@@ -1,0 +1,20 @@
+# Global ownership
+* @core-maintainers
+
+# Architecture and process docs
+/docs/architecture/ @architecture-reviewers
+/docs/sdlc/ @process-owners
+/docs/stlc/ @qa-owners
+/docs/security/ @security-reviewers
+
+# Schemas
+/schemas/ @schema-owners
+
+# CLI package
+/packages/agentquilt-cli/ @cli-maintainers
+
+# Policies
+/policies/ @governance-owners
+
+# Examples
+/examples/ @developer-experience

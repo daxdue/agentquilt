@@ -1,18 +1,55 @@
 # AgentQuilt
 
-> **This is a placeholder release.** AgentQuilt is under active development — this
-> package currently does nothing except reserve the name on npm.
+AgentQuilt is a Git-native framework for maintaining AI agent instructions as structured, composable, validated source files instead of manually edited Markdown prompts.
 
-AgentQuilt is a framework for maintaining AI agent instruction files in a
-distributed engineering team. Instead of editing large, free-form Markdown
-prompt files directly, AgentQuilt represents each agent as a structured,
-composable, validated set of source files (a manifest, instruction blocks,
-and evaluation tests) that compile deterministically into a final deployable
-`.md` prompt artifact.
+## Problem
 
-The eventual CLI for this framework is `agentctl`.
+Large agent Markdown files are hard to maintain in distributed teams. Multiple developers editing the same `.md` file often create merge conflicts, and those conflicts are difficult to resolve because agent instructions are semantic, not purely syntactic.
 
-## Status
+## Solution
+
+AgentQuilt introduces a structured source model:
+
+Agent = Manifest + Instruction Blocks + Evals + Generated Prompt
+
+Developers edit small structured instruction blocks. AgentQuilt validates and compiles them into deterministic Markdown artifacts.
+
+## Goals
+
+- Reduce merge conflicts in agent files
+- Make agent changes reviewable
+- Validate agent definitions
+- Generate deterministic Markdown prompts
+- Support CI gates
+- Support eval-based regression testing
+- Provide traceability for agent behavior changes
+
+## Non-Goals
+
+- Replacing human review
+- Fully automatic semantic conflict resolution
+- Building a web platform in the MVP
+- Requiring live LLM calls for core compilation
+
+## Project Status
+
+Early foundation phase.
+
+## Repository Structure
+
+Explain main folders.
+
+## Roadmap
+
+Link to `docs/roadmap.md`.
+
+## Contributing
+
+Link to `CONTRIBUTING.md`.
+
+## Architecture
+
+Link to `docs/architecture/overview.md`.
 
 Pre-release. No functional code yet — check back at
 [agentquilt.dev](https://agentquilt.dev) for updates.
