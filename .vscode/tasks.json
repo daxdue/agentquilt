@@ -1,0 +1,70 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "AgentQuilt: Watch and Compile",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "agentctl", "--", "compile", "${relativeFileDirname}", "--watch"],
+      "cwd": "${workspaceFolder}/tools/agentctl",
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^.*Compiled.*$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*Watching for changes.*$",
+          "endsPattern": "^.*never$"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "AgentQuilt: Compile (one-time)",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "agentctl", "--", "compile", "${relativeFileDirname}"],
+      "cwd": "${workspaceFolder}/tools/agentctl",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "AgentQuilt: Init New Agent",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "agentctl", "--", "init"],
+      "cwd": "${workspaceFolder}/tools/agentctl",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "AgentQuilt: Build CLI",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build"],
+      "cwd": "${workspaceFolder}/tools/agentctl",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    }
+  ]
+}
