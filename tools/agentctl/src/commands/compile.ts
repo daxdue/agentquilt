@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
+import { watch } from "fs";
 import type { Command } from "commander";
 import {
   loadAgent,
@@ -7,7 +8,7 @@ import {
   renderMarkdown,
   computeSourceHash,
 } from "../core/index.js";
-import { getGeneratedPath } from "../utils/paths.js";
+import { getGeneratedPath, getInstructionsPath, getManifestPath } from "../utils/paths.js";
 
 const VERSION = "0.1.0";
 
@@ -25,10 +26,12 @@ export function registerCompileCommand(program: Command): void {
       "Include block metadata as comments",
       false
     )
+    .option("--watch", "Watch for changes and recompile", false)
     .action((agentPath: string, options) => {
       compileAgent(agentPath, {
         includeDraft: options.includeDraft,
         includeBlockComments: options.includeBlockComments,
+        watch: options.watch,
       });
     });
 }
@@ -36,9 +39,10 @@ export function registerCompileCommand(program: Command): void {
 interface CompileOptions {
   includeDraft: boolean;
   includeBlockComments: boolean;
+  watch?: boolean;
 }
 
-function compileAgent(agentPath: string, options: CompileOptions): void {
+function performCompile(agentPath: string, options: CompileOptions): void {
   try {
     const manifest = loadAgent(agentPath);
     let blocks = loadBlocks(agentPath);
@@ -83,6 +87,36 @@ agentctl-version: ${VERSION}
     console.error(
       `Error: ${error instanceof Error ? error.message : String(error)}`
     );
-    process.exit(1);
+    if (!options.watch) {
+      process.exit(1);
+    }
+  }
+}
+
+function compileAgent(agentPath: string, options: CompileOptions): void {
+  // Perform initial compile
+  performCompile(agentPath, options);
+
+  // If watch mode, set up file watcher
+  if (options.watch) {
+    console.log(`\nWatching for changes in ${agentPath}...`);
+
+    const manifestPath = getManifestPath(agentPath);
+    const instructionsPath = getInstructionsPath(agentPath);
+
+    // Watch manifest
+    watch(manifestPath, () => {
+      console.log("\nManifest changed, recompiling...");
+      performCompile(agentPath, options);
+    });
+
+    // Watch instructions directory
+    watch(instructionsPath, () => {
+      console.log("\nInstructions changed, recompiling...");
+      performCompile(agentPath, options);
+    });
+
+    // Keep process alive
+    console.log("Press Ctrl+C to stop watching.");
   }
 }
