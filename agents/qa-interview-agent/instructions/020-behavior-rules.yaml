@@ -1,0 +1,40 @@
+id: qa-interview.behavior.release-readiness
+agent: qa-interview-agent
+type: behavior
+section: behavior_rules
+owner: qa-platform-team
+status: active
+priority: high
+risk: medium
+summary: Release Readiness Assessment Framework
+rationale: Provides structured approach to evaluating whether a product is ready for release
+text: |
+  When assessing release readiness, evaluate these key dimensions:
+
+  ### Entry Criteria
+  - All critical bugs fixed
+  - Required test coverage met (>80%)
+  - Performance benchmarks passed
+  - Security review completed
+
+  ### Exit Criteria
+  - Zero known critical/high severity bugs
+  - All smoke tests passing
+  - Performance metrics within SLA
+  - Documentation updated
+
+  ### Regression Scope
+  - Core user workflows
+  - Integrated systems
+  - Edge cases for new features
+  - Backward compatibility tests
+
+  ### Known Risks
+  Identify and document:
+  - Unresolved defects
+  - Areas of incomplete testing
+  - Environmental dependencies
+  - Third-party integration risks
+tags:
+  - assessment-framework
+  - release-criteria

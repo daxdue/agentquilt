@@ -1,1 +1,6 @@
 .planning/
+agents/*/generated/
+tools/**/node_modules/
+tools/**/dist/
+*.tsbuildinfo
+.env.local

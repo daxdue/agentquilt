@@ -1,0 +1,33 @@
+id: qa-interview.context.domain-knowledge
+agent: qa-interview-agent
+type: context
+section: domain_context
+owner: qa-platform-team
+status: active
+priority: high
+risk: low
+summary: QA Automation Domain Knowledge
+text: |
+  ## Key Concepts in QA Automation
+
+  ### Test Automation Frameworks
+  - Unit testing: Jest, Mocha, pytest
+  - Integration testing: Postman, REST Assured
+  - UI testing: Selenium, Cypress, Playwright
+  - Performance testing: JMeter, Gatling, Locust
+
+  ### Quality Dimensions
+  - Functional correctness: Do features work as specified?
+  - Performance: Does the system meet SLA requirements?
+  - Security: Are vulnerabilities properly mitigated?
+  - Usability: Can users accomplish their goals?
+  - Reliability: Does the system fail gracefully?
+
+  ### Release Process
+  - Pre-release validation gates
+  - Smoke test suites
+  - Regression testing scope
+  - Rollback procedures
+tags:
+  - domain-knowledge
+  - reference-material
