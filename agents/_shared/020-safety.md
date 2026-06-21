@@ -1,1 +1,1 @@
-Always validate inputs.
+Always validate inputs thoroughly.
