@@ -1,0 +1,39 @@
+{
+  "lockfileVersion": 1,
+  "formatVersion": "1",
+  "fragments": [
+    {
+      "id": "agents/_shared/010-tone.md",
+      "hash": "sha256-6c65d78d1178db62db60e754f6f637d77723bd24820728c0d1b4a7efca3fa924",
+      "bytes": 23
+    },
+    {
+      "id": "agents/_shared/020-safety.md",
+      "hash": "sha256-35a70d70318002b6b5ae7991a7d3cadf9421286e6345e06b91d5affe15dfb51b",
+      "bytes": 24
+    },
+    {
+      "id": "agents/backend/010-role.md",
+      "hash": "sha256-a9a938cf0b8b42a969a3f87dd4f8d0bac93e4637a8f6b5db5e62eb36131ee375",
+      "bytes": 30
+    },
+    {
+      "id": "agents/backend/020-build.md",
+      "hash": "sha256-255f7b9a123cc0c3b03cfbfd084e8cf44ca8b4dc535bccca621d5499583b0410",
+      "bytes": 32
+    }
+  ],
+  "targets": [
+    {
+      "output": "AGENTS.md",
+      "format": "markdown",
+      "fragments": [
+        "agents/_shared/010-tone.md",
+        "agents/_shared/020-safety.md",
+        "agents/backend/010-role.md",
+        "agents/backend/020-build.md"
+      ],
+      "version": "sha256-e693f3c737026e3d3636b8f0991ba7e5a140df8c7ba22598e13fd432d2741ef5"
+    }
+  ]
+}
