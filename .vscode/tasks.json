@@ -6,7 +6,9 @@
       "type": "shell",
       "command": "npm",
       "args": ["run", "agentctl", "--", "compile", "${relativeFileDirname}", "--watch"],
-      "cwd": "${workspaceFolder}/tools/agentctl",
+      "options": {
+        "cwd": "${workspaceFolder}/tools/agentctl"
+      },
       "isBackground": true,
       "problemMatcher": {
         "pattern": {
@@ -32,7 +34,9 @@
       "type": "shell",
       "command": "npm",
       "args": ["run", "agentctl", "--", "compile", "${relativeFileDirname}"],
-      "cwd": "${workspaceFolder}/tools/agentctl",
+      "options": {
+        "cwd": "${workspaceFolder}/tools/agentctl"
+      },
       "presentation": {
         "echo": true,
         "reveal": "always",
@@ -45,7 +49,9 @@
       "type": "shell",
       "command": "npm",
       "args": ["run", "agentctl", "--", "init"],
-      "cwd": "${workspaceFolder}/tools/agentctl",
+      "options": {
+        "cwd": "${workspaceFolder}/tools/agentctl"
+      },
       "presentation": {
         "echo": true,
         "reveal": "always",
@@ -58,7 +64,9 @@
       "type": "shell",
       "command": "npm",
       "args": ["run", "build"],
-      "cwd": "${workspaceFolder}/tools/agentctl",
+      "options": {
+        "cwd": "${workspaceFolder}/tools/agentctl"
+      },
       "presentation": {
         "echo": true,
         "reveal": "always",
