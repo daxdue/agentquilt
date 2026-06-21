@@ -9,8 +9,8 @@
     },
     {
       "id": "agents/_shared/020-safety.md",
-      "hash": "sha256-35a70d70318002b6b5ae7991a7d3cadf9421286e6345e06b91d5affe15dfb51b",
-      "bytes": 24
+      "hash": "sha256-a20609c4110ef51c517580ef61958f9a48243602895c2388a09f2b85d1285724",
+      "bytes": 35
     },
     {
       "id": "agents/backend/010-role.md",
@@ -21,6 +21,11 @@
       "id": "agents/backend/020-build.md",
       "hash": "sha256-255f7b9a123cc0c3b03cfbfd084e8cf44ca8b4dc535bccca621d5499583b0410",
       "bytes": 32
+    },
+    {
+      "id": "agents/backend/040-new-b.md",
+      "hash": "sha256-b616fbc1d7ae8060560ed3310cb676fe587d925af55f9adb3ddeaae1e82501e8",
+      "bytes": 52
     }
   ],
   "targets": [
@@ -31,9 +36,10 @@
         "agents/_shared/010-tone.md",
         "agents/_shared/020-safety.md",
         "agents/backend/010-role.md",
-        "agents/backend/020-build.md"
+        "agents/backend/020-build.md",
+        "agents/backend/040-new-b.md"
       ],
-      "version": "sha256-e693f3c737026e3d3636b8f0991ba7e5a140df8c7ba22598e13fd432d2741ef5"
+      "version": "sha256-aa7b70c0752a509d90d44ba266a17b2c98638cf2d6db7290a2a8ca6af8f02e6f"
     }
   ]
 }
