@@ -1,1 +1,1 @@
-Be concise and direct.
+Be concise, direct, and helpful.
