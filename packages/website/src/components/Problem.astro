@@ -1,33 +1,58 @@
 ---
 ---
 
-<section class="py-20 px-6 bg-gray-900/50 border-y border-gray-800">
+<section class="py-24 px-6 bg-gradient-to-b from-transparent via-red-950/20 to-transparent border-y border-red-900/30">
   <div class="max-w-6xl mx-auto space-y-12">
     <div class="space-y-4">
-      <h2 class="text-4xl font-bold">The Problem</h2>
-      <p class="text-gray-400 text-lg">
-        Large agent Markdown files are hard to maintain in distributed teams.
+      <div class="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/40 rounded-full text-sm text-red-400">
+        <span>⚠</span>
+        <span>THE PROBLEM</span>
+      </div>
+      <h2 class="text-5xl font-black">Merge conflicts in Markdown</h2>
+      <p class="text-lg text-gray-400">
+        Multiple developers editing the same large <code class="bg-gray-800 px-2 py-1 rounded text-red-300">CLAUDE.md</code> or <code class="bg-gray-800 px-2 py-1 rounded text-red-300">AGENTS.md</code> file creates semantic merge conflicts that are slow to resolve.
       </p>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid md:grid-cols-2 gap-8 items-center animate-on-scroll">
+      <!-- Left: Problem description -->
       <div class="space-y-4">
-        <p class="text-gray-300">
-          When multiple developers edit the same <code class="bg-gray-800 px-2 py-1 rounded text-brand-400">CLAUDE.md</code> or <code class="bg-gray-800 px-2 py-1 rounded text-brand-400">AGENTS.md</code> file, you hit merge conflicts. But these aren't simple syntactic conflicts — they're semantic.
+        <p class="text-gray-300 leading-relaxed">
+          When multiple developers edit the same agent instruction file, you hit merge conflicts. But these aren't simple syntax errors — they're <strong>semantic conflicts</strong> in instruction logic.
         </p>
-        <p class="text-gray-300">
-          Resolving conflicts requires understanding the instruction logic, which is slow and error-prone.
+        <p class="text-gray-300 leading-relaxed">
+          Resolving them requires understanding the instruction intent, which is:
         </p>
+        <ul class="space-y-2 text-gray-300">
+          <li class="flex items-start gap-3">
+            <span class="text-red-400 font-bold">✗</span>
+            <span>Slow — manual review of competing instruction versions</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-red-400 font-bold">✗</span>
+            <span>Error-prone — easy to accidentally merge wrong intent</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-red-400 font-bold">✗</span>
+            <span>Frustrating — happens repeatedly in large teams</span>
+          </li>
+        </ul>
       </div>
 
-      <div class="bg-gray-800 rounded-lg p-4 overflow-x-auto font-mono text-sm">
-        <pre class="text-gray-300"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+      <!-- Right: Conflict code block -->
+      <div class="bg-red-950/40 border border-red-900/50 rounded-xl p-6 overflow-x-auto font-mono text-sm font-medium">
+        <div class="text-red-400 mb-3">← CONFLICT →</div>
+        <pre class="text-gray-300"><code><span class="text-red-500">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
 Your role is to be
-a senior architect.
-=======
+a senior architect
+focused on systems
+design and patterns.
+<span class="text-yellow-500">=======</span>
 You are a Python
-code reviewer.
-&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code></pre>
+code reviewer who
+catches bugs and
+performance issues.
+<span class="text-red-500">&gt;&gt;&gt;&gt;&gt;&gt;&gt; branch</span></code></pre>
       </div>
     </div>
   </div>

@@ -1,36 +1,96 @@
 ---
 ---
 
-<section class="pt-32 pb-20 px-6 max-w-6xl mx-auto">
-  <div class="space-y-8">
-    <div class="space-y-4">
-      <h1 class="text-5xl md:text-6xl font-bold leading-tight">
-        Agent instructions
-        <br />
-        <span class="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-          as code
-        </span>
-      </h1>
-      <p class="text-xl text-gray-400 max-w-2xl">
-        AgentQuilt compiles small, reviewable Markdown fragments into deterministic AI agent prompts — for every platform your team uses.
-      </p>
+<section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 py-32">
+  <!-- Animated gradient orbs -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-80 h-80 bg-indigo-600/30 rounded-full blur-3xl animate-gradient"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-violet-600/20 rounded-full blur-3xl" style="animation: gradient-drift 8s ease-in-out infinite reverse;"></div>
+  </div>
+
+  <div class="relative z-10 max-w-5xl mx-auto text-center space-y-8">
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 px-4 py-2 border border-brand-500/40 bg-brand-500/10 rounded-full text-sm text-brand-300">
+      <span>✦</span>
+      <span>v0.1.0 — Now available</span>
     </div>
 
-    <div class="flex gap-4 flex-wrap">
+    <!-- Headline with gradient -->
+    <h1 class="text-6xl sm:text-7xl lg:text-8xl font-black leading-tight tracking-tight">
+      <span class="bg-gradient-to-br from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+        Agent instructions
+      </span>
+      <br />
+      <span class="bg-gradient-to-r from-brand-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
+        as code
+      </span>
+    </h1>
+
+    <!-- Subheading -->
+    <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+      AgentQuilt compiles small, reviewable Markdown fragments into deterministic AI agent prompts — for every platform your team uses.
+    </p>
+
+    <!-- CTAs -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center pt-6">
       <a
         href="https://github.com/daxdue/agentquilt"
         target="_blank"
         rel="noopener noreferrer"
-        class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-medium transition"
+        class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-semibold transition shadow-lg hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] active:scale-95"
       >
         View on GitHub
       </a>
       <a
         href="#quick-start"
-        class="px-6 py-3 border border-gray-700 hover:border-gray-600 text-white rounded-lg font-medium transition hover:bg-gray-900"
+        class="px-8 py-4 border border-brand-500/40 hover:border-brand-400 bg-brand-500/10 hover:bg-brand-500/20 text-white rounded-xl font-semibold transition"
       >
         Get Started
       </a>
+    </div>
+
+    <!-- Code demo panel -->
+    <div class="pt-12">
+      <div class="glass rounded-2xl p-8 max-w-3xl mx-auto border-brand-500/20 animate-on-scroll">
+        <div class="space-y-4 font-mono text-sm">
+          <!-- Step 1: Source file -->
+          <div class="border border-gray-800 rounded-lg overflow-hidden">
+            <div class="bg-gray-900 px-4 py-3 border-b border-gray-800 text-gray-400 text-xs">
+              📄 agents/coder/010-role.md
+            </div>
+            <div class="bg-gray-950 px-4 py-3 text-gray-300">
+              <span class="text-brand-400">You are</span> a senior TypeScript engineer<span class="text-gray-500">...</span>
+            </div>
+          </div>
+
+          <!-- Arrow + command -->
+          <div class="flex items-center justify-center gap-3 text-gray-500 py-2">
+            <div class="w-12 h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent"></div>
+            <span class="text-xs text-brand-400 font-semibold">agentquilt build</span>
+            <div class="w-12 h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent"></div>
+          </div>
+
+          <!-- Step 2: Output files -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="border border-gray-800 rounded-lg overflow-hidden">
+              <div class="bg-gray-900 px-4 py-2 border-b border-gray-800 text-gray-400 text-xs">
+                ✓ CLAUDE.md
+              </div>
+              <div class="bg-gray-950 px-4 py-2 text-gray-400 text-xs">
+                <span class="text-green-400">deterministic</span>
+              </div>
+            </div>
+            <div class="border border-gray-800 rounded-lg overflow-hidden">
+              <div class="bg-gray-900 px-4 py-2 border-b border-gray-800 text-gray-400 text-xs">
+                ✓ AGENTS.md
+              </div>
+              <div class="bg-gray-950 px-4 py-2 text-gray-400 text-xs">
+                <span class="text-green-400">deterministic</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

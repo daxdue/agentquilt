@@ -1,71 +1,88 @@
 ---
 ---
 
-<section id="quick-start" class="py-20 px-6 bg-gray-900/50 border-y border-gray-800">
-  <div class="max-w-6xl mx-auto space-y-12">
+<section id="quick-start" class="py-24 px-6 bg-gradient-to-b from-transparent via-brand-950/10 to-transparent border-y border-brand-900/30">
+  <div class="max-w-4xl mx-auto space-y-12">
     <div class="space-y-4">
-      <h2 class="text-4xl font-bold">Quick Start</h2>
-      <p class="text-gray-400 text-lg">
-        Get up and running in minutes.
-      </p>
+      <h2 class="text-5xl font-black">Quick Start</h2>
+      <p class="text-lg text-gray-400">Get up and running in minutes.</p>
     </div>
 
-    <div class="bg-gray-800 rounded-lg overflow-hidden">
-      <div class="bg-gray-900 px-6 py-4 border-b border-gray-700">
-        <p class="font-mono text-sm text-gray-400">$ bash</p>
+    <!-- macOS Terminal window -->
+    <div class="glass rounded-2xl overflow-hidden border-brand-500/20 animate-on-scroll">
+      <!-- Terminal header with macOS traffic lights -->
+      <div class="bg-gray-900 px-6 py-4 flex items-center gap-3 border-b border-gray-800">
+        <div class="flex gap-2">
+          <div class="w-3 h-3 rounded-full bg-red-500"></div>
+          <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+          <div class="w-3 h-3 rounded-full bg-green-500"></div>
+        </div>
+        <span class="text-sm text-gray-400 font-medium ml-2">Terminal</span>
       </div>
-      <div class="px-6 py-6">
-        <pre class="font-mono text-sm text-gray-300 overflow-x-auto space-y-4"><code>
-{`# Install the CLI
-npm install -g agentquilt
 
-# Initialize a new project
-agentquilt init
+      <!-- Terminal content -->
+      <div class="bg-gray-950 px-6 py-6 text-sm font-mono overflow-x-auto">
+        <pre class="text-gray-300"><code><span class="text-gray-600"># Install the CLI globally</span>
+<span class="text-brand-400">$</span> npm install -g agentquilt
 
-# Create a new agent
-agentquilt agents add my-agent
+<span class="text-gray-600"># Initialize a new project</span>
+<span class="text-brand-400">$</span> agentquilt init
 
-# Author fragments
-# Edit: agents/my-agent/010-role.md
-# Edit: agents/my-agent/020-tools.md
+<span class="text-gray-600"># Create a new agent</span>
+<span class="text-brand-400">$</span> agentquilt agents add my-agent
 
-# Build the targets
-agentquilt build
+<span class="text-gray-600"># Author fragments in your editor</span>
+<span class="text-brand-400">$</span> edit agents/my-agent/010-role.md
+<span class="text-brand-400">$</span> edit agents/my-agent/020-tools.md
 
-# CI: check for drift
-agentquilt check`}
-        </code></pre>
+<span class="text-gray-600"># Build the outputs</span>
+<span class="text-brand-400">$</span> agentquilt build
+<span class="text-green-400">✓ CLAUDE.md generated</span>
+<span class="text-green-400">✓ AGENTS.md generated</span>
+
+<span class="text-gray-600"># Commit and deploy</span>
+<span class="text-brand-400">$</span> git add agents/ CLAUDE.md AGENTS.md
+<span class="text-brand-400">$</span> git commit -m <span class="text-yellow-400">"feat(agents): update role and tools"</span>
+<span class="text-brand-400">$</span> git push origin main
+
+<span class="text-gray-600"># In CI, ensure drift is caught</span>
+<span class="text-brand-400">$</span> agentquilt check
+<span class="text-green-400">✓ All targets up-to-date</span></code></pre>
       </div>
     </div>
 
-    <div class="bg-brand-900/30 border border-brand-800 rounded-lg p-6 space-y-4">
-      <h3 class="font-semibold text-white">What just happened?</h3>
-      <ul class="space-y-2 text-gray-300">
+    <!-- What just happened callout -->
+    <div class="glass rounded-xl p-8 border-green-500/20">
+      <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+        <span class="text-green-400">✓</span> What just happened?
+      </h3>
+      <ul class="space-y-3 text-gray-300">
         <li class="flex gap-3">
-          <span class="text-brand-400 font-bold">✓</span>
-          Created a manifest and agent structure
+          <span class="text-green-400 font-bold flex-shrink-0">→</span>
+          <span>Created a manifest and agent structure in your repo</span>
         </li>
         <li class="flex gap-3">
-          <span class="text-brand-400 font-bold">✓</span>
-          Compiled fragments into <code class="bg-gray-800 px-1 py-0.5 rounded text-brand-300">CLAUDE.md</code> and <code class="bg-gray-800 px-1 py-0.5 rounded text-brand-300">AGENTS.md</code>
+          <span class="text-green-400 font-bold flex-shrink-0">→</span>
+          <span>Compiled fragments into deterministic <code class="bg-gray-800 px-2 py-1 rounded text-sm text-brand-300">CLAUDE.md</code> and <code class="bg-gray-800 px-2 py-1 rounded text-sm text-brand-300">AGENTS.md</code></span>
         </li>
         <li class="flex gap-3">
-          <span class="text-brand-400 font-bold">✓</span>
-          Generated <code class="bg-gray-800 px-1 py-0.5 rounded text-brand-300">agentquilt.lock</code> with content hashes
+          <span class="text-green-400 font-bold flex-shrink-0">→</span>
+          <span>Generated <code class="bg-gray-800 px-2 py-1 rounded text-sm text-brand-300">agentquilt.lock</code> with content hashes</span>
         </li>
         <li class="flex gap-3">
-          <span class="text-brand-400 font-bold">✓</span>
-          Ready to version control and add to CI
+          <span class="text-green-400 font-bold flex-shrink-0">→</span>
+          <span>Ready to version control and add to CI gates</span>
         </li>
       </ul>
     </div>
 
-    <div class="flex gap-4">
+    <!-- Documentation links -->
+    <div class="flex flex-col sm:flex-row gap-4">
       <a
         href="https://github.com/daxdue/agentquilt/blob/main/README.md"
         target="_blank"
         rel="noopener noreferrer"
-        class="px-6 py-3 border border-gray-700 hover:border-gray-600 text-white rounded-lg font-medium transition hover:bg-gray-900"
+        class="glass rounded-lg px-6 py-4 text-center hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition font-medium border-brand-500/20"
       >
         Full Documentation
       </a>
@@ -73,7 +90,7 @@ agentquilt check`}
         href="https://github.com/daxdue/agentquilt/tree/main/.docs"
         target="_blank"
         rel="noopener noreferrer"
-        class="px-6 py-3 border border-gray-700 hover:border-gray-600 text-white rounded-lg font-medium transition hover:bg-gray-900"
+        class="glass rounded-lg px-6 py-4 text-center hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition font-medium border-brand-500/20"
       >
         Architecture Specs
       </a>
