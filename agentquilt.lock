@@ -1,36 +1,50 @@
 {
   "lockfileVersion": 1,
   "formatVersion": "1",
+  "agents": [
+    {
+      "name": "reviewer",
+      "dir": "agents/reviewer",
+      "bodyFragments": [
+        "agents/reviewer/010-role.md",
+        "agents/reviewer/020-criteria.md"
+      ],
+      "metaHash": "sha256-fff0b40c88b1499c4f5c63fdb9ef305790338e08a3e4ecb75e0d2b29de832d31",
+      "version": "sha256-bb4af0e3d84df503a055b58f9fee9efc89a47ec99127686e26ee92670668050e",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/reviewer.md",
+          "kind": "file",
+          "hash": "sha256-048ef6a7a9cac464189b0f36f99510f957dca9f5cc698a87edac51ea6ba41f9f"
+        }
+      ]
+    }
+  ],
   "fragments": [
     {
-      "id": "agents/_shared/010-tone.md",
+      "id": "_shared/010-tone.md",
       "hash": "sha256-75b3f728099bd4d1a2977ce8828d62668b6e1330d5734302f9ce9272e2606aa6",
-      "bytes": 33
+      "bytes": 33,
+      "tags": []
     },
     {
-      "id": "agents/_shared/020-safety.md",
+      "id": "_shared/020-safety.md",
       "hash": "sha256-a20609c4110ef51c517580ef61958f9a48243602895c2388a09f2b85d1285724",
-      "bytes": 35
+      "bytes": 35,
+      "tags": []
     },
     {
-      "id": "agents/backend/010-role.md",
-      "hash": "sha256-a9a938cf0b8b42a969a3f87dd4f8d0bac93e4637a8f6b5db5e62eb36131ee375",
-      "bytes": 30
+      "id": "agents/reviewer/010-role.md",
+      "hash": "sha256-06f2a924264f06efc7019b50d242f8035f47332b63d0a9512fbb586a4adf3f8c",
+      "bytes": 440,
+      "tags": []
     },
     {
-      "id": "agents/backend/020-build.md",
-      "hash": "sha256-255f7b9a123cc0c3b03cfbfd084e8cf44ca8b4dc535bccca621d5499583b0410",
-      "bytes": 32
-    },
-    {
-      "id": "agents/backend/030-new-a.md",
-      "hash": "sha256-66b29722dd08923bdeeb7720a0240798b11614c54199901f9d8d361c7430f09b",
-      "bytes": 44
-    },
-    {
-      "id": "agents/backend/040-new-b.md",
-      "hash": "sha256-b616fbc1d7ae8060560ed3310cb676fe587d925af55f9adb3ddeaae1e82501e8",
-      "bytes": 52
+      "id": "agents/reviewer/020-criteria.md",
+      "hash": "sha256-24af2a7e7d58dd85089c654f6d25f6392b10a460a62f640b2a0498fee205e27f",
+      "bytes": 897,
+      "tags": []
     }
   ],
   "targets": [
@@ -38,14 +52,10 @@
       "output": "AGENTS.md",
       "format": "markdown",
       "fragments": [
-        "agents/_shared/010-tone.md",
-        "agents/_shared/020-safety.md",
-        "agents/backend/010-role.md",
-        "agents/backend/020-build.md",
-        "agents/backend/030-new-a.md",
-        "agents/backend/040-new-b.md"
+        "_shared/010-tone.md",
+        "_shared/020-safety.md"
       ],
-      "version": "sha256-83284c295a696b1a57d8e9513730f32274050a4ec297310e8169a9e4fe30e999"
+      "version": "sha256-0cc73f4a8247d5bf3e948faff53e0a56cab02024b08ea3be56f1eb4c4f681e57"
     }
   ]
 }

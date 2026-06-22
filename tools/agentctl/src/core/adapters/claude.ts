@@ -1,0 +1,85 @@
+import { readFileSync } from "fs";
+import { stringify as yamlStringify } from "yaml";
+import { normalize } from "../normalize.js";
+import { registerAdapter, type Adapter, type AdapterOutput } from "./index.js";
+import type { CanonicalAgentRecord } from "../agentLoader.js";
+import type { ResolvedModel } from "../modelResolver.js";
+
+const ADAPTER_VERSION = "1";
+
+function assembleBody(record: CanonicalAgentRecord): string {
+  const bodies = record.bodyFragments.map((f) => {
+    const raw = readFileSync(f.filePath);
+    return normalize(raw);
+  });
+  // join with blank line, normalize already ensures trailing \n per fragment
+  return bodies.join("\n") + "\n"; // bodies end in \n, adding one more blank line between
+}
+// Note: normalize() ensures each body fragment ends with exactly one \n.
+// Joining with "\n" inserts a blank line between fragments (matching document target behavior).
+
+function buildFrontmatter(
+  record: CanonicalAgentRecord,
+  resolvedModel: ResolvedModel
+): string {
+  const def = record.definition;
+  const xClaude = (def as Record<string, unknown>)["x-claude"];
+  const xc =
+    xClaude && typeof xClaude === "object"
+      ? ((xClaude as Record<string, unknown>) || {})
+      : {};
+
+  const fm: Record<string, unknown> = {};
+  fm["name"] = record.name;
+  fm["description"] = def.description;
+
+  if (resolvedModel.model !== null) {
+    fm["model"] = resolvedModel.model;
+  }
+
+  // tools: x-claude.tools override wins; else derive from permissions
+  if (xc["tools"] !== undefined) {
+    fm["tools"] = xc["tools"];
+  } else if (def.permissions === "read-only" || def.permissions === undefined) {
+    fm["tools"] = "Read, Grep, Glob";
+  }
+  // workspace: no tools line; full: no tools line
+
+  // permissionMode: x-claude.permissionMode override wins; else derive from permissions
+  if (xc["permissionMode"] !== undefined) {
+    fm["permissionMode"] = xc["permissionMode"];
+  } else if (def.permissions === "full") {
+    fm["permissionMode"] = "acceptEdits";
+  }
+
+  // effort from reasoning
+  if (resolvedModel.reasoning !== undefined) {
+    fm["effort"] = resolvedModel.reasoning;
+  }
+
+  // remaining x-claude keys (not tools, not permissionMode)
+  for (const [k, v] of Object.entries(xc)) {
+    if (k !== "tools" && k !== "permissionMode") {
+      fm[k] = v;
+    }
+  }
+
+  return yamlStringify(fm); // ends with \n
+}
+
+export const CLAUDE_ADAPTER: Adapter = {
+  id: "claude",
+  ADAPTER_VERSION,
+  outputsFor(record, resolvedModel, _config): AdapterOutput[] {
+    const path = `.claude/agents/${record.name}.md`;
+    const frontmatter = buildFrontmatter(record, resolvedModel);
+    const body = assembleBody(record);
+    // agentVersion is not available here; it's finalized in agentCompiler.
+    // The HTML comment version will be filled by agentCompiler using the final version.
+    // For now the adapter returns raw content and agentCompiler wraps it.
+    const content = `---\n${frontmatter}---\n\n${body}`;
+    return [{ path, content, kind: "file" }];
+  },
+};
+
+registerAdapter(CLAUDE_ADAPTER);

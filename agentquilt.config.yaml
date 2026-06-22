@@ -1,0 +1,22 @@
+version: 1
+sourceDir: agents
+defaultModelTier: balanced
+modelTiers:
+  frontier:
+    claude: claude-opus-4-8
+  balanced:
+    claude: claude-sonnet-4-6
+  fast:
+    claude: claude-haiku-4-5
+
+targets:
+  - output: AGENTS.md
+    include:
+      - _shared
+    format: markdown
+
+  - kind: agent-definitions
+    agents:
+      - reviewer
+    platforms:
+      - claude

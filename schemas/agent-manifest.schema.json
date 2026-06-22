@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentquilt.dev/schemas/agent-manifest.json",
+  "title": "Agent Manifest (agent.yaml)",
+  "description": "Schema for agent.yaml: the canonical agent definition metadata. Used for agent-definition targets in agentquilt.config.yaml.",
+  "type": "object",
+  "required": ["description"],
+  "properties": {
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable purpose of this agent. Required."
+    },
+    "name": {
+      "type": "string",
+      "description": "Optional agent name. Defaults to the agent directory name if not provided."
+    },
+    "model": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": ["frontier", "balanced", "fast", "inherit"],
+          "description": "Shorthand tier. Resolves to concrete model per platform via modelTiers in agentquilt.config.yaml. 'inherit' omits the model field from generated output."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "tier": {
+              "type": "string",
+              "enum": ["frontier", "balanced", "fast", "inherit"]
+            },
+            "reasoning": {
+              "type": "string",
+              "enum": ["low", "medium", "high"],
+              "description": "Model reasoning effort (if supported by the platform)."
+            },
+            "overrides": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Per-platform model name overrides. E.g., {\"claude\": \"claude-opus-4-8\"}."
+            }
+          }
+        }
+      ],
+      "description": "Model configuration: tier shorthand or expanded object. Optional."
+    },
+    "permissions": {
+      "type": "string",
+      "enum": ["read-only", "workspace", "full"],
+      "description": "Permission level for this agent. Defaults to 'read-only' if not provided. Maps to tool sets or API access levels per platform."
+    }
+  },
+  "additionalProperties": {
+    "description": "Platform-specific extension blocks (e.g., x-claude, x-codex) are accepted and passed through verbatim to adapters. Keys must start with 'x-' to indicate extensions."
+  },
+  "examples": [
+    {
+      "description": "Code reviewer for pull requests",
+      "name": "reviewer",
+      "model": "balanced",
+      "permissions": "workspace",
+      "x-claude": {
+        "tools": ["Read", "Grep", "Edit"],
+        "effort": "high"
+      }
+    },
+    {
+      "description": "Documentation assistant",
+      "model": {
+        "tier": "fast",
+        "reasoning": "low"
+      },
+      "permissions": "read-only"
+    }
+  ]
+}

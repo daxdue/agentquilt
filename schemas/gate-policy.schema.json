@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentquilt.dev/schemas/gate-policy.json",
+  "title": "CI Gate Policy",
+  "description": "Schema for SDLC quality gates enforced during CI. Gates define required checks, approval workflows, and risk controls before code is merged or released. See .docs/sdlc/gates.md for policy details.",
+  "type": "object",
+  "required": ["name", "phase"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Gate name (e.g., 'intake-gate', 'pr-quality-gate')."
+    },
+    "phase": {
+      "type": "string",
+      "enum": ["intake", "requirement", "architecture", "implementation", "verification", "release", "post-release"],
+      "description": "SDLC phase during which this gate applies."
+    },
+    "description": {
+      "type": "string",
+      "description": "Purpose and rationale for the gate."
+    },
+    "requiredChecks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of required CI checks (e.g., 'npm test', 'agentquilt check')."
+    },
+    "requiredApprovals": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of required human approvals before proceeding."
+    },
+    "riskCriteria": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Risk type (e.g., 'architecture', 'security', 'performance')."
+          },
+          "condition": {
+            "type": "string",
+            "description": "Condition that triggers this risk (e.g., 'changes to compiler core')."
+          },
+          "level": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "description": "Risk level if condition is met."
+          }
+        }
+      },
+      "description": "Risk assessments that must be documented if triggered."
+    },
+    "escalationPath": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Team or individuals to notify if gate blocks a PR (e.g., ['@maintainers'])."
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this gate is currently active."
+    }
+  },
+  "examples": [
+    {
+      "name": "intake-gate",
+      "phase": "intake",
+      "description": "Validates that new issues meet basic quality criteria.",
+      "requiredChecks": ["issue template", "labels assigned"],
+      "riskCriteria": [
+        {
+          "type": "scope",
+          "condition": "no clear acceptance criteria",
+          "level": "medium"
+        }
+      ]
+    },
+    {
+      "name": "pr-quality-gate",
+      "phase": "verification",
+      "description": "Ensures all PRs pass CI and code review before merge.",
+      "requiredChecks": [
+        "npm test",
+        "npm run lint",
+        "agentquilt check"
+      ],
+      "requiredApprovals": 1,
+      "riskCriteria": [
+        {
+          "type": "architecture",
+          "condition": "changes to compiler.ts or core/",
+          "level": "high"
+        }
+      ],
+      "escalationPath": ["@maintainers"]
+    }
+  ],
+  "notes": [
+    "Gates are applied in SDLC phase order during development.",
+    "Risk criteria drive the need for additional reviews or documentation.",
+    "See policies/gates/ for concrete policy definitions."
+  ]
+}

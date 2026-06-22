@@ -1,16 +1,23 @@
 #!/usr/bin/env node
 
 import { program } from "commander";
-import { registerCompileCommand } from "./commands/compile.js";
+import { registerInitCommand } from "./commands/init.js";
+import { registerBuildCommand } from "./commands/build.js";
+import { registerCheckCommand } from "./commands/check.js";
+import { registerAgentsCommand } from "./commands/agents/index.js";
+import "./core/adapters/claude.js";
 
 const version = "0.1.0";
 
 program
-  .name("agentctl")
-  .description("CLI tool for AgentQuilt agent framework")
+  .name("agentquilt")
+  .description("Deterministic compiler for AI agent instruction files")
   .version(version);
 
-registerCompileCommand(program);
+registerInitCommand(program);
+registerBuildCommand(program);
+registerCheckCommand(program);
+registerAgentsCommand(program);
 
 program.parse(process.argv);
 

@@ -1,14 +1,14 @@
 {
-  "name": "agentquilt-cli",
+  "name": "agentquilt",
   "version": "0.1.0",
-  "description": "CLI tool for AgentQuilt agent framework",
+  "description": "CLI tool for AgentQuilt agent framework — compiles Markdown fragments into deployment-ready agent instructions with deterministic versioning",
   "type": "module",
   "engines": {
     "node": ">=18"
   },
   "main": "dist/index.js",
   "bin": {
-    "agentctl": "dist/index.js"
+    "agentquilt": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
