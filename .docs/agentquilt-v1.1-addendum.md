@@ -233,9 +233,63 @@ Injection rules:
 
 This is the v1 "never hand-edit a generated artifact" rule applied to a *slice* of someone else's file. It is the most failure-prone adapter behavior; cover it with focused tests (no region, empty file, region present, user text adjacent to sentinels, user edit inside region).
 
+### 6.3 AgentSkills adapter
+
+Platform ID: `"agentskills"`. Output path: `.agents/skills/<name>/SKILL.md`.
+
+AgentSkills is an open standard for portable, runtime-discoverable agent skills (https://agentskills.io). A skill is a directory with a `SKILL.md` file containing YAML frontmatter + Markdown instructions.
+
+**Frontmatter mapping:**
+
+| `agent.yaml` source | `SKILL.md` frontmatter | Behavior |
+|---|---|---|
+| `name` (normalized) | `name` | Converted to lowercase kebab-case; must match directory name |
+| `description` | `description` | Required; passed through |
+| `x-agentskills.license` | `license` | Optional; passed through |
+| `x-agentskills.compatibility` | `compatibility` | Optional; passed through (e.g., "Requires Python 3.8+ and docker") |
+| `x-agentskills.allowed-tools` | `allowed-tools` | Optional; space-separated string, experimental |
+| `x-agentskills.metadata` | `metadata` | Optional; nested YAML object (author, version, etc.) |
+
+**Name normalization rule:** Convert agent name to lowercase, replace non-`[a-z0-9-]` with `-`, collapse runs of `-`, trim leading/trailing `-`. Example: `My-PDF-Processor` → `my-pdf-processor`.
+
+**Notes:**
+- No `model` or `permissionMode` fields emitted — AgentSkills is platform-agnostic.
+- The full skill body (assembled fragments) is emitted as Markdown after the frontmatter.
+- AgentSkills does not define skill "types"; differentiation is by content and metadata.
+
+Example agent definition:
+
+```yaml
+description: Extract and process PDF files
+x-agentskills:
+  license: Apache-2.0
+  compatibility: "Requires pdfplumber and Python 3.8+"
+  metadata:
+    author: example-org
+    version: "1.0"
+```
+
+Produces `.agents/skills/pdf-processor/SKILL.md`:
+
+```yaml
+---
+name: pdf-processor
+description: Extract and process PDF files
+license: Apache-2.0
+compatibility: "Requires pdfplumber and Python 3.8+"
+metadata:
+  author: example-org
+  version: "1.0"
+---
+
+<assembled body fragments>
+```
+
+---
+
 ### 6.4 Adapter API and forward-compatibility **[v1.1 CHOICE]**
 
-Adapters implement a small interface (`id`, `version`, `outputsFor(record, resolvedModel, config) → File[]`, optional `injectionsFor(...) → Region[]`). v1.1 ships **Claude and Codex** concretely; the API is open so a new platform is added without touching core. Honest limit: an unknown future platform is unsupported until its adapter exists — there is no magic. Two mitigations, both **[DEFERRED]**: (a) a community/plugin adapter path; (b) an optional **neutral fallback emission** — a plain-prose description of each agent appended to a document target — so AGENTS.md-only tools get *something* for free.
+Adapters implement a small interface (`id`, `version`, `outputsFor(record, resolvedModel, config) → File[]`, optional `injectionsFor(...) → Region[]`). v1.1+ ships **Claude, Codex, and AgentSkills** concretely; the API is open so a new platform is added without touching core. Honest limit: an unknown future platform is unsupported until its adapter exists — there is no magic. Two mitigations, both **[DEFERRED]**: (a) a community/plugin adapter path; (b) an optional **neutral fallback emission** — a plain-prose description of each agent appended to a document target — so AGENTS.md-only tools get *something* for free.
 
 ---
 

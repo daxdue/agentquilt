@@ -24,6 +24,7 @@ const PRESET_DEFAULTS: Record<Preset, Partial<Target>> = {
   cursor: { output: ".cursor/rules/<agent>.mdc" },
   copilot: { output: ".github/copilot-instructions.md" },
   gemini: { output: "GEMINI.md" },
+  agentskills: { output: ".agents/skills/<agent>/SKILL.md" },
 };
 
 /**

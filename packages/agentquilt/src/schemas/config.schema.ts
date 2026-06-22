@@ -6,6 +6,7 @@ export const PresetEnum = z.enum([
   "cursor",
   "copilot",
   "gemini",
+  "agentskills",
 ]);
 export type Preset = z.infer<typeof PresetEnum>;
 

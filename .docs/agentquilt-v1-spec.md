@@ -177,6 +177,7 @@ A preset is sugar that supplies a default `output` (and possibly `format`). Pres
 | `cursor` | `.cursor/rules/<agent>.mdc` |
 | `copilot` | `.github/copilot-instructions.md` |
 | `gemini` | `GEMINI.md` |
+| `agentskills` | `.agents/skills/<agent>/SKILL.md` |
 
 ### 5.3 Validation rules (fail the build, exit 2)
 
@@ -235,6 +236,7 @@ CLAUDE.md            linguist-generated=true
 GEMINI.md            linguist-generated=true
 .cursor/rules/**     linguist-generated=true
 .github/copilot-instructions.md linguist-generated=true
+.agents/skills/**    linguist-generated=true
 
 # lock: structured to rarely conflict; union as a free win where honored
 agentquilt.lock      linguist-generated=true merge=union

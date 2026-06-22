@@ -6,6 +6,7 @@ import { registerBuildCommand } from "./commands/build.js";
 import { registerCheckCommand } from "./commands/check.js";
 import { registerAgentsCommand } from "./commands/agents/index.js";
 import "./core/adapters/claude.js";
+import "./core/adapters/agentskills.js";
 
 const version = "0.1.0";
 
