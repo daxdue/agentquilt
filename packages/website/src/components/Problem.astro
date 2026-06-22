@@ -1,59 +1,115 @@
 ---
 ---
 
-<section class="py-24 px-6 bg-gradient-to-b from-transparent via-red-950/20 to-transparent border-y border-red-900/30">
-  <div class="max-w-6xl mx-auto space-y-12">
-    <div class="space-y-4">
-      <div class="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/40 rounded-full text-sm text-red-400">
+<section class="py-32 px-6 bg-gradient-to-b from-transparent via-red-950/20 to-transparent border-y border-red-900/30">
+  <div class="max-w-6xl mx-auto space-y-16">
+    <!-- Section header -->
+    <div class="space-y-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/40 rounded-full text-sm text-red-400 font-medium">
         <span>⚠</span>
         <span>THE PROBLEM</span>
       </div>
-      <h2 class="text-5xl font-black">Merge conflicts in Markdown</h2>
-      <p class="text-lg text-gray-400">
-        Multiple developers editing the same large <code class="bg-gray-800 px-2 py-1 rounded text-red-300">CLAUDE.md</code> or <code class="bg-gray-800 px-2 py-1 rounded text-red-300">AGENTS.md</code> file creates semantic merge conflicts that are slow to resolve.
-      </p>
+
+      <div class="max-w-3xl space-y-4">
+        <h2 class="text-6xl font-black leading-tight">
+          Your agent prompts are<br />
+          <span class="bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
+            held together by duct tape
+          </span>
+        </h2>
+
+        <p class="text-xl text-gray-400 leading-relaxed">
+          When your team works on a single large <code class="bg-gray-800 px-2 py-1 rounded text-red-300 font-medium">CLAUDE.md</code> or <code class="bg-gray-800 px-2 py-1 rounded text-red-300 font-medium">AGENTS.md</code> file, merge conflicts are inevitable. But these aren't simple git conflicts—they're <strong>semantic conflicts in instruction logic</strong>.
+        </p>
+      </div>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-8 items-center animate-on-scroll">
-      <!-- Left: Problem description -->
-      <div class="space-y-4">
-        <p class="text-gray-300 leading-relaxed">
-          When multiple developers edit the same agent instruction file, you hit merge conflicts. But these aren't simple syntax errors — they're <strong>semantic conflicts</strong> in instruction logic.
-        </p>
-        <p class="text-gray-300 leading-relaxed">
-          Resolving them requires understanding the instruction intent, which is:
-        </p>
-        <ul class="space-y-2 text-gray-300">
-          <li class="flex items-start gap-3">
-            <span class="text-red-400 font-bold">✗</span>
-            <span>Slow — manual review of competing instruction versions</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-red-400 font-bold">✗</span>
-            <span>Error-prone — easy to accidentally merge wrong intent</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-red-400 font-bold">✗</span>
-            <span>Frustrating — happens repeatedly in large teams</span>
-          </li>
-        </ul>
+    <!-- Two-column: pain points + visual conflict -->
+    <div class="grid md:grid-cols-2 gap-12 items-start">
+      <!-- Left: The real costs -->
+      <div class="space-y-8">
+        <div>
+          <h3 class="text-sm font-bold text-red-400 uppercase tracking-wide mb-3">The Reality</h3>
+          <p class="text-gray-300 leading-relaxed">
+            Your team wants to work in parallel. Alice is updating the role. Bob is adding tools. Carol is improving system context. But the moment someone pushes, you have a merge conflict that requires manual resolution.
+          </p>
+        </div>
+
+        <!-- Pain point cards -->
+        <div class="space-y-4">
+          <div class="border-l-4 border-red-500 bg-red-950/40 px-6 py-4 rounded-r">
+            <div class="text-sm font-bold text-red-400 mb-1">🐢 Velocity hit</div>
+            <p class="text-gray-300 text-sm">
+              Resolving conflicts requires understanding instruction logic. That's not a syntax error—it's a code review.
+            </p>
+          </div>
+
+          <div class="border-l-4 border-orange-500 bg-orange-950/40 px-6 py-4 rounded-r">
+            <div class="text-sm font-bold text-orange-400 mb-1">⚠️ Human error</div>
+            <p class="text-gray-300 text-sm">
+              Merge the wrong version? Deploy instructions that conflict? Spend hours debugging which version was correct?
+            </p>
+          </div>
+
+          <div class="border-l-4 border-red-600 bg-red-950/40 px-6 py-4 rounded-r">
+            <div class="text-sm font-bold text-red-400 mb-1">🔗 Broken traceability</div>
+            <p class="text-gray-300 text-sm">
+              Git blame becomes meaningless. Code reviews are hard to follow. You can't tell why an instruction was changed.
+            </p>
+          </div>
+        </div>
       </div>
 
-      <!-- Right: Conflict code block -->
-      <div class="bg-red-950/40 border border-red-900/50 rounded-xl p-6 overflow-x-auto font-mono text-sm font-medium">
-        <div class="text-red-400 mb-3">← CONFLICT →</div>
-        <pre class="text-gray-300"><code><span class="text-red-500">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
-Your role is to be
-a senior architect
-focused on systems
-design and patterns.
-<span class="text-yellow-500">=======</span>
-You are a Python
-code reviewer who
-catches bugs and
-performance issues.
-<span class="text-red-500">&gt;&gt;&gt;&gt;&gt;&gt;&gt; branch</span></code></pre>
+      <!-- Right: Conflict visualization -->
+      <div class="space-y-4">
+        <div class="text-xs font-bold text-red-400 uppercase tracking-wide">Typical merge scenario</div>
+
+        <div class="bg-red-950/40 border border-red-900/50 rounded-xl p-6 overflow-x-auto font-mono text-sm">
+          <div class="space-y-3 text-gray-300">
+            <!-- Left side (HEAD) -->
+            <div class="bg-gray-950/60 border-l-4 border-red-500 px-3 py-2">
+              <div class="text-red-400 font-bold text-xs mb-1">← ALICE'S CHANGES (HEAD)</div>
+              <pre class="text-xs"><code><span class="text-gray-400">You are a</span> <span class="text-red-300">senior architect</span>
+<span class="text-gray-400">focused on</span> <span class="text-red-300">systems design</span>
+<span class="text-gray-400">with expertise in</span>
+<span class="text-red-300">scalability</span></code></pre>
+            </div>
+
+            <!-- Conflict indicator -->
+            <div class="flex items-center gap-2 text-yellow-500 font-bold text-xs">
+              <div class="flex-1 h-px bg-yellow-600/50"></div>
+              ⚔️ CONFLICT
+              <div class="flex-1 h-px bg-yellow-600/50"></div>
+            </div>
+
+            <!-- Right side (incoming) -->
+            <div class="bg-gray-950/60 border-l-4 border-yellow-600 px-3 py-2">
+              <div class="text-yellow-500 font-bold text-xs mb-1">BOB'S CHANGES →</div>
+              <pre class="text-xs"><code><span class="text-gray-400">You are a</span> <span class="text-yellow-300">Python code reviewer</span>
+<span class="text-gray-400">who catches</span> <span class="text-yellow-300">bugs</span>
+<span class="text-gray-400">and</span> <span class="text-yellow-300">performance issues</span></code></pre>
+            </div>
+
+            <!-- Question -->
+            <div class="text-center text-gray-400 text-xs pt-2">
+              <span class="bg-gray-900 px-3 py-1 rounded inline-block">
+                Which one is correct? Both? Neither?
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-xs text-gray-500 leading-relaxed">
+          This happens <strong>every time</strong> two developers edit the same agent file. And the cost isn't just the time to resolve—it's the risk of choosing wrong.
+        </p>
       </div>
+    </div>
+
+    <!-- Bottom callout: scale pain -->
+    <div class="border border-red-900/50 bg-red-950/20 rounded-xl p-8">
+      <p class="text-lg text-gray-300 leading-relaxed">
+        <span class="text-red-400 font-bold">The core issue:</span> Merge conflicts in Markdown aren't syntax errors. They're semantic conflicts. Resolving them requires understanding instruction intent, not just applying merge strategy. At scale, this becomes a bottleneck for any team managing multiple agents.
+      </p>
     </div>
   </div>
 </section>
