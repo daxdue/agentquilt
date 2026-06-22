@@ -8,9 +8,9 @@
         <span>✓</span>
         <span>THE SOLUTION</span>
       </div>
-      <h2 class="text-5xl font-black">Fragment-based compilation</h2>
+      <h2 class="text-5xl font-black">Fragment-based, platform-agnostic compilation</h2>
       <p class="text-lg text-gray-400">
-        Author small Markdown fragments. Compile deterministically. Never resolve semantic conflicts again.
+        Write fragments once. Compile to any platform. One source of truth for all agent targets.
       </p>
     </div>
 
@@ -47,14 +47,15 @@
         </div>
 
         <div class="glass rounded-xl p-6">
-          <h3 class="text-2xl font-bold text-white mb-4">Compile</h3>
-          <p class="text-gray-400 mb-4">Run <code class="bg-gray-800 px-2 py-1 rounded text-brand-300">agentquilt build</code> to validate and compile fragments into deterministic targets.</p>
+          <h3 class="text-2xl font-bold text-white mb-4">Compile to All Platforms</h3>
+          <p class="text-gray-400 mb-4">Run <code class="bg-gray-800 px-2 py-1 rounded text-brand-300">agentquilt build</code> to validate and compile fragments into deterministic targets for every platform.</p>
 
           <div class="bg-gray-900/80 border border-gray-800 rounded-lg p-4 font-mono text-sm text-gray-300 overflow-x-auto">
             <pre><code><span class="text-gray-500">$ agentquilt build</span>
 <span class="text-green-400">✓</span> CLAUDE.md
-<span class="text-green-400">✓</span> AGENTS.md
-<span class="text-gray-500">→ Hash: 4a7f2e9d...</span></code></pre>
+<span class="text-green-400">✓</span> .cursor/rules/coder.mdc
+<span class="text-green-400">✓</span> .github/copilot-instructions.md
+<span class="text-gray-500">→ Version hash: 4a7f2e9d...</span></code></pre>
           </div>
         </div>
       </div>
@@ -81,7 +82,7 @@
     <!-- Benefit callout -->
     <div class="glass rounded-xl p-8 border-brand-500/20 mt-8">
       <p class="text-lg text-white leading-relaxed">
-        <span class="text-green-400 font-bold">✓ No more conflicts.</span> Each developer edits separate files. Git merges naturally. Code reviews are readable. Agent changes are traceable.
+        <span class="text-green-400 font-bold">✓ No more conflicts. Platform consistency guaranteed.</span> Each developer edits separate fragments. Git merges naturally. One source of truth compiles to all platforms. Code reviews are readable. Agent changes are traceable across Claude, Cursor, Copilot, and internal targets.
       </p>
     </div>
   </div>
