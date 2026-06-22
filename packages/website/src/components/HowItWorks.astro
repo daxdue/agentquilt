@@ -1,0 +1,75 @@
+---
+---
+
+<section class="py-20 px-6 bg-gray-900/50 border-y border-gray-800">
+  <div class="max-w-6xl mx-auto space-y-12">
+    <div class="space-y-4">
+      <h2 class="text-4xl font-bold">How It Works</h2>
+      <p class="text-gray-400 text-lg">
+        Fragment-based compilation for AI agent instructions.
+      </p>
+    </div>
+
+    <div class="space-y-8">
+      <div class="bg-gray-800 rounded-lg p-8">
+        <div class="space-y-6">
+          <div class="flex gap-6">
+            <div class="flex-shrink-0">
+              <div class="flex items-center justify-center h-10 w-10 rounded-full bg-brand-600 text-white font-bold">
+                1
+              </div>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold text-white mb-2">Organize by concern</h3>
+              <p class="text-gray-400">
+                Fragment files live in <code class="bg-gray-700 px-2 py-1 rounded text-brand-300">agents/&lt;agent-id&gt;/</code>. Use numbered prefixes (010, 020, 030) for ordering.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-6">
+            <div class="flex-shrink-0">
+              <div class="flex items-center justify-center h-10 w-10 rounded-full bg-brand-600 text-white font-bold">
+                2
+              </div>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold text-white mb-2">Validate and hash</h3>
+              <p class="text-gray-400">
+                Each fragment is validated against the schema, then hashed. The compiler creates a Merkle tree of fragment hashes to produce a deterministic target hash.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-6">
+            <div class="flex-shrink-0">
+              <div class="flex items-center justify-center h-10 w-10 rounded-full bg-brand-600 text-white font-bold">
+                3
+              </div>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold text-white mb-2">Generate output</h3>
+              <p class="text-gray-400">
+                Fragments are concatenated into Markdown targets (<code class="bg-gray-700 px-2 py-1 rounded text-brand-300">CLAUDE.md</code>, <code class="bg-gray-700 px-2 py-1 rounded text-brand-300">AGENTS.md</code>, platform-specific files). Output is deterministic — same input always produces identical output.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-6">
+            <div class="flex-shrink-0">
+              <div class="flex items-center justify-center h-10 w-10 rounded-full bg-brand-600 text-white font-bold">
+                4
+              </div>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold text-white mb-2">Enforce with CI</h3>
+              <p class="text-gray-400">
+                <code class="bg-gray-700 px-2 py-1 rounded text-brand-300">agentquilt check</code> fails the build if targets drift from source. Prevent stale agent files.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

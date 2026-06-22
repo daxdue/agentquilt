@@ -1,0 +1,82 @@
+---
+---
+
+<section id="quick-start" class="py-20 px-6 bg-gray-900/50 border-y border-gray-800">
+  <div class="max-w-6xl mx-auto space-y-12">
+    <div class="space-y-4">
+      <h2 class="text-4xl font-bold">Quick Start</h2>
+      <p class="text-gray-400 text-lg">
+        Get up and running in minutes.
+      </p>
+    </div>
+
+    <div class="bg-gray-800 rounded-lg overflow-hidden">
+      <div class="bg-gray-900 px-6 py-4 border-b border-gray-700">
+        <p class="font-mono text-sm text-gray-400">$ bash</p>
+      </div>
+      <div class="px-6 py-6">
+        <pre class="font-mono text-sm text-gray-300 overflow-x-auto space-y-4"><code>
+{`# Install the CLI
+npm install -g agentquilt
+
+# Initialize a new project
+agentquilt init
+
+# Create a new agent
+agentquilt agents add my-agent
+
+# Author fragments
+# Edit: agents/my-agent/010-role.md
+# Edit: agents/my-agent/020-tools.md
+
+# Build the targets
+agentquilt build
+
+# CI: check for drift
+agentquilt check`}
+        </code></pre>
+      </div>
+    </div>
+
+    <div class="bg-brand-900/30 border border-brand-800 rounded-lg p-6 space-y-4">
+      <h3 class="font-semibold text-white">What just happened?</h3>
+      <ul class="space-y-2 text-gray-300">
+        <li class="flex gap-3">
+          <span class="text-brand-400 font-bold">✓</span>
+          Created a manifest and agent structure
+        </li>
+        <li class="flex gap-3">
+          <span class="text-brand-400 font-bold">✓</span>
+          Compiled fragments into <code class="bg-gray-800 px-1 py-0.5 rounded text-brand-300">CLAUDE.md</code> and <code class="bg-gray-800 px-1 py-0.5 rounded text-brand-300">AGENTS.md</code>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-brand-400 font-bold">✓</span>
+          Generated <code class="bg-gray-800 px-1 py-0.5 rounded text-brand-300">agentquilt.lock</code> with content hashes
+        </li>
+        <li class="flex gap-3">
+          <span class="text-brand-400 font-bold">✓</span>
+          Ready to version control and add to CI
+        </li>
+      </ul>
+    </div>
+
+    <div class="flex gap-4">
+      <a
+        href="https://github.com/daxdue/agentquilt/blob/main/README.md"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="px-6 py-3 border border-gray-700 hover:border-gray-600 text-white rounded-lg font-medium transition hover:bg-gray-900"
+      >
+        Full Documentation
+      </a>
+      <a
+        href="https://github.com/daxdue/agentquilt/tree/main/.docs"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="px-6 py-3 border border-gray-700 hover:border-gray-600 text-white rounded-lg font-medium transition hover:bg-gray-900"
+      >
+        Architecture Specs
+      </a>
+    </div>
+  </div>
+</section>
