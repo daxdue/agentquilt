@@ -58,7 +58,8 @@ repo/
 ├── policies/                        # SDLC gates, risk register
 ├── schemas/                         # JSON Schema definitions (language-neutral reference)
 ├── scripts/                         # Utility scripts and spike tests
-├── tools/agentquilt/                # CLI implementation (TypeScript, Zod, Commander)
+├── packages/
+│   └── agentquilt/                  # CLI implementation (TypeScript, Zod, Commander)
 └── .gitignore, LICENSE, README.md
 ```
 
@@ -141,7 +142,7 @@ See [ADRs](.docs/architecture/adr/) for examples.
 
 ## Development Commands
 
-From `tools/agentquilt/`:
+From root (using npm workspaces) or `packages/agentquilt/`:
 
 ```bash
 # Install dependencies
@@ -219,7 +220,7 @@ See [PROJECT_PLAN.md](.planning/PROJECT_PLAN.md) for historical context and full
 
 - **npm package**: `agentquilt` (https://github.com/daxdue/agentquilt)
 - **Node requirement**: >= 18
-- **CLI entry point**: `tools/agentquilt/dist/index.js` (compiled from TypeScript)
+- **CLI entry point**: `packages/agentquilt/dist/index.js` (compiled from TypeScript)
 - **Built with**: TypeScript, Commander.js, Zod, YAML parser
 - **License**: MIT
 

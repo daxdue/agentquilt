@@ -16,8 +16,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "lint": "eslint src --ext .ts",
-    "format": "prettier --write src tests",
-    "agentctl": "node dist/index.js"
+    "format": "prettier --write src tests"
   },
   "dependencies": {
     "commander": "^11.1.0",

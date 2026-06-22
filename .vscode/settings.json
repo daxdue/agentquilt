@@ -11,13 +11,13 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "search.exclude": {
-    "tools/agentquilt/node_modules": true,
-    "tools/agentquilt/dist": true,
+    "packages/agentquilt/node_modules": true,
+    "packages/agentquilt/dist": true,
     "agents/*/generated": true
   },
   "files.exclude": {
-    "tools/agentquilt/node_modules": true,
-    "tools/agentquilt/dist": true,
+    "packages/agentquilt/node_modules": true,
+    "packages/agentquilt/dist": true,
     "agents/*/generated": true
   }
 }

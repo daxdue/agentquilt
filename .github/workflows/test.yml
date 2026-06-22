@@ -14,8 +14,8 @@ jobs:
         with:
           node-version: "20"
       - name: Install dependencies
-        working-directory: tools/agentquilt
+        working-directory: packages/agentquilt
         run: npm ci
       - name: Run tests
-        working-directory: tools/agentquilt
+        working-directory: packages/agentquilt
         run: npm test -- --run

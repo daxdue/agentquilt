@@ -12,8 +12,8 @@ AgentQuilt needs to support CLI source code, schemas, documentation, policies, a
 
 Use a repository structure with dedicated top-level directories:
 
-- **`tools/`** — executable CLI tools and applications (vs. libraries or data)
-  - `tools/agentquilt/` — the main CLI, TypeScript implementation
+- **`packages/`** — publishable packages (workspace)
+  - `packages/agentquilt/` — the main CLI, TypeScript implementation
 - **`agents/`** — user-facing agent source (fragments + manifests)
 - **`.agents/`** — meta-agents: AgentQuilt's own internal agents for governance, SDLC, testing, release workflows
 - **`schemas/`** — JSON Schema definitions (language-neutral reference for configuration and blocks)
@@ -25,7 +25,7 @@ Use a repository structure with dedicated top-level directories:
 
 ## Rationale
 
-**`tools/` over `packages/`:** Distinguishes *executable tools* (CLI, which users run) from future *library packages* (reusable modules). This separation clarifies intent: `tools/` is where CLIs live; future package directories would be at the same level if they existed.
+**`packages/` as standard monorepo:** Follows npm/Yarn/Turborepo convention. Enables npm workspaces support: one root workspace root with `"workspaces": ["packages/*"]`, shared scripts, and consistent CLI for building/testing multiple packages. Future packages (`packages/agentquilt-linter`, `packages/agentquilt-vscode`, etc.) fit naturally without restructuring.
 
 **`.agents/` inclusion:** The framework is self-hosted—it uses its own agent definitions to drive governance, code review, testing, and release workflows. These are structurally identical to user agents but conceptually distinct (meta-agents). They validate the framework's own capabilities.
 
