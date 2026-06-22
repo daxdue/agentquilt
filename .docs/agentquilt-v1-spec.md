@@ -34,9 +34,13 @@ repo/
 │       └── 020-style.md
 ├── agentquilt.config.yaml        # config (JSON also accepted)
 ├── agentquilt.lock               # generated — do not hand-edit
-├── AGENTS.md                     # generated target — do not hand-edit
-├── CLAUDE.md                     # generated target — do not hand-edit
-├── .cursor/rules/backend.mdc     # generated target — do not hand-edit
+├── .claude/agents/
+│   ├── backend.md                # generated target — do not hand-edit
+│   └── frontend.md               # generated target — do not hand-edit
+├── .cursor/rules/
+│   ├── backend.mdc               # generated target — do not hand-edit
+│   └── frontend.mdc              # generated target — do not hand-edit
+├── .github/copilot-instructions.md # generated target — do not hand-edit
 └── .gitattributes
 ```
 
@@ -151,14 +155,15 @@ Clean assembled Markdown. **No inline source markers** — they are noise for an
 version: 1                       # config schema version (required)
 sourceDir: agents                # optional, default "agents"
 targets:                         # required, >= 1
-  - output: AGENTS.md            # required, repo-relative path
-    include: [_shared, backend, frontend]   # required, order significant
-    # preset: agents-md          # optional; supplies default output/format
-    # format: markdown           # optional, default "markdown"
-  - output: CLAUDE.md
-    include: [_shared, backend, frontend]
+  - output: .claude/agents/backend.md    # required, repo-relative path
+    include: [_shared, backend]          # required, order significant
+    format: markdown                     # optional, default "markdown"
   - output: .cursor/rules/backend.mdc
     include: [_shared, backend]
+    format: cursor-mdc
+  - output: .github/copilot-instructions.md
+    include: [_shared, backend, frontend]
+    format: markdown
 ```
 
 ### 5.2 Presets

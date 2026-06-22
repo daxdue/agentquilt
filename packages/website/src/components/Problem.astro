@@ -19,7 +19,7 @@
         </h2>
 
         <p class="text-xl text-gray-400 leading-relaxed">
-          Your team maintains agent instructions across multiple platforms: Claude, GitHub Copilot, Cursor, internal docs. Each gets its own file (<code class="bg-gray-800 px-2 py-1 rounded text-red-300 font-medium">CLAUDE.md</code>, <code class="bg-gray-800 px-2 py-1 rounded text-red-300 font-medium">AGENTS.md</code>, <code class="bg-gray-800 px-2 py-1 rounded text-red-300 font-medium">.cursor/rules/</code>, etc.). When developers edit these files directly, merge conflicts are inevitable—and they're <strong>semantic conflicts in instruction logic, not syntax errors</strong>.
+          Your team maintains agent instructions across multiple platforms. Each platform expects instructions in a specific location: <code class="bg-gray-800 px-2 py-1 rounded text-red-300 font-medium">.claude/agents/</code>, <code class="bg-gray-800 px-2 py-1 rounded text-red-300 font-medium">.cursor/rules/</code>, <code class="bg-gray-800 px-2 py-1 rounded text-red-300 font-medium">.github/copilot-instructions.md</code>. When developers edit these files directly, merge conflicts are inevitable—and they're <strong>semantic conflicts in instruction logic, not syntax errors</strong>.
         </p>
       </div>
     </div>
@@ -68,7 +68,7 @@
           <div class="space-y-3 text-gray-300">
             <!-- Left side (HEAD) -->
             <div class="bg-gray-950/60 border-l-4 border-red-500 px-3 py-2">
-              <div class="text-red-400 font-bold text-xs mb-1">← ALICE (CLAUDE.md)</div>
+              <div class="text-red-400 font-bold text-xs mb-1">← ALICE (.claude/agents/coder.md)</div>
               <pre class="text-xs"><code><span class="text-gray-400">You are a</span> <span class="text-red-300">senior architect</span>
 <span class="text-gray-400">focused on</span> <span class="text-red-300">systems design</span>
 <span class="text-gray-400">with expertise in</span>
@@ -84,10 +84,10 @@
 
             <!-- Right side (incoming) -->
             <div class="bg-gray-950/60 border-l-4 border-yellow-600 px-3 py-2">
-              <div class="text-yellow-500 font-bold text-xs mb-1">BOB (.cursor/rules/coder.mdc) →</div>
-              <pre class="text-xs"><code><span class="text-gray-400">You are a</span> <span class="text-yellow-300">Python code reviewer</span>
-<span class="text-gray-400">who catches</span> <span class="text-yellow-300">bugs</span>
-<span class="text-gray-400">and</span> <span class="text-yellow-300">performance issues</span></code></pre>
+              <div class="text-yellow-500 font-bold text-xs mb-1">BOB (.github/copilot-instructions.md) →</div>
+              <pre class="text-xs"><code><span class="text-gray-400">You are a</span> <span class="text-yellow-300">TypeScript code reviewer</span>
+<span class="text-gray-400">who catches</span> <span class="text-yellow-300">bugs and</span>
+<span class="text-gray-400">suggests</span> <span class="text-yellow-300">performance improvements</span></code></pre>
             </div>
 
             <!-- Question -->
