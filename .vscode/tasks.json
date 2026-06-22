@@ -7,7 +7,7 @@
       "command": "npm",
       "args": ["run", "agentctl", "--", "compile", "${relativeFileDirname}", "--watch"],
       "options": {
-        "cwd": "${workspaceFolder}/tools/agentctl"
+        "cwd": "${workspaceFolder}/tools/agentquilt"
       },
       "isBackground": true,
       "problemMatcher": {
@@ -35,7 +35,7 @@
       "command": "npm",
       "args": ["run", "agentctl", "--", "compile", "${relativeFileDirname}"],
       "options": {
-        "cwd": "${workspaceFolder}/tools/agentctl"
+        "cwd": "${workspaceFolder}/tools/agentquilt"
       },
       "presentation": {
         "echo": true,
@@ -50,7 +50,7 @@
       "command": "npm",
       "args": ["run", "agentctl", "--", "init"],
       "options": {
-        "cwd": "${workspaceFolder}/tools/agentctl"
+        "cwd": "${workspaceFolder}/tools/agentquilt"
       },
       "presentation": {
         "echo": true,
@@ -65,7 +65,7 @@
       "command": "npm",
       "args": ["run", "build"],
       "options": {
-        "cwd": "${workspaceFolder}/tools/agentctl"
+        "cwd": "${workspaceFolder}/tools/agentquilt"
       },
       "presentation": {
         "echo": true,

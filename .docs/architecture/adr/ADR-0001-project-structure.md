@@ -13,7 +13,7 @@ AgentQuilt needs to support CLI source code, schemas, documentation, policies, a
 Use a repository structure with dedicated top-level directories:
 
 - **`tools/`** — executable CLI tools and applications (vs. libraries or data)
-  - `tools/agentctl/` — the main CLI, TypeScript implementation
+  - `tools/agentquilt/` — the main CLI, TypeScript implementation
 - **`agents/`** — user-facing agent source (fragments + manifests)
 - **`.agents/`** — meta-agents: AgentQuilt's own internal agents for governance, SDLC, testing, release workflows
 - **`schemas/`** — JSON Schema definitions (language-neutral reference for configuration and blocks)

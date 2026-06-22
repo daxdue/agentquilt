@@ -33,7 +33,7 @@ Expected output:
 Spike 1 is formalized in the Vitest suite:
 
 ```bash
-cd tools/agentctl
+cd tools/agentquilt
 npm test -- tests/normalize.test.ts tests/hash.test.ts
 ```
 
@@ -69,14 +69,14 @@ Expected output:
 ## Phase 0 Status
 
 Both spikes are implemented as:
-- **Spike 1**: Vitest tests in `tools/agentctl/tests/{normalize,hash}.test.ts`
+- **Spike 1**: Vitest tests in `tools/agentquilt/tests/{normalize,hash}.test.ts`
 - **Spike 2**: Bash script that creates a temp git repo and validates merge-free parallel edits
 
 Run all Phase 0 validation:
 
 ```bash
 # Spike 1 (comprehensive normalize/hash tests)
-cd tools/agentctl
+cd tools/agentquilt
 npm test -- --run
 
 # Spike 2 (concurrent merge scenario)
