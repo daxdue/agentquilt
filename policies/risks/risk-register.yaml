@@ -1,0 +1,76 @@
+# AgentQuilt Risk Register
+# Format: ID, Type, Description, Level, Status, Mitigation
+# Updated: ongoing (AI risk agent monitors and updates)
+
+risks:
+  - id: RISK-001
+    type: implementation
+    description: "agentCompiler.ts has 0% test coverage — agent compilation logic untested"
+    level: medium
+    status: open
+    discovered: "2026-06-23 (SDLC/STLC review)"
+    owner: "@cli-maintainers"
+    mitigation: "Add unit tests for compileAgentDefinitionsTarget, metadata hashing, agent record creation. Target: Week 3."
+    aiAssistance: "risk-agent monitors this, escalates if new changes to agentCompiler.ts merge without tests"
+
+  - id: RISK-002
+    type: implementation
+    description: "build --watch claimed complete in CLAUDE.md but absent from source code"
+    level: low
+    status: mitigated
+    discovered: "2026-06-23 (SDLC/STLC review)"
+    owner: "@cli-maintainers"
+    mitigation: "Marked [DEFERRED] in CLAUDE.md. Future work tracked in project plan."
+    aiAssistance: "Removed from false completion claims; now in backlog with explicit defer marker"
+
+  - id: RISK-003
+    type: compliance
+    description: "Planning docs (PROJECT_PLAN.md, WORK_BREAKDOWN.md, test-strategy.md) reference agentctl CLI and compile command, not agentquilt build/check"
+    level: low
+    status: open
+    discovered: "2026-06-23 (SDLC/STLC review)"
+    owner: "@maintainers"
+    mitigation: "Update planning docs to reflect actual CLI names and commands. Or mark as historical-context-only."
+    aiAssistance: "requirements-agent flags mismatches between docs and reality on intake"
+
+  - id: RISK-004
+    type: security
+    description: "Path traversal via include field not validated — include: ../../../../etc/passwd is not rejected by validateConfig"
+    level: medium
+    status: open
+    discovered: "2026-06-23 (SDLC/STLC review)"
+    owner: "@cli-maintainers"
+    mitigation: "Add validation in configLoader.ts that includes paths must resolve inside sourceDir. Add security test case."
+    aiAssistance: "security-agent flags any PR touching configLoader.ts or fragmentScanner.ts; generates adversarial test inputs"
+
+  - id: RISK-005
+    type: process
+    description: "No npm publish workflow — releases are currently manual (npm publish run by human from CI)"
+    level: medium
+    status: open
+    discovered: "2026-06-23 (SDLC/STLC review)"
+    owner: "@maintainers"
+    mitigation: "Create release.yml GitHub workflow that publishes on git tag. Week 4 scope."
+    aiAssistance: "release-agent reminds of this risk during release-gate check"
+
+  - id: RISK-006
+    type: test
+    description: "Integration tests only cover build→check happy path; CLI commands add/list not integration-tested"
+    level: low
+    status: open
+    discovered: "2026-06-23 (SDLC/STLC review)"
+    owner: "@qa-owners"
+    mitigation: "Add integration tests for agentquilt init, agents add, agents list. Week 3 scope."
+    aiAssistance: "qa-agent tracks this; eval-agent tests CLI behavior changes"
+
+mitigationProcess: |
+  ## AI-Assisted Risk Management
+
+  1. **Discovery** — requirements-agent flags issues that match risk criteria on intake. security-agent probes high-risk code changes.
+  2. **Classification** — risk-agent classifies level (low/medium/high/critical) based on impact domain (architecture, security, compliance, process).
+  3. **Assignment** — triage-agent suggests owner based on change area (cli-maintainers, qa-owners, etc.).
+  4. **Monitoring** — risk-agent monitors all PRs; escalates if high/critical risks remain open and unmitigated.
+  5. **Closure** — human decides when risk is resolved; ai-agent updates status and documents final mitigation.
+
+escalationThreshold: "Any critical risk blocks release. Any high risk requires explicit human acceptance."
+auditCycle: "Review all open risks monthly. Close mitigated risks. Promote new risks discovered in PRs."

@@ -1,0 +1,53 @@
+name: release-gate
+phase: release
+description: |
+  Pre-release validation. No releases without human approval.
+  AI agents assist with changelog, migration notes, and risk verification.
+enabled: true
+
+requiredChecks:
+  - All CI tests pass (npm test -- --run exits 0)
+  - Drift check passes (agentquilt check exits 0)
+  - CHANGELOG.md updated with user-visible changes
+  - package.json version bumped to release version
+  - No open critical or high-severity risks in risk register
+  - Migration notes written if manifest format or CLI changed
+  - Generated artifacts regenerated (agentquilt build)
+
+requiredApprovals: 1
+
+riskCriteria:
+  - type: release
+    condition: No CHANGELOG entry for this version
+    level: high
+  - type: release
+    condition: Version not bumped in package.json
+    level: high
+  - type: compliance
+    condition: High or critical risks still open
+    level: critical
+  - type: process
+    condition: Breaking changes without migration guide
+    level: high
+
+escalationPath:
+  - "@maintainers"
+
+aiAssistance:
+  enabled: true
+  agents:
+    - name: release-agent
+      role: Prepare release artifacts and verify readiness
+      tasks:
+        - Generate CHANGELOG draft from commit history (for human review)
+        - Extract breaking changes and generate migration guide skeleton
+        - Verify version bump is semver-compliant (major.minor.patch)
+        - Check risk register for any critical/high risks
+        - Generate release announcement draft with feature summary
+        - Verify all generated outputs are up to date (agentquilt.lock, AGENTS.md, CLAUDE.md)
+      mustNotDo:
+        - Approve the release (requires human decision)
+        - Publish to npm (requires human action)
+        - Close critical risks (requires human triage and fix)
+        - Modify CHANGELOG without explicit human approval
+      output: Release readiness report + changelog/migration/announcement drafts
