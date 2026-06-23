@@ -164,16 +164,12 @@ export function diffLock(diskLock: AgentQuiltLock, newLock: AgentQuiltLock): Loc
 
 /**
  * Read lock from disk. Returns null if file doesn't exist.
+ * Throws SyntaxError if the file exists but cannot be parsed.
  */
 export function readLock(lockPath: string): AgentQuiltLock | null {
   if (!existsSync(lockPath)) {
     return null;
   }
-
-  try {
-    const content = readFileSync(lockPath, "utf8");
-    return JSON.parse(content);
-  } catch {
-    return null;
-  }
+  const content = readFileSync(lockPath, "utf8");
+  return JSON.parse(content);
 }

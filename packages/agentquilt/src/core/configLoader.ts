@@ -7,7 +7,6 @@ import {
   AgentQuiltConfigSchema,
   PresetEnum,
   type Preset,
-  type Target,
 } from "../schemas/config.schema.js";
 import { knownAdapters } from "./adapters/index.js";
 
@@ -18,7 +17,7 @@ export class ConfigError extends Error {
   }
 }
 
-const PRESET_DEFAULTS: Record<Preset, Partial<Target>> = {
+const PRESET_DEFAULTS: Record<Preset, { output: string }> = {
   "agents-md": { output: "AGENTS.md" },
   claude: { output: "CLAUDE.md" },
   cursor: { output: ".cursor/rules/<agent>.mdc" },
@@ -78,6 +77,18 @@ export function loadConfig(configPath: string): AgentQuiltConfig {
     );
   }
 
+  // Apply preset defaults before schema validation so `output` can be omitted when `preset` is set
+  if (raw && typeof raw === "object" && "targets" in raw && Array.isArray((raw as Record<string, unknown>).targets)) {
+    for (const target of (raw as Record<string, unknown[]>).targets as Record<string, unknown>[]) {
+      if (target && typeof target === "object" && target["preset"] && !target["output"]) {
+        const defaults = resolvePreset(target["preset"] as string);
+        if (defaults.output) {
+          target["output"] = defaults.output;
+        }
+      }
+    }
+  }
+
   // Validate schema
   try {
     const config = AgentQuiltConfigSchema.parse(raw);
@@ -98,7 +109,7 @@ export function loadConfig(configPath: string): AgentQuiltConfig {
 /**
  * Resolve preset to default output/format (or empty if no preset).
  */
-export function resolvePreset(preset?: string): Partial<Target> {
+export function resolvePreset(preset?: string): { output?: string } {
   if (!preset) return {};
   try {
     PresetEnum.parse(preset);

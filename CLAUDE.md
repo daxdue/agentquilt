@@ -157,7 +157,6 @@ npm test
 # CLI commands (available after npm run build or npm install -g):
 agentquilt init                          # Scaffold a new project with config and shared fragments
 agentquilt build                         # Compile all targets, write outputs and lock file
-agentquilt build --watch                 # Auto-recompile on file changes
 agentquilt check                         # CI gate: detect drift between source and disk
 agentquilt agents add <name>             # Scaffold a new agent directory with agent.yaml
 agentquilt agents list                   # List all agents and resolved models per platform
@@ -196,14 +195,16 @@ JSON schemas for validation:
 - Zod schema definitions for config, lock, and agent definitions
 - Core compiler: fragment scanning, normalization, hashing, deterministic output
 - Agent compiler: metadata hashing, adapter system, per-platform serialization
-- Claude and Codex adapters (v1.1 addendum)
+- Claude and AgentSkills adapters (v1.1 addendum)
 - Lock writer and drift checker
-- CLI: init, build, build --watch, check, agents add, agents list
+- CLI: init, build, check, agents add, agents list
 
 🔄 **In Progress & Planned**
 - Week 2: Lint rules, semantic diff, additional enforcement
 - Week 3: Eval runner, regression testing
 - Week 4: Release packaging, migration tools
+- [DEFERRED] `agentquilt build --watch` — file-watching mode (requires chokidar or equivalent)
+- [DEFERRED] Codex adapter — `.codex/agents/<name>.toml` + managed-region injection in `.codex/config.toml` (v1.1 §6.2–6.3)
 
 See [PROJECT_PLAN.md](.planning/PROJECT_PLAN.md) for historical context and full roadmap.
 
