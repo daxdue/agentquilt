@@ -22,6 +22,9 @@ jobs:
       - name: Run tests
         working-directory: packages/agentquilt
         run: npm test -- --run
+      - name: Coverage
+        working-directory: packages/agentquilt
+        run: npm run coverage
       - name: Build CLI
         working-directory: packages/agentquilt
         run: npm run build

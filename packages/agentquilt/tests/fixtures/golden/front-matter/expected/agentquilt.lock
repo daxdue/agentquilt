@@ -1,0 +1,26 @@
+{
+  "lockfileVersion": 1,
+  "formatVersion": "1",
+  "agents": [],
+  "fragments": [
+    {
+      "id": "myagent/010-role.md",
+      "hash": "sha256-47cbfb7a8d4b32f87f96d45b3f3d7af45cc18accde70af8cad0a9f5bf5fc976d",
+      "bytes": 55,
+      "tags": [
+        "role",
+        "safety"
+      ]
+    }
+  ],
+  "targets": [
+    {
+      "output": "AGENTS.md",
+      "format": "markdown",
+      "fragments": [
+        "myagent/010-role.md"
+      ],
+      "version": "sha256-937d6961c130630d4efd45e113e7e7d965ad6a4fe3fc57e155785310ab1a006d"
+    }
+  ]
+}
