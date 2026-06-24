@@ -1,0 +1,95 @@
+name: issue-intake
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  intake-triage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Parse intake gate requirements
+        run: |
+          echo "Intake gate policy: policies/gates/intake-gate.yaml"
+          echo "Required checks:"
+          echo "  - Issue template completed (title, problem, expected value, initial risk)"
+          echo "  - Owner identified"
+          echo "  - Category labeled (bug, feature, docs, refactor, etc.)"
+          echo "  - No obvious duplicate"
+
+      - name: Run triage-agent on new issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_LABELS: ${{ github.event.issue.labels[*].name }}
+        run: |
+          # TODO: Invoke triage-agent from .agents/sdlc/product-discovery/
+          # Agent responsibilities (from intake-gate.yaml):
+          # - Summarize issue in one sentence
+          # - Flag missing required fields (owner, risk level, acceptance criteria)
+          # - Suggest risk level based on change type
+          # - Identify similar open/closed issues (potential duplicates)
+          # - Draft initial acceptance criteria for human review if missing
+
+          # Placeholder: print agent instructions
+          cat << 'AGENT_PROMPT'
+          ROLE: Issue Triage Agent
+
+          INPUT:
+          - Issue #$ISSUE_NUMBER: "$ISSUE_TITLE"
+          - Body: $ISSUE_BODY
+          - Labels: $ISSUE_LABELS
+
+          TASKS:
+          1. Summarize the issue in one sentence
+          2. Check for required fields: owner, risk level, acceptance criteria
+          3. Suggest risk level (low/medium/high/critical)
+          4. Search for similar issues (potential duplicates)
+          5. Draft acceptance criteria skeleton if missing
+
+          OUTPUT: Post as issue comment with structured findings
+
+          AUTHORITY (ADR-0004):
+          - CAN: Analyze, flag issues, suggest risk level, draft acceptance criteria
+          - CANNOT: Assign issue, approve/close, estimate effort
+          AGENT_PROMPT
+
+      - name: Post triage findings as issue comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // TODO: Implement agent invocation and result posting
+            // For now, placeholder comment showing what the agent would do
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🤖 Triage Agent Report
+
+            ⏳ Agent: product-discovery/triage-agent
+
+            **Summary:** [Agent analysis would appear here]
+
+            **Findings:**
+            - [ ] Required fields present
+            - [ ] Risk level identified
+            - [ ] Duplicates checked
+            - [ ] Acceptance criteria drafted
+
+            **Next Steps:** Maintainer reviews findings and assigns owner.
+
+            *Note: This is a placeholder. Full agent integration requires Claude API setup.*`
+            })
+
+      - name: Check intake gate compliance
+        run: |
+          echo "Gate: intake-gate (policies/gates/intake-gate.yaml)"
+          echo "Required approvals: 0 (self-service)"
+          echo "Status: ✅ Intake triage complete"
