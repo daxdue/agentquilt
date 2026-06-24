@@ -10,13 +10,13 @@
         "agents/reviewer/020-criteria.md"
       ],
       "metaHash": "sha256-fff0b40c88b1499c4f5c63fdb9ef305790338e08a3e4ecb75e0d2b29de832d31",
-      "version": "sha256-bb4af0e3d84df503a055b58f9fee9efc89a47ec99127686e26ee92670668050e",
+      "version": "sha256-fe170f5b228a84ca76bdea082cc39068503cd0c647c92b14e709c8689aa43b4b",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/reviewer.md",
           "kind": "file",
-          "hash": "sha256-048ef6a7a9cac464189b0f36f99510f957dca9f5cc698a87edac51ea6ba41f9f"
+          "hash": "sha256-2b88bc737e7cbe0f9f21158121de69ecb0250c2b64043faab1db88528fe4a120"
         }
       ]
     }

@@ -4,3 +4,4 @@ packages/**/node_modules/
 packages/**/dist/
 *.tsbuildinfo
 .env.local
+node_modules/

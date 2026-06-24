@@ -10,13 +10,13 @@
         "sdlc/adr-writer/020-adrs.md"
       ],
       "metaHash": "sha256-b1ddff4e2ebb050b626cfaa296ed6ed11e2fac610b212772e2c445ead6c3eed5",
-      "version": "sha256-6b016abb189ccaf867a29341ca8caa94d5bacba89d02b4acfa1be076bdf4d2b0",
+      "version": "sha256-53ff2ecf71262fc9b4b6c4fc2c641580b69077bac63eefcce2f16ce45ae81fa1",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/adr-writer.md",
           "kind": "file",
-          "hash": "sha256-ef1d48fcc6c4f297f6dfa5dafbe99f97175cbb9eb8620d7e4490b49004571842"
+          "hash": "sha256-f2d551126871d02a24fb24811ace205f93b008b881693413dca5337e8461b488"
         }
       ]
     },
@@ -28,13 +28,13 @@
         "internal/agent-behavior-reviewer/020-internal-coordination.md"
       ],
       "metaHash": "sha256-67d63f827e95cf0a12309d6f9dea30a00155c42bb37a5e7a6063f31277a0202f",
-      "version": "sha256-89bcc294f50bd404de4c71de59a5011a0b17730f5719c25b33406e81dfbbb529",
+      "version": "sha256-667fda4761fe6aa1cd66c9627650a5890ba4fdacead03dfeaf1696d1ff01272f",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/agent-behavior-reviewer.md",
           "kind": "file",
-          "hash": "sha256-d56dde491c01d2fa7841192252720fa8d2bb2a124a37ac1b06a46d0a59df4bcb"
+          "hash": "sha256-75cc3bc476c783afb276be5fbd89223d1af0d21238684479db347710d8d99f67"
         }
       ]
     },
@@ -46,13 +46,13 @@
         "internal/agent-documentation/020-internal-coordination.md"
       ],
       "metaHash": "sha256-8b171309f4685fe590bb735122c24dffbdc42d82318332ac1fa19f3f1d9741ee",
-      "version": "sha256-5b0d5a053e5b15f67e6c0348d2795d02caa50e22f9eb6aa50515bbbe80afc09c",
+      "version": "sha256-be5acd537d3fb19b78cb9591d1a05511e6159fad8608d30ddd3b92f5399643ab",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/agent-documentation.md",
           "kind": "file",
-          "hash": "sha256-a04f7d4bed892f799a19ee00ee6683826080906c7862a5a02a8a6f10933f4d54"
+          "hash": "sha256-6581a49af10d2d938e720c977b32d1a04cf33bd9e7a6a20d35aeff79d7d4eafa"
         }
       ]
     },
@@ -64,13 +64,13 @@
         "internal/agent-migration/020-internal-coordination.md"
       ],
       "metaHash": "sha256-3614fb44805cc6c340aab228f37a5241130dc9055ede8a02836e40f22927b76f",
-      "version": "sha256-242822ba77450c93045160cee30fc24fb8066fe4cac0b406d0a2275c61533c5c",
+      "version": "sha256-0faf7e74f69d5f4ab0e3330a1169638edd3fbd68c9b519aac40709acbb0875dd",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/agent-migration.md",
           "kind": "file",
-          "hash": "sha256-f60601f4b62049c97373d8dcec06e989ed40d2b1caa01496595829206e0db474"
+          "hash": "sha256-d1e318865447b836d6b6b506dd133645a982b52e596dd944849d3cd663a6d57f"
         }
       ]
     },
@@ -82,13 +82,13 @@
         "internal/agent-registry/020-internal-coordination.md"
       ],
       "metaHash": "sha256-c3bbfe68448b707b71bf20c6c3e5c0b72bbbefc6825ad4403296df22cd5c8123",
-      "version": "sha256-604e79f052b6cdc99ec248eb32d8aebc2dc24fddcb90d85f403eff47c6045a9b",
+      "version": "sha256-bde9aff0d2271a4ce734d19bffbec1c8946db5dbc8040fdb183b372a30ba1373",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/agent-registry.md",
           "kind": "file",
-          "hash": "sha256-27d21c80249b8d8b8d349b2778c7cbd3d66c22983f3329e9613bfe020e2b562a"
+          "hash": "sha256-73270e365f2cd0e1d29d13e3ed9073d5735219b918920262729c8915b9741416"
         }
       ]
     },
@@ -100,13 +100,13 @@
         "sdlc/ambiguity-detector/020-patterns.md"
       ],
       "metaHash": "sha256-f115844d189f05de241c5eb34ca353f7355d44fcf109d19cd7b535f73ee2d706",
-      "version": "sha256-b926da400432623cc54f7ca65db24b1178b5ebf525e6a36b2a93893daf64e397",
+      "version": "sha256-8b65d8f352be9e238b7fa442f2caeb6b291333eec9812572ec4a3198d5125153",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/ambiguity-detector.md",
           "kind": "file",
-          "hash": "sha256-db7bec750d6dea957ceb60528aeeb1cf48c219808e581966463950d3bbddea5d"
+          "hash": "sha256-b57ae702b22cca52a774c7b4e1b5c3b6c8e1c9cfc866e3c3b78fec2c2ccf0266"
         }
       ]
     },
@@ -118,13 +118,13 @@
         "sdlc/architecture/020-review.md"
       ],
       "metaHash": "sha256-f8f239bee1c32661ad62d5225972c985ce1b3ff69f1fc86f4a718f00f66daa94",
-      "version": "sha256-10313aed79e547dc57d8563270ca64e6f356b839b696a873a47cfc48d9f1ac24",
+      "version": "sha256-abce6a530c9313c66859a43b99229d927aa55c6f782e17a7ea250c981224b90f",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/architecture.md",
           "kind": "file",
-          "hash": "sha256-85c97026b8f4e7cf6854786359d8290b679e98b9f0d71f635fcf920566d589ef"
+          "hash": "sha256-9d7482bceba1f5aa991c2cdf02f470cff7866e0e62ab47bac5099196e7db1440"
         }
       ]
     },
@@ -136,13 +136,13 @@
         "release/changelog/020-release-workflow.md"
       ],
       "metaHash": "sha256-62d0536d00d48819a050ad57c2dbb71de9fc5a8535269865000589b240ad3431",
-      "version": "sha256-24e839d2090d090176589dd6c830f7e20bbe84c08ea4fc917ff642c5ec23a847",
+      "version": "sha256-04f67562c792e6927385f3d295ebe0481fa8bec8b352f5e01cf8960dd968e0ba",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/changelog.md",
           "kind": "file",
-          "hash": "sha256-bf140559ca743ab4141f555e13059ca640475ce1beac17fac2c839db03b1eb61"
+          "hash": "sha256-a1dbcb6de65a081f05f270c55404975945f1bd8ccceb873a8c2916292aaa1a3d"
         }
       ]
     },
@@ -154,13 +154,13 @@
         "sdlc/code-review/020-review-guidelines.md"
       ],
       "metaHash": "sha256-69f925d681016cb180fecfa197772910467f841ebf6176652f116bd8058c3e5a",
-      "version": "sha256-712ea4fc0a5d13443bd813d9f3659d87e5d6dbd4822ddd4b46f70d4b01e3714f",
+      "version": "sha256-70ae3c64a9e12a943ddc3af397aea2f81a956233c2e93fa9f018d217b67d90d7",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/code-review.md",
           "kind": "file",
-          "hash": "sha256-a4194bdd4cc97fb2e747f55520554a9e1d2d42cd10b248871a639169001ed0bf"
+          "hash": "sha256-d2dcc4f08bcee364a34db1a8ce44cd1d4d6b14758f86923067e75d384967f26f"
         }
       ]
     },
@@ -172,13 +172,13 @@
         "stlc/compatibility-test/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-8f07f5c3153e55a9cb184e996d40305f06a4cbb1c6cf88e636db8376b69a9144",
-      "version": "sha256-8076a5725b9879b415ea8daaecb93a5132116c4789c5ea3913e899f2524d1b82",
+      "version": "sha256-684077d7bc2a968420bd8747810002c71503cce8bc84f1a273a7c963a23228dd",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/compatibility-test.md",
           "kind": "file",
-          "hash": "sha256-5da8cd0c96ad4cdb87bba6d678008e06000cc8af6de9b965de6d1cb11503b5d5"
+          "hash": "sha256-f1d691f04192e197306fe9dcb4ec39bb35a432851a120872470461c0f068912f"
         }
       ]
     },
@@ -190,13 +190,13 @@
         "internal/conflict-detector/020-internal-coordination.md"
       ],
       "metaHash": "sha256-135b0d91fd7b5c3b0d25336c0cb04a85c73607b53d84c0bca4a808081fa2468d",
-      "version": "sha256-9a5369f154eca8eff6e00f068bb11f3535d81489c2f1dae96f9eaffad4d65420",
+      "version": "sha256-ad40d1be8e56ff784970890f2e7eb25470657059f0133d2a6c6a22ca676a3e6e",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/conflict-detector.md",
           "kind": "file",
-          "hash": "sha256-b072077b2dc19bb9b0e79b40df0ed858d2cdf625fee77502dc1b4dae79dc07a8"
+          "hash": "sha256-b97c4457e0815ca8661d3a155e2a7dfe67a7e3038f553433dd85df671b09703a"
         }
       ]
     },
@@ -208,13 +208,13 @@
         "stlc/defect-triage/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-ef88e8b8eef28c78a2cead79f76bf0768151d07b9048051cfe4a713aa739111d",
-      "version": "sha256-df96d29bff0b827a9761046d41906dc661d607ce38f1c2a4da6fc8ce0f4d5a18",
+      "version": "sha256-1de6eb4ae908c035f31164dec31000efadf7e1d36e88773417bb126a13aafe49",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/defect-triage.md",
           "kind": "file",
-          "hash": "sha256-244e6991bc901d56d692b59fe82c8b14c1047f2347747c5a9934cd512d8f22c1"
+          "hash": "sha256-8d8b632d4657cfa857b16fd1db3fc89c0e3ec09ad157f9716546b00bbdedac6c"
         }
       ]
     },
@@ -226,13 +226,13 @@
         "internal/definition-architect/020-internal-coordination.md"
       ],
       "metaHash": "sha256-2c8379e603e80c8587fc9394591490e4775a9ad12bd4ffd7385ee3e59e9bfc93",
-      "version": "sha256-2cfacb70b35a1ff23bc35ffc148c64dd887cfed0b2d36eb05057f104f2728c95",
+      "version": "sha256-48885c124f0451dbaef0492e51a700f0ed9e6587ecd94b4c246a944976b85fb4",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/definition-architect.md",
           "kind": "file",
-          "hash": "sha256-26202285061d02fa975aae615c667d120106af204093b684dbab721e93531404"
+          "hash": "sha256-75121047bc47e2613107bee8833cdaa882dab2627143b0badeefedc736458687"
         }
       ]
     },
@@ -244,13 +244,13 @@
         "sdlc/developer-experience/020-sdlc-workflow.md"
       ],
       "metaHash": "sha256-76c09096665467b0e68dc4741d25f398e723891aa89c551eb5344fe85559b0cc",
-      "version": "sha256-777bfb5eb09103df5eb68bb0960a73c2957c94ebee217ba7779a27746c872222",
+      "version": "sha256-f8a5f949034798273f5f10950706c8a657d7227ed56671c037e4df7ff8f0ce5b",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/developer-experience.md",
           "kind": "file",
-          "hash": "sha256-eef805001791dd3a55bcd8af977fa3d27f3ad1b548bbe34970dc31f2f34361ec"
+          "hash": "sha256-db0bfb80f869a9e3fef4a663dde15b9bc471c4a572cdd9daf673b8f471bf613e"
         }
       ]
     },
@@ -262,13 +262,13 @@
         "sdlc/documentation/020-sdlc-workflow.md"
       ],
       "metaHash": "sha256-8f17433ac3051f86e02296b505d845be507c7b94b7052e22be9c3e1a4850a16e",
-      "version": "sha256-00a47cda01c60e6dbaa59ca917ee033f25e390c8f04748b86cfde7d29d9ad8ba",
+      "version": "sha256-41e12055d20225f47d981655637ea83f627963b29e2cced3b737f15ebfc83822",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/documentation.md",
           "kind": "file",
-          "hash": "sha256-6ccca6e948cb792aa9c4c263e332266192586c7b55bae70713de91bf1d747811"
+          "hash": "sha256-184eb4119681da5d7422984065fe5491f81ce23fa6f44a41f1618619c45bd085"
         }
       ]
     },
@@ -280,13 +280,13 @@
         "stlc/eval-designer/020-eval-workflow.md"
       ],
       "metaHash": "sha256-4535b2d9a8a09dfa3d836f44032f6ede4c79df27e81e3524c4d11c052d896c1a",
-      "version": "sha256-b97fce8a13233764ea4414e23db019c6680aa07799d48acbfa6ec5e614cc76ab",
+      "version": "sha256-5a1f64d3b228cfae9c744b31ad021aea98ef8836f7f37cc3a54d92d0525d5272",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/eval-designer.md",
           "kind": "file",
-          "hash": "sha256-18db3e79691307e43d4ed9eabf80c509567a625f4082847727c0b741e2cdb612"
+          "hash": "sha256-d41cbf8caef7021143eae8c444b700e84258df047dcfe1768f165ab2fbd134e5"
         }
       ]
     },
@@ -298,13 +298,13 @@
         "release/evidence-collector/020-release-workflow.md"
       ],
       "metaHash": "sha256-c92778233322bf81fd5605c6fbb8675045a98a23cc43e668cdc261cb5eb8c79c",
-      "version": "sha256-d10fcc253669d17ae0ec9305789ce448097e3e8f61fc9d5e95678de60e325982",
+      "version": "sha256-e95fceea5fdf6ab4e30cc14449a4f47bcc728472c306b5bb9fa4f08c47ab30ea",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/evidence-collector.md",
           "kind": "file",
-          "hash": "sha256-da90638f48b49eff13e4df671eecbbb01345d03434964b1cb22609d0233fbe04"
+          "hash": "sha256-d8fee44497bb0a54a8eda838c65270bc3d8c5c2a078ff405240da380029aa621"
         }
       ]
     },
@@ -316,13 +316,13 @@
         "governance/gatekeeper/020-governance-workflow.md"
       ],
       "metaHash": "sha256-884df834d30a3461457b63d48e5f6cbea1ae921198a8dc5b46de6524583a0d2d",
-      "version": "sha256-76b1ee1ffa041f457e2109ac5d0d2b8e81b4f2ce687553fdf7c9e96ed29e9cd6",
+      "version": "sha256-757aef141ab447ef36dd9a66776f1c21509a26a80745bff00ccd3e3927b6272c",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/gatekeeper.md",
           "kind": "file",
-          "hash": "sha256-50a3ddd3e021a60ddebceab1a2c8c483a2fc2aec212849d8c23b071c98c361fe"
+          "hash": "sha256-2ada470d4085357098bfe202c12bcf7249a898f5147c98210b8cb33069e26e41"
         }
       ]
     },
@@ -334,13 +334,13 @@
         "stlc/golden-file-test/020-workflow.md"
       ],
       "metaHash": "sha256-cbbd0e4235026bce9959f75d6c6d084034eb975dfe691cbc1a4627a69796cd7c",
-      "version": "sha256-752f73c1160d1b3190d9d53872af6b369513651b8448979d9267cbe3ad859f4b",
+      "version": "sha256-3411c12a9fdc1b59b041a5cc8951e665c7888a9c98b667fef27edf03d6d16f64",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/golden-file-test.md",
           "kind": "file",
-          "hash": "sha256-9eb98142fbb508086806d6a39db3018bd55e9d3109eb644dea7cec5c7b53ee70"
+          "hash": "sha256-396a393ec14349ddd221e0af3cc74952ade9f46e1abfc7b18af7abe40cb20085"
         }
       ]
     },
@@ -352,13 +352,13 @@
         "sdlc/implementation-planning/020-sdlc-workflow.md"
       ],
       "metaHash": "sha256-1df870509239ef44c24c6d7b681e4c3c6cb4c631d4e5be1ef13f7d3d00c7d84e",
-      "version": "sha256-7bc85c57a18ce540ba41f4987eee1cb2e141dc90153d9b978201c03553c2d716",
+      "version": "sha256-7151e2df659bda5b23e5bf7f88255ecf760f37c6941b1c8cdac656c43514323f",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/implementation-planning.md",
           "kind": "file",
-          "hash": "sha256-fea67f36dc4d3c0b6ab98c7962b9658e7975a05152bc6438d21ea55173f68122"
+          "hash": "sha256-4d385c1613681b9f0e4f4e4e99bbb233bcaf52b9d192fb4dad537825d5200e70"
         }
       ]
     },
@@ -370,13 +370,13 @@
         "internal/instruction-block-author/020-internal-coordination.md"
       ],
       "metaHash": "sha256-04f66f2ee9f5f6b354d486da86ae90bffcc80f5f908a789d932e4f0b44301368",
-      "version": "sha256-9787d545059e8515614a3a4b1af25193d86c2bf30e17a3b65ef338fc5017954c",
+      "version": "sha256-71a74a96888720304b090a87ad48fffe0223afef48cbcb91aa38f4f1ba0b0ce8",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/instruction-block-author.md",
           "kind": "file",
-          "hash": "sha256-61a50522801516edb096fbf25ec2b611b0527793813f2c3277246aaf2628f89d"
+          "hash": "sha256-9d5541f9a358c3383269caa75991dd4fb7df82a8c25c092c50da7f6e5326e012"
         }
       ]
     },
@@ -388,13 +388,13 @@
         "internal/instruction-refactoring/020-internal-coordination.md"
       ],
       "metaHash": "sha256-8b7f74a0cf2042aa7f86095c4aac3e4750a6a97ae2a2e7a7c19928c0caf26d38",
-      "version": "sha256-d9a5de8a34986d3c63ffad7f47fd35b268af25e77ae909161598339cd1abd882",
+      "version": "sha256-7aebde3bf3cc6d05df4449f59ed49e5ed3a3b7bfa01fd31201512df556fd7257",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/instruction-refactoring.md",
           "kind": "file",
-          "hash": "sha256-d853f750a9ee413faeed18ac5b839cb0aad7b7c43b59c7f6ca9b36a7e672e7e1"
+          "hash": "sha256-362613960c6b6a675a5cb0bf6893924f44377825940ecbae7b75fccf7c2fda01"
         }
       ]
     },
@@ -406,13 +406,13 @@
         "internal/main-orchestrator/020-internal-coordination.md"
       ],
       "metaHash": "sha256-6fa6aba0b131e6e8db800afd41c4868344bf5b13c6c3ae797e95d07c89185f8d",
-      "version": "sha256-126c0b9836be0e12da9b1c134604d8d384d1bc415d8a2a21c4483b49f4fc29d2",
+      "version": "sha256-a58879ce8b0204b968538e756e6f1af63deca1a77ee2cbbba489d7a4f7b95bb2",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/main-orchestrator.md",
           "kind": "file",
-          "hash": "sha256-d3797e913ddf2198523a65f635b3a83e64ecd886ad9328e874a195149ab115da"
+          "hash": "sha256-f51e82eb7531edced74270b6606e9e43742500670a2371b367a2719c621eb3b4"
         }
       ]
     },
@@ -424,13 +424,13 @@
         "release/migration-guide/020-release-workflow.md"
       ],
       "metaHash": "sha256-b9264b6e8a6944df70ef08876e4c5bd663df3352e5526c93925ace2267eca2e8",
-      "version": "sha256-921aae83edef12413aee12ae33372215114f52bd8e7229f317b24bcffd1081b9",
+      "version": "sha256-ff5327d8e9a760046d470ade06a991e3b03252b6c420f247267656db08cd999b",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/migration-guide.md",
           "kind": "file",
-          "hash": "sha256-6aff2a9d80be51dfa4d163303c2950bec5c38f0e33e104a593be11fb26b33cec"
+          "hash": "sha256-69e50d4141f40f4e747e1fcb3e54826e8225eab2c888361558b27983f17b0ea6"
         }
       ]
     },
@@ -442,13 +442,13 @@
         "stlc/performance-test/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-dfc6eff0e8f55bb3b514317c231a4583d56cb21ce1079ab5634905715b5a918f",
-      "version": "sha256-b4d32e04d7b5082ed3cb21ec39bc84ac7d154c099efbe71ba2c4a609a6652fa3",
+      "version": "sha256-8421bf8bc6d945a1730b8a0178ece4e02d914c0d0a0abe48dce2b073f90c4cfd",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/performance-test.md",
           "kind": "file",
-          "hash": "sha256-ca4a5066422974ac46db5f39f37bfa51cba39505ff007842c0d11493b55e4057"
+          "hash": "sha256-ea43d51f280952dfbd91b4aef865f99a107134b6b28b8d413a2f8af0b0f934a0"
         }
       ]
     },
@@ -460,13 +460,13 @@
         "governance/policy-compliance/020-governance-workflow.md"
       ],
       "metaHash": "sha256-87f4a8fcfab3c0c789e93b2a81d456d22293273545e57c1f784716e47c2344b1",
-      "version": "sha256-b6474490b02ba7375921a71d8effd1b36511f5f1a577d2f69527c73fcfd62281",
+      "version": "sha256-533fa4883af735a4419ea2cc0bcb6d4c308f052091ea718302c81cc35ae20494",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/policy-compliance.md",
           "kind": "file",
-          "hash": "sha256-1351231114262bbb1d4757410f8d3bd93015157b2ea20be932c64558b2b28cd5"
+          "hash": "sha256-3555af1ad918968763440d72f8d9f02121308d40e2fd16fba552fb26add84085"
         }
       ]
     },
@@ -478,13 +478,13 @@
         "release/post-release-review/020-release-workflow.md"
       ],
       "metaHash": "sha256-d13dc79dcbc2118be9151937ca9a20be4bf1b5477ce6675f9d2a69fcc3dbd137",
-      "version": "sha256-a1b073d2a6572da14c70665fa582ca36d80fa540509907000103b61aa760eae3",
+      "version": "sha256-ceab99b6ee7fd97b90098260e80f274673ab853e13a054a13cb98b06d4c20a96",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/post-release-review.md",
           "kind": "file",
-          "hash": "sha256-d3b0c5566c8257ac759a2de628114eb5ce3a60fa20bea7ab543267007e4f4abf"
+          "hash": "sha256-df23f40a704b45f0253eb212e5567495ec524101e9c97079db42a0fcb29f4ed6"
         }
       ]
     },
@@ -496,13 +496,13 @@
         "sdlc/product-discovery/020-triage-workflow.md"
       ],
       "metaHash": "sha256-8af5405b14260f87e535fc9684400c60bf27b2053f438fcee17edbe85807bb70",
-      "version": "sha256-70531b8c3b81a3fb09b8f5a8564448f4e1f68334cdebbe72856465b515982ff3",
+      "version": "sha256-19a76fb01b38ac76f741a46e309d6ffe7c7fffef98ef8aab592d2ba2135a0110",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/product-discovery.md",
           "kind": "file",
-          "hash": "sha256-357428a19b81a78956ac9cf7269faa1083931676935a8850d5c25f8c8d61c79a"
+          "hash": "sha256-54cd61472b7e9237f73a4942b3622fea96a1ef508b1a2a182dc484d0fac5bf41"
         }
       ]
     },
@@ -514,13 +514,13 @@
         "internal/prompt-compiler-guardian/020-internal-coordination.md"
       ],
       "metaHash": "sha256-2d6ff3c8cac5968d7f28c07ecea80ef1cdd73e37bb40be2ca018916d95d7b3c5",
-      "version": "sha256-172f14e675fe41900c13567ca9f4519b54e06b4eca441cdbec6b959fd97389e4",
+      "version": "sha256-62e0f05dc8a2b634cd5af0381dc7f2d98b40b1420e7508fa1739fa54b9c3301d",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/prompt-compiler-guardian.md",
           "kind": "file",
-          "hash": "sha256-c8e73c7a5ed3aaefad7784341441a0d3250a08d14a8de116b0682c6474016571"
+          "hash": "sha256-2d37ef09d27b98236244a6aa0086fb989b0b0ac3bb0d8f9c4cfcf2e8456fbd35"
         }
       ]
     },
@@ -532,13 +532,13 @@
         "governance/prompt-injection-test/020-governance-workflow.md"
       ],
       "metaHash": "sha256-38f0cbd171d4e24a6956e24799621394ff8e87d17f8cdbcf80327db2c3eaf4f5",
-      "version": "sha256-f87de921e528e26d8fb37a7de7e74b5cad880088b4659ad5a8b3368b866bb8f5",
+      "version": "sha256-0e72563ec244e0641b9395675f837bc7058d7ac15b5f32c8ecae5e1f53b01d1a",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/prompt-injection-test.md",
           "kind": "file",
-          "hash": "sha256-563308d690c8c9eeecdd1d38d7c5517eed0fd60c69a79fc37768a6a753628e4c"
+          "hash": "sha256-b498b0ad41e28837bea20936c63ccf9aaa78f455ebb4e0db7338bd31113486eb"
         }
       ]
     },
@@ -550,13 +550,13 @@
         "stlc/qa-strategy/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-c59b588b0a657274232fd2c4957f9dea546234d9046a7ce33c9d84ccf565058c",
-      "version": "sha256-c1fd40629c99721a35576396da2651aafd49aec740d961efb6a88b7273186195",
+      "version": "sha256-74baa1790fff6d7ed388783e93d02ed3a587476f7571bfb2826976a1c23fc824",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/qa-strategy.md",
           "kind": "file",
-          "hash": "sha256-b495fbbfdf054b62adccacefdf46eaa3bfcb3ddfc2c50c23b14ffefce108e4e2"
+          "hash": "sha256-487475c47e8adc13a4e25d267736b2d1379cd2cf28d458c2645ec423a8151ff9"
         }
       ]
     },
@@ -568,13 +568,13 @@
         "stlc/regression-scope/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-9571f39fb0c853521fd00e92d06d933182dd603b4a1ae5ca422c2c72d25e2978",
-      "version": "sha256-31dfcb3731ec56c3ab0887f9a2a8e72990f3288aecbdc955387a0f78437bac07",
+      "version": "sha256-51ad8ebe198ea9a38505df7bc6e279cefb58e971ed2df548ac38631c6232fcb7",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/regression-scope.md",
           "kind": "file",
-          "hash": "sha256-a3045fd7103ed6fa7fba999a9c1396d6a804fc6bd4a75d3456d6d510d624aadc"
+          "hash": "sha256-a265fdd22cdc2730eb2d710428be54d55e196f6e2f9f5ab708b3442445745416"
         }
       ]
     },
@@ -586,13 +586,13 @@
         "release/release-manager/020-release-workflow.md"
       ],
       "metaHash": "sha256-ec51aa3736b2cbab924dd2fcc3d977f24f1cb1aba8d27fb4be156d8a709b2187",
-      "version": "sha256-bda305c10990a086c8182afac67672f0168c9670fe23703dfdc5653544623f3e",
+      "version": "sha256-66a101e6140f4b47f85955e5346e7476e1719734550be37aa738e9af026faf83",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/release-manager.md",
           "kind": "file",
-          "hash": "sha256-7b9ca7959dcd309d2af919ee7b3e0e92ed603ae2c62b8b69a2f232f243536faf"
+          "hash": "sha256-155e6e99a289c82c994703a5d06b5410c158bb19ec3c798093a016b8562bf7b2"
         }
       ]
     },
@@ -604,13 +604,13 @@
         "sdlc/requirements-analyst/020-validation.md"
       ],
       "metaHash": "sha256-164bce9de83109b19deea594c1bb230fe18c82bd02b99233436960000c58ada8",
-      "version": "sha256-6b2c649704f05941cdbcb4ebec83e9cecfe69518ca06342a2c1fae5dd1947cb8",
+      "version": "sha256-d63e405536571dc8cce095a7d2c031b055dc80309343e5f3d1f024d3fc2cbd66",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/requirements-analyst.md",
           "kind": "file",
-          "hash": "sha256-6464c9d2bc75a1fd83b0e77fc73f8ec51990fed75812d91395b0a055131addbb"
+          "hash": "sha256-3598ab5228ffe3fde520bb73d5484e3a742ba3faadf0bd65a59e791663e5972e"
         }
       ]
     },
@@ -622,13 +622,13 @@
         "governance/risk-register/020-risk-classification.md"
       ],
       "metaHash": "sha256-f754afa305b3456ad06f134976405b104d2625af2b71210b21106b5163477ff2",
-      "version": "sha256-028f3d88fd6fb6e87cd1f6b413b937ed270ece48d7da91d86970086f82b65eee",
+      "version": "sha256-129906a2648d19676d0bb12da35b272f67fdd968dd5c5e0334f16349189f4e63",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/risk-register.md",
           "kind": "file",
-          "hash": "sha256-c8e5f317a5430e3ef450feeaad89f8ca32badcc1487d3ae9d8d53b9298834d22"
+          "hash": "sha256-083687153439c49d4305fcca40de56bbe22e613e5f01dc1edcbbd3e858a56d33"
         }
       ]
     },
@@ -640,13 +640,13 @@
         "sdlc/schema-design/020-validation.md"
       ],
       "metaHash": "sha256-cadccc9f0b1a2fcdc0fe6076f4b41e476578dd42ddd935ace7bd88e08ec18d35",
-      "version": "sha256-0ef345401c55d89d15a0d55f092f0582b4e9be42c02e216a321efb5ea3f39f95",
+      "version": "sha256-73e43c6e7a1cd1f6742331f8e057489050603e2aa2db48affe0e47ef41faf47f",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/schema-design.md",
           "kind": "file",
-          "hash": "sha256-c427aa6f6d9465760cbe85b1c87fc1ff8696022f7e755621f13a8f5b45e7dbae"
+          "hash": "sha256-925b242ca3a4e30c18b7a16ce1604704bf78daccb996e7aa421208f5cb6c7730"
         }
       ]
     },
@@ -658,13 +658,13 @@
         "governance/secret-leakage-detection/020-patterns.md"
       ],
       "metaHash": "sha256-52b102d84f308eea3c7cd251ce9c07bc1f074716edca32746aedcf097ab81ff6",
-      "version": "sha256-2d2f14e0fc1ce2b2e5801923f552df9b513d52d4e767d281a02892d705c00637",
+      "version": "sha256-b69d76a28905bf9ff928036598f5f256da58f0d58430b2bea2e320a360634f19",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/secret-leakage-detection.md",
           "kind": "file",
-          "hash": "sha256-0e507ea606a042db79fd87303b946aa46a2b7e1ba2175c18ed21cbd48d1c442a"
+          "hash": "sha256-e7cbb3b9745d7023007f87275eba86622dfc851c1080aec26e8bac4fbe703ba1"
         }
       ]
     },
@@ -676,13 +676,13 @@
         "governance/security-review/020-threat-assessment.md"
       ],
       "metaHash": "sha256-5555c42229ade6c8376350596239cfbb2c0d17249b440b54d94307028fe9d611",
-      "version": "sha256-b6f91d4340bef86699e4ede35b5f181b1ed8930622ef96c33fb37f7f316c866b",
+      "version": "sha256-4887ed454befe9b57817120601b4c0651d1d3e075a5e090340716ff38b164449",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/security-review.md",
           "kind": "file",
-          "hash": "sha256-071fcfb8eba839b73fed2daef8972121afe29acd45c89f8d22916331b3483fb5"
+          "hash": "sha256-f966b26ecc02b78a2609d974cd0efd9ca828f6e7c36f15e82835e5706a12eb54"
         }
       ]
     },
@@ -694,13 +694,13 @@
         "stlc/semantic-regression/020-detection.md"
       ],
       "metaHash": "sha256-90b29dece1359614573f0ac1e849d78bfe18f1fd35176e19290cff024bb8bb55",
-      "version": "sha256-c8a9bde93723210350275f76f0a82e02ca784fb673042dde3e89536fd631e145",
+      "version": "sha256-9783fe11c49f761e00c52e3c5f44dce8443ecb67aa57780cbeb2cfb139a58aaf",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/semantic-regression.md",
           "kind": "file",
-          "hash": "sha256-b564dbec00c2035c161acf649abe5173c7d7ae0e125a79009cf3bd23fc6aa149"
+          "hash": "sha256-663968cd6259b8b79d97d3ef69c413c95e9eeda4861f3befa62426f1b5262b4c"
         }
       ]
     },
@@ -712,13 +712,13 @@
         "governance/supply-chain-risk/020-governance-workflow.md"
       ],
       "metaHash": "sha256-a7fb48310cefb603fa0620773e2769943a56a0274662d0934be158162b6d0a79",
-      "version": "sha256-b4316e49d1de37321403cbda499de3982558de6bc6a44ad11c95f93f8b76465f",
+      "version": "sha256-7967bf7597c00b91f12a941da8e9dac328c362904015fd8a6319f8118bcf0041",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/supply-chain-risk.md",
           "kind": "file",
-          "hash": "sha256-7860eec96df2700a497f93b5da27fed39726688ff5f16e05c40752854cdfbf93"
+          "hash": "sha256-cddf0552885e8c615cd95ce9475e88d2c6f627eb5d197f00679fcfff37b47592"
         }
       ]
     },
@@ -730,13 +730,13 @@
         "stlc/test-automation/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-b60d3ce53960087138c0c36012b7310d0757ee32a0a56ef46bd26101c1277482",
-      "version": "sha256-661d425e522ddc32cb6b874266fe29ae335bf2ca929a2de12d027fcf9970ee44",
+      "version": "sha256-f641521aa3bd1f5fa63c109a4ce97b2a9e3321181f9dc89e706229727d629bbe",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/test-automation.md",
           "kind": "file",
-          "hash": "sha256-4c23219eaaf91e32f4213a93dbc90efe56bf4135a53c8ab90d751372fbe6b225"
+          "hash": "sha256-eac1e44817b864874c4c21308d1a85fb4e05872af1fe9e869c6d614dea314645"
         }
       ]
     },
@@ -748,13 +748,13 @@
         "stlc/test-design/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-b0d19b0fd93eb06bf5b391842f6b81176e1d95c293babef3cee962e91f65ad7c",
-      "version": "sha256-2d2e73ac0e371578b11eca97de5b50c98595d225883728ae290c568044758521",
+      "version": "sha256-4a2017a9e9bca240da57b7b4e01f69d84a1a9c09e1e5013b422c70e16d9a7e8c",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/test-design.md",
           "kind": "file",
-          "hash": "sha256-c95c1edb8618d19a192af2c2640275b6fb6e91f9c4279e276eb0e11e85058d2f"
+          "hash": "sha256-e6d2e7b67772a4c476cfd392847e7fc8e5c5b591739b0ddba5be98c1965f4e94"
         }
       ]
     },
@@ -766,13 +766,13 @@
         "governance/traceability/020-governance-workflow.md"
       ],
       "metaHash": "sha256-c6efa2b4d7f9ea4515d7a8a749f9331998d0ac84ab01a91beff9643c1bed9d7c",
-      "version": "sha256-4772b20ce46957365c019889dcb4aed44a1a23f48cdc840d9ab91bd6f574a0a2",
+      "version": "sha256-fe370f9cbde683f8d4e5775a45af6387641a6f62c55dc50c10faa9cc93ccda1a",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/traceability.md",
           "kind": "file",
-          "hash": "sha256-6ab1eaf9ca8c089c28ae42618456786c89510d481a75273d8976ff605036df1d"
+          "hash": "sha256-f4e1e80a53877f476f7e5e9d93ed62af65fcca5ddbbd1700512ddc44bb10b5f7"
         }
       ]
     },
@@ -784,13 +784,13 @@
         "release/versioning/020-release-workflow.md"
       ],
       "metaHash": "sha256-45a9acd80d2ede3d53eab3c42151e7372749ed17d8ed197fb8ff8cadb25bbe39",
-      "version": "sha256-e07ac9aab6309eee7aecdbc8d09c071c365e73007cfc648d71479c83f1edb9de",
+      "version": "sha256-fa6ae55190e8679fd6446a3fc58701d789833ee65dc36e27a2e35d5a46a5b69d",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/versioning.md",
           "kind": "file",
-          "hash": "sha256-1e02483dc4e03ecc5058aed395c1dffab6a4b25bee1960ecc2a69522e063a95d"
+          "hash": "sha256-a96ff8517b7bfe55cc8f938e83319ad01aee95bf9fc332be751d0485ede6c2b4"
         }
       ]
     }

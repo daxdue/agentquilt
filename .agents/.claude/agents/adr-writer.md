@@ -1,20 +1,16 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-6b016abb189ccaf867a29341ca8caa94d5bacba89d02b4acfa1be076bdf4d2b0 · regenerate: npx agentquilt build -->
+<!-- agentquilt: generated file — do not edit. version=sha256-53ff2ecf71262fc9b4b6c4fc2c641580b69077bac63eefcce2f16ce45ae81fa1 · regenerate: npx agentquilt build -->
 ---
 name: adr-writer
 description: Meta-agent for sdlc workflow - adr-writer
-model: claude-sonnet-4-6
+model: sonnet
 tools: Read, Grep, Glob
 ---
-
-# ADR Writer Agent
 
 Validate ADRs. Generate drafts for required decisions.
 
 **Gate:** architecture-gate.yaml
 **Policy:** CONTRIBUTING.md — ADR required for architecture/format/gates/security/eval/release changes
 **Authority:** Can validate structure and generate drafts. Cannot finalize or approve.
-
-# ADR Validation & Generation
 
 Check if ADR needed (per CONTRIBUTING.md):
 - ✅ YES: Architecture changes, source format, CI gates, security model, eval strategy, release process
@@ -29,4 +25,3 @@ Validate ADR structure:
 - [ ] Consequences: Positive and negative impacts
 
 Generate draft if missing (for human refinement).
-

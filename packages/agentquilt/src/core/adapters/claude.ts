@@ -7,16 +7,37 @@ import type { ResolvedModel } from "../modelResolver.js";
 
 const ADAPTER_VERSION = "1";
 
+// Strip Markdown headers and convert to plain system prompt text
+function stripMarkdownHeaders(text: string): string {
+  return text
+    .split("\n")
+    .filter((line) => !line.match(/^#+\s+/)) // Remove lines that are Markdown headers
+    .join("\n")
+    .replace(/\n\n+/g, "\n\n") // Normalize multiple blank lines to single blank line
+    .trim();
+}
+
 function assembleBody(record: CanonicalAgentRecord): string {
   const bodies = record.bodyFragments.map((f) => {
     const raw = readFileSync(f.filePath);
-    return normalize(raw);
+    const normalized = normalize(raw);
+    return stripMarkdownHeaders(normalized);
   });
-  // join with blank line, normalize already ensures trailing \n per fragment
-  return bodies.join("\n") + "\n"; // bodies end in \n, adding one more blank line between
+  // join with blank line
+  return bodies.join("\n\n") + "\n";
 }
 // Note: normalize() ensures each body fragment ends with exactly one \n.
-// Joining with "\n" inserts a blank line between fragments (matching document target behavior).
+// Joining with "\n\n" inserts a blank line between fragments.
+// stripMarkdownHeaders removes Markdown headers to produce plain system prompt text.
+
+// Map full model names to tier shortnames for Claude Code format
+function modelToTierName(fullModelName: string | null): string | null {
+  if (!fullModelName) return null;
+  if (fullModelName.includes("opus")) return "opus";
+  if (fullModelName.includes("sonnet")) return "sonnet";
+  if (fullModelName.includes("haiku")) return "haiku";
+  return fullModelName; // fallback to original if unrecognized
+}
 
 function buildFrontmatter(
   record: CanonicalAgentRecord,
@@ -34,7 +55,7 @@ function buildFrontmatter(
   fm["description"] = def.description;
 
   if (resolvedModel.model !== null) {
-    fm["model"] = resolvedModel.model;
+    fm["model"] = modelToTierName(resolvedModel.model);
   }
 
   // tools: x-claude.tools override wins; else derive from permissions
