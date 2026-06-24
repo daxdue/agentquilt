@@ -10,13 +10,28 @@ modelTiers:
     claude: claude-haiku-4-5
 
 targets:
+  # User agents: fragments compiled into prose documentation
   - output: AGENTS.md
     include:
       - _shared
     format: markdown
 
+  # User agent definitions (e.g., reviewer, triage-agent)
   - kind: agent-definitions
     agents:
       - reviewer
     platforms:
       - claude
+
+# Note: Meta-agents in .agents/ are formatted as agent definitions but compiled separately.
+# Each meta-agent category (.agents/governance/, .agents/sdlc/, etc.) can be compiled
+# into its own target by creating an agentquilt.config.yaml in that directory or via
+# separate compilation. They follow the v1.1 agent-definition format:
+#
+# .agents/<category>/<agent-name>/
+#   ├── agent.yaml                     # Canonical metadata
+#   ├── 010-role.md                    # Instruction fragment
+#   └── 020-workflow.md                # Instruction fragment
+#
+# Agent definitions are self-contained and compile to per-platform outputs
+# (.claude/agents/<name>.md, etc.) via adapters.
