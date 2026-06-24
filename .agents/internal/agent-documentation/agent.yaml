@@ -1,6 +1,4 @@
 name: agent-documentation
-description: |
-  Generate and maintain agent usage docs
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for internal workflow - agent-documentation
+model: balanced
+permissions: read-only

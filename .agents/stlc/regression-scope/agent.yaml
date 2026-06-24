@@ -1,6 +1,4 @@
 name: regression-scope
-description: |
-  Define regression test scope per change
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for stlc workflow - regression-scope
+model: balanced
+permissions: read-only

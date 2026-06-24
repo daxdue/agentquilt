@@ -1,8 +1,4 @@
 name: risk-register
-description: |
-  Monitor and classify risks across PRs, issues, and releases. Update the risk register
-  (policies/risks/risk-register.yaml) with new risks, status changes, and escalation flags.
-  Coordinate escalation to maintainers when critical/high risks are detected.
-model: claude-opus-4-8
-permissions:
-  - read-only  # Read PRs, issues, risk register; cannot modify
+description: Meta-agent for governance workflow - risk-register
+model: balanced
+permissions: read-only

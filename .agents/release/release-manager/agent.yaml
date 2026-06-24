@@ -1,6 +1,4 @@
 name: release-manager
-description: |
-  Orchestrate release process end-to-end
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for release workflow - release-manager
+model: balanced
+permissions: read-only

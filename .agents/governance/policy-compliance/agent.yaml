@@ -1,6 +1,4 @@
 name: policy-compliance
-description: |
-  Verify gate policies are followed
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for governance workflow - policy-compliance
+model: balanced
+permissions: read-only

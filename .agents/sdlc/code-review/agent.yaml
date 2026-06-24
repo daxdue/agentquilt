@@ -1,8 +1,4 @@
 name: code-review
-description: |
-  Automated code review for PRs. Review diffs for type safety, potential bugs,
-  security risks, test coverage gaps, and simplification opportunities.
-  Post findings as PR comments (human approval still required).
-model: claude-opus-4-8
-permissions:
-  - read-only  # Read PR diff, files, test files; cannot approve or merge
+description: Meta-agent for sdlc workflow - code-review
+model: balanced
+permissions: read-only

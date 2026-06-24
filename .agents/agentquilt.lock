@@ -1,0 +1,1329 @@
+{
+  "lockfileVersion": 1,
+  "formatVersion": "1",
+  "agents": [
+    {
+      "name": "adr-writer",
+      "dir": "sdlc/adr-writer",
+      "bodyFragments": [
+        "sdlc/adr-writer/010-role.md",
+        "sdlc/adr-writer/020-adrs.md"
+      ],
+      "metaHash": "sha256-b1ddff4e2ebb050b626cfaa296ed6ed11e2fac610b212772e2c445ead6c3eed5",
+      "version": "sha256-6b016abb189ccaf867a29341ca8caa94d5bacba89d02b4acfa1be076bdf4d2b0",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/adr-writer.md",
+          "kind": "file",
+          "hash": "sha256-ef1d48fcc6c4f297f6dfa5dafbe99f97175cbb9eb8620d7e4490b49004571842"
+        }
+      ]
+    },
+    {
+      "name": "agent-behavior-reviewer",
+      "dir": "internal/agent-behavior-reviewer",
+      "bodyFragments": [
+        "internal/agent-behavior-reviewer/010-role.md",
+        "internal/agent-behavior-reviewer/020-internal-coordination.md"
+      ],
+      "metaHash": "sha256-67d63f827e95cf0a12309d6f9dea30a00155c42bb37a5e7a6063f31277a0202f",
+      "version": "sha256-89bcc294f50bd404de4c71de59a5011a0b17730f5719c25b33406e81dfbbb529",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/agent-behavior-reviewer.md",
+          "kind": "file",
+          "hash": "sha256-d56dde491c01d2fa7841192252720fa8d2bb2a124a37ac1b06a46d0a59df4bcb"
+        }
+      ]
+    },
+    {
+      "name": "agent-documentation",
+      "dir": "internal/agent-documentation",
+      "bodyFragments": [
+        "internal/agent-documentation/010-role.md",
+        "internal/agent-documentation/020-internal-coordination.md"
+      ],
+      "metaHash": "sha256-8b171309f4685fe590bb735122c24dffbdc42d82318332ac1fa19f3f1d9741ee",
+      "version": "sha256-5b0d5a053e5b15f67e6c0348d2795d02caa50e22f9eb6aa50515bbbe80afc09c",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/agent-documentation.md",
+          "kind": "file",
+          "hash": "sha256-a04f7d4bed892f799a19ee00ee6683826080906c7862a5a02a8a6f10933f4d54"
+        }
+      ]
+    },
+    {
+      "name": "agent-migration",
+      "dir": "internal/agent-migration",
+      "bodyFragments": [
+        "internal/agent-migration/010-role.md",
+        "internal/agent-migration/020-internal-coordination.md"
+      ],
+      "metaHash": "sha256-3614fb44805cc6c340aab228f37a5241130dc9055ede8a02836e40f22927b76f",
+      "version": "sha256-242822ba77450c93045160cee30fc24fb8066fe4cac0b406d0a2275c61533c5c",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/agent-migration.md",
+          "kind": "file",
+          "hash": "sha256-f60601f4b62049c97373d8dcec06e989ed40d2b1caa01496595829206e0db474"
+        }
+      ]
+    },
+    {
+      "name": "agent-registry",
+      "dir": "internal/agent-registry",
+      "bodyFragments": [
+        "internal/agent-registry/010-role.md",
+        "internal/agent-registry/020-internal-coordination.md"
+      ],
+      "metaHash": "sha256-c3bbfe68448b707b71bf20c6c3e5c0b72bbbefc6825ad4403296df22cd5c8123",
+      "version": "sha256-604e79f052b6cdc99ec248eb32d8aebc2dc24fddcb90d85f403eff47c6045a9b",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/agent-registry.md",
+          "kind": "file",
+          "hash": "sha256-27d21c80249b8d8b8d349b2778c7cbd3d66c22983f3329e9613bfe020e2b562a"
+        }
+      ]
+    },
+    {
+      "name": "ambiguity-detector",
+      "dir": "sdlc/ambiguity-detector",
+      "bodyFragments": [
+        "sdlc/ambiguity-detector/010-role.md",
+        "sdlc/ambiguity-detector/020-patterns.md"
+      ],
+      "metaHash": "sha256-f115844d189f05de241c5eb34ca353f7355d44fcf109d19cd7b535f73ee2d706",
+      "version": "sha256-b926da400432623cc54f7ca65db24b1178b5ebf525e6a36b2a93893daf64e397",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/ambiguity-detector.md",
+          "kind": "file",
+          "hash": "sha256-db7bec750d6dea957ceb60528aeeb1cf48c219808e581966463950d3bbddea5d"
+        }
+      ]
+    },
+    {
+      "name": "architecture",
+      "dir": "sdlc/architecture",
+      "bodyFragments": [
+        "sdlc/architecture/010-role.md",
+        "sdlc/architecture/020-review.md"
+      ],
+      "metaHash": "sha256-f8f239bee1c32661ad62d5225972c985ce1b3ff69f1fc86f4a718f00f66daa94",
+      "version": "sha256-10313aed79e547dc57d8563270ca64e6f356b839b696a873a47cfc48d9f1ac24",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/architecture.md",
+          "kind": "file",
+          "hash": "sha256-85c97026b8f4e7cf6854786359d8290b679e98b9f0d71f635fcf920566d589ef"
+        }
+      ]
+    },
+    {
+      "name": "changelog",
+      "dir": "release/changelog",
+      "bodyFragments": [
+        "release/changelog/010-role.md",
+        "release/changelog/020-release-workflow.md"
+      ],
+      "metaHash": "sha256-62d0536d00d48819a050ad57c2dbb71de9fc5a8535269865000589b240ad3431",
+      "version": "sha256-24e839d2090d090176589dd6c830f7e20bbe84c08ea4fc917ff642c5ec23a847",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/changelog.md",
+          "kind": "file",
+          "hash": "sha256-bf140559ca743ab4141f555e13059ca640475ce1beac17fac2c839db03b1eb61"
+        }
+      ]
+    },
+    {
+      "name": "code-review",
+      "dir": "sdlc/code-review",
+      "bodyFragments": [
+        "sdlc/code-review/010-role.md",
+        "sdlc/code-review/020-review-guidelines.md"
+      ],
+      "metaHash": "sha256-69f925d681016cb180fecfa197772910467f841ebf6176652f116bd8058c3e5a",
+      "version": "sha256-712ea4fc0a5d13443bd813d9f3659d87e5d6dbd4822ddd4b46f70d4b01e3714f",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/code-review.md",
+          "kind": "file",
+          "hash": "sha256-a4194bdd4cc97fb2e747f55520554a9e1d2d42cd10b248871a639169001ed0bf"
+        }
+      ]
+    },
+    {
+      "name": "compatibility-test",
+      "dir": "stlc/compatibility-test",
+      "bodyFragments": [
+        "stlc/compatibility-test/010-role.md",
+        "stlc/compatibility-test/020-stlc-workflow.md"
+      ],
+      "metaHash": "sha256-8f07f5c3153e55a9cb184e996d40305f06a4cbb1c6cf88e636db8376b69a9144",
+      "version": "sha256-8076a5725b9879b415ea8daaecb93a5132116c4789c5ea3913e899f2524d1b82",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/compatibility-test.md",
+          "kind": "file",
+          "hash": "sha256-5da8cd0c96ad4cdb87bba6d678008e06000cc8af6de9b965de6d1cb11503b5d5"
+        }
+      ]
+    },
+    {
+      "name": "conflict-detector",
+      "dir": "internal/conflict-detector",
+      "bodyFragments": [
+        "internal/conflict-detector/010-role.md",
+        "internal/conflict-detector/020-internal-coordination.md"
+      ],
+      "metaHash": "sha256-135b0d91fd7b5c3b0d25336c0cb04a85c73607b53d84c0bca4a808081fa2468d",
+      "version": "sha256-9a5369f154eca8eff6e00f068bb11f3535d81489c2f1dae96f9eaffad4d65420",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/conflict-detector.md",
+          "kind": "file",
+          "hash": "sha256-b072077b2dc19bb9b0e79b40df0ed858d2cdf625fee77502dc1b4dae79dc07a8"
+        }
+      ]
+    },
+    {
+      "name": "defect-triage",
+      "dir": "stlc/defect-triage",
+      "bodyFragments": [
+        "stlc/defect-triage/010-role.md",
+        "stlc/defect-triage/020-stlc-workflow.md"
+      ],
+      "metaHash": "sha256-ef88e8b8eef28c78a2cead79f76bf0768151d07b9048051cfe4a713aa739111d",
+      "version": "sha256-df96d29bff0b827a9761046d41906dc661d607ce38f1c2a4da6fc8ce0f4d5a18",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/defect-triage.md",
+          "kind": "file",
+          "hash": "sha256-244e6991bc901d56d692b59fe82c8b14c1047f2347747c5a9934cd512d8f22c1"
+        }
+      ]
+    },
+    {
+      "name": "definition-architect",
+      "dir": "internal/definition-architect",
+      "bodyFragments": [
+        "internal/definition-architect/010-role.md",
+        "internal/definition-architect/020-internal-coordination.md"
+      ],
+      "metaHash": "sha256-2c8379e603e80c8587fc9394591490e4775a9ad12bd4ffd7385ee3e59e9bfc93",
+      "version": "sha256-2cfacb70b35a1ff23bc35ffc148c64dd887cfed0b2d36eb05057f104f2728c95",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/definition-architect.md",
+          "kind": "file",
+          "hash": "sha256-26202285061d02fa975aae615c667d120106af204093b684dbab721e93531404"
+        }
+      ]
+    },
+    {
+      "name": "developer-experience",
+      "dir": "sdlc/developer-experience",
+      "bodyFragments": [
+        "sdlc/developer-experience/010-role.md",
+        "sdlc/developer-experience/020-sdlc-workflow.md"
+      ],
+      "metaHash": "sha256-76c09096665467b0e68dc4741d25f398e723891aa89c551eb5344fe85559b0cc",
+      "version": "sha256-777bfb5eb09103df5eb68bb0960a73c2957c94ebee217ba7779a27746c872222",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/developer-experience.md",
+          "kind": "file",
+          "hash": "sha256-eef805001791dd3a55bcd8af977fa3d27f3ad1b548bbe34970dc31f2f34361ec"
+        }
+      ]
+    },
+    {
+      "name": "documentation",
+      "dir": "sdlc/documentation",
+      "bodyFragments": [
+        "sdlc/documentation/010-role.md",
+        "sdlc/documentation/020-sdlc-workflow.md"
+      ],
+      "metaHash": "sha256-8f17433ac3051f86e02296b505d845be507c7b94b7052e22be9c3e1a4850a16e",
+      "version": "sha256-00a47cda01c60e6dbaa59ca917ee033f25e390c8f04748b86cfde7d29d9ad8ba",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/documentation.md",
+          "kind": "file",
+          "hash": "sha256-6ccca6e948cb792aa9c4c263e332266192586c7b55bae70713de91bf1d747811"
+        }
+      ]
+    },
+    {
+      "name": "eval-designer",
+      "dir": "stlc/eval-designer",
+      "bodyFragments": [
+        "stlc/eval-designer/010-role.md",
+        "stlc/eval-designer/020-eval-workflow.md"
+      ],
+      "metaHash": "sha256-4535b2d9a8a09dfa3d836f44032f6ede4c79df27e81e3524c4d11c052d896c1a",
+      "version": "sha256-b97fce8a13233764ea4414e23db019c6680aa07799d48acbfa6ec5e614cc76ab",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/eval-designer.md",
+          "kind": "file",
+          "hash": "sha256-18db3e79691307e43d4ed9eabf80c509567a625f4082847727c0b741e2cdb612"
+        }
+      ]
+    },
+    {
+      "name": "evidence-collector",
+      "dir": "release/evidence-collector",
+      "bodyFragments": [
+        "release/evidence-collector/010-role.md",
+        "release/evidence-collector/020-release-workflow.md"
+      ],
+      "metaHash": "sha256-c92778233322bf81fd5605c6fbb8675045a98a23cc43e668cdc261cb5eb8c79c",
+      "version": "sha256-d10fcc253669d17ae0ec9305789ce448097e3e8f61fc9d5e95678de60e325982",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/evidence-collector.md",
+          "kind": "file",
+          "hash": "sha256-da90638f48b49eff13e4df671eecbbb01345d03434964b1cb22609d0233fbe04"
+        }
+      ]
+    },
+    {
+      "name": "gatekeeper",
+      "dir": "governance/gatekeeper",
+      "bodyFragments": [
+        "governance/gatekeeper/010-role.md",
+        "governance/gatekeeper/020-governance-workflow.md"
+      ],
+      "metaHash": "sha256-884df834d30a3461457b63d48e5f6cbea1ae921198a8dc5b46de6524583a0d2d",
+      "version": "sha256-76b1ee1ffa041f457e2109ac5d0d2b8e81b4f2ce687553fdf7c9e96ed29e9cd6",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/gatekeeper.md",
+          "kind": "file",
+          "hash": "sha256-50a3ddd3e021a60ddebceab1a2c8c483a2fc2aec212849d8c23b071c98c361fe"
+        }
+      ]
+    },
+    {
+      "name": "golden-file-test",
+      "dir": "stlc/golden-file-test",
+      "bodyFragments": [
+        "stlc/golden-file-test/010-role.md",
+        "stlc/golden-file-test/020-workflow.md"
+      ],
+      "metaHash": "sha256-cbbd0e4235026bce9959f75d6c6d084034eb975dfe691cbc1a4627a69796cd7c",
+      "version": "sha256-752f73c1160d1b3190d9d53872af6b369513651b8448979d9267cbe3ad859f4b",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/golden-file-test.md",
+          "kind": "file",
+          "hash": "sha256-9eb98142fbb508086806d6a39db3018bd55e9d3109eb644dea7cec5c7b53ee70"
+        }
+      ]
+    },
+    {
+      "name": "implementation-planning",
+      "dir": "sdlc/implementation-planning",
+      "bodyFragments": [
+        "sdlc/implementation-planning/010-role.md",
+        "sdlc/implementation-planning/020-sdlc-workflow.md"
+      ],
+      "metaHash": "sha256-1df870509239ef44c24c6d7b681e4c3c6cb4c631d4e5be1ef13f7d3d00c7d84e",
+      "version": "sha256-7bc85c57a18ce540ba41f4987eee1cb2e141dc90153d9b978201c03553c2d716",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/implementation-planning.md",
+          "kind": "file",
+          "hash": "sha256-fea67f36dc4d3c0b6ab98c7962b9658e7975a05152bc6438d21ea55173f68122"
+        }
+      ]
+    },
+    {
+      "name": "instruction-block-author",
+      "dir": "internal/instruction-block-author",
+      "bodyFragments": [
+        "internal/instruction-block-author/010-role.md",
+        "internal/instruction-block-author/020-internal-coordination.md"
+      ],
+      "metaHash": "sha256-04f66f2ee9f5f6b354d486da86ae90bffcc80f5f908a789d932e4f0b44301368",
+      "version": "sha256-9787d545059e8515614a3a4b1af25193d86c2bf30e17a3b65ef338fc5017954c",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/instruction-block-author.md",
+          "kind": "file",
+          "hash": "sha256-61a50522801516edb096fbf25ec2b611b0527793813f2c3277246aaf2628f89d"
+        }
+      ]
+    },
+    {
+      "name": "instruction-refactoring",
+      "dir": "internal/instruction-refactoring",
+      "bodyFragments": [
+        "internal/instruction-refactoring/010-role.md",
+        "internal/instruction-refactoring/020-internal-coordination.md"
+      ],
+      "metaHash": "sha256-8b7f74a0cf2042aa7f86095c4aac3e4750a6a97ae2a2e7a7c19928c0caf26d38",
+      "version": "sha256-d9a5de8a34986d3c63ffad7f47fd35b268af25e77ae909161598339cd1abd882",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/instruction-refactoring.md",
+          "kind": "file",
+          "hash": "sha256-d853f750a9ee413faeed18ac5b839cb0aad7b7c43b59c7f6ca9b36a7e672e7e1"
+        }
+      ]
+    },
+    {
+      "name": "main-orchestrator",
+      "dir": "internal/main-orchestrator",
+      "bodyFragments": [
+        "internal/main-orchestrator/010-role.md",
+        "internal/main-orchestrator/020-internal-coordination.md"
+      ],
+      "metaHash": "sha256-6fa6aba0b131e6e8db800afd41c4868344bf5b13c6c3ae797e95d07c89185f8d",
+      "version": "sha256-126c0b9836be0e12da9b1c134604d8d384d1bc415d8a2a21c4483b49f4fc29d2",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/main-orchestrator.md",
+          "kind": "file",
+          "hash": "sha256-d3797e913ddf2198523a65f635b3a83e64ecd886ad9328e874a195149ab115da"
+        }
+      ]
+    },
+    {
+      "name": "migration-guide",
+      "dir": "release/migration-guide",
+      "bodyFragments": [
+        "release/migration-guide/010-role.md",
+        "release/migration-guide/020-release-workflow.md"
+      ],
+      "metaHash": "sha256-b9264b6e8a6944df70ef08876e4c5bd663df3352e5526c93925ace2267eca2e8",
+      "version": "sha256-921aae83edef12413aee12ae33372215114f52bd8e7229f317b24bcffd1081b9",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/migration-guide.md",
+          "kind": "file",
+          "hash": "sha256-6aff2a9d80be51dfa4d163303c2950bec5c38f0e33e104a593be11fb26b33cec"
+        }
+      ]
+    },
+    {
+      "name": "performance-test",
+      "dir": "stlc/performance-test",
+      "bodyFragments": [
+        "stlc/performance-test/010-role.md",
+        "stlc/performance-test/020-stlc-workflow.md"
+      ],
+      "metaHash": "sha256-dfc6eff0e8f55bb3b514317c231a4583d56cb21ce1079ab5634905715b5a918f",
+      "version": "sha256-b4d32e04d7b5082ed3cb21ec39bc84ac7d154c099efbe71ba2c4a609a6652fa3",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/performance-test.md",
+          "kind": "file",
+          "hash": "sha256-ca4a5066422974ac46db5f39f37bfa51cba39505ff007842c0d11493b55e4057"
+        }
+      ]
+    },
+    {
+      "name": "policy-compliance",
+      "dir": "governance/policy-compliance",
+      "bodyFragments": [
+        "governance/policy-compliance/010-role.md",
+        "governance/policy-compliance/020-governance-workflow.md"
+      ],
+      "metaHash": "sha256-87f4a8fcfab3c0c789e93b2a81d456d22293273545e57c1f784716e47c2344b1",
+      "version": "sha256-b6474490b02ba7375921a71d8effd1b36511f5f1a577d2f69527c73fcfd62281",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/policy-compliance.md",
+          "kind": "file",
+          "hash": "sha256-1351231114262bbb1d4757410f8d3bd93015157b2ea20be932c64558b2b28cd5"
+        }
+      ]
+    },
+    {
+      "name": "post-release-review",
+      "dir": "release/post-release-review",
+      "bodyFragments": [
+        "release/post-release-review/010-role.md",
+        "release/post-release-review/020-release-workflow.md"
+      ],
+      "metaHash": "sha256-d13dc79dcbc2118be9151937ca9a20be4bf1b5477ce6675f9d2a69fcc3dbd137",
+      "version": "sha256-a1b073d2a6572da14c70665fa582ca36d80fa540509907000103b61aa760eae3",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/post-release-review.md",
+          "kind": "file",
+          "hash": "sha256-d3b0c5566c8257ac759a2de628114eb5ce3a60fa20bea7ab543267007e4f4abf"
+        }
+      ]
+    },
+    {
+      "name": "product-discovery",
+      "dir": "sdlc/product-discovery",
+      "bodyFragments": [
+        "sdlc/product-discovery/010-role.md",
+        "sdlc/product-discovery/020-triage-workflow.md"
+      ],
+      "metaHash": "sha256-8af5405b14260f87e535fc9684400c60bf27b2053f438fcee17edbe85807bb70",
+      "version": "sha256-70531b8c3b81a3fb09b8f5a8564448f4e1f68334cdebbe72856465b515982ff3",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/product-discovery.md",
+          "kind": "file",
+          "hash": "sha256-357428a19b81a78956ac9cf7269faa1083931676935a8850d5c25f8c8d61c79a"
+        }
+      ]
+    },
+    {
+      "name": "prompt-compiler-guardian",
+      "dir": "internal/prompt-compiler-guardian",
+      "bodyFragments": [
+        "internal/prompt-compiler-guardian/010-role.md",
+        "internal/prompt-compiler-guardian/020-internal-coordination.md"
+      ],
+      "metaHash": "sha256-2d6ff3c8cac5968d7f28c07ecea80ef1cdd73e37bb40be2ca018916d95d7b3c5",
+      "version": "sha256-172f14e675fe41900c13567ca9f4519b54e06b4eca441cdbec6b959fd97389e4",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/prompt-compiler-guardian.md",
+          "kind": "file",
+          "hash": "sha256-c8e73c7a5ed3aaefad7784341441a0d3250a08d14a8de116b0682c6474016571"
+        }
+      ]
+    },
+    {
+      "name": "prompt-injection-test",
+      "dir": "governance/prompt-injection-test",
+      "bodyFragments": [
+        "governance/prompt-injection-test/010-role.md",
+        "governance/prompt-injection-test/020-governance-workflow.md"
+      ],
+      "metaHash": "sha256-38f0cbd171d4e24a6956e24799621394ff8e87d17f8cdbcf80327db2c3eaf4f5",
+      "version": "sha256-f87de921e528e26d8fb37a7de7e74b5cad880088b4659ad5a8b3368b866bb8f5",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/prompt-injection-test.md",
+          "kind": "file",
+          "hash": "sha256-563308d690c8c9eeecdd1d38d7c5517eed0fd60c69a79fc37768a6a753628e4c"
+        }
+      ]
+    },
+    {
+      "name": "qa-strategy",
+      "dir": "stlc/qa-strategy",
+      "bodyFragments": [
+        "stlc/qa-strategy/010-role.md",
+        "stlc/qa-strategy/020-stlc-workflow.md"
+      ],
+      "metaHash": "sha256-c59b588b0a657274232fd2c4957f9dea546234d9046a7ce33c9d84ccf565058c",
+      "version": "sha256-c1fd40629c99721a35576396da2651aafd49aec740d961efb6a88b7273186195",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/qa-strategy.md",
+          "kind": "file",
+          "hash": "sha256-b495fbbfdf054b62adccacefdf46eaa3bfcb3ddfc2c50c23b14ffefce108e4e2"
+        }
+      ]
+    },
+    {
+      "name": "regression-scope",
+      "dir": "stlc/regression-scope",
+      "bodyFragments": [
+        "stlc/regression-scope/010-role.md",
+        "stlc/regression-scope/020-stlc-workflow.md"
+      ],
+      "metaHash": "sha256-9571f39fb0c853521fd00e92d06d933182dd603b4a1ae5ca422c2c72d25e2978",
+      "version": "sha256-31dfcb3731ec56c3ab0887f9a2a8e72990f3288aecbdc955387a0f78437bac07",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/regression-scope.md",
+          "kind": "file",
+          "hash": "sha256-a3045fd7103ed6fa7fba999a9c1396d6a804fc6bd4a75d3456d6d510d624aadc"
+        }
+      ]
+    },
+    {
+      "name": "release-manager",
+      "dir": "release/release-manager",
+      "bodyFragments": [
+        "release/release-manager/010-role.md",
+        "release/release-manager/020-release-workflow.md"
+      ],
+      "metaHash": "sha256-ec51aa3736b2cbab924dd2fcc3d977f24f1cb1aba8d27fb4be156d8a709b2187",
+      "version": "sha256-bda305c10990a086c8182afac67672f0168c9670fe23703dfdc5653544623f3e",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/release-manager.md",
+          "kind": "file",
+          "hash": "sha256-7b9ca7959dcd309d2af919ee7b3e0e92ed603ae2c62b8b69a2f232f243536faf"
+        }
+      ]
+    },
+    {
+      "name": "requirements-analyst",
+      "dir": "sdlc/requirements-analyst",
+      "bodyFragments": [
+        "sdlc/requirements-analyst/010-role.md",
+        "sdlc/requirements-analyst/020-validation.md"
+      ],
+      "metaHash": "sha256-164bce9de83109b19deea594c1bb230fe18c82bd02b99233436960000c58ada8",
+      "version": "sha256-6b2c649704f05941cdbcb4ebec83e9cecfe69518ca06342a2c1fae5dd1947cb8",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/requirements-analyst.md",
+          "kind": "file",
+          "hash": "sha256-6464c9d2bc75a1fd83b0e77fc73f8ec51990fed75812d91395b0a055131addbb"
+        }
+      ]
+    },
+    {
+      "name": "risk-register",
+      "dir": "governance/risk-register",
+      "bodyFragments": [
+        "governance/risk-register/010-role.md",
+        "governance/risk-register/020-risk-classification.md"
+      ],
+      "metaHash": "sha256-f754afa305b3456ad06f134976405b104d2625af2b71210b21106b5163477ff2",
+      "version": "sha256-028f3d88fd6fb6e87cd1f6b413b937ed270ece48d7da91d86970086f82b65eee",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/risk-register.md",
+          "kind": "file",
+          "hash": "sha256-c8e5f317a5430e3ef450feeaad89f8ca32badcc1487d3ae9d8d53b9298834d22"
+        }
+      ]
+    },
+    {
+      "name": "schema-design",
+      "dir": "sdlc/schema-design",
+      "bodyFragments": [
+        "sdlc/schema-design/010-role.md",
+        "sdlc/schema-design/020-validation.md"
+      ],
+      "metaHash": "sha256-cadccc9f0b1a2fcdc0fe6076f4b41e476578dd42ddd935ace7bd88e08ec18d35",
+      "version": "sha256-0ef345401c55d89d15a0d55f092f0582b4e9be42c02e216a321efb5ea3f39f95",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/schema-design.md",
+          "kind": "file",
+          "hash": "sha256-c427aa6f6d9465760cbe85b1c87fc1ff8696022f7e755621f13a8f5b45e7dbae"
+        }
+      ]
+    },
+    {
+      "name": "secret-leakage-detection",
+      "dir": "governance/secret-leakage-detection",
+      "bodyFragments": [
+        "governance/secret-leakage-detection/010-role.md",
+        "governance/secret-leakage-detection/020-patterns.md"
+      ],
+      "metaHash": "sha256-52b102d84f308eea3c7cd251ce9c07bc1f074716edca32746aedcf097ab81ff6",
+      "version": "sha256-2d2f14e0fc1ce2b2e5801923f552df9b513d52d4e767d281a02892d705c00637",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/secret-leakage-detection.md",
+          "kind": "file",
+          "hash": "sha256-0e507ea606a042db79fd87303b946aa46a2b7e1ba2175c18ed21cbd48d1c442a"
+        }
+      ]
+    },
+    {
+      "name": "security-review",
+      "dir": "governance/security-review",
+      "bodyFragments": [
+        "governance/security-review/010-role.md",
+        "governance/security-review/020-threat-assessment.md"
+      ],
+      "metaHash": "sha256-5555c42229ade6c8376350596239cfbb2c0d17249b440b54d94307028fe9d611",
+      "version": "sha256-b6f91d4340bef86699e4ede35b5f181b1ed8930622ef96c33fb37f7f316c866b",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/security-review.md",
+          "kind": "file",
+          "hash": "sha256-071fcfb8eba839b73fed2daef8972121afe29acd45c89f8d22916331b3483fb5"
+        }
+      ]
+    },
+    {
+      "name": "semantic-regression",
+      "dir": "stlc/semantic-regression",
+      "bodyFragments": [
+        "stlc/semantic-regression/010-role.md",
+        "stlc/semantic-regression/020-detection.md"
+      ],
+      "metaHash": "sha256-90b29dece1359614573f0ac1e849d78bfe18f1fd35176e19290cff024bb8bb55",
+      "version": "sha256-c8a9bde93723210350275f76f0a82e02ca784fb673042dde3e89536fd631e145",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/semantic-regression.md",
+          "kind": "file",
+          "hash": "sha256-b564dbec00c2035c161acf649abe5173c7d7ae0e125a79009cf3bd23fc6aa149"
+        }
+      ]
+    },
+    {
+      "name": "supply-chain-risk",
+      "dir": "governance/supply-chain-risk",
+      "bodyFragments": [
+        "governance/supply-chain-risk/010-role.md",
+        "governance/supply-chain-risk/020-governance-workflow.md"
+      ],
+      "metaHash": "sha256-a7fb48310cefb603fa0620773e2769943a56a0274662d0934be158162b6d0a79",
+      "version": "sha256-b4316e49d1de37321403cbda499de3982558de6bc6a44ad11c95f93f8b76465f",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/supply-chain-risk.md",
+          "kind": "file",
+          "hash": "sha256-7860eec96df2700a497f93b5da27fed39726688ff5f16e05c40752854cdfbf93"
+        }
+      ]
+    },
+    {
+      "name": "test-automation",
+      "dir": "stlc/test-automation",
+      "bodyFragments": [
+        "stlc/test-automation/010-role.md",
+        "stlc/test-automation/020-stlc-workflow.md"
+      ],
+      "metaHash": "sha256-b60d3ce53960087138c0c36012b7310d0757ee32a0a56ef46bd26101c1277482",
+      "version": "sha256-661d425e522ddc32cb6b874266fe29ae335bf2ca929a2de12d027fcf9970ee44",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/test-automation.md",
+          "kind": "file",
+          "hash": "sha256-4c23219eaaf91e32f4213a93dbc90efe56bf4135a53c8ab90d751372fbe6b225"
+        }
+      ]
+    },
+    {
+      "name": "test-design",
+      "dir": "stlc/test-design",
+      "bodyFragments": [
+        "stlc/test-design/010-role.md",
+        "stlc/test-design/020-stlc-workflow.md"
+      ],
+      "metaHash": "sha256-b0d19b0fd93eb06bf5b391842f6b81176e1d95c293babef3cee962e91f65ad7c",
+      "version": "sha256-2d2e73ac0e371578b11eca97de5b50c98595d225883728ae290c568044758521",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/test-design.md",
+          "kind": "file",
+          "hash": "sha256-c95c1edb8618d19a192af2c2640275b6fb6e91f9c4279e276eb0e11e85058d2f"
+        }
+      ]
+    },
+    {
+      "name": "traceability",
+      "dir": "governance/traceability",
+      "bodyFragments": [
+        "governance/traceability/010-role.md",
+        "governance/traceability/020-governance-workflow.md"
+      ],
+      "metaHash": "sha256-c6efa2b4d7f9ea4515d7a8a749f9331998d0ac84ab01a91beff9643c1bed9d7c",
+      "version": "sha256-4772b20ce46957365c019889dcb4aed44a1a23f48cdc840d9ab91bd6f574a0a2",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/traceability.md",
+          "kind": "file",
+          "hash": "sha256-6ab1eaf9ca8c089c28ae42618456786c89510d481a75273d8976ff605036df1d"
+        }
+      ]
+    },
+    {
+      "name": "versioning",
+      "dir": "release/versioning",
+      "bodyFragments": [
+        "release/versioning/010-role.md",
+        "release/versioning/020-release-workflow.md"
+      ],
+      "metaHash": "sha256-45a9acd80d2ede3d53eab3c42151e7372749ed17d8ed197fb8ff8cadb25bbe39",
+      "version": "sha256-e07ac9aab6309eee7aecdbc8d09c071c365e73007cfc648d71479c83f1edb9de",
+      "outputs": [
+        {
+          "platform": "claude",
+          "path": ".claude/agents/versioning.md",
+          "kind": "file",
+          "hash": "sha256-1e02483dc4e03ecc5058aed395c1dffab6a4b25bee1960ecc2a69522e063a95d"
+        }
+      ]
+    }
+  ],
+  "fragments": [
+    {
+      "id": "governance/gatekeeper/010-role.md",
+      "hash": "sha256-e77c615f390be035f953120e05496c12db75bf0a7a01c971135b9584cbd0a348",
+      "bytes": 865,
+      "tags": []
+    },
+    {
+      "id": "governance/gatekeeper/020-governance-workflow.md",
+      "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
+      "bytes": 862,
+      "tags": []
+    },
+    {
+      "id": "governance/policy-compliance/010-role.md",
+      "hash": "sha256-b9ab9cd0a16ee7622fb3ac47457b7165a916752767c5a7117e475b0461919ed8",
+      "bytes": 872,
+      "tags": []
+    },
+    {
+      "id": "governance/policy-compliance/020-governance-workflow.md",
+      "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
+      "bytes": 862,
+      "tags": []
+    },
+    {
+      "id": "governance/prompt-injection-test/010-role.md",
+      "hash": "sha256-67377a28dfd7a3ceed81a517e1c6dfb32e895dbb581f246a7cc04626a24980f6",
+      "bytes": 892,
+      "tags": []
+    },
+    {
+      "id": "governance/prompt-injection-test/020-governance-workflow.md",
+      "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
+      "bytes": 862,
+      "tags": []
+    },
+    {
+      "id": "governance/risk-register/010-role.md",
+      "hash": "sha256-c354b115e81ae48aec2cd585529fa7f8ed2d702284ca63294a532b817c3d40f4",
+      "bytes": 1848,
+      "tags": []
+    },
+    {
+      "id": "governance/risk-register/020-risk-classification.md",
+      "hash": "sha256-40d75028314706944170b95106d54eab277f0edbab0e891e93f9f8720c9a9efe",
+      "bytes": 2697,
+      "tags": []
+    },
+    {
+      "id": "governance/secret-leakage-detection/010-role.md",
+      "hash": "sha256-0bf4932d5766282d4ef85917fbc048f0774aa64e236c90e3258feed1ec052b29",
+      "bytes": 246,
+      "tags": []
+    },
+    {
+      "id": "governance/secret-leakage-detection/020-patterns.md",
+      "hash": "sha256-4a22c0c25d684ea9bb54d3acc7ec22ff17a1f957297eb103a4d6118686a7b45a",
+      "bytes": 509,
+      "tags": []
+    },
+    {
+      "id": "governance/security-review/010-role.md",
+      "hash": "sha256-bfc767dd5de77cde59347e57a0b4aec931826296adb21d9161d30aa9f57de2c7",
+      "bytes": 1539,
+      "tags": []
+    },
+    {
+      "id": "governance/security-review/020-threat-assessment.md",
+      "hash": "sha256-41af9bf32573ebc31b4380611d45df3f44bb18cfb196e955eeb024c3e53d17c0",
+      "bytes": 2336,
+      "tags": []
+    },
+    {
+      "id": "governance/supply-chain-risk/010-role.md",
+      "hash": "sha256-9b1f3f84b55666f56f724e050e2b4b07e91b89ff8e5f15bc57142c6d0e84b0fe",
+      "bytes": 880,
+      "tags": []
+    },
+    {
+      "id": "governance/supply-chain-risk/020-governance-workflow.md",
+      "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
+      "bytes": 862,
+      "tags": []
+    },
+    {
+      "id": "governance/traceability/010-role.md",
+      "hash": "sha256-c71be7743e4a4da0a97114d95f2aa82ab96159fc7accd40802e9698201a00007",
+      "bytes": 880,
+      "tags": []
+    },
+    {
+      "id": "governance/traceability/020-governance-workflow.md",
+      "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
+      "bytes": 862,
+      "tags": []
+    },
+    {
+      "id": "internal/agent-behavior-reviewer/010-role.md",
+      "hash": "sha256-e720d1e9570ae041caf09a75dd3440aebc7a260880bfd223f59cc3082d5040a8",
+      "bytes": 889,
+      "tags": []
+    },
+    {
+      "id": "internal/agent-behavior-reviewer/020-internal-coordination.md",
+      "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
+      "bytes": 1038,
+      "tags": []
+    },
+    {
+      "id": "internal/agent-documentation/010-role.md",
+      "hash": "sha256-15b35b77c7807ad867a775c2c3aa71bd49c80ac4d7c55dc9e8e420f736d5fdce",
+      "bytes": 879,
+      "tags": []
+    },
+    {
+      "id": "internal/agent-documentation/020-internal-coordination.md",
+      "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
+      "bytes": 1038,
+      "tags": []
+    },
+    {
+      "id": "internal/agent-migration/010-role.md",
+      "hash": "sha256-6ae01894f38b342c5b2f9c5d69147583fa76e8b00d5bb1c7a030b2766e53149c",
+      "bytes": 884,
+      "tags": []
+    },
+    {
+      "id": "internal/agent-migration/020-internal-coordination.md",
+      "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
+      "bytes": 1038,
+      "tags": []
+    },
+    {
+      "id": "internal/agent-registry/010-role.md",
+      "hash": "sha256-7de02b2820505372fbca3fda71739f7a79eab2fde10b97d8f2c69e3dbb2f1fa5",
+      "bytes": 874,
+      "tags": []
+    },
+    {
+      "id": "internal/agent-registry/020-internal-coordination.md",
+      "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
+      "bytes": 1038,
+      "tags": []
+    },
+    {
+      "id": "internal/conflict-detector/010-role.md",
+      "hash": "sha256-49fd8b83973217be2106ef7d9bcfb87abdde8ae250d34121f2a7f2b1a32dedff",
+      "bytes": 880,
+      "tags": []
+    },
+    {
+      "id": "internal/conflict-detector/020-internal-coordination.md",
+      "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
+      "bytes": 1038,
+      "tags": []
+    },
+    {
+      "id": "internal/definition-architect/010-role.md",
+      "hash": "sha256-8d57524f2fe3f27e3a430fa1df81e2ccb37a9ceb8fb7f57de215e1027f4bb867",
+      "bytes": 882,
+      "tags": []
+    },
+    {
+      "id": "internal/definition-architect/020-internal-coordination.md",
+      "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
+      "bytes": 1038,
+      "tags": []
+    },
+    {
+      "id": "internal/instruction-block-author/010-role.md",
+      "hash": "sha256-cfb70091a59fee4315b3031e4da2023f57ea9ed7fd560a86b655c0ac8a9ce234",
+      "bytes": 892,
+      "tags": []
+    },
+    {
+      "id": "internal/instruction-block-author/020-internal-coordination.md",
+      "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
+      "bytes": 1038,
+      "tags": []
+    },
+    {
+      "id": "internal/instruction-refactoring/010-role.md",
+      "hash": "sha256-68dd80093c10f5040d7a3a3633483822d01b600a55ed9e130108f14e927d7934",
+      "bytes": 888,
+      "tags": []
+    },
+    {
+      "id": "internal/instruction-refactoring/020-internal-coordination.md",
+      "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
+      "bytes": 1038,
+      "tags": []
+    },
+    {
+      "id": "internal/main-orchestrator/010-role.md",
+      "hash": "sha256-98406647b46c19528514b7d320c363b76d3d6fe17b84a07ce838c91075f17c14",
+      "bytes": 882,
+      "tags": []
+    },
+    {
+      "id": "internal/main-orchestrator/020-internal-coordination.md",
+      "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
+      "bytes": 1038,
+      "tags": []
+    },
+    {
+      "id": "internal/prompt-compiler-guardian/010-role.md",
+      "hash": "sha256-4b021d300e37d414a9bad87b7d6bcb64dd4ea671377b2f9ae14a1b3b9b59470e",
+      "bytes": 877,
+      "tags": []
+    },
+    {
+      "id": "internal/prompt-compiler-guardian/020-internal-coordination.md",
+      "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
+      "bytes": 1038,
+      "tags": []
+    },
+    {
+      "id": "release/changelog/010-role.md",
+      "hash": "sha256-0c6681ff0e58b9977703372232217c59b2d1b1fc41584b4cf30ede015593cb40",
+      "bytes": 869,
+      "tags": []
+    },
+    {
+      "id": "release/changelog/020-release-workflow.md",
+      "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
+      "bytes": 1144,
+      "tags": []
+    },
+    {
+      "id": "release/evidence-collector/010-role.md",
+      "hash": "sha256-3cdbb9e5569672e1dbb38914ea7592be0a11432c9d7e34212daeab22a37c48ee",
+      "bytes": 876,
+      "tags": []
+    },
+    {
+      "id": "release/evidence-collector/020-release-workflow.md",
+      "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
+      "bytes": 1144,
+      "tags": []
+    },
+    {
+      "id": "release/migration-guide/010-role.md",
+      "hash": "sha256-088da712757b81f1f4b88ba871d021d7950e61971bfe6504a2a12bea8e8a07d5",
+      "bytes": 880,
+      "tags": []
+    },
+    {
+      "id": "release/migration-guide/020-release-workflow.md",
+      "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
+      "bytes": 1144,
+      "tags": []
+    },
+    {
+      "id": "release/post-release-review/010-role.md",
+      "hash": "sha256-37f8734ac7d27476501403502d881138ab296631da6c338c1dc00c7729c2621d",
+      "bytes": 884,
+      "tags": []
+    },
+    {
+      "id": "release/post-release-review/020-release-workflow.md",
+      "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
+      "bytes": 1144,
+      "tags": []
+    },
+    {
+      "id": "release/release-manager/010-role.md",
+      "hash": "sha256-df025cfb0ef415a2f013f588514e73cc7fbc3dfad4e1e0f3f72bfb68b38a366f",
+      "bytes": 875,
+      "tags": []
+    },
+    {
+      "id": "release/release-manager/020-release-workflow.md",
+      "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
+      "bytes": 1144,
+      "tags": []
+    },
+    {
+      "id": "release/versioning/010-role.md",
+      "hash": "sha256-d8d5fa24be6d356f7b53432a1ad7524636a55799b9b0d00c5494aa3f6ff9cf0a",
+      "bytes": 876,
+      "tags": []
+    },
+    {
+      "id": "release/versioning/020-release-workflow.md",
+      "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
+      "bytes": 1144,
+      "tags": []
+    },
+    {
+      "id": "sdlc/adr-writer/010-role.md",
+      "hash": "sha256-0ada8274c0fd1f26cf925cbeb91b50076c54a29f92dac1f39ea52c3fddb0d361",
+      "bytes": 301,
+      "tags": []
+    },
+    {
+      "id": "sdlc/adr-writer/020-adrs.md",
+      "hash": "sha256-ac515fb8fe43e8ab8220a90fed095492c326f108b5c1cf38da3704346cc9411b",
+      "bytes": 596,
+      "tags": []
+    },
+    {
+      "id": "sdlc/ambiguity-detector/010-role.md",
+      "hash": "sha256-a2ac829afc01f2912f2462b23382e1888e8ab43ae687d1206c507ed610d3555f",
+      "bytes": 241,
+      "tags": []
+    },
+    {
+      "id": "sdlc/ambiguity-detector/020-patterns.md",
+      "hash": "sha256-776ca169e741e804a9ceb4daa7904711c234060202a4b6aa5ee5ebb4945df8fa",
+      "bytes": 577,
+      "tags": []
+    },
+    {
+      "id": "sdlc/architecture/010-role.md",
+      "hash": "sha256-65b1943a4495df4906745896c944150dba02a1e5851da758e96bfa143b2bf7c9",
+      "bytes": 227,
+      "tags": []
+    },
+    {
+      "id": "sdlc/architecture/020-review.md",
+      "hash": "sha256-e42452baecc600c802a537b5c940564954ff00cf9da9a3f9e64e20f14d1623ea",
+      "bytes": 398,
+      "tags": []
+    },
+    {
+      "id": "sdlc/code-review/010-role.md",
+      "hash": "sha256-fd72ce0f92b63e366fdd6a36c73257ffee6199a150ee48dc303e56aa51faaf27",
+      "bytes": 1634,
+      "tags": []
+    },
+    {
+      "id": "sdlc/code-review/020-review-guidelines.md",
+      "hash": "sha256-a2d68f5358fc066f8a4c4bfa5d561c5bfd361b8027c5b69546838fe679c8e252",
+      "bytes": 1858,
+      "tags": []
+    },
+    {
+      "id": "sdlc/developer-experience/010-role.md",
+      "hash": "sha256-a8a186ab534af471f112993ccfe62b34fc7526f525f0f3f347ff47b1f7a5cdd9",
+      "bytes": 887,
+      "tags": []
+    },
+    {
+      "id": "sdlc/developer-experience/020-sdlc-workflow.md",
+      "hash": "sha256-3722f38a14c64237357ee887025601569c97d2b72718fee215e9a25d2ddc7668",
+      "bytes": 1257,
+      "tags": []
+    },
+    {
+      "id": "sdlc/documentation/010-role.md",
+      "hash": "sha256-4d51285dda6b998f69d5e011d7dad33a3d88b9c6c4671f6f225f685c753125ac",
+      "bytes": 871,
+      "tags": []
+    },
+    {
+      "id": "sdlc/documentation/020-sdlc-workflow.md",
+      "hash": "sha256-3722f38a14c64237357ee887025601569c97d2b72718fee215e9a25d2ddc7668",
+      "bytes": 1257,
+      "tags": []
+    },
+    {
+      "id": "sdlc/implementation-planning/010-role.md",
+      "hash": "sha256-a3c80bf5303c930399fe051a566b857874706049fc60d1f07a83138a9e8233c9",
+      "bytes": 895,
+      "tags": []
+    },
+    {
+      "id": "sdlc/implementation-planning/020-sdlc-workflow.md",
+      "hash": "sha256-3722f38a14c64237357ee887025601569c97d2b72718fee215e9a25d2ddc7668",
+      "bytes": 1257,
+      "tags": []
+    },
+    {
+      "id": "sdlc/product-discovery/010-role.md",
+      "hash": "sha256-8e3693aec706935bfebdbde37060027cd9c92e94f8199bfcc54cd16c2d702758",
+      "bytes": 353,
+      "tags": []
+    },
+    {
+      "id": "sdlc/product-discovery/020-triage-workflow.md",
+      "hash": "sha256-4fb81e40d20403da9ca0828275a2ffeda23a9a27f8f37f0b60ab7bdc983c8a2e",
+      "bytes": 550,
+      "tags": []
+    },
+    {
+      "id": "sdlc/requirements-analyst/010-role.md",
+      "hash": "sha256-5a43d85627ff32174f78dfc1f14e6432c14ba7058f3a90e7c3dcdfe746245b5d",
+      "bytes": 268,
+      "tags": []
+    },
+    {
+      "id": "sdlc/requirements-analyst/020-validation.md",
+      "hash": "sha256-960ab48778ef2d4a929c4db6f9ef211b781550011e453f06434bace5bcbed3ce",
+      "bytes": 371,
+      "tags": []
+    },
+    {
+      "id": "sdlc/schema-design/010-role.md",
+      "hash": "sha256-3176c91cf54b8d9131c6367ee12c5ed34794200d40cbaa03f0ac9d930558e2b6",
+      "bytes": 247,
+      "tags": []
+    },
+    {
+      "id": "sdlc/schema-design/020-validation.md",
+      "hash": "sha256-1d35d748aedf0cf372ebee7e3472d08e23e1de2dc3eee097fa01eb90fc441cd4",
+      "bytes": 429,
+      "tags": []
+    },
+    {
+      "id": "stlc/compatibility-test/010-role.md",
+      "hash": "sha256-fa14d8acdbdc6d0a3fba2c966d577d1dd7ccdb21d7a84c9abdadc4fb79f7583c",
+      "bytes": 883,
+      "tags": []
+    },
+    {
+      "id": "stlc/compatibility-test/020-stlc-workflow.md",
+      "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
+      "bytes": 1751,
+      "tags": []
+    },
+    {
+      "id": "stlc/defect-triage/010-role.md",
+      "hash": "sha256-9fbca59819fe9fe4897bfd880577c8dde21324c769105d4fe8a09671467ee8dc",
+      "bytes": 872,
+      "tags": []
+    },
+    {
+      "id": "stlc/defect-triage/020-stlc-workflow.md",
+      "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
+      "bytes": 1751,
+      "tags": []
+    },
+    {
+      "id": "stlc/eval-designer/010-role.md",
+      "hash": "sha256-ce43fb739aabbd38673287ed8135efc242c019888af00dfea8478b74ae1272f5",
+      "bytes": 1467,
+      "tags": []
+    },
+    {
+      "id": "stlc/eval-designer/020-eval-workflow.md",
+      "hash": "sha256-ed45dae3f0100c7219c3885eeaff548951a3f2eb427618164f9fa93ad1fa7440",
+      "bytes": 3901,
+      "tags": []
+    },
+    {
+      "id": "stlc/golden-file-test/010-role.md",
+      "hash": "sha256-4852967f028fad7ea40664e375fce9c6ee9807ab52044519874573d0296a647d",
+      "bytes": 261,
+      "tags": []
+    },
+    {
+      "id": "stlc/golden-file-test/020-workflow.md",
+      "hash": "sha256-9f919c6e3ff48605df4580262c149472607b74b0c2a9446551dcb19acbdf10e6",
+      "bytes": 523,
+      "tags": []
+    },
+    {
+      "id": "stlc/performance-test/010-role.md",
+      "hash": "sha256-fc2ed55ce3707fc4d2b3fa0787cfcc516bb69fabf3aca79358bc5c80892cead9",
+      "bytes": 876,
+      "tags": []
+    },
+    {
+      "id": "stlc/performance-test/020-stlc-workflow.md",
+      "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
+      "bytes": 1751,
+      "tags": []
+    },
+    {
+      "id": "stlc/qa-strategy/010-role.md",
+      "hash": "sha256-174efe7c0c478f3878f0a5b071754b234ae74dce3595b471ae11e781aa59c9ec",
+      "bytes": 864,
+      "tags": []
+    },
+    {
+      "id": "stlc/qa-strategy/020-stlc-workflow.md",
+      "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
+      "bytes": 1751,
+      "tags": []
+    },
+    {
+      "id": "stlc/regression-scope/010-role.md",
+      "hash": "sha256-6651a528cb3f9409702e207641866913f6a11c7b09907f055a8169e9f0589d26",
+      "bytes": 877,
+      "tags": []
+    },
+    {
+      "id": "stlc/regression-scope/020-stlc-workflow.md",
+      "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
+      "bytes": 1751,
+      "tags": []
+    },
+    {
+      "id": "stlc/semantic-regression/010-role.md",
+      "hash": "sha256-2483a167aae471c5c3411268814f4eb3064de3c22a9293296ab3f51bfe7fe243",
+      "bytes": 282,
+      "tags": []
+    },
+    {
+      "id": "stlc/semantic-regression/020-detection.md",
+      "hash": "sha256-07fee07bd163c46ddc5e43d85523d1b086f205ee44f79c8f2078c9bc5720a172",
+      "bytes": 562,
+      "tags": []
+    },
+    {
+      "id": "stlc/test-automation/010-role.md",
+      "hash": "sha256-b940b9d61bbc13f87d97b966dfa1b3ccba6a4164a7f05b66fb3f612911e69755",
+      "bytes": 880,
+      "tags": []
+    },
+    {
+      "id": "stlc/test-automation/020-stlc-workflow.md",
+      "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
+      "bytes": 1751,
+      "tags": []
+    },
+    {
+      "id": "stlc/test-design/010-role.md",
+      "hash": "sha256-93e57dbe4716fb7575acd14672249429882d27109fa34db44effc95645c379d8",
+      "bytes": 867,
+      "tags": []
+    },
+    {
+      "id": "stlc/test-design/020-stlc-workflow.md",
+      "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
+      "bytes": 1751,
+      "tags": []
+    }
+  ],
+  "targets": []
+}

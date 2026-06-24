@@ -1,6 +1,4 @@
 name: prompt-compiler-guardian
-description: |
-  Monitor compiler output quality
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for internal workflow - prompt-compiler-guardian
+model: balanced
+permissions: read-only

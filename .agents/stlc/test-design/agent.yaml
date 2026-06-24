@@ -1,6 +1,4 @@
 name: test-design
-description: |
-  Design test cases for new features
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for stlc workflow - test-design
+model: balanced
+permissions: read-only

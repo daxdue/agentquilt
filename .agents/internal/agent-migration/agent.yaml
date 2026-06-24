@@ -1,6 +1,4 @@
-name: agent-mogration
-description: |
-  Help migrate agent definitions between versions
-model: claude-opus-4-8
-permissions:
-  - read-only
+name: agent-migration
+description: Meta-agent for internal workflow - agent-migration
+model: balanced
+permissions: read-only

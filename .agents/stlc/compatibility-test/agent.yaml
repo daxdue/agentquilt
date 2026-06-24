@@ -1,6 +1,4 @@
 name: compatibility-test
-description: |
-  Test backward compatibility across versions
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for stlc workflow - compatibility-test
+model: balanced
+permissions: read-only

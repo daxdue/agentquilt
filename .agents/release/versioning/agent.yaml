@@ -1,6 +1,4 @@
 name: versioning
-description: |
-  Validate semver compliance and version bumps
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for release workflow - versioning
+model: balanced
+permissions: read-only

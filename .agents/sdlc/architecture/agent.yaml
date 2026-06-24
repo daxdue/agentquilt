@@ -1,4 +1,4 @@
 name: architecture
-description: Review architectural changes and design decisions.
-model: claude-opus-4-8
-permissions: [read-only]
+description: Meta-agent for sdlc workflow - architecture
+model: balanced
+permissions: read-only

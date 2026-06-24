@@ -1,6 +1,4 @@
 name: migration-guide
-description: |
-  Write migration guides for breaking changes
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for release workflow - migration-guide
+model: balanced
+permissions: read-only

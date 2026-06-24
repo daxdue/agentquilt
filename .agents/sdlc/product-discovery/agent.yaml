@@ -1,4 +1,4 @@
 name: product-discovery
-description: Issue intake triage and deduplication for the product-discovery phase.
-model: claude-opus-4-8
-permissions: [read-only]
+description: Meta-agent for sdlc workflow - product-discovery
+model: balanced
+permissions: read-only

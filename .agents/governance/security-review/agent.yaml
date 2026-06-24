@@ -1,8 +1,4 @@
 name: security-review
-description: |
-  Targeted security review of high-risk PRs. Scan diffs for path traversal risks,
-  secrets, injection vectors, and hardcoded assumptions. Generate adversarial
-  test inputs for eval suite.
-model: claude-opus-4-8
-permissions:
-  - read-only  # Read PR diff, test fixtures, secrets database; cannot approve
+description: Meta-agent for governance workflow - security-review
+model: balanced
+permissions: read-only

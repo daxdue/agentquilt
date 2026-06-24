@@ -1,6 +1,4 @@
 name: gatekeeper
-description: |
-  Gate policy enforcement and audit
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for governance workflow - gatekeeper
+model: balanced
+permissions: read-only

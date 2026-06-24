@@ -1,6 +1,4 @@
 name: implementation-planning
-description: |
-  Create implementation roadmaps and task breakdowns
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for sdlc workflow - implementation-planning
+model: balanced
+permissions: read-only

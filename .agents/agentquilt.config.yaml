@@ -1,0 +1,89 @@
+version: 1
+sourceDir: .
+defaultModelTier: balanced
+modelTiers:
+  frontier:
+    claude: claude-opus-4-8
+  balanced:
+    claude: claude-sonnet-4-6
+  fast:
+    claude: claude-haiku-4-5
+
+# Compile all meta-agents to per-platform outputs
+# Run from .agents/ directory: agentquilt build -c agentquilt.config.yaml
+# Output: ../.claude/agents/<agent-name>.md for each meta-agent
+
+targets:
+  # Governance meta-agents
+  - kind: agent-definitions
+    agents:
+      - governance/risk-register
+      - governance/security-review
+      - governance/gatekeeper
+      - governance/policy-compliance
+      - governance/prompt-injection-test
+      - governance/supply-chain-risk
+      - governance/traceability
+      - governance/secret-leakage-detection
+    platforms:
+      - claude
+
+  # SDLC meta-agents
+  - kind: agent-definitions
+    agents:
+      - sdlc/product-discovery
+      - sdlc/requirements-analyst
+      - sdlc/ambiguity-detector
+      - sdlc/architecture
+      - sdlc/adr-writer
+      - sdlc/schema-design
+      - sdlc/code-review
+      - sdlc/developer-experience
+      - sdlc/documentation
+      - sdlc/implementation-planning
+    platforms:
+      - claude
+
+  # STLC meta-agents
+  - kind: agent-definitions
+    agents:
+      - stlc/eval-designer
+      - stlc/golden-file-test
+      - stlc/semantic-regression
+      - stlc/test-design
+      - stlc/test-automation
+      - stlc/regression-scope
+      - stlc/qa-strategy
+      - stlc/compatibility-test
+      - stlc/defect-triage
+      - stlc/performance-test
+    platforms:
+      - claude
+
+  # Release meta-agents
+  - kind: agent-definitions
+    agents:
+      - release/release-manager
+      - release/changelog
+      - release/migration-guide
+      - release/evidence-collector
+      - release/post-release-review
+      - release/versioning
+    platforms:
+      - claude
+
+  # Internal meta-agents
+  - kind: agent-definitions
+    agents:
+      - internal/main-orchestrator
+      - internal/agent-registry
+      - internal/conflict-detector
+      - internal/agent-behavior-reviewer
+      - internal/agent-documentation
+      - internal/agent-migration
+      - internal/definition-architect
+      - internal/instruction-block-author
+      - internal/instruction-refactoring
+      - internal/prompt-compiler-guardian
+    platforms:
+      - claude

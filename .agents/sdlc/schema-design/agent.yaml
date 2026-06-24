@@ -1,4 +1,4 @@
 name: schema-design
-description: Review and validate schema changes (manifest, config, lock format).
-model: claude-opus-4-8
-permissions: [read-only]
+description: Meta-agent for sdlc workflow - schema-design
+model: balanced
+permissions: read-only

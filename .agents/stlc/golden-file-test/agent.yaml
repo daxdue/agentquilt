@@ -1,4 +1,4 @@
 name: golden-file-test
-description: Validate deterministic compiled output against golden fixtures.
-model: claude-opus-4-8
-permissions: [read-only]
+description: Meta-agent for stlc workflow - golden-file-test
+model: balanced
+permissions: read-only

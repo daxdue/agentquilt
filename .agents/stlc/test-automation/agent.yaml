@@ -1,6 +1,4 @@
 name: test-automation
-description: |
-  Automate test case generation and execution
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for stlc workflow - test-automation
+model: balanced
+permissions: read-only

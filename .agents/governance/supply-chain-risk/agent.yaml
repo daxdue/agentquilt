@@ -1,6 +1,4 @@
 name: supply-chain-risk
-description: |
-  Monitor dependency and supply chain risks
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for governance workflow - supply-chain-risk
+model: balanced
+permissions: read-only

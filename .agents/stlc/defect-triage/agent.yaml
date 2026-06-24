@@ -1,6 +1,4 @@
 name: defect-triage
-description: |
-  Classify and prioritize test failures
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for stlc workflow - defect-triage
+model: balanced
+permissions: read-only

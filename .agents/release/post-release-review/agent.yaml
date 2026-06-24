@@ -1,6 +1,4 @@
 name: post-release-review
-description: |
-  Post-release verification and rollback prep
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for release workflow - post-release-review
+model: balanced
+permissions: read-only

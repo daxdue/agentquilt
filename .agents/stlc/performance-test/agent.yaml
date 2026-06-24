@@ -1,6 +1,4 @@
 name: performance-test
-description: |
-  Test compiler performance and optimize
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for stlc workflow - performance-test
+model: balanced
+permissions: read-only

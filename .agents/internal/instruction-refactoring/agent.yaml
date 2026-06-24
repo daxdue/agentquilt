@@ -1,6 +1,4 @@
 name: instruction-refactoring
-description: |
-  Refactor and consolidate instruction blocks
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for internal workflow - instruction-refactoring
+model: balanced
+permissions: read-only

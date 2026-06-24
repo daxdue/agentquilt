@@ -1,8 +1,4 @@
 name: eval-designer
-description: |
-  Design and run behavioral evals for compiled agent outputs. Detect regressions
-  in agent behavior through static prompt checks and mock-response evals.
-  Compare semantic meaning of compiled prompts across versions.
-model: claude-opus-4-8
-permissions:
-  - read-only  # Read compiled outputs, eval baselines, PR descriptions
+description: Meta-agent for stlc workflow - eval-designer
+model: balanced
+permissions: read-only

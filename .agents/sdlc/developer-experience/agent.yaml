@@ -1,6 +1,4 @@
 name: developer-experience
-description: |
-  Improve agent dev ergonomics and productivity
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for sdlc workflow - developer-experience
+model: balanced
+permissions: read-only

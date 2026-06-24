@@ -1,6 +1,4 @@
 name: documentation
-description: |
-  Generate and maintain developer docs
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for sdlc workflow - documentation
+model: balanced
+permissions: read-only

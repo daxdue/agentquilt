@@ -1,6 +1,4 @@
 name: prompt-injection-test
-description: |
-  Test compiled prompts for injection vulnerability
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for governance workflow - prompt-injection-test
+model: balanced
+permissions: read-only

@@ -1,4 +1,4 @@
 name: requirements-analyst
-description: Validate requirements are testable, complete, and traceable.
-model: claude-opus-4-8
-permissions: [read-only]
+description: Meta-agent for sdlc workflow - requirements-analyst
+model: balanced
+permissions: read-only

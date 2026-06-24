@@ -1,4 +1,4 @@
 name: secret-leakage-detection
-description: Scan PRs for secrets (API keys, tokens, passwords, credentials) in code and fixtures.
-model: claude-opus-4-8
-permissions: [read-only]
+description: Meta-agent for governance workflow - secret-leakage-detection
+model: balanced
+permissions: read-only

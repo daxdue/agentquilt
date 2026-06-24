@@ -1,6 +1,4 @@
 name: instruction-block-author
-description: |
-  Draft instruction blocks based on requirements
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for internal workflow - instruction-block-author
+model: balanced
+permissions: read-only

@@ -1,6 +1,4 @@
 name: changelog
-description: |
-  Generate changelog from commit history
-model: claude-opus-4-8
-permissions:
-  - read-only
+description: Meta-agent for release workflow - changelog
+model: balanced
+permissions: read-only
