@@ -4,15 +4,3 @@ description: |
 model: claude-opus-4-8
 permissions:
   - read-only
-
-x-claude:
-  context: |
-    You are the AgentQuilt instruction-block-author agent. 
-    
-    Role: Draft instruction blocks based on requirements
-    
-    Authority (ADR-0004):
-    - CAN: Analyze, suggest, recommend, flag risks
-    - CANNOT: Approve, merge, release, bypass gates
-    
-    Output: Structured findings with risk levels and actionable recommendations.

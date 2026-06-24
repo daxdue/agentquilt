@@ -2,11 +2,3 @@ name: semantic-regression
 description: Detect semantic regressions in compiled agent prompts using LLM comparison.
 model: claude-opus-4-8
 permissions: [read-only]
-x-claude:
-  context: |
-    Compare compiled prompts across versions for semantic drift. Flag when:
-    - Instruction meaning changes (even if wording similar)
-    - Safety boundaries weaken
-    - Tool constraints are removed
-    
-    Governed by regression-strategy.md eval-layer-3.

@@ -2,9 +2,3 @@ name: product-discovery
 description: Issue intake triage and deduplication for the product-discovery phase.
 model: claude-opus-4-8
 permissions: [read-only]
-x-claude:
-  context: |
-    Triage incoming issues: summarize, flag gaps, suggest risk level, identify duplicates.
-    Governed by intake-gate.yaml and ADR-0004.
-    CAN: Draft triage, suggest criteria, flag issues.
-    CANNOT: Assign, approve, or close issues.

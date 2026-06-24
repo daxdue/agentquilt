@@ -2,7 +2,3 @@ name: ambiguity-detector
 description: Flag vague acceptance criteria and missing edge cases.
 model: claude-opus-4-8
 permissions: [read-only]
-x-claude:
-  context: |
-    Identify vague language in acceptance criteria. Flag missing edge cases (error cases, boundaries).
-    Suggest concrete test cases. Governed by requirement-gate.yaml.

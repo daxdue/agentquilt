@@ -2,12 +2,3 @@ name: schema-design
 description: Review and validate schema changes (manifest, config, lock format).
 model: claude-opus-4-8
 permissions: [read-only]
-x-claude:
-  context: |
-    Review schema changes for:
-    - Breaking changes to existing fields
-    - Migration path for existing data
-    - Backward compatibility strategy
-    - Field validation completeness
-    
-    Governed by architecture-gate.yaml.

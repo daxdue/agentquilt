@@ -2,8 +2,3 @@ name: golden-file-test
 description: Validate deterministic compiled output against golden fixtures.
 model: claude-opus-4-8
 permissions: [read-only]
-x-claude:
-  context: |
-    Verify compiled outputs (lock file, generated Markdown) match golden expected files.
-    Run golden-file-test.ts test suite and report results.
-    Governed by regression-strategy.md layer-2.
