@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-d63e405536571dc8cce095a7d2c031b055dc80309343e5f3d1f024d3fc2cbd66 · regenerate: npx agentquilt build -->
 ---
 name: requirements-analyst
 description: Meta-agent for sdlc workflow - requirements-analyst

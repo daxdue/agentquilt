@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-ff5327d8e9a760046d470ade06a991e3b03252b6c420f247267656db08cd999b · regenerate: npx agentquilt build -->
 ---
 name: migration-guide
 description: Meta-agent for release workflow - migration-guide

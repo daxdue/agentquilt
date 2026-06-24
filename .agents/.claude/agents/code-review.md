@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-70ae3c64a9e12a943ddc3af397aea2f81a956233c2e93fa9f018d217b67d90d7 · regenerate: npx agentquilt build -->
 ---
 name: code-review
 description: Meta-agent for sdlc workflow - code-review

@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-62e0f05dc8a2b634cd5af0381dc7f2d98b40b1420e7508fa1739fa54b9c3301d · regenerate: npx agentquilt build -->
 ---
 name: prompt-compiler-guardian
 description: Meta-agent for internal workflow - prompt-compiler-guardian

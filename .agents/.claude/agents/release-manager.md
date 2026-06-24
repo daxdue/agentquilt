@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-66a101e6140f4b47f85955e5346e7476e1719734550be37aa738e9af026faf83 · regenerate: npx agentquilt build -->
 ---
 name: release-manager
 description: Meta-agent for release workflow - release-manager

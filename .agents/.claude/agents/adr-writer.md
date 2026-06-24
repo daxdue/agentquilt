@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-53ff2ecf71262fc9b4b6c4fc2c641580b69077bac63eefcce2f16ce45ae81fa1 · regenerate: npx agentquilt build -->
 ---
 name: adr-writer
 description: Meta-agent for sdlc workflow - adr-writer

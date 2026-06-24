@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-129906a2648d19676d0bb12da35b272f67fdd968dd5c5e0334f16349189f4e63 · regenerate: npx agentquilt build -->
 ---
 name: risk-register
 description: Meta-agent for governance workflow - risk-register

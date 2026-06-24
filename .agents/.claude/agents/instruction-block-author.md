@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-71a74a96888720304b090a87ad48fffe0223afef48cbcb91aa38f4f1ba0b0ce8 · regenerate: npx agentquilt build -->
 ---
 name: instruction-block-author
 description: Meta-agent for internal workflow - instruction-block-author

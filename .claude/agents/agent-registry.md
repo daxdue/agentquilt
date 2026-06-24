@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-bde9aff0d2271a4ce734d19bffbec1c8946db5dbc8040fdb183b372a30ba1373 · regenerate: npx agentquilt build -->
 ---
 name: agent-registry
 description: Meta-agent for internal workflow - agent-registry

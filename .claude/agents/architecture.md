@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-abce6a530c9313c66859a43b99229d927aa55c6f782e17a7ea250c981224b90f · regenerate: npx agentquilt build -->
 ---
 name: architecture
 description: Meta-agent for sdlc workflow - architecture

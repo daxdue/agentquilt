@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-5a1f64d3b228cfae9c744b31ad021aea98ef8836f7f37cc3a54d92d0525d5272 · regenerate: npx agentquilt build -->
 ---
 name: eval-designer
 description: Meta-agent for stlc workflow - eval-designer

@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-73e43c6e7a1cd1f6742331f8e057489050603e2aa2db48affe0e47ef41faf47f · regenerate: npx agentquilt build -->
 ---
 name: schema-design
 description: Meta-agent for sdlc workflow - schema-design

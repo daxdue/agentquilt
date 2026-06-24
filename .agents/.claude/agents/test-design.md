@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-4a2017a9e9bca240da57b7b4e01f69d84a1a9c09e1e5013b422c70e16d9a7e8c · regenerate: npx agentquilt build -->
 ---
 name: test-design
 description: Meta-agent for stlc workflow - test-design

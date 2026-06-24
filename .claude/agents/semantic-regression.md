@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-9783fe11c49f761e00c52e3c5f44dce8443ecb67aa57780cbeb2cfb139a58aaf · regenerate: npx agentquilt build -->
 ---
 name: semantic-regression
 description: Meta-agent for stlc workflow - semantic-regression

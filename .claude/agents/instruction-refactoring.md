@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-7aebde3bf3cc6d05df4449f59ed49e5ed3a3b7bfa01fd31201512df556fd7257 · regenerate: npx agentquilt build -->
 ---
 name: instruction-refactoring
 description: Meta-agent for internal workflow - instruction-refactoring

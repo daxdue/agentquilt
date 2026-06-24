@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-b69d76a28905bf9ff928036598f5f256da58f0d58430b2bea2e320a360634f19 · regenerate: npx agentquilt build -->
 ---
 name: secret-leakage-detection
 description: Meta-agent for governance workflow - secret-leakage-detection

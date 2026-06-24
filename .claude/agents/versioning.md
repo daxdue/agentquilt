@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-fa6ae55190e8679fd6446a3fc58701d789833ee65dc36e27a2e35d5a46a5b69d · regenerate: npx agentquilt build -->
 ---
 name: versioning
 description: Meta-agent for release workflow - versioning

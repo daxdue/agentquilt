@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-3411c12a9fdc1b59b041a5cc8951e665c7888a9c98b667fef27edf03d6d16f64 · regenerate: npx agentquilt build -->
 ---
 name: golden-file-test
 description: Meta-agent for stlc workflow - golden-file-test

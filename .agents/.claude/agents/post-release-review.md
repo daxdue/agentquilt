@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-ceab99b6ee7fd97b90098260e80f274673ab853e13a054a13cb98b06d4c20a96 · regenerate: npx agentquilt build -->
 ---
 name: post-release-review
 description: Meta-agent for release workflow - post-release-review

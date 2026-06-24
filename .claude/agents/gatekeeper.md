@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-757aef141ab447ef36dd9a66776f1c21509a26a80745bff00ccd3e3927b6272c · regenerate: npx agentquilt build -->
 ---
 name: gatekeeper
 description: Meta-agent for governance workflow - gatekeeper

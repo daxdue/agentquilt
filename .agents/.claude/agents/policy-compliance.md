@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-533fa4883af735a4419ea2cc0bcb6d4c308f052091ea718302c81cc35ae20494 · regenerate: npx agentquilt build -->
 ---
 name: policy-compliance
 description: Meta-agent for governance workflow - policy-compliance

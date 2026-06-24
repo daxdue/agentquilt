@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-f8a5f949034798273f5f10950706c8a657d7227ed56671c037e4df7ff8f0ce5b · regenerate: npx agentquilt build -->
 ---
 name: developer-experience
 description: Meta-agent for sdlc workflow - developer-experience

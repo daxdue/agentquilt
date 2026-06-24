@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-fe370f9cbde683f8d4e5775a45af6387641a6f62c55dc50c10faa9cc93ccda1a · regenerate: npx agentquilt build -->
 ---
 name: traceability
 description: Meta-agent for governance workflow - traceability

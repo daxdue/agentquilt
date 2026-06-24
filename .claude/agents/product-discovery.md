@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-19a76fb01b38ac76f741a46e309d6ffe7c7fffef98ef8aab592d2ba2135a0110 · regenerate: npx agentquilt build -->
 ---
 name: product-discovery
 description: Meta-agent for sdlc workflow - product-discovery

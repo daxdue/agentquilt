@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-74baa1790fff6d7ed388783e93d02ed3a587476f7571bfb2826976a1c23fc824 · regenerate: npx agentquilt build -->
 ---
 name: qa-strategy
 description: Meta-agent for stlc workflow - qa-strategy

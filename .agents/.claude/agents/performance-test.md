@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-8421bf8bc6d945a1730b8a0178ece4e02d914c0d0a0abe48dce2b073f90c4cfd · regenerate: npx agentquilt build -->
 ---
 name: performance-test
 description: Meta-agent for stlc workflow - performance-test

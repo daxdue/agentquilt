@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-be5acd537d3fb19b78cb9591d1a05511e6159fad8608d30ddd3b92f5399643ab · regenerate: npx agentquilt build -->
 ---
 name: agent-documentation
 description: Meta-agent for internal workflow - agent-documentation

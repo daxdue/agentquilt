@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-48885c124f0451dbaef0492e51a700f0ed9e6587ecd94b4c246a944976b85fb4 · regenerate: npx agentquilt build -->
 ---
 name: definition-architect
 description: Meta-agent for internal workflow - definition-architect

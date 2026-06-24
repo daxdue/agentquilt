@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-684077d7bc2a968420bd8747810002c71503cce8bc84f1a273a7c963a23228dd · regenerate: npx agentquilt build -->
 ---
 name: compatibility-test
 description: Meta-agent for stlc workflow - compatibility-test

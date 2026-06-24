@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-0faf7e74f69d5f4ab0e3330a1169638edd3fbd68c9b519aac40709acbb0875dd · regenerate: npx agentquilt build -->
 ---
 name: agent-migration
 description: Meta-agent for internal workflow - agent-migration

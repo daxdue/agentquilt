@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-a58879ce8b0204b968538e756e6f1af63deca1a77ee2cbbba489d7a4f7b95bb2 · regenerate: npx agentquilt build -->
 ---
 name: main-orchestrator
 description: Meta-agent for internal workflow - main-orchestrator

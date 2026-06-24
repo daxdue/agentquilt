@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-04f67562c792e6927385f3d295ebe0481fa8bec8b352f5e01cf8960dd968e0ba · regenerate: npx agentquilt build -->
 ---
 name: changelog
 description: Meta-agent for release workflow - changelog

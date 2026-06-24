@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-ad40d1be8e56ff784970890f2e7eb25470657059f0133d2a6c6a22ca676a3e6e · regenerate: npx agentquilt build -->
 ---
 name: conflict-detector
 description: Meta-agent for internal workflow - conflict-detector

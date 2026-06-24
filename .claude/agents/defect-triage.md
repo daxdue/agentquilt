@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-1de6eb4ae908c035f31164dec31000efadf7e1d36e88773417bb126a13aafe49 · regenerate: npx agentquilt build -->
 ---
 name: defect-triage
 description: Meta-agent for stlc workflow - defect-triage

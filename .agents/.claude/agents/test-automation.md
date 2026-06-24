@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-f641521aa3bd1f5fa63c109a4ce97b2a9e3321181f9dc89e706229727d629bbe · regenerate: npx agentquilt build -->
 ---
 name: test-automation
 description: Meta-agent for stlc workflow - test-automation

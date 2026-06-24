@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-667fda4761fe6aa1cd66c9627650a5890ba4fdacead03dfeaf1696d1ff01272f · regenerate: npx agentquilt build -->
 ---
 name: agent-behavior-reviewer
 description: Meta-agent for internal workflow - agent-behavior-reviewer

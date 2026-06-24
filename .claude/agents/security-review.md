@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-4887ed454befe9b57817120601b4c0651d1d3e075a5e090340716ff38b164449 · regenerate: npx agentquilt build -->
 ---
 name: security-review
 description: Meta-agent for governance workflow - security-review

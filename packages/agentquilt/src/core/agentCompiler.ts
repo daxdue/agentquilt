@@ -49,7 +49,7 @@ export async function compileAgentDefinitionsTarget(
 
     // Run registered adapters for each platform
     const outputs: AgentOutputRecord[] = [];
-    const adapterOutputsByPlatform: AdapterOutput[] = [];
+    const adapterOutputsByPlatform: Array<AdapterOutput & { platform: string }> = [];
     const outputEntries: OutputEntry[] = [];
 
     for (const platform of target.platforms) {
@@ -63,7 +63,7 @@ export async function compileAgentDefinitionsTarget(
       for (const out of adapterOutputs) {
         // Hash the output content
         const outHash = fragmentHash(normalize(Buffer.from(out.content, "utf8")));
-        adapterOutputsByPlatform.push({ ...out, content: out.content }); // Store for later wrapping
+        adapterOutputsByPlatform.push({ ...out, content: out.content, platform }); // Store platform for later
         outputs.push({
           platform,
           path: out.path,
@@ -81,10 +81,14 @@ export async function compileAgentDefinitionsTarget(
     // Finalize agent version with output entries
     const finalVersion = computeAgentVersion(record.name, bodyHash, metaHash, outputEntries);
 
-    // Prepend HTML comment header to each adapter output
-    const header = `<!-- agentquilt: generated file — do not edit. version=${finalVersion} · regenerate: npx agentquilt build -->\n`;
+    // Prepend HTML comment header to adapter outputs (except Claude, which needs clean YAML start for discovery)
     for (const out of adapterOutputsByPlatform) {
-      out.content = `${header}${out.content}`;
+      // Claude Code agents must start with --- for agent discovery; skip HTML comment for claude adapter
+      if (out.platform !== "claude") {
+        const header = `<!-- agentquilt: generated file — do not edit. version=${finalVersion} · regenerate: npx agentquilt build -->\n`;
+        out.content = `${header}${out.content}`;
+      }
+      // For Claude adapter, content starts directly with --- (YAML frontmatter)
     }
 
     // Store adapter outputs in allOutputs map for later retrieval

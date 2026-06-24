@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-e95fceea5fdf6ab4e30cc14449a4f47bcc728472c306b5bb9fa4f08c47ab30ea · regenerate: npx agentquilt build -->
 ---
 name: evidence-collector
 description: Meta-agent for release workflow - evidence-collector

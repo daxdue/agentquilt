@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-7967bf7597c00b91f12a941da8e9dac328c362904015fd8a6319f8118bcf0041 · regenerate: npx agentquilt build -->
 ---
 name: supply-chain-risk
 description: Meta-agent for governance workflow - supply-chain-risk

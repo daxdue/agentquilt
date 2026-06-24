@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-fe170f5b228a84ca76bdea082cc39068503cd0c647c92b14e709c8689aa43b4b · regenerate: npx agentquilt build -->
 ---
 name: reviewer
 description: A code review expert who provides detailed feedback on pull

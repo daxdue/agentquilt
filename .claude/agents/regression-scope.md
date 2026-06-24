@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-51ad8ebe198ea9a38505df7bc6e279cefb58e971ed2df548ac38631c6232fcb7 · regenerate: npx agentquilt build -->
 ---
 name: regression-scope
 description: Meta-agent for stlc workflow - regression-scope

@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-8b65d8f352be9e238b7fa442f2caeb6b291333eec9812572ec4a3198d5125153 · regenerate: npx agentquilt build -->
 ---
 name: ambiguity-detector
 description: Meta-agent for sdlc workflow - ambiguity-detector

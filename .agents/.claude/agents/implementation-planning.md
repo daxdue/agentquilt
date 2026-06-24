@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-7151e2df659bda5b23e5bf7f88255ecf760f37c6941b1c8cdac656c43514323f · regenerate: npx agentquilt build -->
 ---
 name: implementation-planning
 description: Meta-agent for sdlc workflow - implementation-planning

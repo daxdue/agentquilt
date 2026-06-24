@@ -1,4 +1,3 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-0e72563ec244e0641b9395675f837bc7058d7ac15b5f32c8ecae5e1f53b01d1a · regenerate: npx agentquilt build -->
 ---
 name: prompt-injection-test
 description: Meta-agent for governance workflow - prompt-injection-test
