@@ -189,7 +189,7 @@ JSON schemas for validation:
 - **[eval-case.schema.json](schemas/eval-case.schema.json)** — Eval test definitions.
 - **[gate-policy.schema.json](schemas/gate-policy.schema.json)** — CI gate policy definitions.
 
-## Current Phase: Week 1 Complete
+## Current Phase: Phase 3.0 Complete ✅
 
 ✅ **Completed (Week 1 — Foundations)**
 - Zod schema definitions for config, lock, and agent definitions
@@ -199,7 +199,21 @@ JSON schemas for validation:
 - Lock writer and drift checker
 - CLI: init, build, check, agents add, agents list
 
-🔄 **In Progress & Planned**
+✅ **Completed (Phase 3.0 — Agent Scaffolding & Discovery)**
+- 33 meta-agents scaffolded across 5 categories (governance, SDLC, STLC, release, internal)
+- All agents compiled to Claude Code format (.claude/agents/*.md) — 46 total
+- **Agent discovery working in Claude Code** — all agents now discoverable and usable
+- Five gate policies defined with AI assistance blocks (intake, requirement, architecture, pr-quality, release)
+- Risk register and SDLC/STLC strategies documented
+- Authority model (ADR-0004) enforced in all agents
+- GitHub Actions workflow templates (intake, pr-review, release) — ready for Phase 3.1 implementation
+
+🔄 **In Progress & Planned (Phase 3.1-3.5)**
+- Phase 3.1: Claude API integration layer (invokeAgent function)
+- Phase 3.2: Wire agents into GitHub Actions (actual automation)
+- Phase 3.3: Environment setup (API keys, cost monitoring, logging)
+- Phase 3.4: Testing & validation (pilot with real issues/PRs)
+- Phase 3.5: Release & team training
 - Week 2: Lint rules, semantic diff, additional enforcement
 - Week 3: Eval runner, regression testing
 - Week 4: Release packaging, migration tools

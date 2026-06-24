@@ -324,9 +324,19 @@ Enforced by `npm run coverage` in CI.
 
 ---
 
-## Part 7: Phase 3 Implementation Plan (4-5 weeks)
+## Part 7: Phase 3 Status (In Progress)
 
-### Phase 3.1: Claude API Integration (1-2 weeks)
+### Phase 3.0: Agent Scaffolding & Discovery ✅ COMPLETE
+
+- ✅ All 33 meta-agents scaffolded (+ 2 user agents = 46 total)
+- ✅ All agents compiled to Claude Code format (.claude/agents/*.md)
+- ✅ **Agent discovery working in Claude Code**
+- ✅ Agents now usable: code-review, eval-designer, release-manager, etc.
+- ✅ Five gate policies defined with AI assistance blocks
+- ✅ Authority boundaries enforced (ADR-0004)
+- ✅ GitHub Actions workflow templates ready
+
+### Phase 3.1: Claude API Integration (1-2 weeks, Starting)
 - [ ] Implement `packages/agentquilt/src/integration/claude-agent.ts`
 - [ ] Add `@anthropic-ai/sdk` dependency
 - [ ] Define AgentResponse schema and parsing
