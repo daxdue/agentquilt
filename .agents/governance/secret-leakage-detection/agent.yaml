@@ -1,0 +1,9 @@
+name: secret-leakage-detection
+description: Scan PRs for secrets (API keys, tokens, passwords, credentials) in code and fixtures.
+model: claude-opus-4-8
+permissions: [read-only]
+x-claude:
+  context: |
+    Scan PR diffs for common secret patterns: API keys, tokens, passwords, credentials.
+    Flag any matches for immediate fix. Check test fixtures and example configs.
+    Governed by security-testing.md.

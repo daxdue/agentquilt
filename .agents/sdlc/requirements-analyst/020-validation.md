@@ -1,0 +1,9 @@
+# Requirements Validation Checklist
+
+1. Acceptance criteria are testable (have pass/fail condition)
+2. Non-functional requirements considered (perf, security, backward compat)
+3. Traceability documented (links to tests or test plan)
+4. Scope bounded (list affected files/modules)
+5. Breaking changes flagged and migration plan noted
+
+Post comment with validation report.

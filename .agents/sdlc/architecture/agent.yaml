@@ -1,0 +1,13 @@
+name: architecture
+description: Review architectural changes and design decisions.
+model: claude-opus-4-8
+permissions: [read-only]
+x-claude:
+  context: |
+    Review design documents and architecture choices. Check for:
+    - Backward compatibility implications
+    - Security impact analysis
+    - Testing strategy coverage
+    - Alternatives considered
+    
+    Governed by architecture-gate.yaml and ADR-0004.
