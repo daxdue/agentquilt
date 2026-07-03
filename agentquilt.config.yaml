@@ -16,22 +16,88 @@ targets:
       - _shared
     format: markdown
 
-  # User agent definitions (e.g., reviewer, triage-agent)
+  # User agent definitions (e.g., reviewer)
   - kind: agent-definitions
     agents:
       - reviewer
     platforms:
       - claude
 
-# Note: Meta-agents in .agents/ are formatted as agent definitions but compiled separately.
-# Each meta-agent category (.agents/governance/, .agents/sdlc/, etc.) can be compiled
-# into its own target by creating an agentquilt.config.yaml in that directory or via
-# separate compilation. They follow the v1.1 agent-definition format:
-#
-# .agents/<category>/<agent-name>/
-#   ├── agent.yaml                     # Canonical metadata
-#   ├── 010-role.md                    # Instruction fragment
-#   └── 020-workflow.md                # Instruction fragment
-#
-# Agent definitions are self-contained and compile to per-platform outputs
-# (.claude/agents/<name>.md, etc.) via adapters.
+  # Governance meta-agents (AI-assisted gate policies)
+  - kind: agent-definitions
+    sourceDir: .agents
+    agents:
+      - governance/risk-register
+      - governance/security-review
+      - governance/gatekeeper
+      - governance/policy-compliance
+      - governance/prompt-injection-test
+      - governance/supply-chain-risk
+      - governance/traceability
+      - governance/secret-leakage-detection
+    platforms:
+      - claude
+
+  # SDLC meta-agents (AI-assisted development workflow)
+  - kind: agent-definitions
+    sourceDir: .agents
+    agents:
+      - sdlc/product-discovery
+      - sdlc/requirements-analyst
+      - sdlc/ambiguity-detector
+      - sdlc/architecture
+      - sdlc/adr-writer
+      - sdlc/schema-design
+      - sdlc/code-review
+      - sdlc/developer-experience
+      - sdlc/documentation
+      - sdlc/implementation-planning
+    platforms:
+      - claude
+
+  # STLC meta-agents (AI-assisted testing workflow)
+  - kind: agent-definitions
+    sourceDir: .agents
+    agents:
+      - stlc/eval-designer
+      - stlc/golden-file-test
+      - stlc/semantic-regression
+      - stlc/test-design
+      - stlc/test-automation
+      - stlc/regression-scope
+      - stlc/qa-strategy
+      - stlc/compatibility-test
+      - stlc/defect-triage
+      - stlc/performance-test
+    platforms:
+      - claude
+
+  # Release meta-agents (AI-assisted release coordination)
+  - kind: agent-definitions
+    sourceDir: .agents
+    agents:
+      - release/release-manager
+      - release/changelog
+      - release/migration-guide
+      - release/evidence-collector
+      - release/post-release-review
+      - release/versioning
+    platforms:
+      - claude
+
+  # Internal meta-agents (AgentQuilt framework internal use)
+  - kind: agent-definitions
+    sourceDir: .agents
+    agents:
+      - internal/main-orchestrator
+      - internal/agent-registry
+      - internal/conflict-detector
+      - internal/agent-behavior-reviewer
+      - internal/agent-documentation
+      - internal/agent-migration
+      - internal/definition-architect
+      - internal/instruction-block-author
+      - internal/instruction-refactoring
+      - internal/prompt-compiler-guardian
+    platforms:
+      - claude
