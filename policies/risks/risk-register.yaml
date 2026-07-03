@@ -7,10 +7,11 @@ risks:
     type: implementation
     description: "agentCompiler.ts has 0% test coverage — agent compilation logic untested"
     level: medium
-    status: open
+    status: mitigated
     discovered: "2026-06-23 (SDLC/STLC review)"
+    mitigatedDate: "2026-06-30"
     owner: "@cli-maintainers"
-    mitigation: "Add unit tests for compileAgentDefinitionsTarget, metadata hashing, agent record creation. Target: Week 3."
+    mitigation: "Added tests/agentCompiler.test.ts with 9 test cases covering: single-agent compilation, Claude adapter output format (starts with ---), missing agent.yaml, invalid manifest, multi-agent target, wildcard discovery, AdapterOutput path/kind, and fragmentMap population."
     aiAssistance: "risk-agent monitors this, escalates if new changes to agentCompiler.ts merge without tests"
 
   - id: RISK-002
@@ -27,20 +28,21 @@ risks:
     type: compliance
     description: "Planning docs (PROJECT_PLAN.md, WORK_BREAKDOWN.md, test-strategy.md) reference agentctl CLI and compile command, not agentquilt build/check"
     level: low
-    status: open
+    status: mitigated
     discovered: "2026-06-23 (SDLC/STLC review)"
     owner: "@maintainers"
-    mitigation: "Update planning docs to reflect actual CLI names and commands. Or mark as historical-context-only."
+    mitigation: "PROJECT_PLAN.md updated 2026-06-24 to use correct CLI names (agentquilt build/check). Deferred tasks marked clearly. Week 1-3 status reconciled with actual completion."
     aiAssistance: "requirements-agent flags mismatches between docs and reality on intake"
 
   - id: RISK-004
     type: security
     description: "Path traversal via include field not validated — include: ../../../../etc/passwd is not rejected by validateConfig"
     level: medium
-    status: open
+    status: mitigated
     discovered: "2026-06-23 (SDLC/STLC review)"
+    mitigatedDate: "2026-06-30"
     owner: "@cli-maintainers"
-    mitigation: "Add validation in configLoader.ts that includes paths must resolve inside sourceDir. Add security test case."
+    mitigation: "Added path traversal check in validateConfig() Rule 5 (configLoader.ts): each include is resolved with path.resolve(sourceDir, includeName) and asserted to start with path.resolve(sourceDir). Traversal paths push a ConfigError entry. Covered by tests/security.test.ts (8 cases)."
     aiAssistance: "security-agent flags any PR touching configLoader.ts or fragmentScanner.ts; generates adversarial test inputs"
 
   - id: RISK-005
@@ -57,10 +59,11 @@ risks:
     type: test
     description: "Integration tests only cover build→check happy path; CLI commands add/list not integration-tested"
     level: low
-    status: open
+    status: mitigated
     discovered: "2026-06-23 (SDLC/STLC review)"
+    mitigatedDate: "2026-06-30"
     owner: "@qa-owners"
-    mitigation: "Add integration tests for agentquilt init, agents add, agents list. Week 3 scope."
+    mitigation: "Added tests/commands.integration.test.ts covering: init (config.yaml, .gitattributes, agents/ dir creation, platform config, invalid platform exit), generateConfig (content structure), agents add (agent.yaml, 010-role.md, duplicate guard, no-overwrite), and agents list via library functions (discovery, model resolution, empty directory)."
     aiAssistance: "qa-agent tracks this; eval-agent tests CLI behavior changes"
 
 mitigationProcess: |

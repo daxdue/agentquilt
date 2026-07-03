@@ -278,7 +278,7 @@ Deterministic regeneration means there is exactly one recovery path, and CI tell
 
 ## 8. CLI **[LOCKED: Node]**
 
-Package `agentquilt` (npm name reserved). TypeScript, ESM, Node ≥ 18. Invoked via `npx agentquilt` or a project devDependency.
+Package `agentquilt-cli` (binary name `agentquilt`). TypeScript, ESM, Node ≥ 18. Invoked via `npx agentquilt` or a project devDependency.
 
 ### 8.1 v1 commands
 
@@ -286,7 +286,7 @@ Package `agentquilt` (npm name reserved). TypeScript, ESM, Node ≥ 18. Invoked 
 |---|---|
 | `agentquilt init` | scaffold `agentquilt.config.yaml`, an `agents/` tree with one example agent, and `.gitattributes`. |
 | `agentquilt build` | compile every target, write all outputs and the lock. |
-| `agentquilt build --watch` | recompile affected targets on fragment/config change (fast local feedback). |
+| `agentquilt build --watch` | **[DEFERRED]** recompile affected targets on fragment/config change (fast local feedback). Not implemented in v0.1.0. |
 | `agentquilt check` | recompile in memory; exit `1` on any drift vs. committed outputs/lock. CI gate. |
 
 ### 8.2 Exit codes

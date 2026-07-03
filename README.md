@@ -10,15 +10,17 @@ Large agent Markdown files are hard to maintain in distributed teams. Multiple d
 
 AgentQuilt introduces a structured source model:
 
+```
 Agent = Manifest + Instruction Blocks + Evals + Generated Prompt
+```
 
-Developers edit small structured instruction blocks. AgentQuilt validates and compiles them into deterministic Markdown artifacts.
+Developers edit small structured instruction blocks. AgentQuilt validates and compiles them into deterministic Markdown artifacts per platform (Claude Code, AgentSkills, etc.).
 
 ## Goals
 
 - Reduce merge conflicts in agent files
 - Make agent changes reviewable
-- Validate agent definitions
+- Validate agent definitions before compilation
 - Generate deterministic Markdown prompts
 - Support CI gates
 - Support eval-based regression testing
@@ -33,26 +35,82 @@ Developers edit small structured instruction blocks. AgentQuilt validates and co
 
 ## Project Status
 
-Early foundation phase.
+v0.1.0 — Core compiler, CLI, schemas, and platform adapters implemented.
+
+## Requirements
+
+- Node.js >= 18
+
+## Installation
+
+```bash
+npm install -g agentquilt-cli
+```
+
+Or from source:
+
+```bash
+git clone https://github.com/daxdue/agentquilt.git
+cd agentquilt
+npm install
+npm run build
+```
+
+## Usage
+
+```bash
+# Scaffold a new project
+agentquilt init
+
+# Compile all agents to platform-specific outputs
+agentquilt build
+
+# CI gate: detect drift between source and compiled output
+agentquilt check
+
+# Add a new agent scaffold
+agentquilt agents add <name>
+
+# List all agents and resolved models
+agentquilt agents list
+```
 
 ## Repository Structure
 
-Explain main folders.
+```
+repo/
+├── agents/                    # Source agent definitions
+│   ├── _shared/               # Shared fragments (included across agents)
+│   └── <agent-id>/
+│       ├── agent.yaml         # Agent manifest
+│       └── NNN-block.md       # Instruction blocks (ordered by prefix)
+├── .agents/                   # AgentQuilt's own meta-agents (framework development)
+├── .claude/agents/            # Compiled Claude Code agent outputs
+├── agentquilt.config.yaml     # Project config (targets, model tiers, sourceDir)
+├── agentquilt.lock            # Generated — do not edit
+├── packages/
+│   └── agentquilt-cli/        # CLI source (TypeScript, Commander, Zod)
+├── schemas/                   # JSON Schema definitions (language-neutral)
+├── policies/                  # Gate policies
+└── .docs/                     # Architecture specs, ADRs, SDLC/STLC docs
+```
 
-## Roadmap
+## Documentation
 
-Link to `docs/roadmap.md`.
+- [Architecture Overview](.docs/architecture/overview.md)
+- [v1 Specification](.docs/agentquilt-v1-spec.md)
+- [v1.1 Addendum](.docs/agentquilt-v1.1-addendum.md)
+- [Glossary](.docs/glossary.md)
+- [Roadmap](.docs/roadmap.md)
+- [Contributing](CONTRIBUTING.md)
 
 ## Contributing
 
-Link to `CONTRIBUTING.md`.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for branch naming, commit format, PR expectations, and ADR policy.
 
 ## Architecture
 
-Link to `docs/architecture/overview.md`.
-
-Pre-release. No functional code yet — check back at
-[agentquilt.dev](https://agentquilt.dev) for updates.
+See [.docs/architecture/overview.md](.docs/architecture/overview.md).
 
 ## License
 

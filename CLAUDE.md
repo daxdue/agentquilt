@@ -59,7 +59,7 @@ repo/
 ├── schemas/                         # JSON Schema definitions (language-neutral reference)
 ├── scripts/                         # Utility scripts and spike tests
 ├── packages/
-│   └── agentquilt/                  # CLI implementation (TypeScript, Zod, Commander)
+│   └── agentquilt-cli/              # CLI implementation (TypeScript, Zod, Commander)
 └── .gitignore, LICENSE, README.md
 ```
 
@@ -127,6 +127,14 @@ Each PR must include:
 
 Generated files (`agentquilt.lock`, `AGENTS.md`, `CLAUDE.md`, etc.) must **never** be manually edited. If generated output changes, regenerate using the appropriate command once the CLI exists. Changes to generated files should only come from manifest or block changes.
 
+**Strict Rule for AGENTS.md and CLAUDE.md:**
+- NO emojis (e.g., ✅, ✘, 🚀, 📋, etc.)
+- NO smileys or emoticons (e.g., :), :( , :-), etc.)
+- NO pictographic symbols
+- Use plain text only: `[OK]` for status, `READY` for availability, `WARNING` for caution
+- Automatically enforced: adapter layer strips all emojis and emoticons during generation
+- See [Emoji Policy](.docs/EMOJI_POLICY.md) for details and migration guide
+
 ### ADR Policy
 
 Create an ADR when a change affects:
@@ -142,7 +150,7 @@ See [ADRs](.docs/architecture/adr/) for examples.
 
 ## Development Commands
 
-From root (using npm workspaces) or `packages/agentquilt/`:
+From root (using npm workspaces) or `packages/agentquilt-cli/`:
 
 ```bash
 # Install dependencies
@@ -189,9 +197,9 @@ JSON schemas for validation:
 - **[eval-case.schema.json](schemas/eval-case.schema.json)** — Eval test definitions.
 - **[gate-policy.schema.json](schemas/gate-policy.schema.json)** — CI gate policy definitions.
 
-## Current Phase: Phase 3.0 Complete ✅
+## Current Phase: Phase 3.3 Complete
 
-✅ **Completed (Week 1 — Foundations)**
+[DONE] **Completed (Week 1 — Foundations)**
 - Zod schema definitions for config, lock, and agent definitions
 - Core compiler: fragment scanning, normalization, hashing, deterministic output
 - Agent compiler: metadata hashing, adapter system, per-platform serialization
@@ -199,21 +207,57 @@ JSON schemas for validation:
 - Lock writer and drift checker
 - CLI: init, build, check, agents add, agents list
 
-✅ **Completed (Phase 3.0 — Agent Scaffolding & Discovery)**
-- 33 meta-agents scaffolded across 5 categories (governance, SDLC, STLC, release, internal)
-- All agents compiled to Claude Code format (.claude/agents/*.md) — 46 total
+[DONE] **Completed (Phase 3.0 — Agent Scaffolding & Discovery)**
+- 44 meta-agents scaffolded across 5 categories (governance, SDLC, STLC, release, internal)
+- All agents compiled to Claude Code format (.claude/agents/*.md) — 45 managed outputs (44 meta-agents + 1 user agent `reviewer`; the `test-runner` agent in `.claude/agents/` is hand-authored and not managed by AgentQuilt)
 - **Agent discovery working in Claude Code** — all agents now discoverable and usable
 - Five gate policies defined with AI assistance blocks (intake, requirement, architecture, pr-quality, release)
 - Risk register and SDLC/STLC strategies documented
 - Authority model (ADR-0004) enforced in all agents
 - GitHub Actions workflow templates (intake, pr-review, release) — ready for Phase 3.1 implementation
 
-🔄 **In Progress & Planned (Phase 3.1-3.5)**
-- Phase 3.1: Claude API integration layer (invokeAgent function)
-- Phase 3.2: Wire agents into GitHub Actions (actual automation)
-- Phase 3.3: Environment setup (API keys, cost monitoring, logging)
-- Phase 3.4: Testing & validation (pilot with real issues/PRs)
-- Phase 3.5: Release & team training
+[DONE] **Completed (Phase 3.1 — Claude API Integration)**
+- Core integration library: `packages/agentquilt-cli/src/integration/claude-agent.ts`
+  - `invokeAgent(agentPath, gateName, taskInput)` — Main invocation function
+  - `loadAgentDefinition()` — Parse compiled agents from .claude/agents/
+  - `parseAgentResponse()` — Convert text to structured findings
+  - `parseFinding()` — Parse individual finding lines
+- Complete unit test suite: 37 tests, all passing
+- GitHub Actions integration layer: `.github/actions/invoke-agent/` (removed in the later Claude Code-Only Simplification)
+- Workflow integration complete:
+  - `intake.yml` — Issues triage via product-discovery agent
+  - `pr-review.yml` — PRs reviewed by code-review, eval-designer, security-review agents
+  - `release.yml` — Release coordination via release-manager, changelog, versioning agents
+- Full error handling and edge case coverage
+
+[DONE] **Completed (Phase 3.2 — Workflow Wiring)**
+- All three GitHub Actions workflows updated to use real agent invocation
+- Workflows tested with mock responses (ready for live testing)
+- Graceful error handling if API unavailable
+- Conditional agent invocation (eval agent only if agents/ changed, security agent only for high-risk files)
+
+[DONE] **Completed (Phase 3.3 — Environment Setup)**
+- Rate limiting: Token bucket algorithm with 10 requests/minute (configurable)
+- Structured JSON logging: Timestamp, agent, model, tokens, duration, status
+- Exponential backoff retry logic (3 attempts for transient failures)
+- Cost monitoring guide: $1-2/month estimated spend
+- Spending limits: Documented setup in Anthropic console
+- GitHub Actions secrets guide: Step-by-step ANTHROPIC_API_KEY setup
+- Comprehensive troubleshooting guide with common issues and solutions
+- Production-ready error handling and observability
+
+[DONE] **Completed (Claude Code-Only Simplification)**
+- Removed automatic agent invocation from CI/CD workflows
+- Simplified to manual invocation via Claude Code
+- Aligns with ADR-0004: humans make decisions
+- Reduced complexity, eliminated API costs from CI/CD
+- All 45 managed agents remain discoverable and usable
+
+[DEFERRED] **Optional Future: Auto-Invocation (Phase 3.4-3.5)**
+- Claude API integration layer created but not used in workflows
+- Can be re-enabled if automated agent invocation desired
+- See `.docs/PHASE_3_1_COMPLETION.md` for implementation details
+- See `.docs/CLAUDE_CODE_ONLY_AGENTS.md` for current approach
 - Week 2: Lint rules, semantic diff, additional enforcement
 - Week 3: Eval runner, regression testing
 - Week 4: Release packaging, migration tools
@@ -229,13 +273,13 @@ See [PROJECT_PLAN.md](.planning/PROJECT_PLAN.md) for historical context and full
 - **Cross-platform hashing**: Line endings normalized to LF before hashing (SHA-256).
 - **Linked fragments**: Blocks can reference other blocks via `conflicts_with`, `supersedes`, `applies_when` metadata.
 - **Risk metadata**: Defaults to "medium"; explicitly set for high-risk or sensitive instructions.
-- **Status filtering**: Deprecated blocks never compiled; draft blocks excluded unless `--include-draft` flag.
+- **Status filtering**: Deprecated blocks never compiled; draft blocks always excluded (an `--include-draft` flag is planned but not yet implemented).
 
 ## Package Details
 
-- **npm package**: `agentquilt` (https://github.com/daxdue/agentquilt)
+- **npm package**: `agentquilt-cli` (https://github.com/daxdue/agentquilt)
 - **Node requirement**: >= 18
-- **CLI entry point**: `packages/agentquilt/dist/index.js` (compiled from TypeScript)
+- **CLI entry point**: `packages/agentquilt-cli/dist/index.js` (compiled from TypeScript)
 - **Built with**: TypeScript, Commander.js, Zod, YAML parser
 - **License**: MIT
 

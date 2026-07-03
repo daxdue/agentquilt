@@ -38,92 +38,7 @@ jobs:
       - name: Drift check
         run: node packages/agentquilt/dist/index.js check
 
-      - name: Parse PR quality gate policy
-        run: |
-          echo "Gate: pr-quality-gate (policies/gates/pr-quality-gate.yaml)"
-          echo "Required checks:"
-          echo "  ✅ TypeScript: tsc --project tsconfig.test.json"
-          echo "  ✅ Unit tests: npm test -- --run"
-          echo "  ✅ Coverage: npm run coverage (75% lines, 65% branches)"
-          echo "  ✅ Drift check: agentquilt check"
-          echo ""
-          echo "AI Agents to invoke:"
-          echo "  - code-review-agent: Review diff for correctness and security"
-          echo "  - eval-agent: Validate compiled outputs for regressions"
-          echo "  - security-agent: Targeted security review for high-risk files"
-
-      - name: Invoke code-review agent
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const { execSync } = require('child_process');
-
-            // Get PR diff
-            const diff = execSync(`git diff origin/${context.payload.pull_request.base.ref}...HEAD`, {
-              encoding: 'utf-8'
-            });
-
-            // TODO: Invoke code-review-agent from .agents/sdlc/code-review/
-            // Agent responsibilities (from pr-quality-gate.yaml):
-            // - Review diff for type safety issues and potential bugs
-            // - Flag security risks (path traversal, injection, resource exhaustion)
-            // - Check test coverage for changed functions
-            // - Verify error handling exists for all paths
-            // - Suggest simplifications and reuse opportunities
-
-            console.log('Code Review Agent: Analyzing PR diff...');
-            console.log(`Diff size: ${diff.length} bytes`);
-
-      - name: Post code-review findings
-        uses: actions/github-script@v7
-        if: always()
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## 🔍 Code Review Agent Report
-
-            **Agent:** code-review (from .agents/sdlc/code-review/)
-
-            **Findings:**
-            - [ ] Type safety: No unsafe casts detected
-            - [ ] Correctness: Logic appears sound
-            - [ ] Security: Path traversal check OK
-            - [ ] Test coverage: All changed functions tested
-            - [ ] Simplification: No obvious improvements
-
-            **Risk Level:** LOW
-
-            **Authority (ADR-0004):**
-            - This is a suggested review
-            - Human maintainer makes final decision
-            - Cannot block merge
-
-            *Note: This is a placeholder. Full review requires Claude API integration.*`
-            })
-
-      - name: Invoke eval-agent
-        if: contains(github.event.pull_request.files[*].filename, 'agents/')
-        uses: actions/github-script@v7
-        with:
-          script: |
-            // TODO: Invoke eval-agent from .agents/stlc/eval-designer/
-            // Agent responsibilities (from pr-quality-gate.yaml):
-            // - If agent-definitions or fragment changes: compile agents and check for regressions
-            // - Run static evals (prompt-presence checks) against golden outputs
-            // - Flag semantic changes in compiled prompts
-            // - Run mock-response evals if available
-
-            console.log('Eval Agent: Running regression detection...');
-            console.log('Layer 1: Deterministic output (agentquilt check) - PASS');
-            console.log('Layer 2: Golden-file tests (npm test) - PASS');
-            console.log('Layer 3: Behavioral evals - PENDING (agent invocation)');
-
-      - name: Post eval findings
-        if: contains(github.event.pull_request.files[*].filename, 'agents/')
+      - name: Post review reminder
         uses: actions/github-script@v7
         with:
           script: |
@@ -131,98 +46,27 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## 🧪 Eval Agent Report
+              body: `## PR Quality Gate
 
-            **Agent:** eval-designer (from .agents/stlc/eval-designer/)
+Automated checks passed:
+- TypeScript typecheck: OK
+- Unit tests: OK
+- Coverage thresholds: OK
+- Drift check: OK
 
-            **Regression Detection:**
-            - Layer 1 (deterministic): ✅ PASS (agentquilt check)
-            - Layer 2 (golden-file): ✅ PASS (npm test)
-            - Layer 3 (behavioral): ⏳ PENDING (eval suite integration)
+For detailed code review, use Claude Code agents:
+1. Open this PR in Claude Code
+2. Select agents from the agents list:
+   - **code-review** - Review diff for correctness and security
+   - **eval-designer** - Check for regressions (if agents/ changed)
+   - **security-review** - Security assessment (if high-risk files changed)
 
-            **Findings:**
-            - No semantic regressions detected
-            - All compiled outputs match baseline
-            - No breaking changes to agent behavior
-
-            **Authority (ADR-0004):**
-            - Agent detects and flags regressions
-            - Humans decide if regression is acceptable
-            - Cannot block merge
-
-            *Note: Layer 3 requires Claude API and eval test cases.*`
+**Authority:** Agents advise; maintainer approves.`
             })
 
-      - name: Invoke security-agent
-        if: |
-          contains(github.event.pull_request.files[*].filename, 'configLoader') ||
-          contains(github.event.pull_request.files[*].filename, 'fragmentScanner') ||
-          contains(github.event.pull_request.files[*].filename, 'adapter')
-        uses: actions/github-script@v7
-        with:
-          script: |
-            // TODO: Invoke security-agent from .agents/governance/security-review/
-            // Agent responsibilities (from pr-quality-gate.yaml):
-            // - If touching configLoader.ts or fragmentScanner.ts: review for path traversal risk
-            // - Verify input validation boundaries exist for all user inputs
-            // - Check for secrets in added test fixtures or example configs
-            // - Flag hardcoded paths or assumptions that may break on Windows/macOS
-
-            console.log('Security Agent: Analyzing high-risk files...');
-
-      - name: Post security findings
-        if: |
-          contains(github.event.pull_request.files[*].filename, 'configLoader') ||
-          contains(github.event.pull_request.files[*].filename, 'fragmentScanner') ||
-          contains(github.event.pull_request.files[*].filename, 'adapter')
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## 🔐 Security Agent Report
-
-            **Agent:** security-review (from .agents/governance/security-review/)
-
-            **High-Risk Files Detected:**
-            - Reviewing: configLoader.ts, fragmentScanner.ts, or adapters
-
-            **Security Checks:**
-            - [ ] Path traversal validation in include paths
-            - [ ] Input validation boundaries verified
-            - [ ] No secrets in test fixtures
-            - [ ] No hardcoded OS-specific paths
-
-            **Findings:**
-            - No path traversal risks detected
-            - All inputs validated before use
-            - No secrets found in code
-
-            **Authority (ADR-0004):**
-            - Agent flags security risks
-            - Humans make final security decision
-            - Cannot block merge
-
-            *Note: Requires Claude API for static analysis.*`
-            })
-
-      - name: Gate compliance summary
+      - name: Quality gate status
         if: success()
         run: |
-          echo "✅ PR Quality Gate (pr-quality-gate.yaml) Status"
-          echo ""
-          echo "Required Checks:"
-          echo "  ✅ TypeScript typecheck"
-          echo "  ✅ Unit tests"
-          echo "  ✅ Coverage thresholds"
-          echo "  ✅ Drift check"
-          echo ""
-          echo "AI Agent Reviews (advisory):"
-          echo "  ✅ code-review-agent findings posted"
-          echo "  ✅ eval-agent findings posted"
-          echo "  ✅ security-agent findings posted (if applicable)"
-          echo ""
-          echo "Human Approval Required: YES (1 maintainer)"
-          echo "Decision: Human maintainer reviews agent findings and PR changes"
+          echo "OK: PR Quality Gate passed"
+          echo "Required checks: TypeScript, tests, coverage, drift"
+          echo "Code review: Use Claude Code agents for detailed analysis"
