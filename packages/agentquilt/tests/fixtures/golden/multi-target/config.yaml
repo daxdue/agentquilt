@@ -1,7 +1,0 @@
-version: 1
-sourceDir: agents
-targets:
-  - output: AGENTS.md
-    include: [_shared, frontend]
-  - output: CLAUDE.md
-    include: [_shared, backend]
