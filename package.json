@@ -20,8 +20,8 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "npm run build -w packages/agentquilt",
-    "test": "npm test -w packages/agentquilt",
+    "build": "npm run build -w packages/agentquilt-cli",
+    "test": "npm test -w packages/agentquilt-cli",
     "website:dev": "npm run dev -w packages/website",
     "website:build": "npm run build -w packages/website"
   }

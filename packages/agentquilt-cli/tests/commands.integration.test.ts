@@ -1,0 +1,194 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { mkdirSync, writeFileSync, existsSync, readFileSync, rmSync } from "fs";
+import path from "path";
+import os from "os";
+import { initProject, generateConfig } from "../src/commands/init";
+import { addAgentAction } from "../src/commands/agents/add";
+import { discoverAgentDirs, loadAgentDir } from "../src/core/agentLoader";
+import { resolveModel } from "../src/core/modelResolver";
+import type { AgentQuiltConfig } from "../src/schemas/config.schema";
+
+let tmpDir: string;
+
+// Prevent process.exit from killing the test process
+const mockExit = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+
+beforeEach(() => {
+  tmpDir = path.join(os.tmpdir(), `aq-cmd-integ-${Date.now()}`);
+  mkdirSync(tmpDir, { recursive: true });
+  mockExit.mockClear();
+});
+
+afterEach(() => {
+  rmSync(tmpDir, { recursive: true, force: true });
+});
+
+// ---------------------------------------------------------------------------
+// agentquilt init
+// ---------------------------------------------------------------------------
+
+describe("agentquilt init", () => {
+  it("creates agentquilt.config.yaml in the target directory", () => {
+    initProject(tmpDir, ["claude"]);
+
+    expect(existsSync(path.join(tmpDir, "agentquilt.config.yaml"))).toBe(true);
+    expect(mockExit).toHaveBeenCalledWith(0);
+  });
+
+  it("creates .gitattributes in the target directory", () => {
+    initProject(tmpDir, ["claude"]);
+
+    expect(existsSync(path.join(tmpDir, ".gitattributes"))).toBe(true);
+  });
+
+  it("creates the agents/ directory", () => {
+    initProject(tmpDir, ["claude"]);
+
+    expect(existsSync(path.join(tmpDir, "agents"))).toBe(true);
+  });
+
+  it("--platform claude generates an agent-definitions target with claude platform", () => {
+    initProject(tmpDir, ["claude"]);
+
+    const configContent = readFileSync(
+      path.join(tmpDir, "agentquilt.config.yaml"),
+      "utf8"
+    );
+    expect(configContent).toContain("kind: agent-definitions");
+    expect(configContent).toContain("claude");
+  });
+
+  it("exits with code 3 when given an invalid platform", () => {
+    initProject(tmpDir, ["not-a-platform"]);
+
+    expect(mockExit).toHaveBeenCalledWith(3);
+  });
+});
+
+describe("generateConfig", () => {
+  it("includes version and sourceDir", () => {
+    const config = generateConfig(["claude"]);
+    expect(config).toContain("version: 1");
+    expect(config).toContain("sourceDir: agents");
+  });
+
+  it("includes agent-definitions target with claude platform", () => {
+    const config = generateConfig(["claude"]);
+    expect(config).toContain("kind: agent-definitions");
+    expect(config).toContain("claude");
+  });
+
+  it("includes agentskills model mapping when agentskills selected", () => {
+    const config = generateConfig(["agentskills"]);
+    expect(config).toContain("agentskills");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// agentquilt agents add
+// ---------------------------------------------------------------------------
+
+describe("agentquilt agents add", () => {
+  it("creates agents/<name>/agent.yaml", () => {
+    addAgentAction("my-bot", { cwd: tmpDir });
+
+    expect(existsSync(path.join(tmpDir, "agents", "my-bot", "agent.yaml"))).toBe(true);
+    expect(mockExit).toHaveBeenCalledWith(0);
+  });
+
+  it("creates agents/<name>/010-role.md", () => {
+    addAgentAction("my-bot", { cwd: tmpDir });
+
+    expect(existsSync(path.join(tmpDir, "agents", "my-bot", "010-role.md"))).toBe(true);
+  });
+
+  it("agent.yaml contains description and model fields", () => {
+    addAgentAction("scaffolded-agent", { cwd: tmpDir });
+
+    const content = readFileSync(
+      path.join(tmpDir, "agents", "scaffolded-agent", "agent.yaml"),
+      "utf8"
+    );
+    expect(content).toContain("description:");
+    expect(content).toContain("model:");
+  });
+
+  it("exits with code 2 when the agent already exists", () => {
+    // Create the agent once
+    addAgentAction("dupe-agent", { cwd: tmpDir });
+    mockExit.mockClear();
+
+    // Try to create it again
+    addAgentAction("dupe-agent", { cwd: tmpDir });
+
+    expect(mockExit).toHaveBeenCalledWith(2);
+  });
+
+
+});
+
+// ---------------------------------------------------------------------------
+// agentquilt agents list (via underlying library functions)
+// ---------------------------------------------------------------------------
+
+describe("agentquilt agents list (library functions)", () => {
+  beforeEach(() => {
+    // Set up a minimal project
+    mkdirSync(path.join(tmpDir, "agents", "agent-a"), { recursive: true });
+    mkdirSync(path.join(tmpDir, "agents", "agent-b"), { recursive: true });
+    writeFileSync(
+      path.join(tmpDir, "agents", "agent-a", "agent.yaml"),
+      'description: "Agent A"\nmodel: balanced\n',
+      "utf8"
+    );
+    writeFileSync(
+      path.join(tmpDir, "agents", "agent-b", "agent.yaml"),
+      'description: "Agent B"\nmodel: balanced\n',
+      "utf8"
+    );
+    writeFileSync(
+      path.join(tmpDir, "agents", "agent-a", "010-role.md"),
+      "You are agent A.\n",
+      "utf8"
+    );
+    writeFileSync(
+      path.join(tmpDir, "agents", "agent-b", "010-role.md"),
+      "You are agent B.\n",
+      "utf8"
+    );
+  });
+
+  it("discovers all agents in the source directory", () => {
+    const sourceDir = path.join(tmpDir, "agents");
+    const dirs = discoverAgentDirs(sourceDir);
+
+    expect(dirs.map((d) => path.basename(d))).toContain("agent-a");
+    expect(dirs.map((d) => path.basename(d))).toContain("agent-b");
+  });
+
+  it("loads each agent and resolves the model", () => {
+    const sourceDir = path.join(tmpDir, "agents");
+    const dirs = discoverAgentDirs(sourceDir);
+    const config: AgentQuiltConfig = {
+      version: 1,
+      sourceDir: "agents",
+      modelTiers: {
+        balanced: { claude: "claude-sonnet-4-6" },
+      },
+      targets: [],
+    } as unknown as AgentQuiltConfig;
+
+    for (const dir of dirs) {
+      const record = loadAgentDir(dir, tmpDir);
+      const resolved = resolveModel(record.definition, "claude", config);
+      expect(resolved.model).toBe("claude-sonnet-4-6");
+    }
+  });
+
+  it("returns an empty array when source directory has no agents", () => {
+    const emptyDir = path.join(tmpDir, "empty-agents");
+    mkdirSync(emptyDir, { recursive: true });
+    const dirs = discoverAgentDirs(emptyDir);
+    expect(dirs).toHaveLength(0);
+  });
+});
