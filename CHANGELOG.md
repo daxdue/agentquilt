@@ -20,6 +20,7 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 - `agentquilt check` — detect drift between source and disk; exits 1 if any output or lock is stale. CI-safe.
 - `agentquilt agents add <name>` — scaffold a new agent directory with `agent.yaml` and `010-role.md`.
 - `agentquilt agents list` — list all agents and their resolved model per platform.
+- Documented exit codes for CI integration: 0 success, 1 drift detected (`check`), 2 config or validation error, 3 I/O error.
 
 **Compiler**
 
@@ -51,7 +52,7 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 **Meta-agents (`.agents/` and `.claude/agents/`)**
 
 - 44 meta-agents scaffolded across five categories: governance (8), SDLC (10), STLC (10), release (6), internal (10).
-- All 46 compiled agent files discoverable and usable in Claude Code via `.claude/agents/`.
+- 45 managed agent files (44 meta-agents + the `reviewer` user agent) plus 1 hand-authored file (`test-runner.md`), all discoverable and usable in Claude Code via `.claude/agents/`.
 - Five gate policies defined: intake, requirement, architecture, pr-quality, release.
 - AI assistance model enforced in all agents per ADR-0004: agents may draft, review, and recommend; humans retain all approval and merge authority.
 
@@ -82,6 +83,7 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 ### Security
 
 - Path traversal via `include` field in config: `validateConfig()` now resolves each include with `path.resolve(sourceDir, includeName)` and rejects any path that escapes `sourceDir`. Covered by `tests/security.test.ts`.
+- Path traversal via agent `name` fields: names adopted from `.claude/agents/` / `.agents/skills/` frontmatter are bounds-checked against `.agentquilt/agents/` before any write, and `agent.yaml` `name` is schema-validated to reject path separators, absolute paths, and `..` (the name becomes a path component in adapter outputs). Covered by adversarial tests in `tests/adopt-init.test.ts` and `tests/security.test.ts`.
 
 ---
 

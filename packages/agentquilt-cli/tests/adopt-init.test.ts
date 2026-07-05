@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
@@ -221,6 +221,68 @@ describe("adoptExistingAgents", () => {
     const dir = initAgentsDir();
     expect(adoptExistingAgents(tmpDir, ["cursor"], dir)).toBe(0);
   });
+
+  it("rejects a claude agent whose frontmatter name escapes agentsDir", () => {
+    writeClaudeAgent(
+      "evil",
+      '---\nname: "../../evil-escape"\ndescription: Bad\n---\n\nPayload.\n'
+    );
+    const dir = initAgentsDir();
+    const count = adoptExistingAgents(tmpDir, ["claude"], dir);
+
+    expect(count).toBe(0);
+    expect(existsSync(join(tmpDir, "evil-escape"))).toBe(false);
+    expect(existsSync(join(tmpDir, ".agentquilt", "evil-escape"))).toBe(false);
+  });
+
+  it("rejects an absolute path in frontmatter name", () => {
+    const escapeTarget = join(tmpDir, "abs-escape");
+    writeClaudeAgent(
+      "abs",
+      `---\nname: ${JSON.stringify(escapeTarget)}\ndescription: Bad\n---\n\nPayload.\n`
+    );
+    const dir = initAgentsDir();
+
+    expect(adoptExistingAgents(tmpDir, ["claude"], dir)).toBe(0);
+    expect(existsSync(escapeTarget)).toBe(false);
+  });
+
+  function writeSkill(dirName: string, content: string): void {
+    const dir = join(tmpDir, ".agents", "skills", dirName);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, "SKILL.md"), content, "utf8");
+  }
+
+  it("adopts an agentskills skill", () => {
+    writeSkill("helper", "---\nname: helper\ndescription: Helps out\n---\n\nYou help.\n");
+    const dir = initAgentsDir();
+    const count = adoptExistingAgents(tmpDir, ["agentskills"], dir);
+
+    expect(count).toBe(1);
+    const agentYaml = readFileSync(join(dir, "helper", "agent.yaml"), "utf8");
+    expect(agentYaml).toContain('description: "Helps out"');
+    expect(agentYaml).toContain("permissions: workspace");
+    expect(readFileSync(join(dir, "helper", "010-role.md"), "utf8")).toContain("You help.");
+  });
+
+  it("skips an agentskills skill whose source dir already exists", () => {
+    writeSkill("helper", "---\nname: helper\ndescription: Helps out\n---\n\nYou help.\n");
+    const dir = initAgentsDir();
+    mkdirSync(join(dir, "helper"), { recursive: true });
+
+    expect(adoptExistingAgents(tmpDir, ["agentskills"], dir)).toBe(0);
+  });
+
+  it("rejects an agentskills skill whose frontmatter name escapes agentsDir", () => {
+    writeSkill(
+      "evil-skill",
+      '---\nname: "../../../skill-escape"\ndescription: Bad\n---\n\nPayload.\n'
+    );
+    const dir = initAgentsDir();
+
+    expect(adoptExistingAgents(tmpDir, ["agentskills"], dir)).toBe(0);
+    expect(existsSync(join(tmpDir, "skill-escape"))).toBe(false);
+  });
 });
 
 // --- initProject integration ---
@@ -282,26 +344,18 @@ describe("initProject integration", () => {
     expect(roleBlock).toContain("You are a reviewer.");
   });
 
-  // Same process.exit interception as above, returning the exit code instead
-  // of asserting on it, so tests can check both success and failure paths.
+  // Returns the first exit code initProject reports, without letting it
+  // terminate the test process.
   function runInit(dir: string, platforms: string[], force?: boolean): number {
-    const origExit = process.exit.bind(process);
-    let exitCode: number | undefined;
-    process.exit = ((code?: number) => {
-      if (exitCode === undefined) {
-        exitCode = code ?? 0;
-        throw new Error("__exit__");
-      }
-    }) as typeof process.exit;
-
+    const exitSpy = vi
+      .spyOn(process, "exit")
+      .mockImplementation(() => undefined as never);
     try {
       initProject(dir, platforms, force);
-    } catch (e) {
-      if (!(e instanceof Error && e.message === "__exit__")) throw e;
+      return (exitSpy.mock.calls[0]?.[0] as number | undefined) ?? 0;
     } finally {
-      process.exit = origExit;
+      exitSpy.mockRestore();
     }
-    return exitCode ?? 0;
   }
 
   it("refuses to overwrite an existing .agentquilt/config.yaml", () => {
@@ -312,8 +366,17 @@ describe("initProject integration", () => {
 
     const code = runInit(tmpDir, ["claude"]);
 
-    expect(code).toBe(3);
+    expect(code).toBe(2);
     expect(readFileSync(join(aqDir, "config.yaml"), "utf8")).toBe(existingConfig);
+  });
+
+  it("refuses when only .agentquilt/config.json exists", () => {
+    const aqDir = join(tmpDir, ".agentquilt");
+    mkdirSync(aqDir, { recursive: true });
+    writeFileSync(join(aqDir, "config.json"), "{\"version\": 1}\n", "utf8");
+
+    expect(runInit(tmpDir, ["claude"])).toBe(2);
+    expect(existsSync(join(aqDir, "config.yaml"))).toBe(false);
   });
 
   it("overwrites existing config when force is true", () => {

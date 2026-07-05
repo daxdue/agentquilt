@@ -2,7 +2,7 @@
 
 ## Trigger Points
 
-- PR changes `.agents/`, `policies/`, or `.docs/`
+- PR changes `.agentquilt/agents/`, `policies/`, or `.docs/`
 - New risk detected in code change
 - Gate policy evaluation needed
 - Compliance audit cycle

@@ -58,10 +58,10 @@ describe("agentquilt init", () => {
     expect(configContent).toContain("claude");
   });
 
-  it("exits with code 3 when given an invalid platform", () => {
+  it("exits with code 2 when given an invalid platform", () => {
     initProject(tmpDir, ["not-a-platform"]);
 
-    expect(mockExit).toHaveBeenCalledWith(3);
+    expect(mockExit).toHaveBeenCalledWith(2);
   });
 });
 

@@ -316,13 +316,13 @@
         ".agentquilt/meta-agents/governance/gatekeeper/020-governance-workflow.md"
       ],
       "metaHash": "sha256-884df834d30a3461457b63d48e5f6cbea1ae921198a8dc5b46de6524583a0d2d",
-      "version": "sha256-f294ca4fd5b8649e4f55f16132d0862fa2310fc34cc516624f9a6bbc33ba6e52",
+      "version": "sha256-4d1f438d5e99a868a18ff8fc7569a17d83d9bfa255bcac3e74d33e38b075fbf2",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/gatekeeper.md",
           "kind": "file",
-          "hash": "sha256-929d96c0abfa6aac88f90338b0ed5b19f25d2dab95fc72cef22dfee397157759"
+          "hash": "sha256-b24798bf25aaa9a6f4258224e847f1bf1fc7e4f467d08dc9451a249e5a53203b"
         }
       ]
     },
@@ -460,13 +460,13 @@
         ".agentquilt/meta-agents/governance/policy-compliance/020-governance-workflow.md"
       ],
       "metaHash": "sha256-87f4a8fcfab3c0c789e93b2a81d456d22293273545e57c1f784716e47c2344b1",
-      "version": "sha256-bfafa87491ecea11246c1ea4e5616185aa2520d3e0e35a2ebfd2dcb7415f9947",
+      "version": "sha256-33148302e803689726300389a957b86810313a3e5d2b74c38dd7f36946f0e5e2",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/policy-compliance.md",
           "kind": "file",
-          "hash": "sha256-6aeb0de8762dbee813fd1b4ca5f7bc8b7f5cf911b4d9648d1dc42ac61e1b4120"
+          "hash": "sha256-511cbdd270f8e920d5788704e4ea22c2b2a8c734df8dc88fdad2af095e13505f"
         }
       ]
     },
@@ -532,13 +532,13 @@
         ".agentquilt/meta-agents/governance/prompt-injection-test/020-governance-workflow.md"
       ],
       "metaHash": "sha256-38f0cbd171d4e24a6956e24799621394ff8e87d17f8cdbcf80327db2c3eaf4f5",
-      "version": "sha256-6b6f861bd2874e1658a18e37cd0cde046420816eed4dd80ba50bd7ec8152a4c5",
+      "version": "sha256-54e28e01f4bee6ed75d732ffc08285fcadf80319623a681e2a98eba5b99180e5",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/prompt-injection-test.md",
           "kind": "file",
-          "hash": "sha256-92421f59959b138979f0da23b52a90b7f825efeccee4d3af86ade81dac8b619c"
+          "hash": "sha256-b5e87489ee1d5a236aca071cce545d91dc9899121b87ea1a046e8e6745812c89"
         }
       ]
     },
@@ -730,13 +730,13 @@
         ".agentquilt/meta-agents/governance/supply-chain-risk/020-governance-workflow.md"
       ],
       "metaHash": "sha256-a7fb48310cefb603fa0620773e2769943a56a0274662d0934be158162b6d0a79",
-      "version": "sha256-eeb9a62a821c8b4358c34ae51bca48a74f23f2674f2cbd74ee59b5033c4e091f",
+      "version": "sha256-f519b0979107942ab3696daef70846f7529094b67a1c6918168c045dcc059961",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/supply-chain-risk.md",
           "kind": "file",
-          "hash": "sha256-910120c32d50512be887843957184860902b58e34ab0b1ebc48c01d2554bfe03"
+          "hash": "sha256-a29f5265e1fe67eb6309d906a5df0f05d70506ceb926144807ef438772390e3b"
         }
       ]
     },
@@ -784,13 +784,13 @@
         ".agentquilt/meta-agents/governance/traceability/020-governance-workflow.md"
       ],
       "metaHash": "sha256-c6efa2b4d7f9ea4515d7a8a749f9331998d0ac84ab01a91beff9643c1bed9d7c",
-      "version": "sha256-8c3544cbb9349fa8fe3155effced4148664cc2891bce6b8eeb021be2e33f8229",
+      "version": "sha256-e8e9b417336ca8c1a93909c579600a084d4952337440c7994aa08d0518c65ddb",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/traceability.md",
           "kind": "file",
-          "hash": "sha256-7c63a36e3fa17b58e4c2977e25a25bfb1cfbd8a4afdf444ab7ead13ec4e96610"
+          "hash": "sha256-c66efc20ea3d05f498e855ae6c9db66adf0b63d5e7b984edd9c79317f76487a5"
         }
       ]
     },
@@ -834,8 +834,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/governance/gatekeeper/020-governance-workflow.md",
-      "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
-      "bytes": 862,
+      "hash": "sha256-8b4e61060b465bab1ca3108711466b5266722b549690927e5a06b7b5920a0d5c",
+      "bytes": 873,
       "tags": []
     },
     {
@@ -846,8 +846,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/governance/policy-compliance/020-governance-workflow.md",
-      "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
-      "bytes": 862,
+      "hash": "sha256-8b4e61060b465bab1ca3108711466b5266722b549690927e5a06b7b5920a0d5c",
+      "bytes": 873,
       "tags": []
     },
     {
@@ -858,8 +858,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/governance/prompt-injection-test/020-governance-workflow.md",
-      "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
-      "bytes": 862,
+      "hash": "sha256-8b4e61060b465bab1ca3108711466b5266722b549690927e5a06b7b5920a0d5c",
+      "bytes": 873,
       "tags": []
     },
     {
@@ -906,8 +906,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/governance/supply-chain-risk/020-governance-workflow.md",
-      "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
-      "bytes": 862,
+      "hash": "sha256-8b4e61060b465bab1ca3108711466b5266722b549690927e5a06b7b5920a0d5c",
+      "bytes": 873,
       "tags": []
     },
     {
@@ -918,8 +918,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/governance/traceability/020-governance-workflow.md",
-      "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
-      "bytes": 862,
+      "hash": "sha256-8b4e61060b465bab1ca3108711466b5266722b549690927e5a06b7b5920a0d5c",
+      "bytes": 873,
       "tags": []
     },
     {

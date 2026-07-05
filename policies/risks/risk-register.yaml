@@ -66,6 +66,37 @@ risks:
     mitigation: "Added tests/commands.integration.test.ts covering: init (config.yaml, .gitattributes, agents/ dir creation, platform config, invalid platform exit), generateConfig (content structure), agents add (agent.yaml, 010-role.md, duplicate guard, no-overwrite), and agents list via library functions (discovery, model resolution, empty directory)."
     aiAssistance: "qa-agent tracks this; eval-agent tests CLI behavior changes"
 
+  - id: RISK-007
+    type: security
+    description: "Path traversal via frontmatter/manifest name fields — adopted agent names and agent.yaml name flowed unvalidated into filesystem paths (init adoption and Claude adapter output)"
+    level: high
+    status: mitigated
+    discovered: "2026-07-05 (pre-v0.1.0 security-review + code-review agents)"
+    mitigatedDate: "2026-07-05"
+    owner: "@cli-maintainers"
+    mitigation: "init.ts resolveAdoptionDir() bounds-checks adopted names against .agentquilt/agents/ (same pattern as RISK-004 fix); AgentNameSchema in agentDefinition.schema.ts rejects separators, absolute paths, and '..' at manifest load, covering the build/adapter path. Covered by adversarial tests in adopt-init.test.ts and security.test.ts."
+    aiAssistance: "security-agent generates adversarial name inputs on PRs touching init.ts, agentLoader.ts, or adapters"
+
+  - id: RISK-008
+    type: security
+    description: "agent-definitions target.sourceDir in config.yaml not validated for traversal — a config with sourceDir: ../../../etc directs the loader outside the project"
+    level: medium
+    status: open
+    discovered: "2026-07-05 (pre-v0.1.0 security-review agent)"
+    owner: "@cli-maintainers"
+    mitigation: "Extend validateConfig() to bounds-check per-target sourceDir against the project root, mirroring the RISK-004 include check. Post-v0.1.0 patch scope: config.yaml is author-controlled, so exploitation requires a malicious config passing PR review."
+    aiAssistance: "security-agent flags PRs adding sourceDir values containing '..'"
+
+  - id: RISK-009
+    type: security
+    description: "agentquilt agents add <name> accepts raw CLI argument as path component (low: requires direct CLI control); dead src/integration/claude-agent.ts ships in dist with unresolvable @anthropic-ai/sdk import"
+    level: low
+    status: open
+    discovered: "2026-07-05 (pre-v0.1.0 security-review agent)"
+    owner: "@cli-maintainers"
+    mitigation: "Reject path separators and '..' in agents add name argument (exit 2); either drop integration/ from the published dist or move the SDK dependency when Phase 3.4 auto-invocation is revisited. Post-v0.1.0 patch scope."
+    aiAssistance: "security-agent re-checks on next release-gate run"
+
 mitigationProcess: |
   ## AI-Assisted Risk Management
 

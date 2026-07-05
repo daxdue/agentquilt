@@ -4,6 +4,7 @@ import path from "path";
 import os from "os";
 import { validateConfig, ConfigError } from "../src/core/configLoader";
 import type { AgentQuiltConfig } from "../src/schemas/config.schema";
+import { AgentDefinitionSchema } from "../src/schemas/agentDefinition.schema";
 
 let tmpDir: string;
 
@@ -35,6 +36,35 @@ function makeConfig(includePaths: string[]): [AgentQuiltConfig, string] {
   } as unknown as AgentQuiltConfig;
   return [config, sourceDir];
 }
+
+describe("agent manifest name validation (path traversal in adapter output paths)", () => {
+  const manifest = (name: string) => ({ description: "test agent", name });
+
+  it("rejects a relative traversal name (../../evil)", () => {
+    expect(AgentDefinitionSchema.safeParse(manifest("../../evil")).success).toBe(false);
+  });
+
+  it("rejects a name containing a slash (a/b)", () => {
+    expect(AgentDefinitionSchema.safeParse(manifest("a/b")).success).toBe(false);
+  });
+
+  it("rejects a name containing a backslash (a\\b)", () => {
+    expect(AgentDefinitionSchema.safeParse(manifest("a\\b")).success).toBe(false);
+  });
+
+  it("rejects an absolute path name (/etc/cron.d/x)", () => {
+    expect(AgentDefinitionSchema.safeParse(manifest("/etc/cron.d/x")).success).toBe(false);
+  });
+
+  it("rejects a name containing a dot-dot sequence (a..b)", () => {
+    expect(AgentDefinitionSchema.safeParse(manifest("a..b")).success).toBe(false);
+  });
+
+  it("accepts normal kebab-case and dotted names", () => {
+    expect(AgentDefinitionSchema.safeParse(manifest("code-review")).success).toBe(true);
+    expect(AgentDefinitionSchema.safeParse(manifest("agent_v1.2")).success).toBe(true);
+  });
+});
 
 describe("path traversal validation (RISK-004)", () => {
   it("blocks a deep traversal escape (../../../../etc/passwd)", () => {

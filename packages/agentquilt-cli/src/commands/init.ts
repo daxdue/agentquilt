@@ -1,7 +1,8 @@
 import { mkdirSync, writeFileSync, existsSync, readdirSync, readFileSync } from "fs";
-import { join, basename, extname } from "path";
+import { join, basename, extname, resolve, sep } from "path";
 import { parse as parseYaml } from "yaml";
 import type { Command } from "commander";
+import { ConfigError } from "../core/configLoader.js";
 
 const ADAPTER_PLATFORMS = ["claude", "agentskills"];
 const PRESET_PLATFORMS = ["cursor", "copilot", "gemini"];
@@ -28,7 +29,10 @@ export function registerInitCommand(program: Command): void {
         return prev ? [...prev, ...platforms] : platforms;
       }
     )
-    .option("--force", "overwrite an existing .agentquilt/config.yaml")
+    .option(
+      "--force",
+      "overwrite an existing .agentquilt config (never touches .gitattributes or existing agent sources)"
+    )
     .action((options: { dir?: string; platform?: string[]; force?: boolean }) => {
       const dir = options.dir || process.cwd();
       const platforms = options.platform || ["claude"];
@@ -44,7 +48,7 @@ export function initProject(dir: string, platforms: string[], force = false): vo
     // Validate platforms
     const invalidPlatforms = platforms.filter((p) => !ALL_PLATFORMS.includes(p));
     if (invalidPlatforms.length > 0) {
-      throw new Error(
+      throw new ConfigError(
         `Invalid platform(s): ${invalidPlatforms.join(", ")}. Valid platforms: ${ALL_PLATFORMS.join(", ")}`
       );
     }
@@ -53,7 +57,7 @@ export function initProject(dir: string, platforms: string[], force = false): vo
     if (!force) {
       for (const configName of ["config.yaml", "config.json"]) {
         if (existsSync(join(dir, ".agentquilt", configName))) {
-          throw new Error(
+          throw new ConfigError(
             `project already initialized (.agentquilt/${configName} exists). Use --force to overwrite.`
           );
         }
@@ -126,7 +130,7 @@ agentquilt.lock      linguist-generated=true merge=union
     console.error(
       `✗ Init failed: ${err instanceof Error ? err.message : String(err)}`
     );
-    process.exit(3);
+    process.exit(err instanceof ConfigError ? 2 : 3);
   }
 }
 
@@ -223,6 +227,18 @@ export function reverseMapPermissions(tools: unknown, permissionMode: unknown): 
   return "workspace";
 }
 
+// Frontmatter names come from files an attacker may have committed; the name
+// becomes a directory under agentsDir, so it must stay inside that boundary.
+function resolveAdoptionDir(agentsDir: string, name: string): string | undefined {
+  const boundary = resolve(agentsDir);
+  const target = resolve(agentsDir, name);
+  if (target === boundary || !target.startsWith(boundary + sep)) {
+    console.warn(`  ! skipped ${JSON.stringify(name)}: name escapes .agentquilt/agents/`);
+    return undefined;
+  }
+  return target;
+}
+
 const PLATFORM_SCAN: Record<string, { dir: string; glob: string }> = {
   claude: { dir: ".claude/agents", glob: "*.md" },
   agentskills: { dir: ".agents/skills", glob: "*/SKILL.md" },
@@ -264,8 +280,8 @@ function adoptClaudeAgents(scanDir: string, agentsDir: string): number {
       ? fm["name"]
       : basename(entry.name, ".md");
 
-    const agentDir = join(agentsDir, name);
-    if (existsSync(agentDir)) continue;
+    const agentDir = resolveAdoptionDir(agentsDir, name);
+    if (agentDir === undefined || existsSync(agentDir)) continue;
 
     const description = typeof fm["description"] === "string" && fm["description"].length > 0
       ? fm["description"]
@@ -302,8 +318,8 @@ function adoptAgentSkillsAgents(scanDir: string, agentsDir: string): number {
       ? fm["name"]
       : skillDir.name;
 
-    const agentDir = join(agentsDir, name);
-    if (existsSync(agentDir)) continue;
+    const agentDir = resolveAdoptionDir(agentsDir, name);
+    if (agentDir === undefined || existsSync(agentDir)) continue;
 
     const description = typeof fm["description"] === "string" && fm["description"].length > 0
       ? fm["description"]
