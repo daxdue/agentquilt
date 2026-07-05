@@ -15,7 +15,7 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 
 **CLI (`agentquilt`)**
 
-- `agentquilt init` — scaffold a new project with `agentquilt.config.yaml`, `agents/` directory, and `.gitattributes`. Supports `--platform` flag with `claude`, `agentskills`, `cursor`, `copilot`, `gemini`.
+- `agentquilt init` — scaffold a new project with `.agentquilt/config.yaml`, `.agentquilt/agents/` directory, and `.gitattributes`. Supports `--platform` flag with `claude`, `agentskills`, `cursor`, `copilot`, `gemini`.
 - `agentquilt build` — compile all targets (document and agent-definitions), write adapter outputs, and write `agentquilt.lock`.
 - `agentquilt check` — detect drift between source and disk; exits 1 if any output or lock is stale. CI-safe.
 - `agentquilt agents add <name>` — scaffold a new agent directory with `agent.yaml` and `010-role.md`.
@@ -42,7 +42,7 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 
 **Schemas (Zod + JSON Schema)**
 
-- `agentquilt.config.yaml` — config schema with version, sourceDir, model tiers, targets (document and agent-definitions kinds), platform presets.
+- `.agentquilt/config.yaml` — config schema with version, sourceDir, model tiers, targets (document and agent-definitions kinds), platform presets. Config is discovered at `.agentquilt/config.yaml` (or `.agentquilt/config.json`); the legacy root `agentquilt.config.yaml` / `agentquilt.config.json` are honored as a fallback (ADR-0010).
 - `agent.yaml` — agent manifest schema: description, name, model, permissions, `x-<platform>` extensions.
 - `agentquilt.lock` — lock file schema with fragment records, target locks, and agent output records.
 - `eval-case.schema.json` — eval case schema (prompt-presence, llm-judge, semantic, regex, custom types) for future eval runner.
@@ -50,7 +50,7 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 
 **Meta-agents (`.agents/` and `.claude/agents/`)**
 
-- 43 meta-agents scaffolded across five categories: governance (8), SDLC (10), STLC (10), release (6), internal (9).
+- 44 meta-agents scaffolded across five categories: governance (8), SDLC (10), STLC (10), release (6), internal (10).
 - All 46 compiled agent files discoverable and usable in Claude Code via `.claude/agents/`.
 - Five gate policies defined: intake, requirement, architecture, pr-quality, release.
 - AI assistance model enforced in all agents per ADR-0004: agents may draft, review, and recommend; humans retain all approval and merge authority.
@@ -76,6 +76,7 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 - Claude adapter output now starts with `---` (YAML frontmatter) rather than an HTML comment, enabling agent discovery in Claude Code.
 - `x-claude` context blocks removed from compiled meta-agents for v1.1 spec compliance.
 - Repository structure aligned with v1/v1.1 specs (CLI binary renamed from `agentctl` to `agentquilt`, package paths corrected).
+- All AgentQuilt sources (config and fragment sources) relocated under `.agentquilt/` (ADR-0010); `agentquilt.config.yaml` and root `agents/` directory are retained as legacy fallbacks.
 - Planning and strategy documents updated to reference correct CLI command names.
 
 ### Security
