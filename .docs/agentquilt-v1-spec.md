@@ -19,6 +19,14 @@ This document is the authoritative reference for the v1 build. Decisions marked 
 
 ### 1.2 Directory layout
 
+> **[SUPERSEDED by ADR-0010]** As of v0.1.0, sources live under `.agentquilt/`:
+> config at `.agentquilt/config.yaml` (or `config.json`) and the default
+> `sourceDir` is `.agentquilt/agents`. The root-level layout shown below
+> (`agentquilt.config.yaml`, `agents/`) is still honored as a legacy fallback.
+> See [ADR-0010](architecture/adr/ADR-0010-agentquilt-dotfolder-sources.md).
+> The diagram is kept as originally specified; everything except the source
+> locations is unchanged.
+
 ```
 repo/
 ├── agents/                       # sourceDir (configurable)
@@ -148,6 +156,10 @@ Clean assembled Markdown. **No inline source markers** — they are noise for an
 ## 5. Configuration
 
 **[v1 CHOICE]** `agentquilt.config.yaml` is the documented default for hand-authoring comfort; `agentquilt.config.json` is also accepted. Format is selected by extension. (YAML adds one parse dependency; if a zero-dependency build is preferred, ship JSON-only first and add YAML in a point release — the schema is identical.)
+
+> **[SUPERSEDED by ADR-0010]** The default location is now `.agentquilt/config.yaml`
+> (or `.agentquilt/config.json`), with default `sourceDir: .agentquilt/agents`.
+> The root paths above remain a legacy fallback. Schema is unchanged.
 
 ### 5.1 Schema
 
@@ -284,7 +296,7 @@ Package `agentquilt-cli` (binary name `agentquilt`). TypeScript, ESM, Node ≥ 1
 
 | command | behavior |
 |---|---|
-| `agentquilt init` | scaffold `agentquilt.config.yaml`, an `agents/` tree with one example agent, and `.gitattributes`. |
+| `agentquilt init` | scaffold `.agentquilt/config.yaml`, the `.agentquilt/agents/` tree, and `.gitattributes` (per ADR-0010); adopts existing `.claude/agents/*.md` and `.agents/skills/*/SKILL.md` as source agents; refuses to overwrite an existing config unless `--force` is given. |
 | `agentquilt build` | compile every target, write all outputs and the lock. |
 | `agentquilt build --watch` | **[DEFERRED]** recompile affected targets on fragment/config change (fast local feedback). Not implemented in v0.1.0. |
 | `agentquilt check` | recompile in memory; exit `1` on any drift vs. committed outputs/lock. CI gate. |

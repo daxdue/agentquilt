@@ -15,7 +15,8 @@ Requires Node >= 18.
 ## Commands
 
 ```bash
-agentquilt init                  # Scaffold a new project with config and .gitattributes
+agentquilt init                  # Scaffold a new project; adopts existing .claude/agents/ and
+                                 # .agents/skills/ files as sources (--force to re-init)
 agentquilt build                 # Compile all targets, write outputs and lock file
 agentquilt check                 # CI gate: detect drift between source and committed outputs
 agentquilt agents add <name>     # Scaffold a new agent directory with agent.yaml

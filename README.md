@@ -59,7 +59,9 @@ npm run build
 ## Usage
 
 ```bash
-# Scaffold a new project
+# Scaffold a new project. Existing .claude/agents/*.md and
+# .agents/skills/*/SKILL.md files are adopted as source agents.
+# Refuses to overwrite an existing config unless --force is given.
 agentquilt init
 
 # Compile all agents to platform-specific outputs

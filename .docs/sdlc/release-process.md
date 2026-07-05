@@ -31,7 +31,7 @@ git checkout -b release/v<VERSION>
 
 ### 2. Bump version
 
-Edit `packages/agentquilt/package.json`:
+Edit `packages/agentquilt-cli/package.json`:
 
 ```json
 "version": "0.x.0"
@@ -57,15 +57,15 @@ Add a new section at the top:
 ### 4. Regenerate outputs
 
 ```bash
-cd packages/agentquilt && npm run build
-node dist/index.js build   # from repo root
-node dist/index.js check   # must exit 0
+npm run build              # from repo root (builds the CLI workspace)
+node packages/agentquilt-cli/dist/index.js build   # regenerate outputs
+node packages/agentquilt-cli/dist/index.js check   # must exit 0
 ```
 
 ### 5. Commit and open PR
 
 ```bash
-git add packages/agentquilt/package.json CHANGELOG.md agentquilt.lock AGENTS.md
+git add packages/agentquilt-cli/package.json CHANGELOG.md agentquilt.lock AGENTS.md .claude/agents/
 git commit -m "chore(release): prepare v<VERSION>"
 ```
 
@@ -85,7 +85,7 @@ The `release.yml` CI workflow (to be implemented — see [roadmap.md](../roadmap
 Until the workflow exists, publish manually:
 
 ```bash
-cd packages/agentquilt && npm publish
+cd packages/agentquilt-cli && npm publish
 ```
 
 ---
