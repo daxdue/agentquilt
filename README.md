@@ -44,7 +44,7 @@ v0.1.0 — Core compiler, CLI, schemas, and platform adapters implemented.
 ## Installation
 
 ```bash
-npm install -g agentquilt-cli
+npm install -g agentquilt
 ```
 
 Or from source:

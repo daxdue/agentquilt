@@ -279,7 +279,7 @@ See [PROJECT_PLAN.md](.planning/PROJECT_PLAN.md) for historical context and full
 
 ## Package Details
 
-- **npm package**: `agentquilt-cli` (https://github.com/daxdue/agentquilt)
+- **npm package**: `agentquilt` (https://www.npmjs.com/package/agentquilt); CLI source lives in `packages/agentquilt-cli/`
 - **Node requirement**: >= 18
 - **CLI entry point**: `packages/agentquilt-cli/dist/index.js` (compiled from TypeScript)
 - **Built with**: TypeScript, Commander.js, Zod, YAML parser

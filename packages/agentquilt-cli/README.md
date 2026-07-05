@@ -1,13 +1,13 @@
-# agentquilt-cli
+# agentquilt
 
 CLI for [AgentQuilt](https://agentquilt.dev) — a Git-native framework for maintaining AI agent instructions as structured, composable, validated source files that compile deterministically into platform-specific outputs (`AGENTS.md`, `.claude/agents/*.md`, and more).
 
 ## Install
 
 ```bash
-npm install -g agentquilt-cli
+npm install -g agentquilt
 # or per project
-npm install --save-dev agentquilt-cli
+npm install --save-dev agentquilt
 ```
 
 Requires Node >= 18.
