@@ -45,19 +45,41 @@ describe("resolvePreset", () => {
 });
 
 describe("findConfigFile", () => {
-  it("finds agentquilt.config.yaml when present", () => {
+  it("finds .agentquilt/config.yaml when present", () => {
+    mkdirSync(path.join(tmpDir, ".agentquilt"), { recursive: true });
+    writeConfig(".agentquilt/config.yaml", "version: 1\ntargets: []");
+    const found = findConfigFile(tmpDir);
+    expect(found).toBe(path.join(tmpDir, ".agentquilt", "config.yaml"));
+  });
+
+  it("prefers .agentquilt/config.yaml over the legacy root config", () => {
+    mkdirSync(path.join(tmpDir, ".agentquilt"), { recursive: true });
+    writeConfig(".agentquilt/config.yaml", "version: 1\ntargets: []");
+    writeConfig("agentquilt.config.yaml", "version: 1\ntargets: []");
+    const found = findConfigFile(tmpDir);
+    expect(found).toBe(path.join(tmpDir, ".agentquilt", "config.yaml"));
+  });
+
+  it("falls back to .agentquilt/config.json when yaml is absent", () => {
+    mkdirSync(path.join(tmpDir, ".agentquilt"), { recursive: true });
+    writeConfig(".agentquilt/config.json", '{"version":1,"targets":[]}');
+    const found = findConfigFile(tmpDir);
+    expect(found).toBe(path.join(tmpDir, ".agentquilt", "config.json"));
+  });
+
+  it("finds legacy agentquilt.config.yaml when present", () => {
     writeConfig("agentquilt.config.yaml", "version: 1\ntargets: []");
     const found = findConfigFile(tmpDir);
     expect(found).toBe(path.join(tmpDir, "agentquilt.config.yaml"));
   });
 
-  it("falls back to agentquilt.config.json when yaml is absent", () => {
+  it("falls back to legacy agentquilt.config.json when yaml is absent", () => {
     writeConfig("agentquilt.config.json", '{"version":1,"targets":[]}');
     const found = findConfigFile(tmpDir);
     expect(found).toBe(path.join(tmpDir, "agentquilt.config.json"));
   });
 
-  it("throws ConfigError when neither file exists", () => {
+  it("throws ConfigError when no config file exists", () => {
     expect(() => findConfigFile(tmpDir)).toThrow(ConfigError);
   });
 });
@@ -103,7 +125,7 @@ describe("loadConfig", () => {
     expect(() => loadConfig(p)).toThrow(ConfigError);
   });
 
-  it("uses default sourceDir of 'agents' when omitted", () => {
+  it("uses default sourceDir of '.agentquilt/agents' when omitted", () => {
     const p = writeConfig("agentquilt.config.yaml", [
       "version: 1",
       "targets:",
@@ -111,7 +133,7 @@ describe("loadConfig", () => {
       "    include: [shared]",
     ].join("\n"));
     const config = loadConfig(p);
-    expect(config.sourceDir).toBe("agents");
+    expect(config.sourceDir).toBe(".agentquilt/agents");
   });
 });
 

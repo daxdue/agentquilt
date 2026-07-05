@@ -47,19 +47,19 @@ export function initProject(dir: string, platforms: string[]): void {
       );
     }
 
-    // Create agents directory
-    const agentsDir = join(dir, "agents");
+    // Create .agentquilt/agents source directory
+    const agentsDir = join(dir, ".agentquilt", "agents");
     mkdirSync(agentsDir, { recursive: true });
 
     // Generate config file based on selected platforms
     const configContent = generateConfig(platforms);
-    writeFileSync(join(dir, "agentquilt.config.yaml"), configContent, "utf8");
-    console.log("✓ created agentquilt.config.yaml");
+    writeFileSync(join(dir, ".agentquilt", "config.yaml"), configContent, "utf8");
+    console.log("✓ created .agentquilt/config.yaml");
 
     // Create .gitattributes (spec §7.1)
     const gitattributesContent = `# normalize line endings everywhere — primary CRLF defense in the working tree
 * text=auto eol=lf
-agents/**/*.md text eol=lf
+.agentquilt/**/*.md text eol=lf
 
 # mark generated outputs (collapses diffs, signals "do not edit")
 AGENTS.md            linguist-generated=true
@@ -85,7 +85,7 @@ agentquilt.lock      linguist-generated=true merge=union
     }
     console.log("\nNext steps:");
     console.log("  1. Run: agentquilt agents add <name>");
-    console.log("  2. Edit agents/<name>/010-role.md and other blocks");
+    console.log("  2. Edit .agentquilt/agents/<name>/010-role.md and other blocks");
     console.log("  3. Run: agentquilt build");
     console.log("  4. Commit agentquilt.lock and platform-specific agent files");
     console.log("\nFor more info: https://agentquilt.dev");
@@ -104,7 +104,7 @@ export function generateConfig(platforms: string[]): string {
   const presetPlatforms = platforms.filter((p) => PRESET_PLATFORMS.includes(p));
 
   let config = `version: 1
-sourceDir: agents
+sourceDir: .agentquilt/agents
 defaultModelTier: balanced
 
 modelTiers:

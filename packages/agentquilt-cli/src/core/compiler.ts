@@ -19,8 +19,8 @@ export interface CompileResult {
 /**
  * Generate HTML comment header per v1 spec §4.2.
  */
-function generateHeader(targetVersion: string): string {
-  return `<!-- agentquilt: generated file — do not edit. version=${targetVersion} · source: agents/ · regenerate: npx agentquilt build -->\n`;
+function generateHeader(targetVersion: string, sourceLabel: string): string {
+  return `<!-- agentquilt: generated file — do not edit. version=${targetVersion} · source: ${sourceLabel} · regenerate: npx agentquilt build -->\n`;
 }
 
 /**
@@ -29,9 +29,10 @@ function generateHeader(targetVersion: string): string {
 function assembleTarget(
   normalizedBodies: Map<string, string>,
   fragmentIds: string[],
-  targetVersion: string
+  targetVersion: string,
+  sourceLabel: string
 ): string {
-  const header = generateHeader(targetVersion);
+  const header = generateHeader(targetVersion, sourceLabel);
   const bodies = fragmentIds.map((id) => normalizedBodies.get(id)!);
   const joined = bodies.join("\n"); // join with blank line between bodies
   return header + "\n" + joined;
@@ -46,6 +47,9 @@ export async function compile(
 ): Promise<CompileResult> {
   // Scan all fragments
   const allFragments = scanFragments(config, sourceDir);
+
+  // Header names the configured source, normalized to a trailing slash.
+  const sourceLabel = config.sourceDir.replace(/\/+$/, "") + "/";
 
   // Build fragment map: id -> { body, hash, bytes, tags }
   const fragmentMap = new Map<string, { body: string; hash: string; bytes: number; tags: string[] }>();
@@ -89,7 +93,7 @@ export async function compile(
     const version = targetVersion("1", target.format || "markdown", fragmentRefs);
 
     // Assemble content
-    const content = assembleTarget(normalizedBodies, fragmentIds, version);
+    const content = assembleTarget(normalizedBodies, fragmentIds, version, sourceLabel);
 
     compiledTargets.push({
       output: target.output,

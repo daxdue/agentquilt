@@ -28,10 +28,10 @@ afterEach(() => {
 // ---------------------------------------------------------------------------
 
 describe("agentquilt init", () => {
-  it("creates agentquilt.config.yaml in the target directory", () => {
+  it("creates .agentquilt/config.yaml in the target directory", () => {
     initProject(tmpDir, ["claude"]);
 
-    expect(existsSync(path.join(tmpDir, "agentquilt.config.yaml"))).toBe(true);
+    expect(existsSync(path.join(tmpDir, ".agentquilt", "config.yaml"))).toBe(true);
     expect(mockExit).toHaveBeenCalledWith(0);
   });
 
@@ -41,17 +41,17 @@ describe("agentquilt init", () => {
     expect(existsSync(path.join(tmpDir, ".gitattributes"))).toBe(true);
   });
 
-  it("creates the agents/ directory", () => {
+  it("creates the .agentquilt/agents/ directory", () => {
     initProject(tmpDir, ["claude"]);
 
-    expect(existsSync(path.join(tmpDir, "agents"))).toBe(true);
+    expect(existsSync(path.join(tmpDir, ".agentquilt", "agents"))).toBe(true);
   });
 
   it("--platform claude generates an agent-definitions target with claude platform", () => {
     initProject(tmpDir, ["claude"]);
 
     const configContent = readFileSync(
-      path.join(tmpDir, "agentquilt.config.yaml"),
+      path.join(tmpDir, ".agentquilt", "config.yaml"),
       "utf8"
     );
     expect(configContent).toContain("kind: agent-definitions");
@@ -69,7 +69,7 @@ describe("generateConfig", () => {
   it("includes version and sourceDir", () => {
     const config = generateConfig(["claude"]);
     expect(config).toContain("version: 1");
-    expect(config).toContain("sourceDir: agents");
+    expect(config).toContain("sourceDir: .agentquilt/agents");
   });
 
   it("includes agent-definitions target with claude platform", () => {
@@ -89,24 +89,49 @@ describe("generateConfig", () => {
 // ---------------------------------------------------------------------------
 
 describe("agentquilt agents add", () => {
-  it("creates agents/<name>/agent.yaml", () => {
+  it("creates <sourceDir>/<name>/agent.yaml at the default source location", () => {
     addAgentAction("my-bot", { cwd: tmpDir });
 
-    expect(existsSync(path.join(tmpDir, "agents", "my-bot", "agent.yaml"))).toBe(true);
+    expect(
+      existsSync(path.join(tmpDir, ".agentquilt", "agents", "my-bot", "agent.yaml"))
+    ).toBe(true);
     expect(mockExit).toHaveBeenCalledWith(0);
   });
 
-  it("creates agents/<name>/010-role.md", () => {
+  it("creates <sourceDir>/<name>/010-role.md at the default source location", () => {
     addAgentAction("my-bot", { cwd: tmpDir });
 
-    expect(existsSync(path.join(tmpDir, "agents", "my-bot", "010-role.md"))).toBe(true);
+    expect(
+      existsSync(path.join(tmpDir, ".agentquilt", "agents", "my-bot", "010-role.md"))
+    ).toBe(true);
+  });
+
+  it("respects a configured sourceDir over the default", () => {
+    writeFileSync(
+      path.join(tmpDir, "agentquilt.config.yaml"),
+      [
+        "version: 1",
+        "sourceDir: custom-agents",
+        "targets:",
+        "  - output: AGENTS.md",
+        "    include: [_shared]",
+      ].join("\n"),
+      "utf8"
+    );
+    mkdirSync(path.join(tmpDir, "custom-agents", "_shared"), { recursive: true });
+
+    addAgentAction("my-bot", { cwd: tmpDir });
+
+    expect(
+      existsSync(path.join(tmpDir, "custom-agents", "my-bot", "agent.yaml"))
+    ).toBe(true);
   });
 
   it("agent.yaml contains description and model fields", () => {
     addAgentAction("scaffolded-agent", { cwd: tmpDir });
 
     const content = readFileSync(
-      path.join(tmpDir, "agents", "scaffolded-agent", "agent.yaml"),
+      path.join(tmpDir, ".agentquilt", "agents", "scaffolded-agent", "agent.yaml"),
       "utf8"
     );
     expect(content).toContain("description:");

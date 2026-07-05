@@ -22,7 +22,9 @@ export const DocumentTargetSchema = z.object({
 // Agent-definitions target (new in Phase 2)
 export const AgentDefinitionsTargetSchema = z.object({
   kind: z.literal("agent-definitions"),
-  sourceDir: z.string().optional(),  // Override global sourceDir for this target
+  // Override global sourceDir; resolved against the parent of the global
+  // sourceDir (e.g. "meta-agents" → .agentquilt/meta-agents by default)
+  sourceDir: z.string().optional(),
   agents: z.union([z.array(z.string()), z.literal("*")]),
   platforms: z.array(z.string()).min(1),  // REQUIRED, at least one platform
   outputPaths: z.record(z.string()).optional(),  // per-platform override (Phase 3)
@@ -34,7 +36,7 @@ export type Target = z.infer<typeof TargetSchema>;
 
 export const AgentQuiltConfigSchema = z.object({
   version: z.literal(1),
-  sourceDir: z.string().default("agents"),
+  sourceDir: z.string().default(".agentquilt/agents"),
   defaultModelTier: z.string().optional(),
   modelTiers: z.record(z.record(z.string())).optional(),  // tier → { platform → model }
   targets: z.array(TargetSchema).min(1),

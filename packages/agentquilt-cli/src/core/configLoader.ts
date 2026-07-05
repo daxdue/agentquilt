@@ -27,22 +27,27 @@ const PRESET_DEFAULTS: Record<Preset, { output: string }> = {
 };
 
 /**
- * Find config file in order: agentquilt.config.yaml, agentquilt.config.json
- * Throws ConfigError if neither exists.
+ * Config discovery order: .agentquilt/config.yaml, .agentquilt/config.json,
+ * then the legacy root locations agentquilt.config.yaml, agentquilt.config.json.
+ * Throws ConfigError if none exists.
  */
-export function findConfigFile(cwd: string): string {
-  const yamlPath = path.join(cwd, "agentquilt.config.yaml");
-  const jsonPath = path.join(cwd, "agentquilt.config.json");
+const CONFIG_SEARCH_ORDER = [
+  ".agentquilt/config.yaml",
+  ".agentquilt/config.json",
+  "agentquilt.config.yaml",
+  "agentquilt.config.json",
+];
 
-  if (existsSync(yamlPath)) {
-    return yamlPath;
-  }
-  if (existsSync(jsonPath)) {
-    return jsonPath;
+export function findConfigFile(cwd: string): string {
+  for (const rel of CONFIG_SEARCH_ORDER) {
+    const candidate = path.join(cwd, rel);
+    if (existsSync(candidate)) {
+      return candidate;
+    }
   }
 
   throw new ConfigError(
-    "No agentquilt.config.yaml or agentquilt.config.json found in " + cwd
+    "No .agentquilt/config.yaml (or legacy agentquilt.config.yaml) found in " + cwd
   );
 }
 
