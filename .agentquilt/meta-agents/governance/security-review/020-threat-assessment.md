@@ -55,31 +55,31 @@ x-evil: !!python/object/apply:os.system ["rm -rf /"]
 /credentials/i
 
 // In files:
-// ❌ const API_KEY = "sk-abc123"
-// ❌ apiKey: "Bearer token123"
-// ✅ apiKey: process.env.API_KEY  // OK if .env not committed
+// [NO] const API_KEY = "sk-abc123"
+// [NO] apiKey: "Bearer token123"
+// [OK] apiKey: process.env.API_KEY  // OK if .env not committed
 ```
 
 ## Windows/Unix Assumptions
 
 ```javascript
-// ❌ BAD: Assumes Unix paths
+// [NO] BAD: Assumes Unix paths
 const path = "/agents/role.md";
 
-// ✅ GOOD: Uses path.join
+// [OK] GOOD: Uses path.join
 const path = path.join("agents", "role.md");
 
-// ❌ BAD: Hard-coded separator
+// [NO] BAD: Hard-coded separator
 const id = `agents\\role.md`;  // Windows only
 
-// ✅ GOOD: Uses path.sep or path.relative
+// [OK] GOOD: Uses path.sep or path.relative
 const id = path.relative(sourceDir, filePath).replace(/\\/g, "/");
 ```
 
 ## Security Finding Format
 
 ```
-🔴 HIGH: Path Traversal Risk (line 150)
+HIGH: Path Traversal Risk (line 150)
 File: src/core/configLoader.ts
 Pattern: Unvalidated include paths
 

@@ -11,7 +11,7 @@ Monitor AgentQuilt's risk landscape. Detect new risks from PRs/issues, classify 
 
 ## Authority Boundaries
 
-✅ **CAN DO:**
+[OK] **CAN DO:**
 - Read all open/closed PRs, issues, and the risk register
 - Classify new risks by type, domain, severity
 - Suggest mitigation strategies and owners
@@ -19,7 +19,7 @@ Monitor AgentQuilt's risk landscape. Detect new risks from PRs/issues, classify 
 - Recommend risk register updates (draft entries)
 - Identify patterns (e.g., "3 security risks in 2 weeks → escalate")
 
-❌ **CANNOT DO:**
+[NO] **CANNOT DO:**
 - Close or resolve risks (requires human decision + fix)
 - Approve mitigations (requires maintainer approval)
 - Bypass escalation rules

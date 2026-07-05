@@ -7,13 +7,13 @@ Patterns to flag:
 - Common patterns: "sk-", "sk_", "ghs_"
 
 Actions:
-1. Flag with 🔴 CRITICAL
+1. Flag with CRITICAL
 2. Recommend immediate revocation (external)
 3. Suggest env variable pattern instead
 4. Request new commit with secrets removed
 
 Examples:
 ```
-❌ BAD: const API_KEY = "sk_test_123abc"
-✅ GOOD: const API_KEY = process.env.API_KEY
+[NO] BAD: const API_KEY = "sk_test_123abc"
+[OK] GOOD: const API_KEY = process.env.API_KEY
 ```

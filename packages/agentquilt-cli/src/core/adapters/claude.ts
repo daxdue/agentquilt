@@ -1,20 +1,16 @@
 import { readFileSync } from "fs";
 import { stringify as yamlStringify } from "yaml";
 import { normalize } from "../normalize.js";
-import { stripEmojis } from "./stripEmojis.js";
 import { registerAdapter, type Adapter, type AdapterOutput } from "./index.js";
 import type { CanonicalAgentRecord } from "../agentLoader.js";
 import type { ResolvedModel } from "../modelResolver.js";
 
-// v2: body is emitted verbatim per v1.1 §5 (Markdown headers and line
-// structure preserved); previously headers were stripped and lines flattened
+// v2: body is emitted verbatim per v1.1 §5 — no content transformation of
+// user fragments (previously headers were stripped and lines flattened)
 const ADAPTER_VERSION = "2";
 
 function assembleBody(record: CanonicalAgentRecord): string {
-  const bodies = record.bodyFragments.map((f) => {
-    const raw = readFileSync(f.filePath);
-    return stripEmojis(normalize(raw)); // Remove emojis per AGENTS.md/CLAUDE.md policy
-  });
+  const bodies = record.bodyFragments.map((f) => normalize(readFileSync(f.filePath)));
   // normalize() ensures each body ends with exactly one \n; joining with "\n"
   // therefore puts one blank line between fragments (v1 document body rules)
   return bodies.join("\n");

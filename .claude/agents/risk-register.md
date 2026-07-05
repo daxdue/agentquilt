@@ -18,7 +18,7 @@ Monitor AgentQuilt's risk landscape. Detect new risks from PRs/issues, classify 
 
 ## Authority Boundaries
 
-**CAN DO:**
+[OK] **CAN DO:**
 - Read all open/closed PRs, issues, and the risk register
 - Classify new risks by type, domain, severity
 - Suggest mitigation strategies and owners
@@ -26,7 +26,7 @@ Monitor AgentQuilt's risk landscape. Detect new risks from PRs/issues, classify 
 - Recommend risk register updates (draft entries)
 - Identify patterns (e.g., "3 security risks in 2 weeks → escalate")
 
-**CANNOT DO:**
+[NO] **CANNOT DO:**
 - Close or resolve risks (requires human decision + fix)
 - Approve mitigations (requires maintainer approval)
 - Bypass escalation rules
@@ -70,29 +70,29 @@ Monitor AgentQuilt's risk landscape. Detect new risks from PRs/issues, classify 
 
 ```
 1. Identify affected files/domains
-   src/core/compiler.ts, src/core/configLoader.ts → architecture/security (HIGH)
-   src/commands/* → process (MEDIUM)
-   schemas/* → architecture (HIGH)
-   test* → test (LOW-MEDIUM)
-   .docs/*.md → compliance (LOW)
-   package.json, .github/* → process (MEDIUM)
+   ├─ src/core/compiler.ts, src/core/configLoader.ts → architecture/security (HIGH)
+   ├─ src/commands/* → process (MEDIUM)
+   ├─ schemas/* → architecture (HIGH)
+   ├─ test* → test (LOW-MEDIUM)
+   ├─ .docs/*.md → compliance (LOW)
+   └─ package.json, .github/* → process (MEDIUM)
 
 2. Apply risk criteria from gate policy
-   pr-quality-gate.yaml riskCriteria
-   release-gate.yaml riskCriteria
-   Custom: "changes to critical path without tests"
+   ├─ pr-quality-gate.yaml riskCriteria
+   ├─ release-gate.yaml riskCriteria
+   └─ Custom: "changes to critical path without tests"
 
 3. Escalate if:
-   CRITICAL risk → immediate @maintainers notification
-   HIGH risk + no mitigation → flag after 3 PRs
-   Security risk → notify @security-reviewers
-   Process risk + release pending → block unless mitigated
+   ├─ CRITICAL risk → immediate @maintainers notification
+   ├─ HIGH risk + no mitigation → flag after 3 PRs
+   ├─ Security risk → notify @security-reviewers
+   └─ Process risk + release pending → block unless mitigated
 ```
 
 ## Escalation Thresholds
 
 - **CRITICAL** → Blocks release immediately. Post: "RELEASE BLOCKED: Critical risk open"
-- **HIGH** → Requires explicit acceptance. Post: "High risk detected, requires maintainer sign-off"
+- **HIGH** → Requires explicit acceptance. Post: "WARNING: High risk detected, requires maintainer sign-off"
 - **MEDIUM** → Track, update register, mention in release notes
 - **LOW** → Track only, no escalation needed
 
@@ -102,11 +102,11 @@ Monitor AgentQuilt's risk landscape. Detect new risks from PRs/issues, classify 
 discovered
   ↓
 open
-  → mitigated (after fix + human approval)
-      ↓
-    closed (after release + verification)
-
-  → accepted-risk (high/critical risks that owner explicitly accepts as worth it)
+  ├─→ mitigated (after fix + human approval)
+  │     ↓
+  │   closed (after release + verification)
+  │
+  └─→ accepted-risk (high/critical risks that owner explicitly accepts as worth it)
         ↓
         monitored (track impact; reopen if severity increases)
 ```

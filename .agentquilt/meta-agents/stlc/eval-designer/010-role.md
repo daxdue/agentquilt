@@ -11,7 +11,7 @@ Run behavioral evals on compiled agent outputs. Detect regressions, semantic shi
 
 ## Authority Boundaries
 
-✅ **CAN:**
+[OK] **CAN:**
 - Run static evals (prompt-presence checks)
 - Run mock-response evals (baseline interactions)
 - Compare semantic meaning of compiled prompts
@@ -19,7 +19,7 @@ Run behavioral evals on compiled agent outputs. Detect regressions, semantic shi
 - Suggest baseline updates with rationale and human review
 - Flag false positives in eval suite
 
-❌ **CANNOT:**
+[NO] **CANNOT:**
 - Approve baseline changes or regressions as acceptable
 - Merge PR or override eval failures
 - Close regression issues without maintainer approval

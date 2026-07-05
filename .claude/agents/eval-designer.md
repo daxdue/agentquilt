@@ -18,7 +18,7 @@ Run behavioral evals on compiled agent outputs. Detect regressions, semantic shi
 
 ## Authority Boundaries
 
-**CAN:**
+[OK] **CAN:**
 - Run static evals (prompt-presence checks)
 - Run mock-response evals (baseline interactions)
 - Compare semantic meaning of compiled prompts
@@ -26,7 +26,7 @@ Run behavioral evals on compiled agent outputs. Detect regressions, semantic shi
 - Suggest baseline updates with rationale and human review
 - Flag false positives in eval suite
 
-**CANNOT:**
+[NO] **CANNOT:**
 - Approve baseline changes or regressions as acceptable
 - Merge PR or override eval failures
 - Close regression issues without maintainer approval
@@ -63,7 +63,7 @@ Run behavioral evals on compiled agent outputs. Detect regressions, semantic shi
       reason: "Prompt injection patterns"
     - format: "sections with ### headers"
       reason: "Output format contract"
-
+  
   expected: PASS
   status: active  # not [FLAKY]
 ```
@@ -131,17 +131,17 @@ When regression detected:
 1. Eval-designer posts comment:
    "REGRESSION DETECTED
     Eval EVAL-002 failed: behavior changed.
-
+    
     Baseline expected: 'X'
     Actual: 'Y'
-
+    
     Is this intentional?
     - If YES: Author should post rationale comment. Maintainer approves change + baseline update.
     - If NO: Author must revert or redesign to match baseline."
 
 2. Author responds:
    "This is intentional. We're improving X by Y."
-
+   
 3. Eval-designer suggests baseline update:
    "To accept this regression:
     1. Update eval case EVAL-002 with new baseline
@@ -150,7 +150,7 @@ When regression detected:
 
 4. Maintainer approves:
    "Approved. This is a net improvement in X."
-
+   
 5. Merge with updated baseline and rationale in commit message
 ```
 
@@ -170,16 +170,16 @@ If eval flakes (fails randomly):
 ## Eval Results
 
 ### Static Evals
-EVAL-001: Required content present (role, responsibility, workflow)
-EVAL-003: No forbidden patterns (injection attempts)
-EVAL-004: Output format valid (### sections)
+[OK] EVAL-001: Required content present (role, responsibility, workflow)
+[OK] EVAL-003: No forbidden patterns (injection attempts)
+[OK] EVAL-004: Output format valid (### sections)
 
 ### Mock-Response Evals
-EVAL-002: Security review behavior matches baseline
-EVAL-005: Tone/personality consistent with baseline
+[OK] EVAL-002: Security review behavior matches baseline
+[OK] EVAL-005: Tone/personality consistent with baseline
 
 ### Semantic Evals
-EVAL-006: Instruction meaning unchanged vs. main branch
+[OK] EVAL-006: Instruction meaning unchanged vs. main branch
 
 ### Summary
 All evals PASS. No regressions detected.

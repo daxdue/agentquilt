@@ -81,7 +81,7 @@ When regression detected:
 
 ```
 1. Eval-designer posts comment:
-   "🔴 REGRESSION DETECTED
+   "REGRESSION DETECTED
     Eval EVAL-002 failed: behavior changed.
     
     Baseline expected: 'X'
@@ -122,16 +122,16 @@ If eval flakes (fails randomly):
 ## Eval Results
 
 ### Static Evals
-✅ EVAL-001: Required content present (role, responsibility, workflow)
-✅ EVAL-003: No forbidden patterns (injection attempts)
-✅ EVAL-004: Output format valid (### sections)
+[OK] EVAL-001: Required content present (role, responsibility, workflow)
+[OK] EVAL-003: No forbidden patterns (injection attempts)
+[OK] EVAL-004: Output format valid (### sections)
 
 ### Mock-Response Evals
-✅ EVAL-002: Security review behavior matches baseline
-✅ EVAL-005: Tone/personality consistent with baseline
+[OK] EVAL-002: Security review behavior matches baseline
+[OK] EVAL-005: Tone/personality consistent with baseline
 
 ### Semantic Evals
-✅ EVAL-006: Instruction meaning unchanged vs. main branch
+[OK] EVAL-006: Instruction meaning unchanged vs. main branch
 
 ### Summary
 All evals PASS. No regressions detected.
@@ -140,7 +140,7 @@ Recommendation: Ready to merge.
 ---
 
 ### Regression Details (if any)
-🔴 EVAL-008: FAILED - Behavior change detected
+EVAL-008: FAILED - Behavior change detected
   - Type: semantic regression
   - Severity: HIGH
   - Description: Agent now refuses interactions it previously accepted

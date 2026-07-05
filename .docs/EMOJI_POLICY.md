@@ -1,17 +1,33 @@
-# No-Emoji Policy for Generated Files
+# No-Emoji Policy for AgentQuilt's Own Instruction Files
 
-**Effective:** June 24, 2026  
-**Status:** Enforced  
-**Applies to:** AGENTS.md, CLAUDE.md, and all generated output files
+**Effective:** June 24, 2026
+**Revised:** July 5, 2026 — rescoped to repository governance (see below)
+**Status:** Enforced by authoring convention and code review
+**Applies to:** Content authored by humans and LLMs working on the AgentQuilt project itself — the fragments under `.agentquilt/agents/` and `.agentquilt/meta-agents/`, and therefore this repository's generated outputs (`AGENTS.md`, `CLAUDE.md`, `.claude/agents/*.md`)
+
+---
+
+## Scope — What This Policy Is (and Is Not)
+
+This is a **repository governance policy**, not a product feature.
+
+- **In scope:** instruction files for LLMs working on AgentQuilt's development and testing. Anyone (human or AI assistant) authoring or editing fragments in this repository must keep them emoji-free. Because the compiler emits fragments verbatim, clean sources produce clean generated files.
+- **Out of scope:** user content. The AgentQuilt CLI **never** transforms fragment bodies during compilation — adapters emit the composed fragments verbatim (v1.1 spec §5/§7). If a user's fragments contain emojis, their compiled agent files contain the same emojis. Rewriting user content is not the framework's job.
+
+> Historical note: until July 2026 the adapters stripped emojis (and Markdown
+> headers) from all compiled bodies. This mangled legitimate content
+> (`**bold:**`, `https://` URLs, flattened line structure) and imposed a
+> project-internal style rule on every user of the CLI. Both transforms were
+> removed; bodies are now emitted verbatim.
 
 ---
 
 ## Policy Statement
 
-Generated files (`AGENTS.md`, `CLAUDE.md`, `.agents/skills/*/SKILL.md`, etc.) **MUST NOT** contain:
+Instruction sources in this repository (and thus its generated files) **MUST NOT** contain:
 
-- ✅ Emojis (e.g., ✅, ❌, 🚀, 📋, ⚙️, ⚠️)
-- 😊 Smileys or emoticons (e.g., :), :D, ;), :-(, =))
+- Emojis (check marks, crosses, rockets, clipboards, gears, warning signs, etc.)
+- Smileys or emoticons (colon/semicolon faces and their hyphen/equals variants)
 - Any pictographic symbols or non-ASCII decorative characters
 
 **Rationale:**
@@ -25,181 +41,40 @@ Generated files (`AGENTS.md`, `CLAUDE.md`, `.agents/skills/*/SKILL.md`, etc.) **
 
 ## Enforcement Mechanism
 
-The adapter system automatically strips emojis and emoticons during file generation.
-
-### Affected Adapters
-
-1. **Claude Adapter** (`packages/agentquilt/src/core/adapters/claude.ts`)
-   - Generates: `.claude/agents/*.md`
-   - Applied to: Body fragments only (frontmatter is YAML, no emojis there)
-
-2. **AgentSkills Adapter** (`packages/agentquilt/src/core/adapters/agentskills.ts`)
-   - Generates: `.agents/skills/*/SKILL.md`
-   - Applied to: Body fragments only
-
-### Emoji Stripping Function
-
-```typescript
-function stripEmojis(text: string): string {
-  return text
-    // Emoji ranges with variation selectors
-    .replace(/[\u{1F000}-\u{1F9FF}][\u{FE00}-\u{FE0F}]?/gu, "")
-    .replace(/[\u{1F300}-\u{1F9FF}]/gu, "")
-    .replace(/[\u{2300}-\u{27BF}][\u{FE00}-\u{FE0F}]?/gu, "")
-    .replace(/[\u{2B50}]/gu, "")
-    .replace(/[\u{2705}-\u{274C}]/gu, "")
-    .replace(/\u{200D}/gu, "") // Zero-width joiner
-    .replace(/\u{200B}/gu, "") // Zero-width space
-    .replace(/\u{FE00}-\u{FE0F}/gu, "")
-    // Text emoticons
-    .replace(/\s*[:;][-=]?[)D(pP\\/|@:*'`~]\s*/g, " ")
-    .replace(/\s*[-=][-=]?[)D(P\\/]\s*/g, " ")
-    // Cleanup
-    .replace(/\s+/g, " ")
-    .trim();
-}
-```
+1. **Authoring convention** — LLMs working on this project are instructed via `CLAUDE.md`/`AGENTS.md` (Generated Files Policy section) to use plain-text markers.
+2. **Code review** — PRs touching `.agentquilt/**/*.md` are reviewed for policy compliance; the `policy-compliance` meta-agent can be asked to check this.
+3. *(Deferred)* A lint rule (`agentquilt lint` / CI gate) that rejects emoji characters in this repository's fragment sources — tracked as Week 2 scope in the project plan.
 
 ---
 
-## What Gets Stripped
+## Plain-Text Alternatives
 
-### Emojis Removed
+| Instead of | Write |
+|-----------|-----------|
+| check mark emoji | `[OK]` or `PASS` or `YES` |
+| cross mark emoji | `[NO]` or `FAIL` or `CANNOT` |
+| rocket | `READY` |
+| clipboard | `LIST` or `TASKS` |
+| gear | `CONFIGURE` or `CONFIG` |
+| warning sign | `WARNING` or `CAUTION` |
+| target | `GOAL` or `TARGET` |
+| light bulb | `NOTE` or `IDEA` |
+| padlock | `SECURE` or `SECURITY` |
+| books | `DOCUMENTATION` or `DOCS` |
 
-| Input | Output | Category |
-|-------|--------|----------|
-| ✅ DONE | DONE | Check mark |
-| ❌ ERROR | ERROR | X mark |
-| 🚀 Ready | Ready | Rocket |
-| 📋 Tasks | Tasks | Clipboard |
-| ⚙️ Config | Config | Gear (with variation selector) |
-| ⚠️ WARNING | WARNING | Warning (with variation selector) |
-| 🎯 Goal | Goal | Target |
-| 💰 Cost | Cost | Money |
-
-### Emoticons Removed
-
-| Input | Output | Category |
-|-------|--------|----------|
-| Good work :) | Good work | Smiley |
-| Not good :( | Not good | Frown |
-| Just joking ;) | Just joking | Wink |
-| Haha :D | Haha | Laugh |
-| :-) smiley | smiley | Hyphenated variant |
-| =) happy | happy | Equal variant |
-
-### Text Preserved
-
-| Input | Output | Category |
-|-------|--------|----------|
-| Agent123 | Agent123 | Alphanumeric |
-| code-review | code-review | Hyphens |
-| Hello, world! | Hello, world! | Punctuation |
-| [OK] <- proceed | [OK] <- proceed | Brackets/arrows |
-
----
-
-## Examples
-
-### Before (with emojis)
-
+**Don't:**
 ```markdown
-✅ Phase complete: 🚀 Ready to deploy 📋 See checklist 🎯 Goals met
+<check> CAN: Review code
+<cross> CANNOT: Approve PRs
+<rocket> Ready for production
 ```
 
-### After (stripped)
-
-```markdown
-Phase complete: Ready to deploy See checklist Goals met
-```
-
----
-
-## Migration Guide for Agent Authors
-
-If you're writing agent fragments (e.g., `010-role.md`, `020-workflow.md`), avoid emojis entirely:
-
-**❌ Don't do this:**
-```markdown
-✅ CAN: Review code
-❌ CANNOT: Approve PRs
-🚀 Ready for production
-```
-
-**✅ Do this instead:**
+**Do:**
 ```markdown
 [OK] CAN: Review code
 [NO] CANNOT: Approve PRs
 Ready for production
 ```
-
-### Translation Table
-
-| Emoji | Plain Text |
-|-------|-----------|
-| ✅ | [OK] or PASS or YES |
-| ❌ | [NO] or FAIL or CANNOT |
-| 🚀 | READY |
-| 📋 | LIST or TASKS |
-| ⚙️ | CONFIGURE or CONFIG |
-| ⚠️ | WARNING or CAUTION |
-| 🎯 | GOAL or TARGET |
-| 💡 | NOTE or IDEA |
-| 🔐 | SECURE or SECURITY |
-| 📚 | DOCUMENTATION or DOCS |
-
----
-
-## Testing
-
-A comprehensive test suite validates emoji stripping:
-
-**File:** `packages/agentquilt/tests/emoji-stripping.test.ts`
-
-**Coverage:**
-- ✓ 19 tests (all passing)
-- ✓ Common emojis (check marks, warning, rocket, etc.)
-- ✓ Emoticons (smileys, winks, laughs)
-- ✓ Variation selectors (⚙️, ⚠️ with trailing invisible characters)
-- ✓ Mixed content (multiple emojis in one line)
-- ✓ Whitespace normalization (cleanup after stripping)
-- ✓ Text preservation (normal content not affected)
-
-**Run tests:**
-```bash
-npm test -- emoji-stripping.test.ts --run
-```
-
----
-
-## Implementation Notes
-
-### Why Comprehensive Unicode Ranges?
-
-Emojis span multiple Unicode blocks:
-
-- **1F000-1F9FF**: Main emoji block (most common emojis)
-- **2300-27BF**: Miscellaneous symbols and dingbats
-- **2B50**: Star (sometimes outside main range)
-- **2705-274C**: Check mark to X mark range
-- **FE00-FE0F**: Variation selectors (invisible modifiers that change emoji appearance)
-
-The function covers all these to ensure comprehensive stripping.
-
-### Zero-Width Characters
-
-Some characters are invisible but still present:
-
-- **U+200D**: Zero-width joiner (used in emoji sequences like skin tone variations)
-- **U+200B**: Zero-width space (sometimes appears with emoji text)
-
-These are stripped to clean up artifacts.
-
-### Whitespace Normalization
-
-After emoji removal, multiple spaces can remain. The function normalizes:
-- `"text  :)  more"` → `"text more"` (multiple spaces → single space)
-- Leading/trailing spaces are trimmed
 
 ---
 
@@ -207,43 +82,20 @@ After emoji removal, multiple spaces can remain. The function normalizes:
 
 **Q: Can I use emojis in source fragment files?**
 
-A: Yes, but they'll be stripped during generation. Better practice: avoid them in fragments entirely to keep source clean.
+A: Not in *this repository* — sources here are the single source of truth for the generated files, which must stay emoji-free. In your own projects, AgentQuilt does not care: your fragments compile verbatim.
+
+**Q: Does the CLI strip emojis from my agents?**
+
+A: No. Adapters emit fragment bodies verbatim. This policy binds contributors to AgentQuilt, not users of AgentQuilt.
 
 **Q: What if I need to show a status indicator?**
 
-A: Use plain text alternatives:
-- `[OK]` or `PASS` instead of ✅
-- `[NO]` or `FAIL` instead of ❌
-- `READY` instead of 🚀
-
-**Q: Will my generated files look ugly without emojis?**
-
-A: No. Professional Markdown is readable without visual decorations. Use clear structure with headers, lists, and emphasis instead.
-
-**Q: Are there any emojis that won't be stripped?**
-
-A: Comprehensive coverage means almost all emojis will be stripped. If one isn't, it's a bug — open an issue on GitHub.
-
-**Q: Can I override the emoji stripping?**
-
-A: No. This is a hard requirement for generated files. If you need emojis for some reason, use a non-generated file instead.
+A: Use the plain-text alternatives table above.
 
 ---
 
 ## Related Documentation
 
 - **[CLAUDE.md](../CLAUDE.md)** — Generated Files Policy section
-- **[ADR-0005](adr/ADR-0005.md)** — CLI naming and output format standards
-- **[Test Strategy](.docs/stlc/test-strategy.md)** — Testing best practices
-
----
-
-## Changelog
-
-### v1 (June 24, 2026)
-
-- Initial policy: no emojis in AGENTS.md, CLAUDE.md
-- Comprehensive emoji stripping in adapter layer
-- Emoticon removal (smileys, etc.)
-- 19 test cases for validation
-- Applies to: Claude, AgentSkills adapters
+- **[v1.1 addendum](agentquilt-v1.1-addendum.md)** — §5/§7: adapter bodies are the composed fragments verbatim
+- **[Test Strategy](stlc/test-strategy.md)** — Testing best practices

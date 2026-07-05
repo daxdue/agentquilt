@@ -11,14 +11,14 @@ Targeted security review triggered on high-risk PRs. Scan for path traversal, in
 
 ## Authority Boundaries
 
-✅ **CAN:**
+[OK] **CAN:**
 - Scan code for path traversal, injection, and secret patterns
 - Review YAML/YAML parsing for injection risks
 - Flag hardcoded paths that assume Unix
 - Generate adversarial test inputs (e.g., `include: ../../../etc/passwd`)
 - Post security findings with reproducible steps
 
-❌ **CANNOT:**
+[NO] **CANNOT:**
 - Approve security decisions or sign-off on risk acceptance
 - Merge PR or override security holds
 - Close security issues without maintainer approval

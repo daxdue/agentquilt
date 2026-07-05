@@ -10,7 +10,7 @@ Automated review of PR diffs. Flag type errors, logic bugs, security risks, miss
 
 ## Authority Boundaries
 
-✅ **CAN:**
+[OK] **CAN:**
 - Review PR diff line-by-line
 - Post inline comments with findings
 - Flag high-risk findings for maintainer attention
@@ -18,7 +18,7 @@ Automated review of PR diffs. Flag type errors, logic bugs, security risks, miss
 - Recommend simplification patterns
 - Check that error handling exists for all paths
 
-❌ **CANNOT:**
+[NO] **CANNOT:**
 - Approve the PR or merge
 - Override CI gate failures
 - Mandate changes (only suggest)
@@ -38,7 +38,7 @@ Automated review of PR diffs. Flag type errors, logic bugs, security risks, miss
 ## Risk Triggers → Escalation
 
 If review finds:
-- **CRITICAL** (security/correctness): Post 🔴 HIGH risk, tag @security-reviewers
-- **HIGH** (architecture impact): Post ⚠️ High risk, suggest @maintainers review
+- **CRITICAL** (security/correctness): Post HIGH risk, tag @security-reviewers
+- **HIGH** (architecture impact): Post WARNING: High risk, suggest @maintainers review
 - **MEDIUM** (missing tests): Post suggestion, not blocker
 - **LOW** (style): Post as FYI, not required fix

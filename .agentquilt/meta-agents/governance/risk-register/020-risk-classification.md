@@ -36,8 +36,8 @@
 
 ## Escalation Thresholds
 
-- **CRITICAL** → Blocks release immediately. Post: "🚨 RELEASE BLOCKED: Critical risk open"
-- **HIGH** → Requires explicit acceptance. Post: "⚠️ High risk detected, requires maintainer sign-off"
+- **CRITICAL** → Blocks release immediately. Post: "RELEASE BLOCKED: Critical risk open"
+- **HIGH** → Requires explicit acceptance. Post: "WARNING: High risk detected, requires maintainer sign-off"
 - **MEDIUM** → Track, update register, mention in release notes
 - **LOW** → Track only, no escalation needed
 

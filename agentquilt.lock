@@ -10,7 +10,7 @@
         ".agentquilt/meta-agents/sdlc/adr-writer/020-adrs.md"
       ],
       "metaHash": "sha256-b1ddff4e2ebb050b626cfaa296ed6ed11e2fac610b212772e2c445ead6c3eed5",
-      "version": "sha256-464d6b3429d8fab251c4a8b5304c0d051852e05d233ba788a73af2755f6f130b",
+      "version": "sha256-d10cc38f93644422aa1ac5fbea83a5408237b42e86a18fc93034e6e5dcc5426f",
       "outputs": [
         {
           "platform": "claude",
@@ -28,13 +28,13 @@
         ".agentquilt/meta-agents/internal/agent-behavior-reviewer/020-internal-coordination.md"
       ],
       "metaHash": "sha256-67d63f827e95cf0a12309d6f9dea30a00155c42bb37a5e7a6063f31277a0202f",
-      "version": "sha256-dc8f47840b8717883d17f62c31b63ece880c2606c17482239b25345d389d8de1",
+      "version": "sha256-da259cb4998f465fd22ae584f3c5804b3f91f92b0309117204a54af4614e1cc5",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/agent-behavior-reviewer.md",
           "kind": "file",
-          "hash": "sha256-79711aa7517cf85f29a66e52211edfe2c6dbb1b848a5b668b93b3967dca5dad1"
+          "hash": "sha256-e9d9eab058babe36c49900abda6d25c5022ba5e578aba21fa8425cb52f43394a"
         }
       ]
     },
@@ -46,13 +46,13 @@
         ".agentquilt/meta-agents/internal/agent-documentation/020-internal-coordination.md"
       ],
       "metaHash": "sha256-8b171309f4685fe590bb735122c24dffbdc42d82318332ac1fa19f3f1d9741ee",
-      "version": "sha256-7e2406a45b8e9218469b3e78d187185ad8ec5a388856692c80e863ce895f0d8b",
+      "version": "sha256-688ca0a4b808a0615c3399825c68a2f90d18338ee6f9289f18bbd1aa2bd4e2b8",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/agent-documentation.md",
           "kind": "file",
-          "hash": "sha256-791ebe235df9e2397ff2c65f83dfe7ff5d9088878ad174ede3d97b5aee9596a0"
+          "hash": "sha256-5c2936a8250b3fc234e3b6f532317dbeb1158cbaad057cc80ff0a8b4bf709cd6"
         }
       ]
     },
@@ -64,13 +64,13 @@
         ".agentquilt/meta-agents/internal/agent-migration/020-internal-coordination.md"
       ],
       "metaHash": "sha256-3614fb44805cc6c340aab228f37a5241130dc9055ede8a02836e40f22927b76f",
-      "version": "sha256-cd82dc9d4c258cbec2d4104cdaf7ae902a3b3306d8302c2385fc715ad3c88c1e",
+      "version": "sha256-a88a3c481523e471ac9bd85377def0e000a283c074f2017d6c4cc4b9ca0ff520",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/agent-migration.md",
           "kind": "file",
-          "hash": "sha256-289a2e21ee0c1bc597763e5f096a2aa4c59145d4640b13bb6acc26879253d82e"
+          "hash": "sha256-095c898c0fe4f8bcefe30b10faef36e35c46342bad4bde77dceb55c6b37aadb4"
         }
       ]
     },
@@ -82,13 +82,13 @@
         ".agentquilt/meta-agents/internal/agent-registry/020-internal-coordination.md"
       ],
       "metaHash": "sha256-c3bbfe68448b707b71bf20c6c3e5c0b72bbbefc6825ad4403296df22cd5c8123",
-      "version": "sha256-437fb30e98e30228ee57d3f97b6fbfd70a9f3e171141e419286efb627bd0ec3a",
+      "version": "sha256-4dcd1055bb185a2ffb9a86507a36e5d7c4f5da3c3badb82af603404ee74c5ce1",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/agent-registry.md",
           "kind": "file",
-          "hash": "sha256-092ad98d4bc4fac8e2a854c899091eb8df623126ebf9dc2459ed5c34344d00ea"
+          "hash": "sha256-999a42ec4f0fcaf89fb22536902ac5e46fa033ceaf7371d53b244c6024e37b6e"
         }
       ]
     },
@@ -136,13 +136,13 @@
         ".agentquilt/meta-agents/release/changelog/020-release-workflow.md"
       ],
       "metaHash": "sha256-62d0536d00d48819a050ad57c2dbb71de9fc5a8535269865000589b240ad3431",
-      "version": "sha256-e5b38e035de04954207ae5db531fc16e74c826ec9b2aa6ddcda3535297e1b66f",
+      "version": "sha256-24332d4a9cb54af180035868b56eff002c460fb4829209146f75e5cfe9f4a8b5",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/changelog.md",
           "kind": "file",
-          "hash": "sha256-045430964ed5823bae17a38a60b716e48c2fb7d248df761b61191ff1e37dab9c"
+          "hash": "sha256-16a9c3875f98adc0e758418b6e8146d347d0f9b22ea2c8266f396780a8ba2961"
         }
       ]
     },
@@ -154,13 +154,13 @@
         ".agentquilt/meta-agents/sdlc/code-review/020-review-guidelines.md"
       ],
       "metaHash": "sha256-69f925d681016cb180fecfa197772910467f841ebf6176652f116bd8058c3e5a",
-      "version": "sha256-d91f31f9545b4b8b534b941a98c04ef831d46d24b6b94f0b7f2f1501e14b4772",
+      "version": "sha256-0e82b83454d4ed8aa83d6de9a8ce8a75a7c5f09dd69d2e3d9f333e670716d015",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/code-review.md",
           "kind": "file",
-          "hash": "sha256-9dbd0bdfb13baf9d51fef2e82de767db4ef1351cf5c28e780a212c3b8927555a"
+          "hash": "sha256-ce7bdea7f5f12736c15a488ac800575dc03db220da474c4a24c0b271a692bd8c"
         }
       ]
     },
@@ -172,13 +172,13 @@
         ".agentquilt/meta-agents/stlc/compatibility-test/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-8f07f5c3153e55a9cb184e996d40305f06a4cbb1c6cf88e636db8376b69a9144",
-      "version": "sha256-15c23a9571baf38fe88798373603f65a8b96922f24190da5d20877d8d6d34271",
+      "version": "sha256-380171035ef6a5f5442bdf039c3d4b33ed4d2a912d8854371b611b91eb19a518",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/compatibility-test.md",
           "kind": "file",
-          "hash": "sha256-514f765240ad12573d5eb95c2b408f17dad581f8584f11638e983122c0ddb75c"
+          "hash": "sha256-ed38aa4a0e30d66717fc46322b9fbeea68f6bd42546bf32ac06b23c03a831400"
         }
       ]
     },
@@ -190,13 +190,13 @@
         ".agentquilt/meta-agents/internal/conflict-detector/020-internal-coordination.md"
       ],
       "metaHash": "sha256-135b0d91fd7b5c3b0d25336c0cb04a85c73607b53d84c0bca4a808081fa2468d",
-      "version": "sha256-cf481f245b2beda3f42258950529501da3d52a48535fe96e3836fb43eda5c8df",
+      "version": "sha256-6375c70951950c7dae97b01d98ccf514a39538e8798fba40d791d13619639b03",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/conflict-detector.md",
           "kind": "file",
-          "hash": "sha256-599674b9406fde4457fc093d6acb725ba978a065a9251995abb96ed9cce30988"
+          "hash": "sha256-91304f7b7c9ad32bb09532acd4cf9f39cf85635b7a60fc893775444339cd070b"
         }
       ]
     },
@@ -208,13 +208,13 @@
         ".agentquilt/meta-agents/stlc/defect-triage/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-ef88e8b8eef28c78a2cead79f76bf0768151d07b9048051cfe4a713aa739111d",
-      "version": "sha256-bcfc0c3748c8cc1f010bb6181c2f6acfc7427ea10c69807331df688bfe04b728",
+      "version": "sha256-2155ec4a5cc85fa95393440d035386bad8bdba29181a18bc01a9b7cdd58fed81",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/defect-triage.md",
           "kind": "file",
-          "hash": "sha256-ce2bdf44800d6aaa41b5cae8d22fc99181263b21e48c6e0c88c1e7edaa127dc1"
+          "hash": "sha256-447e9cb263054f4dd22cec187cd039e66450507db8e69981e280d409548bc266"
         }
       ]
     },
@@ -226,13 +226,13 @@
         ".agentquilt/meta-agents/internal/definition-architect/020-internal-coordination.md"
       ],
       "metaHash": "sha256-2c8379e603e80c8587fc9394591490e4775a9ad12bd4ffd7385ee3e59e9bfc93",
-      "version": "sha256-bc2f50134a92b9087a311cce8b5d9d75c89091456e925c20831676bf953125e1",
+      "version": "sha256-182995bf11143cc0fe952b53905aa9d73d8e7dbb7f036f65cb4dc2dd446f9721",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/definition-architect.md",
           "kind": "file",
-          "hash": "sha256-93f572924a74c4f544844435174c4bc4c8eb961cd1c1afcb69164fc8286f6fc5"
+          "hash": "sha256-8cef00b9f612266bc749b3d57d15b264ade6a41f19c1d4609e79fcdc589d4ba9"
         }
       ]
     },
@@ -244,13 +244,13 @@
         ".agentquilt/meta-agents/sdlc/developer-experience/020-sdlc-workflow.md"
       ],
       "metaHash": "sha256-76c09096665467b0e68dc4741d25f398e723891aa89c551eb5344fe85559b0cc",
-      "version": "sha256-bbffe85d20a0fcd7e24cd68ca99daf5c7e40ace774073697ec735529e525e7cf",
+      "version": "sha256-fc58ae44cdef768dbe323aa06824f33be0d94fa93c8c64e8eb0277175e424c6d",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/developer-experience.md",
           "kind": "file",
-          "hash": "sha256-be81d2018a9246c89c8d1111688121f62f8d40ac18295570dcdb1f2a8827f05c"
+          "hash": "sha256-12792b2222c918890c164ac4a564676409d17fb302c233f1adad0325c3e09320"
         }
       ]
     },
@@ -262,13 +262,13 @@
         ".agentquilt/meta-agents/sdlc/documentation/020-sdlc-workflow.md"
       ],
       "metaHash": "sha256-8f17433ac3051f86e02296b505d845be507c7b94b7052e22be9c3e1a4850a16e",
-      "version": "sha256-9e41ba2f613fd7ef9f11f9666d9e080f5fcaa4893154f6fe0147aca66544db30",
+      "version": "sha256-ae80d14f704ad6084459c1f24fddb7bc53e6ccb9a6b4c531626f6841fd9044e4",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/documentation.md",
           "kind": "file",
-          "hash": "sha256-814e8fb3ba070c94296c9156dfa6e66eb2ea6ce08c09342e47b4cd3eef74187b"
+          "hash": "sha256-80ccdd211a2d881e5a4f0ec04ec0cc3b4a12dbcbc142eb7dc7b94655b5355c1c"
         }
       ]
     },
@@ -280,13 +280,13 @@
         ".agentquilt/meta-agents/stlc/eval-designer/020-eval-workflow.md"
       ],
       "metaHash": "sha256-4535b2d9a8a09dfa3d836f44032f6ede4c79df27e81e3524c4d11c052d896c1a",
-      "version": "sha256-e8d64a12ed2d19c937a28077b18e50a0f97148731fba6159873528fda276500a",
+      "version": "sha256-5920538840f940738600d727c56503ba8e26d5fbb5fc0c595818845e455a3d68",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/eval-designer.md",
           "kind": "file",
-          "hash": "sha256-df40b3817e6b05e548934882e277eb11b1af8ac021ccbef71d2a9b565fd4e2fc"
+          "hash": "sha256-2063f336d441b393e09e9a94b6bdaf4ff859d1f91322e45a712c56dae62e743e"
         }
       ]
     },
@@ -298,13 +298,13 @@
         ".agentquilt/meta-agents/release/evidence-collector/020-release-workflow.md"
       ],
       "metaHash": "sha256-c92778233322bf81fd5605c6fbb8675045a98a23cc43e668cdc261cb5eb8c79c",
-      "version": "sha256-8dcd586bdd27fcf2addf8a9ee312a5ab749c2b52ecd5ee9bf0f30d7e0a66c62d",
+      "version": "sha256-1d06b7554ff5e92c5ede2f54669881d1e17ba7da31c8e88c12e43293c10e1851",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/evidence-collector.md",
           "kind": "file",
-          "hash": "sha256-d5304ec9cd0859499177dfe271b9439851ad1d930e47824b2573e3ee228a7242"
+          "hash": "sha256-6229fc9fc1e03ca8b656473e02e4b0e30d7b9686c725813a1de4e75ea3e17702"
         }
       ]
     },
@@ -316,13 +316,13 @@
         ".agentquilt/meta-agents/governance/gatekeeper/020-governance-workflow.md"
       ],
       "metaHash": "sha256-884df834d30a3461457b63d48e5f6cbea1ae921198a8dc5b46de6524583a0d2d",
-      "version": "sha256-9b16498c496d1c3fa89ed6dd1b3b4e2e9fd725534d82324025de5b3ee4b8e5d9",
+      "version": "sha256-2783d3d37342b5fccb7cf109249b4933dca6be70a6aa1583343f5b4b3bd982fc",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/gatekeeper.md",
           "kind": "file",
-          "hash": "sha256-2fb677536649a034f646b67e9c69dccada70cae88c59c70155f2621913daf946"
+          "hash": "sha256-184fdaa21882128c7110bcced1e581be4e881fdf41ad2aa48dc0bb6893d595a4"
         }
       ]
     },
@@ -352,13 +352,13 @@
         ".agentquilt/meta-agents/sdlc/implementation-planning/020-sdlc-workflow.md"
       ],
       "metaHash": "sha256-1df870509239ef44c24c6d7b681e4c3c6cb4c631d4e5be1ef13f7d3d00c7d84e",
-      "version": "sha256-9148c5054cd548a09ed00d4f03d2458460faada1d3039a4b9bba4afbc621e063",
+      "version": "sha256-8af05f59a3cd4d7104094606da7a79f1e591db28efbfe2c86d1a653fe0b08f76",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/implementation-planning.md",
           "kind": "file",
-          "hash": "sha256-a29c6f7b0da24f3597ee9f9d552e20077e43c00e2abd24f37c046cff14fddeaf"
+          "hash": "sha256-00dd6388a29a28b419963b82a23b0638e088d88b761bd578b77991937177ce82"
         }
       ]
     },
@@ -370,13 +370,13 @@
         ".agentquilt/meta-agents/internal/instruction-block-author/020-internal-coordination.md"
       ],
       "metaHash": "sha256-04f66f2ee9f5f6b354d486da86ae90bffcc80f5f908a789d932e4f0b44301368",
-      "version": "sha256-df31122c726b92fa05c1239d611cd0338dab328ff19ef5f15dff280f9ad6d41f",
+      "version": "sha256-8c3fcb94b9ecd2eb1e34ebeb6c650fe993eac9393d97b3105e466bd5b1a270dc",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/instruction-block-author.md",
           "kind": "file",
-          "hash": "sha256-1b0bb3a421d957372dd89f9145772164a4347beb5caf1eeb047bd51e18ef8294"
+          "hash": "sha256-bc527e3b0c0ede4c07ca2bca3ec270b57ee535220f66337e81e04dff55a76849"
         }
       ]
     },
@@ -388,13 +388,13 @@
         ".agentquilt/meta-agents/internal/instruction-refactoring/020-internal-coordination.md"
       ],
       "metaHash": "sha256-8b7f74a0cf2042aa7f86095c4aac3e4750a6a97ae2a2e7a7c19928c0caf26d38",
-      "version": "sha256-92efe670ae6cfb83aa82cdf0dd48a6b97905f30e3a85b43e0e585debf38b3cdc",
+      "version": "sha256-b26801c725e4cebecffb6aaba64e0cf81f041dd3ea9b3f1fa10c8a821ab23a27",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/instruction-refactoring.md",
           "kind": "file",
-          "hash": "sha256-19653046843fb003dd8001afbd5003efe0d4756861f351a9744de9ebd703f6ed"
+          "hash": "sha256-99f32d9f5b217b65d447cfcd5e4e7a0c62e20ef53db05b597be1a22c2375020f"
         }
       ]
     },
@@ -406,13 +406,13 @@
         ".agentquilt/meta-agents/internal/main-orchestrator/020-internal-coordination.md"
       ],
       "metaHash": "sha256-6fa6aba0b131e6e8db800afd41c4868344bf5b13c6c3ae797e95d07c89185f8d",
-      "version": "sha256-23ea266ca41331c20317e61db03ee5a023393bda7ec1b71065034771797f5bfb",
+      "version": "sha256-f981837f3f6ee2577861cb2cb9cae7fddc5ace852b737d295a972a9786b7ebb4",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/main-orchestrator.md",
           "kind": "file",
-          "hash": "sha256-a4a2dab7c6501b155980dac2224e9490f3c68cf531042606504e60eb8b28a940"
+          "hash": "sha256-466b125e1e791a68501954428fc33852180f3e01627e305034bef6a7fcf7b5c2"
         }
       ]
     },
@@ -424,13 +424,13 @@
         ".agentquilt/meta-agents/release/migration-guide/020-release-workflow.md"
       ],
       "metaHash": "sha256-b9264b6e8a6944df70ef08876e4c5bd663df3352e5526c93925ace2267eca2e8",
-      "version": "sha256-bd142a278473f99e19143437113c6afef4ebfa8967da122ddc86273dedb712de",
+      "version": "sha256-0a40da699e380ef5dcd4957421da46869cb39a172530a88e3bb4d1cc579d0400",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/migration-guide.md",
           "kind": "file",
-          "hash": "sha256-3500d4e46953e4dd3f7d6c350f527c4560360e7f192ded34779a60959be87347"
+          "hash": "sha256-05aea60648e8f43e21b883604aa328c94e6725c3d8e03c6692e8d7af6aff79c4"
         }
       ]
     },
@@ -442,13 +442,13 @@
         ".agentquilt/meta-agents/stlc/performance-test/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-dfc6eff0e8f55bb3b514317c231a4583d56cb21ce1079ab5634905715b5a918f",
-      "version": "sha256-3ef8c4f919d530c318fa19e7dc48c09bc0cc97df095b7a85480df0c673c0a1b3",
+      "version": "sha256-c60cabc0f909b4690bba013a8c705ec5b4d7a80e536a40f67257bdbb51efa9bb",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/performance-test.md",
           "kind": "file",
-          "hash": "sha256-f191db5ada70ae16f1cea611af44c88e02b86bd877c2fef58f97b1f40d69bde7"
+          "hash": "sha256-51e3202ed457db9122242728b5f9415cd5803849e471278e1c47e2f2a5cdb332"
         }
       ]
     },
@@ -460,13 +460,13 @@
         ".agentquilt/meta-agents/governance/policy-compliance/020-governance-workflow.md"
       ],
       "metaHash": "sha256-87f4a8fcfab3c0c789e93b2a81d456d22293273545e57c1f784716e47c2344b1",
-      "version": "sha256-f99cdae5e754c498ab2d37343457d2a416e0d0fab9cf7d8d93271cdf63abd99e",
+      "version": "sha256-25df7a962bc6c5c14cae268296096a1be3df0196245f5d5b9e111692cd65d3ab",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/policy-compliance.md",
           "kind": "file",
-          "hash": "sha256-5c9e13871bc3242e4f971553b4ecbabefddfcf8a656e99812869f130d7655433"
+          "hash": "sha256-16dc36bcaec729eb8e946ec0166b9bfb52bce171e4ddf8041896cb841ccae7c3"
         }
       ]
     },
@@ -478,13 +478,13 @@
         ".agentquilt/meta-agents/release/post-release-review/020-release-workflow.md"
       ],
       "metaHash": "sha256-d13dc79dcbc2118be9151937ca9a20be4bf1b5477ce6675f9d2a69fcc3dbd137",
-      "version": "sha256-fee96e4ffabf8b06e4a2404da8a0b64a9ea66af930d5ba22978dc3c7055d90cd",
+      "version": "sha256-84c6d69c14063ead763fd9f42b15f1f2f822cd6b00a439520c3d7640b955edb1",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/post-release-review.md",
           "kind": "file",
-          "hash": "sha256-c9089873552479ac91e50147cf4fa45a08fd4241cd060f0054f51a9fea97a34e"
+          "hash": "sha256-bc594f8bb6b4b6482884b43bbd068d7ea05774b151af3b7cbfddc585cdf6612a"
         }
       ]
     },
@@ -514,13 +514,13 @@
         ".agentquilt/meta-agents/internal/prompt-compiler-guardian/020-internal-coordination.md"
       ],
       "metaHash": "sha256-2d6ff3c8cac5968d7f28c07ecea80ef1cdd73e37bb40be2ca018916d95d7b3c5",
-      "version": "sha256-01e3c921b73311a71a1bbc5484c94bb417c52154bfe5f7f824230ad6b8917814",
+      "version": "sha256-5bbc5747e452c27631770ba768dc911be9cffd9b9f77b5b1872a169c6381eb48",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/prompt-compiler-guardian.md",
           "kind": "file",
-          "hash": "sha256-5da7eb0fc7ab14c535750f3fbda5cb38735f24df0ae51992a310b4f38d7a3052"
+          "hash": "sha256-2b21ca197085fc67f6999ad0cf130a59d0fa00c2561e03502bde2aefd2ff1a61"
         }
       ]
     },
@@ -532,13 +532,13 @@
         ".agentquilt/meta-agents/governance/prompt-injection-test/020-governance-workflow.md"
       ],
       "metaHash": "sha256-38f0cbd171d4e24a6956e24799621394ff8e87d17f8cdbcf80327db2c3eaf4f5",
-      "version": "sha256-2e13ea991109d5dee9a7665219bba833df8476d8fcab9c6bcb3753c74b7666b4",
+      "version": "sha256-b6f1e195b5655cc6edfded71733a20147699931de15badfd7966d7005ab1cf1a",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/prompt-injection-test.md",
           "kind": "file",
-          "hash": "sha256-184e29ed38234a94bac409e4f8643aaf141ec41fe55b5c2effadfbffa78d5d2f"
+          "hash": "sha256-aa0a27cc9c7fa335a5dac68d6125e11f6186d7936cb35afd0b239301754d46e0"
         }
       ]
     },
@@ -550,13 +550,13 @@
         ".agentquilt/meta-agents/stlc/qa-strategy/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-c59b588b0a657274232fd2c4957f9dea546234d9046a7ce33c9d84ccf565058c",
-      "version": "sha256-229dc10c332eefa0234a8f6a281547240b90877fb139f1376d2301c31beb42f8",
+      "version": "sha256-4b46670b0a6f16443c7388744de88807da50c4d6851f1dabb61b6ffa7d45be55",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/qa-strategy.md",
           "kind": "file",
-          "hash": "sha256-d0707b8e9ec6455a6cc44c1fc750c4940c0e2999956dc35e475de157025930d3"
+          "hash": "sha256-097020475e43f176d56ce9b4db6c1a5c15b8fa701305f4efb1648d662de91306"
         }
       ]
     },
@@ -568,13 +568,13 @@
         ".agentquilt/meta-agents/stlc/regression-scope/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-9571f39fb0c853521fd00e92d06d933182dd603b4a1ae5ca422c2c72d25e2978",
-      "version": "sha256-4d931bbe514acb74538e77d598d082ef2b59d95457ee8acaee674d6dc2674371",
+      "version": "sha256-56b74d2342355d108426f51d48b48e6072ebcec607e9e58f005ef4ce7b58c0bf",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/regression-scope.md",
           "kind": "file",
-          "hash": "sha256-ba4ca0bfeac394a49e46d864c45788ff949e3e90da8da1bc35782b7b744ad255"
+          "hash": "sha256-9f3e5bf6fdf90eeaff05e6b6b3b4fc227c5e93d76dbd9f563e1001a5d05a2e6b"
         }
       ]
     },
@@ -586,13 +586,13 @@
         ".agentquilt/meta-agents/release/release-manager/020-release-workflow.md"
       ],
       "metaHash": "sha256-ec51aa3736b2cbab924dd2fcc3d977f24f1cb1aba8d27fb4be156d8a709b2187",
-      "version": "sha256-d60517f07d600af9fb92fdebf296c89d370b46cbe04fb637bc2c7f40f610b2eb",
+      "version": "sha256-da6ef9e9f4d492fbb4e94c528981c3a1124d9b518daf88728f933782c810a488",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/release-manager.md",
           "kind": "file",
-          "hash": "sha256-fd2d2d64326957f532a0ccd05ae140b4f1812c31a2da7c473b6d4ba7294532a2"
+          "hash": "sha256-f7f7d61baa681184838e1d23626079dca6819b741a136fa83b91b8bef60a7ea3"
         }
       ]
     },
@@ -640,13 +640,13 @@
         ".agentquilt/meta-agents/governance/risk-register/020-risk-classification.md"
       ],
       "metaHash": "sha256-f754afa305b3456ad06f134976405b104d2625af2b71210b21106b5163477ff2",
-      "version": "sha256-7b40f624feb7c4eb22783071ad4824d75c3c9d28c04fb8645628222a9eaaded7",
+      "version": "sha256-6c498b70cd6437ad12be0bd9d50548b8ad71eb1dd43761391720f83313c8a7ff",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/risk-register.md",
           "kind": "file",
-          "hash": "sha256-950be0046d2d7b5ab98ba226f66957f6b833e25109b8bdefc30a2559b9407a73"
+          "hash": "sha256-861618036ebc5ea6be8aa964b49ab9eedf27e352b20c909dc0053f9d56c903e8"
         }
       ]
     },
@@ -676,13 +676,13 @@
         ".agentquilt/meta-agents/governance/secret-leakage-detection/020-patterns.md"
       ],
       "metaHash": "sha256-52b102d84f308eea3c7cd251ce9c07bc1f074716edca32746aedcf097ab81ff6",
-      "version": "sha256-74f02c765d6ec4dc769138c2c59cc3411d9d99873cf00ddfdbe11751edbbdef5",
+      "version": "sha256-d3f13f6db043493395b746a253b5a93155268c6230089a9935f558125a33c8ad",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/secret-leakage-detection.md",
           "kind": "file",
-          "hash": "sha256-6f041fd14521b23d37d458fa7579d2600802cb653dfc20a00856acf4a9e48041"
+          "hash": "sha256-045a14ef3d7de65211fab72b68af334ea00c74c068f91783982b50d04426b526"
         }
       ]
     },
@@ -694,13 +694,13 @@
         ".agentquilt/meta-agents/governance/security-review/020-threat-assessment.md"
       ],
       "metaHash": "sha256-5555c42229ade6c8376350596239cfbb2c0d17249b440b54d94307028fe9d611",
-      "version": "sha256-c35b851d0c754b4c4b1c0c8d72cff1516829092ce5b6998be6be8b733bab2b7c",
+      "version": "sha256-e06deba20caefc571c17aa6cc4778728a8b1feaa7626d8ebfd5eb44d1a48d9ce",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/security-review.md",
           "kind": "file",
-          "hash": "sha256-9baf434a43ffc498ff5bf9fd4d9b6bec44fb0a206c58fd1e57e01cb3e386c5cb"
+          "hash": "sha256-43090d199809a82591ef2f3f6b3e4e81c3ea672ff2bd0e3d39df53e6a3e7b08b"
         }
       ]
     },
@@ -730,13 +730,13 @@
         ".agentquilt/meta-agents/governance/supply-chain-risk/020-governance-workflow.md"
       ],
       "metaHash": "sha256-a7fb48310cefb603fa0620773e2769943a56a0274662d0934be158162b6d0a79",
-      "version": "sha256-49b2bdbd5ebc4fa55d5f9d1f4eb4329ae1674eb363a4e08e21180f9e80d709ba",
+      "version": "sha256-a3f60732d8ee604a8f536957eddfade63d479bc075aa447c06941ea725834b47",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/supply-chain-risk.md",
           "kind": "file",
-          "hash": "sha256-3dde2ee66fbf911ed62b35a00f7da5484e6f44610399bdb44152a87fa8d4588d"
+          "hash": "sha256-39a596cebfb7cb5e243041cc8631547f0ec6087cab8f2ef007704e7926200a75"
         }
       ]
     },
@@ -748,13 +748,13 @@
         ".agentquilt/meta-agents/stlc/test-automation/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-b60d3ce53960087138c0c36012b7310d0757ee32a0a56ef46bd26101c1277482",
-      "version": "sha256-bf4216fa2767cc87c4b2738b4c73422e9f5782be27566c51a43630a6e136b235",
+      "version": "sha256-c95da1d6e2c4a2660f06efa06f9e37c90380a750442eb341b0282b6d8f8381c4",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/test-automation.md",
           "kind": "file",
-          "hash": "sha256-61286e568620e544e9d46e01a86f9af5893c2c57230b66d4aa0344fcca6a7b78"
+          "hash": "sha256-186ab229a8733048a5b533f7a19795568ed4bada41fa741503781238b526e479"
         }
       ]
     },
@@ -766,13 +766,13 @@
         ".agentquilt/meta-agents/stlc/test-design/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-b0d19b0fd93eb06bf5b391842f6b81176e1d95c293babef3cee962e91f65ad7c",
-      "version": "sha256-550c5ccadcc189032d6353e3bbfd83000d55ff8d7ce05f352680b17595505658",
+      "version": "sha256-4fbf91c0e3b0a47b939855e9d0150f873f0f620c17e961814b3a74b2c17dda4b",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/test-design.md",
           "kind": "file",
-          "hash": "sha256-94b48a4ddbf58b334060cf5faec9a303c0652180e1fec5bb0a95f527cdb33566"
+          "hash": "sha256-bfa0aaec8d99454d12404634e33b14c2f426625b7c5ad0bddcbba491e89e10b3"
         }
       ]
     },
@@ -784,13 +784,13 @@
         ".agentquilt/meta-agents/governance/traceability/020-governance-workflow.md"
       ],
       "metaHash": "sha256-c6efa2b4d7f9ea4515d7a8a749f9331998d0ac84ab01a91beff9643c1bed9d7c",
-      "version": "sha256-2429978f5feccd8c3ecf36ad7117976d6fa90d651491ec1ce8b82327ec1743df",
+      "version": "sha256-ca89e9172d8dd8e685f6471e57f852a8797c379aa35e4481823de9025a336c1f",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/traceability.md",
           "kind": "file",
-          "hash": "sha256-350b60f38410c906d6cb042630cecc8a5d39a39ce0a5844bcd583c04cca217b6"
+          "hash": "sha256-481bbf3058f26813aa8ce0b2cc7a7e4f7d21cb7df46d0554101efd95e94bab52"
         }
       ]
     },
@@ -802,13 +802,13 @@
         ".agentquilt/meta-agents/release/versioning/020-release-workflow.md"
       ],
       "metaHash": "sha256-45a9acd80d2ede3d53eab3c42151e7372749ed17d8ed197fb8ff8cadb25bbe39",
-      "version": "sha256-75f05f589b3688cdb8d74db9de6d899d0c610aa4b79311a64403f2492383f409",
+      "version": "sha256-5339505d56ec08bfa29d4176b43f47c673b8b1fd1419099721e304820eb368d9",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/versioning.md",
           "kind": "file",
-          "hash": "sha256-d48899830d47b3a20a54d6608d63bfcb6ebe19309b3bab87cfded68c7c4972ec"
+          "hash": "sha256-b77a8a4ba869065641d204aa71c73293fde2df12cf4c545f5d507f59bc9f55e0"
         }
       ]
     }
@@ -828,8 +828,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/governance/gatekeeper/010-role.md",
-      "hash": "sha256-e77c615f390be035f953120e05496c12db75bf0a7a01c971135b9584cbd0a348",
-      "bytes": 865,
+      "hash": "sha256-55830a390e25fa1d38d5eeecc21019a55fc0b8111c1e93bb2c2c58127343d6af",
+      "bytes": 867,
       "tags": []
     },
     {
@@ -840,8 +840,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/governance/policy-compliance/010-role.md",
-      "hash": "sha256-b9ab9cd0a16ee7622fb3ac47457b7165a916752767c5a7117e475b0461919ed8",
-      "bytes": 872,
+      "hash": "sha256-ffe7c46a0d3514e2773037ff4264013601845f9c58584f429c1d9803a96d0eed",
+      "bytes": 874,
       "tags": []
     },
     {
@@ -852,8 +852,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/governance/prompt-injection-test/010-role.md",
-      "hash": "sha256-67377a28dfd7a3ceed81a517e1c6dfb32e895dbb581f246a7cc04626a24980f6",
-      "bytes": 892,
+      "hash": "sha256-b24536ead5955ca4e454c2598b28ee37120f2822eb025bb9e9f9b5319f45d8ac",
+      "bytes": 894,
       "tags": []
     },
     {
@@ -864,14 +864,14 @@
     },
     {
       "id": ".agentquilt/meta-agents/governance/risk-register/010-role.md",
-      "hash": "sha256-c354b115e81ae48aec2cd585529fa7f8ed2d702284ca63294a532b817c3d40f4",
-      "bytes": 1848,
+      "hash": "sha256-b8fa867759ccba1bec0b9eef73e69ae1e36fbfc64ecada9cf7eb2200f563b389",
+      "bytes": 1850,
       "tags": []
     },
     {
       "id": ".agentquilt/meta-agents/governance/risk-register/020-risk-classification.md",
-      "hash": "sha256-40d75028314706944170b95106d54eab277f0edbab0e891e93f9f8720c9a9efe",
-      "bytes": 2697,
+      "hash": "sha256-ffeb6227c4a12d1243529cf20e245e25bae711c337a6bc9a01937fd35a69c2c3",
+      "bytes": 2694,
       "tags": []
     },
     {
@@ -882,26 +882,26 @@
     },
     {
       "id": ".agentquilt/meta-agents/governance/secret-leakage-detection/020-patterns.md",
-      "hash": "sha256-4a22c0c25d684ea9bb54d3acc7ec22ff17a1f957297eb103a4d6118686a7b45a",
-      "bytes": 509,
+      "hash": "sha256-8f97a4477d4f71868f7153dbc0f4753ce59c21113f5db25e21e77aab47532ecd",
+      "bytes": 506,
       "tags": []
     },
     {
       "id": ".agentquilt/meta-agents/governance/security-review/010-role.md",
-      "hash": "sha256-bfc767dd5de77cde59347e57a0b4aec931826296adb21d9161d30aa9f57de2c7",
-      "bytes": 1539,
+      "hash": "sha256-228f0f83684adda697d791cf8a08c5eda10b1d5a54ebb6c3efd3b70e36ec373e",
+      "bytes": 1541,
       "tags": []
     },
     {
       "id": ".agentquilt/meta-agents/governance/security-review/020-threat-assessment.md",
-      "hash": "sha256-41af9bf32573ebc31b4380611d45df3f44bb18cfb196e955eeb024c3e53d17c0",
-      "bytes": 2336,
+      "hash": "sha256-5133ac0136bf9865743c165abe6f7859970b044180da52f346e85bb6a1f8c325",
+      "bytes": 2338,
       "tags": []
     },
     {
       "id": ".agentquilt/meta-agents/governance/supply-chain-risk/010-role.md",
-      "hash": "sha256-9b1f3f84b55666f56f724e050e2b4b07e91b89ff8e5f15bc57142c6d0e84b0fe",
-      "bytes": 880,
+      "hash": "sha256-9a4a1b47b23dbf3d14748fdd0f5cd1f75c39e27836eefd253577406733bb5c25",
+      "bytes": 882,
       "tags": []
     },
     {
@@ -912,8 +912,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/governance/traceability/010-role.md",
-      "hash": "sha256-c71be7743e4a4da0a97114d95f2aa82ab96159fc7accd40802e9698201a00007",
-      "bytes": 880,
+      "hash": "sha256-9503484026f63ffaae9d5ae149341c557b58a6d1fe188c749a8188b471ce5aea",
+      "bytes": 882,
       "tags": []
     },
     {
@@ -924,8 +924,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/internal/agent-behavior-reviewer/010-role.md",
-      "hash": "sha256-e720d1e9570ae041caf09a75dd3440aebc7a260880bfd223f59cc3082d5040a8",
-      "bytes": 889,
+      "hash": "sha256-17594ac4c8dcf7a66c468b1bc3a83dadf4e1e4e598911d9bbb7a11778f9c2ad5",
+      "bytes": 891,
       "tags": []
     },
     {
@@ -936,8 +936,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/internal/agent-documentation/010-role.md",
-      "hash": "sha256-15b35b77c7807ad867a775c2c3aa71bd49c80ac4d7c55dc9e8e420f736d5fdce",
-      "bytes": 879,
+      "hash": "sha256-ee9b9cfd26cd752d7d11516eee227ca8f5dcaa81c8f9de22e91ec63951d6fddc",
+      "bytes": 881,
       "tags": []
     },
     {
@@ -948,8 +948,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/internal/agent-migration/010-role.md",
-      "hash": "sha256-6ae01894f38b342c5b2f9c5d69147583fa76e8b00d5bb1c7a030b2766e53149c",
-      "bytes": 884,
+      "hash": "sha256-3af2789c3618c2bc723e9351de142f78ff4b84a2499008c15b39bf90e910a7cd",
+      "bytes": 886,
       "tags": []
     },
     {
@@ -960,8 +960,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/internal/agent-registry/010-role.md",
-      "hash": "sha256-7de02b2820505372fbca3fda71739f7a79eab2fde10b97d8f2c69e3dbb2f1fa5",
-      "bytes": 874,
+      "hash": "sha256-8acfa1182fff52799764e64a74a57b9668ce270939109c9937a7ca59e9a29f1e",
+      "bytes": 876,
       "tags": []
     },
     {
@@ -972,8 +972,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/internal/conflict-detector/010-role.md",
-      "hash": "sha256-49fd8b83973217be2106ef7d9bcfb87abdde8ae250d34121f2a7f2b1a32dedff",
-      "bytes": 880,
+      "hash": "sha256-6cf3b42d3ae3c0b81d6a5e1803e303115bb813697a2c4cbf54f4b38c6d8b07c3",
+      "bytes": 882,
       "tags": []
     },
     {
@@ -984,8 +984,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/internal/definition-architect/010-role.md",
-      "hash": "sha256-8d57524f2fe3f27e3a430fa1df81e2ccb37a9ceb8fb7f57de215e1027f4bb867",
-      "bytes": 882,
+      "hash": "sha256-0a71d7af51dbbd48da5778cfcfe2924bbd117b37f221653a75c70c2f836f3f46",
+      "bytes": 884,
       "tags": []
     },
     {
@@ -996,8 +996,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/internal/instruction-block-author/010-role.md",
-      "hash": "sha256-cfb70091a59fee4315b3031e4da2023f57ea9ed7fd560a86b655c0ac8a9ce234",
-      "bytes": 892,
+      "hash": "sha256-49e9fb1ace9808116e389aa10d8480ecfcd81fe2ff988198cb4a9e58a0b26792",
+      "bytes": 894,
       "tags": []
     },
     {
@@ -1008,8 +1008,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/internal/instruction-refactoring/010-role.md",
-      "hash": "sha256-68dd80093c10f5040d7a3a3633483822d01b600a55ed9e130108f14e927d7934",
-      "bytes": 888,
+      "hash": "sha256-f946ae8024faf85a4e8947b019d68ad0b6dbb89e15312ced068120011fdc2077",
+      "bytes": 890,
       "tags": []
     },
     {
@@ -1020,8 +1020,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/internal/main-orchestrator/010-role.md",
-      "hash": "sha256-98406647b46c19528514b7d320c363b76d3d6fe17b84a07ce838c91075f17c14",
-      "bytes": 882,
+      "hash": "sha256-f23c9ab9252b1477356deb7440819d0a85f06c2ad17d01e1528c61ee3dd741ef",
+      "bytes": 884,
       "tags": []
     },
     {
@@ -1032,8 +1032,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/internal/prompt-compiler-guardian/010-role.md",
-      "hash": "sha256-4b021d300e37d414a9bad87b7d6bcb64dd4ea671377b2f9ae14a1b3b9b59470e",
-      "bytes": 877,
+      "hash": "sha256-5a04e1ea284266cc157115ad8699af6124d727670d9fc106cf1980ad210e7fe7",
+      "bytes": 879,
       "tags": []
     },
     {
@@ -1044,8 +1044,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/release/changelog/010-role.md",
-      "hash": "sha256-0c6681ff0e58b9977703372232217c59b2d1b1fc41584b4cf30ede015593cb40",
-      "bytes": 869,
+      "hash": "sha256-2a0c636d63e3486ee8f6e4f900defc615e5f7153c966b644112a60a0a5e925fb",
+      "bytes": 871,
       "tags": []
     },
     {
@@ -1056,8 +1056,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/release/evidence-collector/010-role.md",
-      "hash": "sha256-3cdbb9e5569672e1dbb38914ea7592be0a11432c9d7e34212daeab22a37c48ee",
-      "bytes": 876,
+      "hash": "sha256-25af2a25bc3a2e5eaca704ff466fc300b27a6e8db633c56e8090d2672165dc5f",
+      "bytes": 878,
       "tags": []
     },
     {
@@ -1068,8 +1068,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/release/migration-guide/010-role.md",
-      "hash": "sha256-088da712757b81f1f4b88ba871d021d7950e61971bfe6504a2a12bea8e8a07d5",
-      "bytes": 880,
+      "hash": "sha256-857d81814596bc0341845dee4fac5f373237126f7a255e0246c30bd1f47d60d7",
+      "bytes": 882,
       "tags": []
     },
     {
@@ -1080,8 +1080,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/release/post-release-review/010-role.md",
-      "hash": "sha256-37f8734ac7d27476501403502d881138ab296631da6c338c1dc00c7729c2621d",
-      "bytes": 884,
+      "hash": "sha256-ea6903669083a2f677adc3cd5dffb184defa00f3a76c1903458c916b15168bec",
+      "bytes": 886,
       "tags": []
     },
     {
@@ -1092,8 +1092,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/release/release-manager/010-role.md",
-      "hash": "sha256-df025cfb0ef415a2f013f588514e73cc7fbc3dfad4e1e0f3f72bfb68b38a366f",
-      "bytes": 875,
+      "hash": "sha256-9277ff03f62bbe96fc15131c844160e5da84ff4f683f03c42e840bbb9510b09f",
+      "bytes": 877,
       "tags": []
     },
     {
@@ -1104,8 +1104,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/release/versioning/010-role.md",
-      "hash": "sha256-d8d5fa24be6d356f7b53432a1ad7524636a55799b9b0d00c5494aa3f6ff9cf0a",
-      "bytes": 876,
+      "hash": "sha256-e7874e27d065a06deec9115d14c8d1e152da1ae656fbed9ba43c08babf7d1edb",
+      "bytes": 878,
       "tags": []
     },
     {
@@ -1122,8 +1122,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/sdlc/adr-writer/020-adrs.md",
-      "hash": "sha256-ac515fb8fe43e8ab8220a90fed095492c326f108b5c1cf38da3704346cc9411b",
-      "bytes": 596,
+      "hash": "sha256-60819e7f372118d74896796e1e2282ac49577438ff475a6226b6f28155a28115",
+      "bytes": 584,
       "tags": []
     },
     {
@@ -1152,20 +1152,20 @@
     },
     {
       "id": ".agentquilt/meta-agents/sdlc/code-review/010-role.md",
-      "hash": "sha256-fd72ce0f92b63e366fdd6a36c73257ffee6199a150ee48dc303e56aa51faaf27",
-      "bytes": 1634,
+      "hash": "sha256-e45d4ee7a2e582e19d1ff031f77b03be71d00d996427f1c3fda473f414f4c8f0",
+      "bytes": 1633,
       "tags": []
     },
     {
       "id": ".agentquilt/meta-agents/sdlc/code-review/020-review-guidelines.md",
-      "hash": "sha256-a2d68f5358fc066f8a4c4bfa5d561c5bfd361b8027c5b69546838fe679c8e252",
-      "bytes": 1858,
+      "hash": "sha256-3959a0997cbab1e5f4f35adeced6a0201f9a57013f2b3f47aa07a4263fb0732d",
+      "bytes": 1843,
       "tags": []
     },
     {
       "id": ".agentquilt/meta-agents/sdlc/developer-experience/010-role.md",
-      "hash": "sha256-a8a186ab534af471f112993ccfe62b34fc7526f525f0f3f347ff47b1f7a5cdd9",
-      "bytes": 887,
+      "hash": "sha256-d8f542b188138444d62d9e67008dae348c29a365233594d530d112bae678f8e8",
+      "bytes": 889,
       "tags": []
     },
     {
@@ -1176,8 +1176,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/sdlc/documentation/010-role.md",
-      "hash": "sha256-4d51285dda6b998f69d5e011d7dad33a3d88b9c6c4671f6f225f685c753125ac",
-      "bytes": 871,
+      "hash": "sha256-9a90924a81b1ad464220aecad54d25f071519a957fa450a6a1ab0203a9fa8237",
+      "bytes": 873,
       "tags": []
     },
     {
@@ -1188,8 +1188,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/sdlc/implementation-planning/010-role.md",
-      "hash": "sha256-a3c80bf5303c930399fe051a566b857874706049fc60d1f07a83138a9e8233c9",
-      "bytes": 895,
+      "hash": "sha256-ef31bf3f09c645a694d09f3a3d6c7d7d1bec4e54e89f4c5af5306e811be60fe7",
+      "bytes": 897,
       "tags": []
     },
     {
@@ -1236,8 +1236,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/stlc/compatibility-test/010-role.md",
-      "hash": "sha256-fa14d8acdbdc6d0a3fba2c966d577d1dd7ccdb21d7a84c9abdadc4fb79f7583c",
-      "bytes": 883,
+      "hash": "sha256-2c75994ddce0e667ad2b75f8e058c2ebc188282450e309a2647dfb8ef32c7eb5",
+      "bytes": 885,
       "tags": []
     },
     {
@@ -1248,8 +1248,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/stlc/defect-triage/010-role.md",
-      "hash": "sha256-9fbca59819fe9fe4897bfd880577c8dde21324c769105d4fe8a09671467ee8dc",
-      "bytes": 872,
+      "hash": "sha256-60caba477c3752cd6330fef5bfbff3c5aab4b6cf3f30efb64e5be66daafcbed6",
+      "bytes": 874,
       "tags": []
     },
     {
@@ -1260,14 +1260,14 @@
     },
     {
       "id": ".agentquilt/meta-agents/stlc/eval-designer/010-role.md",
-      "hash": "sha256-ce43fb739aabbd38673287ed8135efc242c019888af00dfea8478b74ae1272f5",
-      "bytes": 1467,
+      "hash": "sha256-c74d9c34d41e3227689f7822a15e9f0440ffa4a9900e71952470d2bc595ef6a3",
+      "bytes": 1469,
       "tags": []
     },
     {
       "id": ".agentquilt/meta-agents/stlc/eval-designer/020-eval-workflow.md",
-      "hash": "sha256-ed45dae3f0100c7219c3885eeaff548951a3f2eb427618164f9fa93ad1fa7440",
-      "bytes": 3901,
+      "hash": "sha256-4c9b681803dea3208f6546419d3ef6cd7cfff787d0010e9dafcb2b9b539250a1",
+      "bytes": 3897,
       "tags": []
     },
     {
@@ -1284,8 +1284,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/stlc/performance-test/010-role.md",
-      "hash": "sha256-fc2ed55ce3707fc4d2b3fa0787cfcc516bb69fabf3aca79358bc5c80892cead9",
-      "bytes": 876,
+      "hash": "sha256-dccecb7b1ebc13bfcf0b082cbc490d2e3c1835714ce644ccd1de638a3ac87ae2",
+      "bytes": 878,
       "tags": []
     },
     {
@@ -1296,8 +1296,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/stlc/qa-strategy/010-role.md",
-      "hash": "sha256-174efe7c0c478f3878f0a5b071754b234ae74dce3595b471ae11e781aa59c9ec",
-      "bytes": 864,
+      "hash": "sha256-95cf96332babe4d80cbee12be5db7f40a9dd16ee0ad46f43de74a8c906483a05",
+      "bytes": 866,
       "tags": []
     },
     {
@@ -1308,8 +1308,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/stlc/regression-scope/010-role.md",
-      "hash": "sha256-6651a528cb3f9409702e207641866913f6a11c7b09907f055a8169e9f0589d26",
-      "bytes": 877,
+      "hash": "sha256-9b2e37811a112198a16507465dae8b9d969c0284df543fdf825d12d5e78c9a9b",
+      "bytes": 879,
       "tags": []
     },
     {
@@ -1332,8 +1332,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/stlc/test-automation/010-role.md",
-      "hash": "sha256-b940b9d61bbc13f87d97b966dfa1b3ccba6a4164a7f05b66fb3f612911e69755",
-      "bytes": 880,
+      "hash": "sha256-55e152e19431672b475a24f8d54d1f9f3ec54a20ccdc61370dc889df4747db3e",
+      "bytes": 882,
       "tags": []
     },
     {
@@ -1344,8 +1344,8 @@
     },
     {
       "id": ".agentquilt/meta-agents/stlc/test-design/010-role.md",
-      "hash": "sha256-93e57dbe4716fb7575acd14672249429882d27109fa34db44effc95645c379d8",
-      "bytes": 867,
+      "hash": "sha256-21c0e69091b5df31b176fd65573c8ca040f60e614e4b4cdc8862e7e4e58bfa06",
+      "bytes": 869,
       "tags": []
     },
     {
@@ -1374,8 +1374,8 @@
     },
     {
       "id": "project/040-development-practices.md",
-      "hash": "sha256-04b48f6d17e51251af33c15e30c4924989ccfead24fc78907bb7e2a8faef7d9b",
-      "bytes": 1919,
+      "hash": "sha256-1d39324769b977b18fdebe03b7c5b6df170a5074b9d5bf52bd39b3ff508492bf",
+      "bytes": 2082,
       "tags": []
     },
     {
@@ -1431,7 +1431,7 @@
         "project/090-implementation-notes.md",
         "project/100-package-and-links.md"
       ],
-      "version": "sha256-cb0610f468423a2ee416bdf2bde448d179a67c8209ddbdf4dc3da29311fc9457"
+      "version": "sha256-a81ef37f62483d375d14eef75ea810cfe7aa8461c3a561cf1804a83d5cb97b2b"
     },
     {
       "output": "CLAUDE.md",
@@ -1448,7 +1448,7 @@
         "project/090-implementation-notes.md",
         "project/100-package-and-links.md"
       ],
-      "version": "sha256-cb0610f468423a2ee416bdf2bde448d179a67c8209ddbdf4dc3da29311fc9457"
+      "version": "sha256-a81ef37f62483d375d14eef75ea810cfe7aa8461c3a561cf1804a83d5cb97b2b"
     }
   ]
 }

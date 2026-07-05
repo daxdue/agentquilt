@@ -30,7 +30,7 @@
 ## Example Comments
 
 ```
-🔴 HIGH SECURITY RISK (line 150):
+HIGH SECURITY RISK (line 150):
 This path is not validated against sourceDir.
 Path traversal is possible: include: ../../../../etc/passwd
 Recommend: Add check if (!resolvePath.startsWith(normSourceDir)) throw ConfigError
@@ -47,13 +47,13 @@ Suggest:
 ```
 
 ```
-🟡 MEDIUM: Missing test coverage
+MEDIUM: Missing test coverage
 Function `normalizeConfig()` changed but no test added.
 Suggest: Add test for new validation rule.
 ```
 
 ```
-🟢 LOW: Simplification opportunity
+LOW: Simplification opportunity
 Uses lodash.isEqual() but only for primitives.
 AgentQuilt doesn't import lodash; use === instead.
 ```

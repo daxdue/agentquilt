@@ -28,6 +28,6 @@ Actions:
 
 Examples:
 ```
-BAD: const API_KEY = "sk_test_123abc"
-GOOD: const API_KEY = process.env.API_KEY
+[NO] BAD: const API_KEY = "sk_test_123abc"
+[OK] GOOD: const API_KEY = process.env.API_KEY
 ```

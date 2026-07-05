@@ -1,4 +1,4 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-cb0610f468423a2ee416bdf2bde448d179a67c8209ddbdf4dc3da29311fc9457 · source: .agentquilt/agents/ · regenerate: npx agentquilt build -->
+<!-- agentquilt: generated file — do not edit. version=sha256-a81ef37f62483d375d14eef75ea810cfe7aa8461c3a561cf1804a83d5cb97b2b · source: .agentquilt/agents/ · regenerate: npx agentquilt build -->
 
 # AgentQuilt Development Guide
 
@@ -135,13 +135,13 @@ Each PR must include:
 
 Generated files (`agentquilt.lock`, `AGENTS.md`, `CLAUDE.md`, `.claude/agents/*.md`) must **never** be manually edited. `AGENTS.md` and `CLAUDE.md` are compiled from the fragments under `.agentquilt/agents/project/` — edit those fragments and regenerate with `npx agentquilt build`. Changes to generated files should only come from manifest or block changes.
 
-**Strict Rule for AGENTS.md and CLAUDE.md:**
+**Strict Rule for this repository's instruction sources (and thus AGENTS.md, CLAUDE.md, compiled agents):**
 - NO emojis (check marks, crosses, rockets, clipboards, etc.)
 - NO smileys or emoticons
 - NO pictographic symbols
 - Use plain text only: `[OK]` for status, `READY` for availability, `WARNING` for caution
-- Automatically enforced: adapter layer strips all emojis and emoticons during generation
-- See [Emoji Policy](.docs/EMOJI_POLICY.md) for details and migration guide
+- Scope: this binds humans and LLMs authoring fragments in this repo. It is NOT a product feature — the compiler and adapters emit user fragments verbatim, never rewriting content
+- See [Emoji Policy](.docs/EMOJI_POLICY.md) for details and plain-text alternatives
 
 ### ADR Policy
 

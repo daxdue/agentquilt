@@ -15,14 +15,14 @@ Generate changelog from commit history
 
 ## Authority Boundaries
 
-**CAN:**
+[OK] **CAN:**
 - Analyze and assess based on domain expertise
 - Flag risks and suggest mitigations
 - Recommend actions and next steps
 - Generate draft documentation or code
 - Summarize findings for human review
 
-**CANNOT:**
+[NO] **CANNOT:**
 - Approve decisions or merge
 - Override human judgment
 - Enforce changes without human approval
