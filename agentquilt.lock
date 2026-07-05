@@ -4,13 +4,13 @@
   "agents": [
     {
       "name": "adr-writer",
-      "dir": ".agents/sdlc/adr-writer",
+      "dir": ".agentquilt/meta-agents/sdlc/adr-writer",
       "bodyFragments": [
-        ".agents/sdlc/adr-writer/010-role.md",
-        ".agents/sdlc/adr-writer/020-adrs.md"
+        ".agentquilt/meta-agents/sdlc/adr-writer/010-role.md",
+        ".agentquilt/meta-agents/sdlc/adr-writer/020-adrs.md"
       ],
       "metaHash": "sha256-b1ddff4e2ebb050b626cfaa296ed6ed11e2fac610b212772e2c445ead6c3eed5",
-      "version": "sha256-1489c30bd37c5abd33fbfcabe4155daf01c556124fc33de5d75fb462eb520d75",
+      "version": "sha256-e83d7bdbdcdab858fe0d9c468e3f3fe107b87c89284291a9f8b2042d048709b8",
       "outputs": [
         {
           "platform": "claude",
@@ -22,13 +22,13 @@
     },
     {
       "name": "agent-behavior-reviewer",
-      "dir": ".agents/internal/agent-behavior-reviewer",
+      "dir": ".agentquilt/meta-agents/internal/agent-behavior-reviewer",
       "bodyFragments": [
-        ".agents/internal/agent-behavior-reviewer/010-role.md",
-        ".agents/internal/agent-behavior-reviewer/020-internal-coordination.md"
+        ".agentquilt/meta-agents/internal/agent-behavior-reviewer/010-role.md",
+        ".agentquilt/meta-agents/internal/agent-behavior-reviewer/020-internal-coordination.md"
       ],
       "metaHash": "sha256-67d63f827e95cf0a12309d6f9dea30a00155c42bb37a5e7a6063f31277a0202f",
-      "version": "sha256-ebc2474d152e8c9dae1321b238a5fca363346d14f09c46312859ad6febc0be51",
+      "version": "sha256-831f426d7c76c7dc97fa8497b6c4d08e1461f026f5120b5b073d320710124849",
       "outputs": [
         {
           "platform": "claude",
@@ -40,13 +40,13 @@
     },
     {
       "name": "agent-documentation",
-      "dir": ".agents/internal/agent-documentation",
+      "dir": ".agentquilt/meta-agents/internal/agent-documentation",
       "bodyFragments": [
-        ".agents/internal/agent-documentation/010-role.md",
-        ".agents/internal/agent-documentation/020-internal-coordination.md"
+        ".agentquilt/meta-agents/internal/agent-documentation/010-role.md",
+        ".agentquilt/meta-agents/internal/agent-documentation/020-internal-coordination.md"
       ],
       "metaHash": "sha256-8b171309f4685fe590bb735122c24dffbdc42d82318332ac1fa19f3f1d9741ee",
-      "version": "sha256-b544e6f016c829553abf19cde3b7bab3400007939b562be24a9e745739e02625",
+      "version": "sha256-150955051e009f2f18ebf6e569a2c8d6efc945322d04490d0fdb21b59b72e3d7",
       "outputs": [
         {
           "platform": "claude",
@@ -58,13 +58,13 @@
     },
     {
       "name": "agent-migration",
-      "dir": ".agents/internal/agent-migration",
+      "dir": ".agentquilt/meta-agents/internal/agent-migration",
       "bodyFragments": [
-        ".agents/internal/agent-migration/010-role.md",
-        ".agents/internal/agent-migration/020-internal-coordination.md"
+        ".agentquilt/meta-agents/internal/agent-migration/010-role.md",
+        ".agentquilt/meta-agents/internal/agent-migration/020-internal-coordination.md"
       ],
       "metaHash": "sha256-3614fb44805cc6c340aab228f37a5241130dc9055ede8a02836e40f22927b76f",
-      "version": "sha256-5cebe79f2668acc665a6f7592913cfa1940ef474692ecc534b424771f11f656b",
+      "version": "sha256-bfca2277932fd97d7c8b0204c8c4a30136ead9feaf486e96a3055b25272eb34a",
       "outputs": [
         {
           "platform": "claude",
@@ -76,13 +76,13 @@
     },
     {
       "name": "agent-registry",
-      "dir": ".agents/internal/agent-registry",
+      "dir": ".agentquilt/meta-agents/internal/agent-registry",
       "bodyFragments": [
-        ".agents/internal/agent-registry/010-role.md",
-        ".agents/internal/agent-registry/020-internal-coordination.md"
+        ".agentquilt/meta-agents/internal/agent-registry/010-role.md",
+        ".agentquilt/meta-agents/internal/agent-registry/020-internal-coordination.md"
       ],
       "metaHash": "sha256-c3bbfe68448b707b71bf20c6c3e5c0b72bbbefc6825ad4403296df22cd5c8123",
-      "version": "sha256-eac2c43465d7c1e3b614eb8068b67b0b01f909409a19dd31a8fcda324e0b7b74",
+      "version": "sha256-54e7c8322d97b6267f57aaa6bad70ed2b637f45d7c81c37a6e03e7899097d543",
       "outputs": [
         {
           "platform": "claude",
@@ -94,13 +94,13 @@
     },
     {
       "name": "ambiguity-detector",
-      "dir": ".agents/sdlc/ambiguity-detector",
+      "dir": ".agentquilt/meta-agents/sdlc/ambiguity-detector",
       "bodyFragments": [
-        ".agents/sdlc/ambiguity-detector/010-role.md",
-        ".agents/sdlc/ambiguity-detector/020-patterns.md"
+        ".agentquilt/meta-agents/sdlc/ambiguity-detector/010-role.md",
+        ".agentquilt/meta-agents/sdlc/ambiguity-detector/020-patterns.md"
       ],
       "metaHash": "sha256-f115844d189f05de241c5eb34ca353f7355d44fcf109d19cd7b535f73ee2d706",
-      "version": "sha256-b27e9f9b217265a099ed9de94c8c44795b00ce4e77d527d3934b7c952b815c61",
+      "version": "sha256-9886ba3b6bd8e1947b9ccfbb3991ee60a6206635d4cd761f60538b228df3918b",
       "outputs": [
         {
           "platform": "claude",
@@ -112,13 +112,13 @@
     },
     {
       "name": "architecture",
-      "dir": ".agents/sdlc/architecture",
+      "dir": ".agentquilt/meta-agents/sdlc/architecture",
       "bodyFragments": [
-        ".agents/sdlc/architecture/010-role.md",
-        ".agents/sdlc/architecture/020-review.md"
+        ".agentquilt/meta-agents/sdlc/architecture/010-role.md",
+        ".agentquilt/meta-agents/sdlc/architecture/020-review.md"
       ],
       "metaHash": "sha256-f8f239bee1c32661ad62d5225972c985ce1b3ff69f1fc86f4a718f00f66daa94",
-      "version": "sha256-f66f7bb3c4d5c99246ca5d81e602a3742dab458c28f1a1d73d1255e5beb955b4",
+      "version": "sha256-f8ea350a737ac92f5251128c8f760f2b6e8bb76d321577bd27f164bccd846ffd",
       "outputs": [
         {
           "platform": "claude",
@@ -130,13 +130,13 @@
     },
     {
       "name": "changelog",
-      "dir": ".agents/release/changelog",
+      "dir": ".agentquilt/meta-agents/release/changelog",
       "bodyFragments": [
-        ".agents/release/changelog/010-role.md",
-        ".agents/release/changelog/020-release-workflow.md"
+        ".agentquilt/meta-agents/release/changelog/010-role.md",
+        ".agentquilt/meta-agents/release/changelog/020-release-workflow.md"
       ],
       "metaHash": "sha256-62d0536d00d48819a050ad57c2dbb71de9fc5a8535269865000589b240ad3431",
-      "version": "sha256-b1c4d7e129f426019209b4a95f7c373c213764302ea583e2fdfb4b9d2e42d829",
+      "version": "sha256-f69b5291fffa01d8095fb42d1d1e66881eb20b644590c8b7924b78e0ffc9ac79",
       "outputs": [
         {
           "platform": "claude",
@@ -148,13 +148,13 @@
     },
     {
       "name": "code-review",
-      "dir": ".agents/sdlc/code-review",
+      "dir": ".agentquilt/meta-agents/sdlc/code-review",
       "bodyFragments": [
-        ".agents/sdlc/code-review/010-role.md",
-        ".agents/sdlc/code-review/020-review-guidelines.md"
+        ".agentquilt/meta-agents/sdlc/code-review/010-role.md",
+        ".agentquilt/meta-agents/sdlc/code-review/020-review-guidelines.md"
       ],
       "metaHash": "sha256-69f925d681016cb180fecfa197772910467f841ebf6176652f116bd8058c3e5a",
-      "version": "sha256-2870a63551d4abf7d50f2e5eb3358a5675c36d55523b3c9f7a44c9fa09571cf1",
+      "version": "sha256-a92acfdaf7fe32297f669dd45816cc3f332af2f99b08b3cd764abfc76506fdc4",
       "outputs": [
         {
           "platform": "claude",
@@ -166,13 +166,13 @@
     },
     {
       "name": "compatibility-test",
-      "dir": ".agents/stlc/compatibility-test",
+      "dir": ".agentquilt/meta-agents/stlc/compatibility-test",
       "bodyFragments": [
-        ".agents/stlc/compatibility-test/010-role.md",
-        ".agents/stlc/compatibility-test/020-stlc-workflow.md"
+        ".agentquilt/meta-agents/stlc/compatibility-test/010-role.md",
+        ".agentquilt/meta-agents/stlc/compatibility-test/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-8f07f5c3153e55a9cb184e996d40305f06a4cbb1c6cf88e636db8376b69a9144",
-      "version": "sha256-0f7968675d8f30af3fa0d317afb95129d495a5d5b7f6d5186f79444301a3ab91",
+      "version": "sha256-f4a02cb9f13fc553db291301a54d75404b4938db49cc1c4f7fc34be0765baae7",
       "outputs": [
         {
           "platform": "claude",
@@ -184,13 +184,13 @@
     },
     {
       "name": "conflict-detector",
-      "dir": ".agents/internal/conflict-detector",
+      "dir": ".agentquilt/meta-agents/internal/conflict-detector",
       "bodyFragments": [
-        ".agents/internal/conflict-detector/010-role.md",
-        ".agents/internal/conflict-detector/020-internal-coordination.md"
+        ".agentquilt/meta-agents/internal/conflict-detector/010-role.md",
+        ".agentquilt/meta-agents/internal/conflict-detector/020-internal-coordination.md"
       ],
       "metaHash": "sha256-135b0d91fd7b5c3b0d25336c0cb04a85c73607b53d84c0bca4a808081fa2468d",
-      "version": "sha256-98727685f8c14ff9616cbec410039bdfeb2e5d5d9cd0e4de8ab21273f40c16f0",
+      "version": "sha256-529b1251dbff28b134f637b9e5f035fe2589707cc52caa5fa9a0b96603209942",
       "outputs": [
         {
           "platform": "claude",
@@ -202,13 +202,13 @@
     },
     {
       "name": "defect-triage",
-      "dir": ".agents/stlc/defect-triage",
+      "dir": ".agentquilt/meta-agents/stlc/defect-triage",
       "bodyFragments": [
-        ".agents/stlc/defect-triage/010-role.md",
-        ".agents/stlc/defect-triage/020-stlc-workflow.md"
+        ".agentquilt/meta-agents/stlc/defect-triage/010-role.md",
+        ".agentquilt/meta-agents/stlc/defect-triage/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-ef88e8b8eef28c78a2cead79f76bf0768151d07b9048051cfe4a713aa739111d",
-      "version": "sha256-8462b25c25820a5d0678b7dc327bb84cc92c7e45dd404546cb945a06d3ae9681",
+      "version": "sha256-4fc9de4c6c0e017a0a48c4dbdf4cc98fc34698056735b5f771b23bb14bd2a0e5",
       "outputs": [
         {
           "platform": "claude",
@@ -220,13 +220,13 @@
     },
     {
       "name": "definition-architect",
-      "dir": ".agents/internal/definition-architect",
+      "dir": ".agentquilt/meta-agents/internal/definition-architect",
       "bodyFragments": [
-        ".agents/internal/definition-architect/010-role.md",
-        ".agents/internal/definition-architect/020-internal-coordination.md"
+        ".agentquilt/meta-agents/internal/definition-architect/010-role.md",
+        ".agentquilt/meta-agents/internal/definition-architect/020-internal-coordination.md"
       ],
       "metaHash": "sha256-2c8379e603e80c8587fc9394591490e4775a9ad12bd4ffd7385ee3e59e9bfc93",
-      "version": "sha256-76345fb1faaa829b7d68abbe5fc1ad9024f98e7b24adbc83cdd4e2e2b166c53f",
+      "version": "sha256-333e19a50b78e0b2abbfab0f26763f7471ce922f5f868cf40e5397a4e120473e",
       "outputs": [
         {
           "platform": "claude",
@@ -238,13 +238,13 @@
     },
     {
       "name": "developer-experience",
-      "dir": ".agents/sdlc/developer-experience",
+      "dir": ".agentquilt/meta-agents/sdlc/developer-experience",
       "bodyFragments": [
-        ".agents/sdlc/developer-experience/010-role.md",
-        ".agents/sdlc/developer-experience/020-sdlc-workflow.md"
+        ".agentquilt/meta-agents/sdlc/developer-experience/010-role.md",
+        ".agentquilt/meta-agents/sdlc/developer-experience/020-sdlc-workflow.md"
       ],
       "metaHash": "sha256-76c09096665467b0e68dc4741d25f398e723891aa89c551eb5344fe85559b0cc",
-      "version": "sha256-fa4077a001c774b53ef5a89a1508854af51f22870b85c74ec9a44f80fc408a28",
+      "version": "sha256-04c9550d43821ac43fb04a93a2037b91e2d256fc5bc24cd8f74e4a8decd8d1d9",
       "outputs": [
         {
           "platform": "claude",
@@ -256,13 +256,13 @@
     },
     {
       "name": "documentation",
-      "dir": ".agents/sdlc/documentation",
+      "dir": ".agentquilt/meta-agents/sdlc/documentation",
       "bodyFragments": [
-        ".agents/sdlc/documentation/010-role.md",
-        ".agents/sdlc/documentation/020-sdlc-workflow.md"
+        ".agentquilt/meta-agents/sdlc/documentation/010-role.md",
+        ".agentquilt/meta-agents/sdlc/documentation/020-sdlc-workflow.md"
       ],
       "metaHash": "sha256-8f17433ac3051f86e02296b505d845be507c7b94b7052e22be9c3e1a4850a16e",
-      "version": "sha256-208241d9f31abb5f3eb158a542c417fd61b89e862329dba521ce26b4350ae7ca",
+      "version": "sha256-456ee5b79c484cc76621b3f4329dc418a68a2666ca0e8a6804e3e4862e48c135",
       "outputs": [
         {
           "platform": "claude",
@@ -274,13 +274,13 @@
     },
     {
       "name": "eval-designer",
-      "dir": ".agents/stlc/eval-designer",
+      "dir": ".agentquilt/meta-agents/stlc/eval-designer",
       "bodyFragments": [
-        ".agents/stlc/eval-designer/010-role.md",
-        ".agents/stlc/eval-designer/020-eval-workflow.md"
+        ".agentquilt/meta-agents/stlc/eval-designer/010-role.md",
+        ".agentquilt/meta-agents/stlc/eval-designer/020-eval-workflow.md"
       ],
       "metaHash": "sha256-4535b2d9a8a09dfa3d836f44032f6ede4c79df27e81e3524c4d11c052d896c1a",
-      "version": "sha256-3e6c20b11eea1d9aa87af6ef71222adc2ba76825582ce459e8e8728b2fc2aed9",
+      "version": "sha256-86bb1f9abcfb8285c64079226fda4d4235557f5e5063c7a94d0378d329c4e656",
       "outputs": [
         {
           "platform": "claude",
@@ -292,13 +292,13 @@
     },
     {
       "name": "evidence-collector",
-      "dir": ".agents/release/evidence-collector",
+      "dir": ".agentquilt/meta-agents/release/evidence-collector",
       "bodyFragments": [
-        ".agents/release/evidence-collector/010-role.md",
-        ".agents/release/evidence-collector/020-release-workflow.md"
+        ".agentquilt/meta-agents/release/evidence-collector/010-role.md",
+        ".agentquilt/meta-agents/release/evidence-collector/020-release-workflow.md"
       ],
       "metaHash": "sha256-c92778233322bf81fd5605c6fbb8675045a98a23cc43e668cdc261cb5eb8c79c",
-      "version": "sha256-f0153a5dfd393f3c84012ae04bebdfa2fb6e8e037033d76f56ed32b4a5df9502",
+      "version": "sha256-c6114f7856d8464f2c5650ed9746c080a8758512f48404fad0d5006bd8b72c71",
       "outputs": [
         {
           "platform": "claude",
@@ -310,13 +310,13 @@
     },
     {
       "name": "gatekeeper",
-      "dir": ".agents/governance/gatekeeper",
+      "dir": ".agentquilt/meta-agents/governance/gatekeeper",
       "bodyFragments": [
-        ".agents/governance/gatekeeper/010-role.md",
-        ".agents/governance/gatekeeper/020-governance-workflow.md"
+        ".agentquilt/meta-agents/governance/gatekeeper/010-role.md",
+        ".agentquilt/meta-agents/governance/gatekeeper/020-governance-workflow.md"
       ],
       "metaHash": "sha256-884df834d30a3461457b63d48e5f6cbea1ae921198a8dc5b46de6524583a0d2d",
-      "version": "sha256-2721ebb14043d261e7bc86d8a1c47d6560276c548c9e689f1ff6aff51da60b0f",
+      "version": "sha256-f294ca4fd5b8649e4f55f16132d0862fa2310fc34cc516624f9a6bbc33ba6e52",
       "outputs": [
         {
           "platform": "claude",
@@ -328,13 +328,13 @@
     },
     {
       "name": "golden-file-test",
-      "dir": ".agents/stlc/golden-file-test",
+      "dir": ".agentquilt/meta-agents/stlc/golden-file-test",
       "bodyFragments": [
-        ".agents/stlc/golden-file-test/010-role.md",
-        ".agents/stlc/golden-file-test/020-workflow.md"
+        ".agentquilt/meta-agents/stlc/golden-file-test/010-role.md",
+        ".agentquilt/meta-agents/stlc/golden-file-test/020-workflow.md"
       ],
       "metaHash": "sha256-cbbd0e4235026bce9959f75d6c6d084034eb975dfe691cbc1a4627a69796cd7c",
-      "version": "sha256-7833751d88afa222e42695aa6f437e50c04fe3908da588ff3e207ebf649eb433",
+      "version": "sha256-a55144cd78e63051d0c87e48ca5335ae411a09c02b1610286926408cd9a512a8",
       "outputs": [
         {
           "platform": "claude",
@@ -346,13 +346,13 @@
     },
     {
       "name": "implementation-planning",
-      "dir": ".agents/sdlc/implementation-planning",
+      "dir": ".agentquilt/meta-agents/sdlc/implementation-planning",
       "bodyFragments": [
-        ".agents/sdlc/implementation-planning/010-role.md",
-        ".agents/sdlc/implementation-planning/020-sdlc-workflow.md"
+        ".agentquilt/meta-agents/sdlc/implementation-planning/010-role.md",
+        ".agentquilt/meta-agents/sdlc/implementation-planning/020-sdlc-workflow.md"
       ],
       "metaHash": "sha256-1df870509239ef44c24c6d7b681e4c3c6cb4c631d4e5be1ef13f7d3d00c7d84e",
-      "version": "sha256-ff2cfe6e569cba69e768f5d1c7096e86a22dd7851b04a1fb4a1a38fd4d8ccf45",
+      "version": "sha256-e7e3ca0e786aa460c2e5b487c787dd909a24fa020ab70c1510c21dda15a6f5cb",
       "outputs": [
         {
           "platform": "claude",
@@ -364,13 +364,13 @@
     },
     {
       "name": "instruction-block-author",
-      "dir": ".agents/internal/instruction-block-author",
+      "dir": ".agentquilt/meta-agents/internal/instruction-block-author",
       "bodyFragments": [
-        ".agents/internal/instruction-block-author/010-role.md",
-        ".agents/internal/instruction-block-author/020-internal-coordination.md"
+        ".agentquilt/meta-agents/internal/instruction-block-author/010-role.md",
+        ".agentquilt/meta-agents/internal/instruction-block-author/020-internal-coordination.md"
       ],
       "metaHash": "sha256-04f66f2ee9f5f6b354d486da86ae90bffcc80f5f908a789d932e4f0b44301368",
-      "version": "sha256-028d7c1d5e3bedb18d5cd1d31e0efefa759e9b9518f893211e29912c38f605ee",
+      "version": "sha256-c83385724325da0c476a1a27e3ad350d571d76db415a7267ad255bb082ea3d22",
       "outputs": [
         {
           "platform": "claude",
@@ -382,13 +382,13 @@
     },
     {
       "name": "instruction-refactoring",
-      "dir": ".agents/internal/instruction-refactoring",
+      "dir": ".agentquilt/meta-agents/internal/instruction-refactoring",
       "bodyFragments": [
-        ".agents/internal/instruction-refactoring/010-role.md",
-        ".agents/internal/instruction-refactoring/020-internal-coordination.md"
+        ".agentquilt/meta-agents/internal/instruction-refactoring/010-role.md",
+        ".agentquilt/meta-agents/internal/instruction-refactoring/020-internal-coordination.md"
       ],
       "metaHash": "sha256-8b7f74a0cf2042aa7f86095c4aac3e4750a6a97ae2a2e7a7c19928c0caf26d38",
-      "version": "sha256-d853886cef303a96769717b72dd7454b86b07694970d1d8a9a3a1d8612a0698b",
+      "version": "sha256-1b6abbaeff3a8500ab108899e0bac418f77b3bca7809b2330daa7fd9d2fadc2c",
       "outputs": [
         {
           "platform": "claude",
@@ -400,13 +400,13 @@
     },
     {
       "name": "main-orchestrator",
-      "dir": ".agents/internal/main-orchestrator",
+      "dir": ".agentquilt/meta-agents/internal/main-orchestrator",
       "bodyFragments": [
-        ".agents/internal/main-orchestrator/010-role.md",
-        ".agents/internal/main-orchestrator/020-internal-coordination.md"
+        ".agentquilt/meta-agents/internal/main-orchestrator/010-role.md",
+        ".agentquilt/meta-agents/internal/main-orchestrator/020-internal-coordination.md"
       ],
       "metaHash": "sha256-6fa6aba0b131e6e8db800afd41c4868344bf5b13c6c3ae797e95d07c89185f8d",
-      "version": "sha256-2e61e634b0123c40713e6e57401b2be85df1a1e0062d4d85df2fb0c68bf654fc",
+      "version": "sha256-ffe1302c267b2638026738ca5a97cf00352695f3592dca480c3aa29d4d88861f",
       "outputs": [
         {
           "platform": "claude",
@@ -418,13 +418,13 @@
     },
     {
       "name": "migration-guide",
-      "dir": ".agents/release/migration-guide",
+      "dir": ".agentquilt/meta-agents/release/migration-guide",
       "bodyFragments": [
-        ".agents/release/migration-guide/010-role.md",
-        ".agents/release/migration-guide/020-release-workflow.md"
+        ".agentquilt/meta-agents/release/migration-guide/010-role.md",
+        ".agentquilt/meta-agents/release/migration-guide/020-release-workflow.md"
       ],
       "metaHash": "sha256-b9264b6e8a6944df70ef08876e4c5bd663df3352e5526c93925ace2267eca2e8",
-      "version": "sha256-213c484594134b42110e530eb462aea8b7f7b287c51cc7f86c2adfcb54826abf",
+      "version": "sha256-5eb0ab29edbaa3f90cfc87ff8ac46702a2636ed27c6fdc3244669a7bdd08d69f",
       "outputs": [
         {
           "platform": "claude",
@@ -436,13 +436,13 @@
     },
     {
       "name": "performance-test",
-      "dir": ".agents/stlc/performance-test",
+      "dir": ".agentquilt/meta-agents/stlc/performance-test",
       "bodyFragments": [
-        ".agents/stlc/performance-test/010-role.md",
-        ".agents/stlc/performance-test/020-stlc-workflow.md"
+        ".agentquilt/meta-agents/stlc/performance-test/010-role.md",
+        ".agentquilt/meta-agents/stlc/performance-test/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-dfc6eff0e8f55bb3b514317c231a4583d56cb21ce1079ab5634905715b5a918f",
-      "version": "sha256-e470562d596b44f1c2555a4e450f2184851472036b1cee59862314782b6faa4e",
+      "version": "sha256-50f7469f3e14dbd896d9e19f2bc37b6cec081d3be900098adaa68e77aa195b28",
       "outputs": [
         {
           "platform": "claude",
@@ -454,13 +454,13 @@
     },
     {
       "name": "policy-compliance",
-      "dir": ".agents/governance/policy-compliance",
+      "dir": ".agentquilt/meta-agents/governance/policy-compliance",
       "bodyFragments": [
-        ".agents/governance/policy-compliance/010-role.md",
-        ".agents/governance/policy-compliance/020-governance-workflow.md"
+        ".agentquilt/meta-agents/governance/policy-compliance/010-role.md",
+        ".agentquilt/meta-agents/governance/policy-compliance/020-governance-workflow.md"
       ],
       "metaHash": "sha256-87f4a8fcfab3c0c789e93b2a81d456d22293273545e57c1f784716e47c2344b1",
-      "version": "sha256-f100507a30b17d8d6f7b90455e7a1d85a66542ffff2735943182f0d336dc84ee",
+      "version": "sha256-bfafa87491ecea11246c1ea4e5616185aa2520d3e0e35a2ebfd2dcb7415f9947",
       "outputs": [
         {
           "platform": "claude",
@@ -472,13 +472,13 @@
     },
     {
       "name": "post-release-review",
-      "dir": ".agents/release/post-release-review",
+      "dir": ".agentquilt/meta-agents/release/post-release-review",
       "bodyFragments": [
-        ".agents/release/post-release-review/010-role.md",
-        ".agents/release/post-release-review/020-release-workflow.md"
+        ".agentquilt/meta-agents/release/post-release-review/010-role.md",
+        ".agentquilt/meta-agents/release/post-release-review/020-release-workflow.md"
       ],
       "metaHash": "sha256-d13dc79dcbc2118be9151937ca9a20be4bf1b5477ce6675f9d2a69fcc3dbd137",
-      "version": "sha256-dd038cfba8d52b5c4d14f9839dea268422cb3c22d6cea948543deab3b0b04f1f",
+      "version": "sha256-8040aa5b92bec53bd278fabaca4504563a157d13a33b95505697d66421fdf832",
       "outputs": [
         {
           "platform": "claude",
@@ -490,13 +490,13 @@
     },
     {
       "name": "product-discovery",
-      "dir": ".agents/sdlc/product-discovery",
+      "dir": ".agentquilt/meta-agents/sdlc/product-discovery",
       "bodyFragments": [
-        ".agents/sdlc/product-discovery/010-role.md",
-        ".agents/sdlc/product-discovery/020-triage-workflow.md"
+        ".agentquilt/meta-agents/sdlc/product-discovery/010-role.md",
+        ".agentquilt/meta-agents/sdlc/product-discovery/020-triage-workflow.md"
       ],
       "metaHash": "sha256-8af5405b14260f87e535fc9684400c60bf27b2053f438fcee17edbe85807bb70",
-      "version": "sha256-d3e37e3216172078a6d779b71404b7c8b4363a785d431dd8430742300f689350",
+      "version": "sha256-6f2b6731cdb29b09b813a78121345f90074d4b055dc6de89b12a5b866b41e799",
       "outputs": [
         {
           "platform": "claude",
@@ -508,13 +508,13 @@
     },
     {
       "name": "prompt-compiler-guardian",
-      "dir": ".agents/internal/prompt-compiler-guardian",
+      "dir": ".agentquilt/meta-agents/internal/prompt-compiler-guardian",
       "bodyFragments": [
-        ".agents/internal/prompt-compiler-guardian/010-role.md",
-        ".agents/internal/prompt-compiler-guardian/020-internal-coordination.md"
+        ".agentquilt/meta-agents/internal/prompt-compiler-guardian/010-role.md",
+        ".agentquilt/meta-agents/internal/prompt-compiler-guardian/020-internal-coordination.md"
       ],
       "metaHash": "sha256-2d6ff3c8cac5968d7f28c07ecea80ef1cdd73e37bb40be2ca018916d95d7b3c5",
-      "version": "sha256-39a41fe8dc03065d3f2251ec13da37e308d93bac372abc9ddff6dcb322f8e0a1",
+      "version": "sha256-617822bb37f3b630513da9184df592a9f639e83d428359ae39adf4fc486b2903",
       "outputs": [
         {
           "platform": "claude",
@@ -526,13 +526,13 @@
     },
     {
       "name": "prompt-injection-test",
-      "dir": ".agents/governance/prompt-injection-test",
+      "dir": ".agentquilt/meta-agents/governance/prompt-injection-test",
       "bodyFragments": [
-        ".agents/governance/prompt-injection-test/010-role.md",
-        ".agents/governance/prompt-injection-test/020-governance-workflow.md"
+        ".agentquilt/meta-agents/governance/prompt-injection-test/010-role.md",
+        ".agentquilt/meta-agents/governance/prompt-injection-test/020-governance-workflow.md"
       ],
       "metaHash": "sha256-38f0cbd171d4e24a6956e24799621394ff8e87d17f8cdbcf80327db2c3eaf4f5",
-      "version": "sha256-9936ddad75e23bce3ad16a9c22397c945ec5b095087ac7bbfb760b2fcf6a1749",
+      "version": "sha256-6b6f861bd2874e1658a18e37cd0cde046420816eed4dd80ba50bd7ec8152a4c5",
       "outputs": [
         {
           "platform": "claude",
@@ -544,13 +544,13 @@
     },
     {
       "name": "qa-strategy",
-      "dir": ".agents/stlc/qa-strategy",
+      "dir": ".agentquilt/meta-agents/stlc/qa-strategy",
       "bodyFragments": [
-        ".agents/stlc/qa-strategy/010-role.md",
-        ".agents/stlc/qa-strategy/020-stlc-workflow.md"
+        ".agentquilt/meta-agents/stlc/qa-strategy/010-role.md",
+        ".agentquilt/meta-agents/stlc/qa-strategy/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-c59b588b0a657274232fd2c4957f9dea546234d9046a7ce33c9d84ccf565058c",
-      "version": "sha256-565d000e79ac17ebfa26f52c36867c0a49e55a809af1fc11db2486da98421bc0",
+      "version": "sha256-51d99588950f70d81cce2c8cf3360065db397cb296e70ecb831ced632e10112d",
       "outputs": [
         {
           "platform": "claude",
@@ -562,13 +562,13 @@
     },
     {
       "name": "regression-scope",
-      "dir": ".agents/stlc/regression-scope",
+      "dir": ".agentquilt/meta-agents/stlc/regression-scope",
       "bodyFragments": [
-        ".agents/stlc/regression-scope/010-role.md",
-        ".agents/stlc/regression-scope/020-stlc-workflow.md"
+        ".agentquilt/meta-agents/stlc/regression-scope/010-role.md",
+        ".agentquilt/meta-agents/stlc/regression-scope/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-9571f39fb0c853521fd00e92d06d933182dd603b4a1ae5ca422c2c72d25e2978",
-      "version": "sha256-0751fcfbd6efe96c1b37974b0d0192f27fedac14aa77e6fc8de2da0857bd53fd",
+      "version": "sha256-23a74becb7546364464582c83fe595c9ce7ee60324f77118babddf5a9c3ec866",
       "outputs": [
         {
           "platform": "claude",
@@ -580,13 +580,13 @@
     },
     {
       "name": "release-manager",
-      "dir": ".agents/release/release-manager",
+      "dir": ".agentquilt/meta-agents/release/release-manager",
       "bodyFragments": [
-        ".agents/release/release-manager/010-role.md",
-        ".agents/release/release-manager/020-release-workflow.md"
+        ".agentquilt/meta-agents/release/release-manager/010-role.md",
+        ".agentquilt/meta-agents/release/release-manager/020-release-workflow.md"
       ],
       "metaHash": "sha256-ec51aa3736b2cbab924dd2fcc3d977f24f1cb1aba8d27fb4be156d8a709b2187",
-      "version": "sha256-24333af336a46a67d744b044e282684458c1d1130188e1c09e621015116cf9f8",
+      "version": "sha256-2b7fae864446c46a83335288aea0714c1f68652bba8fa925c10af6af6abf28b9",
       "outputs": [
         {
           "platform": "claude",
@@ -598,13 +598,13 @@
     },
     {
       "name": "requirements-analyst",
-      "dir": ".agents/sdlc/requirements-analyst",
+      "dir": ".agentquilt/meta-agents/sdlc/requirements-analyst",
       "bodyFragments": [
-        ".agents/sdlc/requirements-analyst/010-role.md",
-        ".agents/sdlc/requirements-analyst/020-validation.md"
+        ".agentquilt/meta-agents/sdlc/requirements-analyst/010-role.md",
+        ".agentquilt/meta-agents/sdlc/requirements-analyst/020-validation.md"
       ],
       "metaHash": "sha256-164bce9de83109b19deea594c1bb230fe18c82bd02b99233436960000c58ada8",
-      "version": "sha256-6c466d5b8f63f235a65091d9d66714d47774d7460d2fee3f9fee1e9040577811",
+      "version": "sha256-d6ef51bbf362e3d899d4911477aa86e2e02e96fb56309451d49adeab1671731e",
       "outputs": [
         {
           "platform": "claude",
@@ -616,13 +616,13 @@
     },
     {
       "name": "reviewer",
-      "dir": "agents/reviewer",
+      "dir": ".agentquilt/agents/reviewer",
       "bodyFragments": [
-        "agents/reviewer/010-role.md",
-        "agents/reviewer/020-criteria.md"
+        ".agentquilt/agents/reviewer/010-role.md",
+        ".agentquilt/agents/reviewer/020-criteria.md"
       ],
       "metaHash": "sha256-fff0b40c88b1499c4f5c63fdb9ef305790338e08a3e4ecb75e0d2b29de832d31",
-      "version": "sha256-3b112f588406b590823172910ffad79b4559277f90ccd45dd2aae4c9cb882e55",
+      "version": "sha256-cdbed83a0ece6ce69db3f038411e2b19936e58a2c1575fcd3157e6a99333af21",
       "outputs": [
         {
           "platform": "claude",
@@ -634,13 +634,13 @@
     },
     {
       "name": "risk-register",
-      "dir": ".agents/governance/risk-register",
+      "dir": ".agentquilt/meta-agents/governance/risk-register",
       "bodyFragments": [
-        ".agents/governance/risk-register/010-role.md",
-        ".agents/governance/risk-register/020-risk-classification.md"
+        ".agentquilt/meta-agents/governance/risk-register/010-role.md",
+        ".agentquilt/meta-agents/governance/risk-register/020-risk-classification.md"
       ],
       "metaHash": "sha256-f754afa305b3456ad06f134976405b104d2625af2b71210b21106b5163477ff2",
-      "version": "sha256-6e26061747337e891ce4f0d286f4f1d9d8d00b90cfc963ea16c7ffd80763083b",
+      "version": "sha256-04c7477438a0bd8035f8d9a89cb7cc325b422030848393b68d5823ea8e098f5e",
       "outputs": [
         {
           "platform": "claude",
@@ -652,13 +652,13 @@
     },
     {
       "name": "schema-design",
-      "dir": ".agents/sdlc/schema-design",
+      "dir": ".agentquilt/meta-agents/sdlc/schema-design",
       "bodyFragments": [
-        ".agents/sdlc/schema-design/010-role.md",
-        ".agents/sdlc/schema-design/020-validation.md"
+        ".agentquilt/meta-agents/sdlc/schema-design/010-role.md",
+        ".agentquilt/meta-agents/sdlc/schema-design/020-validation.md"
       ],
       "metaHash": "sha256-cadccc9f0b1a2fcdc0fe6076f4b41e476578dd42ddd935ace7bd88e08ec18d35",
-      "version": "sha256-3d3e3022eebae761a137be9c3b34ef8865f49d42f165a87b1c8cdcd9a3090c3a",
+      "version": "sha256-7f0650ed9c197d126b979fdeeabf9dd546e3217418ad369ea908a7d2711b2014",
       "outputs": [
         {
           "platform": "claude",
@@ -670,13 +670,13 @@
     },
     {
       "name": "secret-leakage-detection",
-      "dir": ".agents/governance/secret-leakage-detection",
+      "dir": ".agentquilt/meta-agents/governance/secret-leakage-detection",
       "bodyFragments": [
-        ".agents/governance/secret-leakage-detection/010-role.md",
-        ".agents/governance/secret-leakage-detection/020-patterns.md"
+        ".agentquilt/meta-agents/governance/secret-leakage-detection/010-role.md",
+        ".agentquilt/meta-agents/governance/secret-leakage-detection/020-patterns.md"
       ],
       "metaHash": "sha256-52b102d84f308eea3c7cd251ce9c07bc1f074716edca32746aedcf097ab81ff6",
-      "version": "sha256-096c41081b562d798f46b363df20b0b8f416f12fa1ba1ec8e231b8973fc98b93",
+      "version": "sha256-c86c929e1f30311c41d7138ee094ec022f7a6c55ec4345ecc83e33ae66e1ce49",
       "outputs": [
         {
           "platform": "claude",
@@ -688,13 +688,13 @@
     },
     {
       "name": "security-review",
-      "dir": ".agents/governance/security-review",
+      "dir": ".agentquilt/meta-agents/governance/security-review",
       "bodyFragments": [
-        ".agents/governance/security-review/010-role.md",
-        ".agents/governance/security-review/020-threat-assessment.md"
+        ".agentquilt/meta-agents/governance/security-review/010-role.md",
+        ".agentquilt/meta-agents/governance/security-review/020-threat-assessment.md"
       ],
       "metaHash": "sha256-5555c42229ade6c8376350596239cfbb2c0d17249b440b54d94307028fe9d611",
-      "version": "sha256-6ec1cd136a80dc61008dea4526f34ed9962d8b4fa484ad2f1783fbfb15009049",
+      "version": "sha256-a0102fbfc4e9126f654f84679133992b3e32b82554ff576c2e9a2bc60d19a992",
       "outputs": [
         {
           "platform": "claude",
@@ -706,13 +706,13 @@
     },
     {
       "name": "semantic-regression",
-      "dir": ".agents/stlc/semantic-regression",
+      "dir": ".agentquilt/meta-agents/stlc/semantic-regression",
       "bodyFragments": [
-        ".agents/stlc/semantic-regression/010-role.md",
-        ".agents/stlc/semantic-regression/020-detection.md"
+        ".agentquilt/meta-agents/stlc/semantic-regression/010-role.md",
+        ".agentquilt/meta-agents/stlc/semantic-regression/020-detection.md"
       ],
       "metaHash": "sha256-90b29dece1359614573f0ac1e849d78bfe18f1fd35176e19290cff024bb8bb55",
-      "version": "sha256-7c8081492bb4b41d82084db97fc46bfc3cc7c8a789a762a990f1cf17a0d7ef33",
+      "version": "sha256-d4cd2707e0541689b6e7ba4abe67679c1b6206093be079d86041e1c6d1dd14df",
       "outputs": [
         {
           "platform": "claude",
@@ -724,13 +724,13 @@
     },
     {
       "name": "supply-chain-risk",
-      "dir": ".agents/governance/supply-chain-risk",
+      "dir": ".agentquilt/meta-agents/governance/supply-chain-risk",
       "bodyFragments": [
-        ".agents/governance/supply-chain-risk/010-role.md",
-        ".agents/governance/supply-chain-risk/020-governance-workflow.md"
+        ".agentquilt/meta-agents/governance/supply-chain-risk/010-role.md",
+        ".agentquilt/meta-agents/governance/supply-chain-risk/020-governance-workflow.md"
       ],
       "metaHash": "sha256-a7fb48310cefb603fa0620773e2769943a56a0274662d0934be158162b6d0a79",
-      "version": "sha256-299897078bb0c40b91e9951890ca58d614631c82ac6c742b2efb4fc81e695e7c",
+      "version": "sha256-eeb9a62a821c8b4358c34ae51bca48a74f23f2674f2cbd74ee59b5033c4e091f",
       "outputs": [
         {
           "platform": "claude",
@@ -742,13 +742,13 @@
     },
     {
       "name": "test-automation",
-      "dir": ".agents/stlc/test-automation",
+      "dir": ".agentquilt/meta-agents/stlc/test-automation",
       "bodyFragments": [
-        ".agents/stlc/test-automation/010-role.md",
-        ".agents/stlc/test-automation/020-stlc-workflow.md"
+        ".agentquilt/meta-agents/stlc/test-automation/010-role.md",
+        ".agentquilt/meta-agents/stlc/test-automation/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-b60d3ce53960087138c0c36012b7310d0757ee32a0a56ef46bd26101c1277482",
-      "version": "sha256-822cc499dd423751ee09fa6c8f1dbb78ec4235925ab030d0526abea71fe84526",
+      "version": "sha256-fe4d9752110b21ba8d7c0383a2daedc1416d7838be2f4b284378b3f7594b6ea6",
       "outputs": [
         {
           "platform": "claude",
@@ -760,13 +760,13 @@
     },
     {
       "name": "test-design",
-      "dir": ".agents/stlc/test-design",
+      "dir": ".agentquilt/meta-agents/stlc/test-design",
       "bodyFragments": [
-        ".agents/stlc/test-design/010-role.md",
-        ".agents/stlc/test-design/020-stlc-workflow.md"
+        ".agentquilt/meta-agents/stlc/test-design/010-role.md",
+        ".agentquilt/meta-agents/stlc/test-design/020-stlc-workflow.md"
       ],
       "metaHash": "sha256-b0d19b0fd93eb06bf5b391842f6b81176e1d95c293babef3cee962e91f65ad7c",
-      "version": "sha256-8b72c705ba98d0bc7ae9d88b2b1b333da1f80b3a52932afdeddd1606fa779802",
+      "version": "sha256-8049cf3f88518690220f58e935eac2adb75a99359d000ae1bf3952c77653f10f",
       "outputs": [
         {
           "platform": "claude",
@@ -778,13 +778,13 @@
     },
     {
       "name": "traceability",
-      "dir": ".agents/governance/traceability",
+      "dir": ".agentquilt/meta-agents/governance/traceability",
       "bodyFragments": [
-        ".agents/governance/traceability/010-role.md",
-        ".agents/governance/traceability/020-governance-workflow.md"
+        ".agentquilt/meta-agents/governance/traceability/010-role.md",
+        ".agentquilt/meta-agents/governance/traceability/020-governance-workflow.md"
       ],
       "metaHash": "sha256-c6efa2b4d7f9ea4515d7a8a749f9331998d0ac84ab01a91beff9643c1bed9d7c",
-      "version": "sha256-8901176bfd6904505976158eddf25356f3c89e8ebe0fb623bba5a8729f945bd9",
+      "version": "sha256-8c3544cbb9349fa8fe3155effced4148664cc2891bce6b8eeb021be2e33f8229",
       "outputs": [
         {
           "platform": "claude",
@@ -796,13 +796,13 @@
     },
     {
       "name": "versioning",
-      "dir": ".agents/release/versioning",
+      "dir": ".agentquilt/meta-agents/release/versioning",
       "bodyFragments": [
-        ".agents/release/versioning/010-role.md",
-        ".agents/release/versioning/020-release-workflow.md"
+        ".agentquilt/meta-agents/release/versioning/010-role.md",
+        ".agentquilt/meta-agents/release/versioning/020-release-workflow.md"
       ],
       "metaHash": "sha256-45a9acd80d2ede3d53eab3c42151e7372749ed17d8ed197fb8ff8cadb25bbe39",
-      "version": "sha256-19255fb1e67ff75337cffce4b1bf5609fb8d6c8bdabeaf90b0562555b092ea00",
+      "version": "sha256-594bb70d10d8396ff2b7a8c219da459765d4c600567a4a926ae0bdd75f200ac4",
       "outputs": [
         {
           "platform": "claude",
@@ -815,529 +815,541 @@
   ],
   "fragments": [
     {
-      "id": ".agents/governance/gatekeeper/010-role.md",
+      "id": ".agentquilt/agents/reviewer/010-role.md",
+      "hash": "sha256-06f2a924264f06efc7019b50d242f8035f47332b63d0a9512fbb586a4adf3f8c",
+      "bytes": 440,
+      "tags": []
+    },
+    {
+      "id": ".agentquilt/agents/reviewer/020-criteria.md",
+      "hash": "sha256-24af2a7e7d58dd85089c654f6d25f6392b10a460a62f640b2a0498fee205e27f",
+      "bytes": 897,
+      "tags": []
+    },
+    {
+      "id": ".agentquilt/meta-agents/governance/gatekeeper/010-role.md",
       "hash": "sha256-e77c615f390be035f953120e05496c12db75bf0a7a01c971135b9584cbd0a348",
       "bytes": 865,
       "tags": []
     },
     {
-      "id": ".agents/governance/gatekeeper/020-governance-workflow.md",
+      "id": ".agentquilt/meta-agents/governance/gatekeeper/020-governance-workflow.md",
       "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
       "bytes": 862,
       "tags": []
     },
     {
-      "id": ".agents/governance/policy-compliance/010-role.md",
+      "id": ".agentquilt/meta-agents/governance/policy-compliance/010-role.md",
       "hash": "sha256-b9ab9cd0a16ee7622fb3ac47457b7165a916752767c5a7117e475b0461919ed8",
       "bytes": 872,
       "tags": []
     },
     {
-      "id": ".agents/governance/policy-compliance/020-governance-workflow.md",
+      "id": ".agentquilt/meta-agents/governance/policy-compliance/020-governance-workflow.md",
       "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
       "bytes": 862,
       "tags": []
     },
     {
-      "id": ".agents/governance/prompt-injection-test/010-role.md",
+      "id": ".agentquilt/meta-agents/governance/prompt-injection-test/010-role.md",
       "hash": "sha256-67377a28dfd7a3ceed81a517e1c6dfb32e895dbb581f246a7cc04626a24980f6",
       "bytes": 892,
       "tags": []
     },
     {
-      "id": ".agents/governance/prompt-injection-test/020-governance-workflow.md",
+      "id": ".agentquilt/meta-agents/governance/prompt-injection-test/020-governance-workflow.md",
       "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
       "bytes": 862,
       "tags": []
     },
     {
-      "id": ".agents/governance/risk-register/010-role.md",
+      "id": ".agentquilt/meta-agents/governance/risk-register/010-role.md",
       "hash": "sha256-c354b115e81ae48aec2cd585529fa7f8ed2d702284ca63294a532b817c3d40f4",
       "bytes": 1848,
       "tags": []
     },
     {
-      "id": ".agents/governance/risk-register/020-risk-classification.md",
+      "id": ".agentquilt/meta-agents/governance/risk-register/020-risk-classification.md",
       "hash": "sha256-40d75028314706944170b95106d54eab277f0edbab0e891e93f9f8720c9a9efe",
       "bytes": 2697,
       "tags": []
     },
     {
-      "id": ".agents/governance/secret-leakage-detection/010-role.md",
+      "id": ".agentquilt/meta-agents/governance/secret-leakage-detection/010-role.md",
       "hash": "sha256-0bf4932d5766282d4ef85917fbc048f0774aa64e236c90e3258feed1ec052b29",
       "bytes": 246,
       "tags": []
     },
     {
-      "id": ".agents/governance/secret-leakage-detection/020-patterns.md",
+      "id": ".agentquilt/meta-agents/governance/secret-leakage-detection/020-patterns.md",
       "hash": "sha256-4a22c0c25d684ea9bb54d3acc7ec22ff17a1f957297eb103a4d6118686a7b45a",
       "bytes": 509,
       "tags": []
     },
     {
-      "id": ".agents/governance/security-review/010-role.md",
+      "id": ".agentquilt/meta-agents/governance/security-review/010-role.md",
       "hash": "sha256-bfc767dd5de77cde59347e57a0b4aec931826296adb21d9161d30aa9f57de2c7",
       "bytes": 1539,
       "tags": []
     },
     {
-      "id": ".agents/governance/security-review/020-threat-assessment.md",
+      "id": ".agentquilt/meta-agents/governance/security-review/020-threat-assessment.md",
       "hash": "sha256-41af9bf32573ebc31b4380611d45df3f44bb18cfb196e955eeb024c3e53d17c0",
       "bytes": 2336,
       "tags": []
     },
     {
-      "id": ".agents/governance/supply-chain-risk/010-role.md",
+      "id": ".agentquilt/meta-agents/governance/supply-chain-risk/010-role.md",
       "hash": "sha256-9b1f3f84b55666f56f724e050e2b4b07e91b89ff8e5f15bc57142c6d0e84b0fe",
       "bytes": 880,
       "tags": []
     },
     {
-      "id": ".agents/governance/supply-chain-risk/020-governance-workflow.md",
+      "id": ".agentquilt/meta-agents/governance/supply-chain-risk/020-governance-workflow.md",
       "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
       "bytes": 862,
       "tags": []
     },
     {
-      "id": ".agents/governance/traceability/010-role.md",
+      "id": ".agentquilt/meta-agents/governance/traceability/010-role.md",
       "hash": "sha256-c71be7743e4a4da0a97114d95f2aa82ab96159fc7accd40802e9698201a00007",
       "bytes": 880,
       "tags": []
     },
     {
-      "id": ".agents/governance/traceability/020-governance-workflow.md",
+      "id": ".agentquilt/meta-agents/governance/traceability/020-governance-workflow.md",
       "hash": "sha256-9c5101a3aaefcee9fa71c5f25972161a997d07b7bf6cd409b21c0b15958fb6fb",
       "bytes": 862,
       "tags": []
     },
     {
-      "id": ".agents/internal/agent-behavior-reviewer/010-role.md",
+      "id": ".agentquilt/meta-agents/internal/agent-behavior-reviewer/010-role.md",
       "hash": "sha256-e720d1e9570ae041caf09a75dd3440aebc7a260880bfd223f59cc3082d5040a8",
       "bytes": 889,
       "tags": []
     },
     {
-      "id": ".agents/internal/agent-behavior-reviewer/020-internal-coordination.md",
+      "id": ".agentquilt/meta-agents/internal/agent-behavior-reviewer/020-internal-coordination.md",
       "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
       "bytes": 1038,
       "tags": []
     },
     {
-      "id": ".agents/internal/agent-documentation/010-role.md",
+      "id": ".agentquilt/meta-agents/internal/agent-documentation/010-role.md",
       "hash": "sha256-15b35b77c7807ad867a775c2c3aa71bd49c80ac4d7c55dc9e8e420f736d5fdce",
       "bytes": 879,
       "tags": []
     },
     {
-      "id": ".agents/internal/agent-documentation/020-internal-coordination.md",
+      "id": ".agentquilt/meta-agents/internal/agent-documentation/020-internal-coordination.md",
       "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
       "bytes": 1038,
       "tags": []
     },
     {
-      "id": ".agents/internal/agent-migration/010-role.md",
+      "id": ".agentquilt/meta-agents/internal/agent-migration/010-role.md",
       "hash": "sha256-6ae01894f38b342c5b2f9c5d69147583fa76e8b00d5bb1c7a030b2766e53149c",
       "bytes": 884,
       "tags": []
     },
     {
-      "id": ".agents/internal/agent-migration/020-internal-coordination.md",
+      "id": ".agentquilt/meta-agents/internal/agent-migration/020-internal-coordination.md",
       "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
       "bytes": 1038,
       "tags": []
     },
     {
-      "id": ".agents/internal/agent-registry/010-role.md",
+      "id": ".agentquilt/meta-agents/internal/agent-registry/010-role.md",
       "hash": "sha256-7de02b2820505372fbca3fda71739f7a79eab2fde10b97d8f2c69e3dbb2f1fa5",
       "bytes": 874,
       "tags": []
     },
     {
-      "id": ".agents/internal/agent-registry/020-internal-coordination.md",
+      "id": ".agentquilt/meta-agents/internal/agent-registry/020-internal-coordination.md",
       "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
       "bytes": 1038,
       "tags": []
     },
     {
-      "id": ".agents/internal/conflict-detector/010-role.md",
+      "id": ".agentquilt/meta-agents/internal/conflict-detector/010-role.md",
       "hash": "sha256-49fd8b83973217be2106ef7d9bcfb87abdde8ae250d34121f2a7f2b1a32dedff",
       "bytes": 880,
       "tags": []
     },
     {
-      "id": ".agents/internal/conflict-detector/020-internal-coordination.md",
+      "id": ".agentquilt/meta-agents/internal/conflict-detector/020-internal-coordination.md",
       "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
       "bytes": 1038,
       "tags": []
     },
     {
-      "id": ".agents/internal/definition-architect/010-role.md",
+      "id": ".agentquilt/meta-agents/internal/definition-architect/010-role.md",
       "hash": "sha256-8d57524f2fe3f27e3a430fa1df81e2ccb37a9ceb8fb7f57de215e1027f4bb867",
       "bytes": 882,
       "tags": []
     },
     {
-      "id": ".agents/internal/definition-architect/020-internal-coordination.md",
+      "id": ".agentquilt/meta-agents/internal/definition-architect/020-internal-coordination.md",
       "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
       "bytes": 1038,
       "tags": []
     },
     {
-      "id": ".agents/internal/instruction-block-author/010-role.md",
+      "id": ".agentquilt/meta-agents/internal/instruction-block-author/010-role.md",
       "hash": "sha256-cfb70091a59fee4315b3031e4da2023f57ea9ed7fd560a86b655c0ac8a9ce234",
       "bytes": 892,
       "tags": []
     },
     {
-      "id": ".agents/internal/instruction-block-author/020-internal-coordination.md",
+      "id": ".agentquilt/meta-agents/internal/instruction-block-author/020-internal-coordination.md",
       "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
       "bytes": 1038,
       "tags": []
     },
     {
-      "id": ".agents/internal/instruction-refactoring/010-role.md",
+      "id": ".agentquilt/meta-agents/internal/instruction-refactoring/010-role.md",
       "hash": "sha256-68dd80093c10f5040d7a3a3633483822d01b600a55ed9e130108f14e927d7934",
       "bytes": 888,
       "tags": []
     },
     {
-      "id": ".agents/internal/instruction-refactoring/020-internal-coordination.md",
+      "id": ".agentquilt/meta-agents/internal/instruction-refactoring/020-internal-coordination.md",
       "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
       "bytes": 1038,
       "tags": []
     },
     {
-      "id": ".agents/internal/main-orchestrator/010-role.md",
+      "id": ".agentquilt/meta-agents/internal/main-orchestrator/010-role.md",
       "hash": "sha256-98406647b46c19528514b7d320c363b76d3d6fe17b84a07ce838c91075f17c14",
       "bytes": 882,
       "tags": []
     },
     {
-      "id": ".agents/internal/main-orchestrator/020-internal-coordination.md",
+      "id": ".agentquilt/meta-agents/internal/main-orchestrator/020-internal-coordination.md",
       "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
       "bytes": 1038,
       "tags": []
     },
     {
-      "id": ".agents/internal/prompt-compiler-guardian/010-role.md",
+      "id": ".agentquilt/meta-agents/internal/prompt-compiler-guardian/010-role.md",
       "hash": "sha256-4b021d300e37d414a9bad87b7d6bcb64dd4ea671377b2f9ae14a1b3b9b59470e",
       "bytes": 877,
       "tags": []
     },
     {
-      "id": ".agents/internal/prompt-compiler-guardian/020-internal-coordination.md",
+      "id": ".agentquilt/meta-agents/internal/prompt-compiler-guardian/020-internal-coordination.md",
       "hash": "sha256-ef5ff96b848dfd3964061172f847fc75106d9a0f4924f1e7ebab09fc455da358",
       "bytes": 1038,
       "tags": []
     },
     {
-      "id": ".agents/release/changelog/010-role.md",
+      "id": ".agentquilt/meta-agents/release/changelog/010-role.md",
       "hash": "sha256-0c6681ff0e58b9977703372232217c59b2d1b1fc41584b4cf30ede015593cb40",
       "bytes": 869,
       "tags": []
     },
     {
-      "id": ".agents/release/changelog/020-release-workflow.md",
+      "id": ".agentquilt/meta-agents/release/changelog/020-release-workflow.md",
       "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
       "bytes": 1144,
       "tags": []
     },
     {
-      "id": ".agents/release/evidence-collector/010-role.md",
+      "id": ".agentquilt/meta-agents/release/evidence-collector/010-role.md",
       "hash": "sha256-3cdbb9e5569672e1dbb38914ea7592be0a11432c9d7e34212daeab22a37c48ee",
       "bytes": 876,
       "tags": []
     },
     {
-      "id": ".agents/release/evidence-collector/020-release-workflow.md",
+      "id": ".agentquilt/meta-agents/release/evidence-collector/020-release-workflow.md",
       "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
       "bytes": 1144,
       "tags": []
     },
     {
-      "id": ".agents/release/migration-guide/010-role.md",
+      "id": ".agentquilt/meta-agents/release/migration-guide/010-role.md",
       "hash": "sha256-088da712757b81f1f4b88ba871d021d7950e61971bfe6504a2a12bea8e8a07d5",
       "bytes": 880,
       "tags": []
     },
     {
-      "id": ".agents/release/migration-guide/020-release-workflow.md",
+      "id": ".agentquilt/meta-agents/release/migration-guide/020-release-workflow.md",
       "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
       "bytes": 1144,
       "tags": []
     },
     {
-      "id": ".agents/release/post-release-review/010-role.md",
+      "id": ".agentquilt/meta-agents/release/post-release-review/010-role.md",
       "hash": "sha256-37f8734ac7d27476501403502d881138ab296631da6c338c1dc00c7729c2621d",
       "bytes": 884,
       "tags": []
     },
     {
-      "id": ".agents/release/post-release-review/020-release-workflow.md",
+      "id": ".agentquilt/meta-agents/release/post-release-review/020-release-workflow.md",
       "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
       "bytes": 1144,
       "tags": []
     },
     {
-      "id": ".agents/release/release-manager/010-role.md",
+      "id": ".agentquilt/meta-agents/release/release-manager/010-role.md",
       "hash": "sha256-df025cfb0ef415a2f013f588514e73cc7fbc3dfad4e1e0f3f72bfb68b38a366f",
       "bytes": 875,
       "tags": []
     },
     {
-      "id": ".agents/release/release-manager/020-release-workflow.md",
+      "id": ".agentquilt/meta-agents/release/release-manager/020-release-workflow.md",
       "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
       "bytes": 1144,
       "tags": []
     },
     {
-      "id": ".agents/release/versioning/010-role.md",
+      "id": ".agentquilt/meta-agents/release/versioning/010-role.md",
       "hash": "sha256-d8d5fa24be6d356f7b53432a1ad7524636a55799b9b0d00c5494aa3f6ff9cf0a",
       "bytes": 876,
       "tags": []
     },
     {
-      "id": ".agents/release/versioning/020-release-workflow.md",
+      "id": ".agentquilt/meta-agents/release/versioning/020-release-workflow.md",
       "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
       "bytes": 1144,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/adr-writer/010-role.md",
+      "id": ".agentquilt/meta-agents/sdlc/adr-writer/010-role.md",
       "hash": "sha256-0ada8274c0fd1f26cf925cbeb91b50076c54a29f92dac1f39ea52c3fddb0d361",
       "bytes": 301,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/adr-writer/020-adrs.md",
+      "id": ".agentquilt/meta-agents/sdlc/adr-writer/020-adrs.md",
       "hash": "sha256-ac515fb8fe43e8ab8220a90fed095492c326f108b5c1cf38da3704346cc9411b",
       "bytes": 596,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/ambiguity-detector/010-role.md",
+      "id": ".agentquilt/meta-agents/sdlc/ambiguity-detector/010-role.md",
       "hash": "sha256-a2ac829afc01f2912f2462b23382e1888e8ab43ae687d1206c507ed610d3555f",
       "bytes": 241,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/ambiguity-detector/020-patterns.md",
+      "id": ".agentquilt/meta-agents/sdlc/ambiguity-detector/020-patterns.md",
       "hash": "sha256-776ca169e741e804a9ceb4daa7904711c234060202a4b6aa5ee5ebb4945df8fa",
       "bytes": 577,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/architecture/010-role.md",
+      "id": ".agentquilt/meta-agents/sdlc/architecture/010-role.md",
       "hash": "sha256-65b1943a4495df4906745896c944150dba02a1e5851da758e96bfa143b2bf7c9",
       "bytes": 227,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/architecture/020-review.md",
+      "id": ".agentquilt/meta-agents/sdlc/architecture/020-review.md",
       "hash": "sha256-e42452baecc600c802a537b5c940564954ff00cf9da9a3f9e64e20f14d1623ea",
       "bytes": 398,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/code-review/010-role.md",
+      "id": ".agentquilt/meta-agents/sdlc/code-review/010-role.md",
       "hash": "sha256-fd72ce0f92b63e366fdd6a36c73257ffee6199a150ee48dc303e56aa51faaf27",
       "bytes": 1634,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/code-review/020-review-guidelines.md",
+      "id": ".agentquilt/meta-agents/sdlc/code-review/020-review-guidelines.md",
       "hash": "sha256-a2d68f5358fc066f8a4c4bfa5d561c5bfd361b8027c5b69546838fe679c8e252",
       "bytes": 1858,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/developer-experience/010-role.md",
+      "id": ".agentquilt/meta-agents/sdlc/developer-experience/010-role.md",
       "hash": "sha256-a8a186ab534af471f112993ccfe62b34fc7526f525f0f3f347ff47b1f7a5cdd9",
       "bytes": 887,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/developer-experience/020-sdlc-workflow.md",
+      "id": ".agentquilt/meta-agents/sdlc/developer-experience/020-sdlc-workflow.md",
       "hash": "sha256-3722f38a14c64237357ee887025601569c97d2b72718fee215e9a25d2ddc7668",
       "bytes": 1257,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/documentation/010-role.md",
+      "id": ".agentquilt/meta-agents/sdlc/documentation/010-role.md",
       "hash": "sha256-4d51285dda6b998f69d5e011d7dad33a3d88b9c6c4671f6f225f685c753125ac",
       "bytes": 871,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/documentation/020-sdlc-workflow.md",
+      "id": ".agentquilt/meta-agents/sdlc/documentation/020-sdlc-workflow.md",
       "hash": "sha256-3722f38a14c64237357ee887025601569c97d2b72718fee215e9a25d2ddc7668",
       "bytes": 1257,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/implementation-planning/010-role.md",
+      "id": ".agentquilt/meta-agents/sdlc/implementation-planning/010-role.md",
       "hash": "sha256-a3c80bf5303c930399fe051a566b857874706049fc60d1f07a83138a9e8233c9",
       "bytes": 895,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/implementation-planning/020-sdlc-workflow.md",
+      "id": ".agentquilt/meta-agents/sdlc/implementation-planning/020-sdlc-workflow.md",
       "hash": "sha256-3722f38a14c64237357ee887025601569c97d2b72718fee215e9a25d2ddc7668",
       "bytes": 1257,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/product-discovery/010-role.md",
+      "id": ".agentquilt/meta-agents/sdlc/product-discovery/010-role.md",
       "hash": "sha256-8e3693aec706935bfebdbde37060027cd9c92e94f8199bfcc54cd16c2d702758",
       "bytes": 353,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/product-discovery/020-triage-workflow.md",
+      "id": ".agentquilt/meta-agents/sdlc/product-discovery/020-triage-workflow.md",
       "hash": "sha256-4fb81e40d20403da9ca0828275a2ffeda23a9a27f8f37f0b60ab7bdc983c8a2e",
       "bytes": 550,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/requirements-analyst/010-role.md",
+      "id": ".agentquilt/meta-agents/sdlc/requirements-analyst/010-role.md",
       "hash": "sha256-5a43d85627ff32174f78dfc1f14e6432c14ba7058f3a90e7c3dcdfe746245b5d",
       "bytes": 268,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/requirements-analyst/020-validation.md",
+      "id": ".agentquilt/meta-agents/sdlc/requirements-analyst/020-validation.md",
       "hash": "sha256-960ab48778ef2d4a929c4db6f9ef211b781550011e453f06434bace5bcbed3ce",
       "bytes": 371,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/schema-design/010-role.md",
+      "id": ".agentquilt/meta-agents/sdlc/schema-design/010-role.md",
       "hash": "sha256-3176c91cf54b8d9131c6367ee12c5ed34794200d40cbaa03f0ac9d930558e2b6",
       "bytes": 247,
       "tags": []
     },
     {
-      "id": ".agents/sdlc/schema-design/020-validation.md",
+      "id": ".agentquilt/meta-agents/sdlc/schema-design/020-validation.md",
       "hash": "sha256-1d35d748aedf0cf372ebee7e3472d08e23e1de2dc3eee097fa01eb90fc441cd4",
       "bytes": 429,
       "tags": []
     },
     {
-      "id": ".agents/stlc/compatibility-test/010-role.md",
+      "id": ".agentquilt/meta-agents/stlc/compatibility-test/010-role.md",
       "hash": "sha256-fa14d8acdbdc6d0a3fba2c966d577d1dd7ccdb21d7a84c9abdadc4fb79f7583c",
       "bytes": 883,
       "tags": []
     },
     {
-      "id": ".agents/stlc/compatibility-test/020-stlc-workflow.md",
+      "id": ".agentquilt/meta-agents/stlc/compatibility-test/020-stlc-workflow.md",
       "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
       "bytes": 1751,
       "tags": []
     },
     {
-      "id": ".agents/stlc/defect-triage/010-role.md",
+      "id": ".agentquilt/meta-agents/stlc/defect-triage/010-role.md",
       "hash": "sha256-9fbca59819fe9fe4897bfd880577c8dde21324c769105d4fe8a09671467ee8dc",
       "bytes": 872,
       "tags": []
     },
     {
-      "id": ".agents/stlc/defect-triage/020-stlc-workflow.md",
+      "id": ".agentquilt/meta-agents/stlc/defect-triage/020-stlc-workflow.md",
       "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
       "bytes": 1751,
       "tags": []
     },
     {
-      "id": ".agents/stlc/eval-designer/010-role.md",
+      "id": ".agentquilt/meta-agents/stlc/eval-designer/010-role.md",
       "hash": "sha256-ce43fb739aabbd38673287ed8135efc242c019888af00dfea8478b74ae1272f5",
       "bytes": 1467,
       "tags": []
     },
     {
-      "id": ".agents/stlc/eval-designer/020-eval-workflow.md",
+      "id": ".agentquilt/meta-agents/stlc/eval-designer/020-eval-workflow.md",
       "hash": "sha256-ed45dae3f0100c7219c3885eeaff548951a3f2eb427618164f9fa93ad1fa7440",
       "bytes": 3901,
       "tags": []
     },
     {
-      "id": ".agents/stlc/golden-file-test/010-role.md",
+      "id": ".agentquilt/meta-agents/stlc/golden-file-test/010-role.md",
       "hash": "sha256-4852967f028fad7ea40664e375fce9c6ee9807ab52044519874573d0296a647d",
       "bytes": 261,
       "tags": []
     },
     {
-      "id": ".agents/stlc/golden-file-test/020-workflow.md",
+      "id": ".agentquilt/meta-agents/stlc/golden-file-test/020-workflow.md",
       "hash": "sha256-9f919c6e3ff48605df4580262c149472607b74b0c2a9446551dcb19acbdf10e6",
       "bytes": 523,
       "tags": []
     },
     {
-      "id": ".agents/stlc/performance-test/010-role.md",
+      "id": ".agentquilt/meta-agents/stlc/performance-test/010-role.md",
       "hash": "sha256-fc2ed55ce3707fc4d2b3fa0787cfcc516bb69fabf3aca79358bc5c80892cead9",
       "bytes": 876,
       "tags": []
     },
     {
-      "id": ".agents/stlc/performance-test/020-stlc-workflow.md",
+      "id": ".agentquilt/meta-agents/stlc/performance-test/020-stlc-workflow.md",
       "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
       "bytes": 1751,
       "tags": []
     },
     {
-      "id": ".agents/stlc/qa-strategy/010-role.md",
+      "id": ".agentquilt/meta-agents/stlc/qa-strategy/010-role.md",
       "hash": "sha256-174efe7c0c478f3878f0a5b071754b234ae74dce3595b471ae11e781aa59c9ec",
       "bytes": 864,
       "tags": []
     },
     {
-      "id": ".agents/stlc/qa-strategy/020-stlc-workflow.md",
+      "id": ".agentquilt/meta-agents/stlc/qa-strategy/020-stlc-workflow.md",
       "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
       "bytes": 1751,
       "tags": []
     },
     {
-      "id": ".agents/stlc/regression-scope/010-role.md",
+      "id": ".agentquilt/meta-agents/stlc/regression-scope/010-role.md",
       "hash": "sha256-6651a528cb3f9409702e207641866913f6a11c7b09907f055a8169e9f0589d26",
       "bytes": 877,
       "tags": []
     },
     {
-      "id": ".agents/stlc/regression-scope/020-stlc-workflow.md",
+      "id": ".agentquilt/meta-agents/stlc/regression-scope/020-stlc-workflow.md",
       "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
       "bytes": 1751,
       "tags": []
     },
     {
-      "id": ".agents/stlc/semantic-regression/010-role.md",
+      "id": ".agentquilt/meta-agents/stlc/semantic-regression/010-role.md",
       "hash": "sha256-2483a167aae471c5c3411268814f4eb3064de3c22a9293296ab3f51bfe7fe243",
       "bytes": 282,
       "tags": []
     },
     {
-      "id": ".agents/stlc/semantic-regression/020-detection.md",
+      "id": ".agentquilt/meta-agents/stlc/semantic-regression/020-detection.md",
       "hash": "sha256-07fee07bd163c46ddc5e43d85523d1b086f205ee44f79c8f2078c9bc5720a172",
       "bytes": 562,
       "tags": []
     },
     {
-      "id": ".agents/stlc/test-automation/010-role.md",
+      "id": ".agentquilt/meta-agents/stlc/test-automation/010-role.md",
       "hash": "sha256-b940b9d61bbc13f87d97b966dfa1b3ccba6a4164a7f05b66fb3f612911e69755",
       "bytes": 880,
       "tags": []
     },
     {
-      "id": ".agents/stlc/test-automation/020-stlc-workflow.md",
+      "id": ".agentquilt/meta-agents/stlc/test-automation/020-stlc-workflow.md",
       "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
       "bytes": 1751,
       "tags": []
     },
     {
-      "id": ".agents/stlc/test-design/010-role.md",
+      "id": ".agentquilt/meta-agents/stlc/test-design/010-role.md",
       "hash": "sha256-93e57dbe4716fb7575acd14672249429882d27109fa34db44effc95645c379d8",
       "bytes": 867,
       "tags": []
     },
     {
-      "id": ".agents/stlc/test-design/020-stlc-workflow.md",
+      "id": ".agentquilt/meta-agents/stlc/test-design/020-stlc-workflow.md",
       "hash": "sha256-99227d6c9562aa6e1955df094b7278373e9d6a04d761f705601f227710ae2899",
       "bytes": 1751,
       "tags": []
@@ -1352,18 +1364,6 @@
       "id": "_shared/020-safety.md",
       "hash": "sha256-a20609c4110ef51c517580ef61958f9a48243602895c2388a09f2b85d1285724",
       "bytes": 35,
-      "tags": []
-    },
-    {
-      "id": "agents/reviewer/010-role.md",
-      "hash": "sha256-06f2a924264f06efc7019b50d242f8035f47332b63d0a9512fbb586a4adf3f8c",
-      "bytes": 440,
-      "tags": []
-    },
-    {
-      "id": "agents/reviewer/020-criteria.md",
-      "hash": "sha256-24af2a7e7d58dd85089c654f6d25f6392b10a460a62f640b2a0498fee205e27f",
-      "bytes": 897,
       "tags": []
     }
   ],

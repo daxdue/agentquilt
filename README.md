@@ -79,14 +79,15 @@ agentquilt agents list
 
 ```
 repo/
-├── agents/                    # Source agent definitions
-│   ├── _shared/               # Shared fragments (included across agents)
-│   └── <agent-id>/
-│       ├── agent.yaml         # Agent manifest
-│       └── NNN-block.md       # Instruction blocks (ordered by prefix)
-├── .agents/                   # AgentQuilt's own meta-agents (framework development)
+├── .agentquilt/               # All AgentQuilt sources live here
+│   ├── config.yaml            # Project config (targets, model tiers, sourceDir)
+│   ├── agents/                # Source agent definitions
+│   │   ├── _shared/           # Shared fragments (included across agents)
+│   │   └── <agent-id>/
+│   │       ├── agent.yaml     # Agent manifest
+│   │       └── NNN-block.md   # Instruction blocks (ordered by prefix)
+│   └── meta-agents/           # AgentQuilt's own meta-agents (framework development)
 ├── .claude/agents/            # Compiled Claude Code agent outputs
-├── agentquilt.config.yaml     # Project config (targets, model tiers, sourceDir)
 ├── agentquilt.lock            # Generated — do not edit
 ├── packages/
 │   └── agentquilt-cli/        # CLI source (TypeScript, Commander, Zod)
@@ -94,6 +95,10 @@ repo/
 ├── policies/                  # Gate policies
 └── .docs/                     # Architecture specs, ADRs, SDLC/STLC docs
 ```
+
+The config is discovered at `.agentquilt/config.yaml` (or `.agentquilt/config.json`);
+the legacy root locations `agentquilt.config.yaml` / `agentquilt.config.json` are
+still honored as a fallback.
 
 ## Documentation
 

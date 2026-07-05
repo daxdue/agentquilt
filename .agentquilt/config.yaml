@@ -1,5 +1,5 @@
 version: 1
-sourceDir: agents
+sourceDir: .agentquilt/agents
 defaultModelTier: balanced
 modelTiers:
   frontier:
@@ -25,7 +25,7 @@ targets:
 
   # Governance meta-agents (AI-assisted gate policies)
   - kind: agent-definitions
-    sourceDir: .agents
+    sourceDir: meta-agents  # resolved against .agentquilt/ (parent of sourceDir)
     agents:
       - governance/risk-register
       - governance/security-review
@@ -40,7 +40,7 @@ targets:
 
   # SDLC meta-agents (AI-assisted development workflow)
   - kind: agent-definitions
-    sourceDir: .agents
+    sourceDir: meta-agents  # resolved against .agentquilt/ (parent of sourceDir)
     agents:
       - sdlc/product-discovery
       - sdlc/requirements-analyst
@@ -57,7 +57,7 @@ targets:
 
   # STLC meta-agents (AI-assisted testing workflow)
   - kind: agent-definitions
-    sourceDir: .agents
+    sourceDir: meta-agents  # resolved against .agentquilt/ (parent of sourceDir)
     agents:
       - stlc/eval-designer
       - stlc/golden-file-test
@@ -74,7 +74,7 @@ targets:
 
   # Release meta-agents (AI-assisted release coordination)
   - kind: agent-definitions
-    sourceDir: .agents
+    sourceDir: meta-agents  # resolved against .agentquilt/ (parent of sourceDir)
     agents:
       - release/release-manager
       - release/changelog
@@ -87,7 +87,7 @@ targets:
 
   # Internal meta-agents (AgentQuilt framework internal use)
   - kind: agent-definitions
-    sourceDir: .agents
+    sourceDir: meta-agents  # resolved against .agentquilt/ (parent of sourceDir)
     agents:
       - internal/main-orchestrator
       - internal/agent-registry

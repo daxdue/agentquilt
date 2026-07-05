@@ -16,7 +16,7 @@ packages/**/coverage/
 .env.local
 
 # Generated agent fragments (runtime output)
-agents/*/generated/
+.agentquilt/agents/*/generated/
 
 # Local planning docs (not shipped)
 .planning/
