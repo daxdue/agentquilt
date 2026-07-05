@@ -14,7 +14,9 @@ export type Preset = z.infer<typeof PresetEnum>;
 export const DocumentTargetSchema = z.object({
   kind: z.literal("document").default("document"),
   output: z.string(),
-  include: z.array(z.string()).min(1),
+  // Empty is valid (freshly scaffolded preset targets start with no agents);
+  // build warns and emits a header-only document until directories are listed.
+  include: z.array(z.string()).default([]),
   preset: PresetEnum.optional(),
   format: z.string().default("markdown"),
 });

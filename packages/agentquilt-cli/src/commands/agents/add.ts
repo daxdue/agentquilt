@@ -47,7 +47,7 @@ export function addAgentAction(name: string, options: AddAgentOptions): void {
 
     // Create agent.yaml
     const agentYaml = `description: "TODO: describe what this agent does and when to use it."
-model: balanced
+# model: balanced  # optional tier (see modelTiers in config); omit to inherit the platform's current model
 permissions: read-only
 `;
     writeFileSync(path.join(agentDir, "agent.yaml"), agentYaml, "utf8");

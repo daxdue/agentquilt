@@ -52,6 +52,11 @@ async function buildAction(options: BuildOptions): Promise<void> {
         console.log(
           `✓ built ${target.output} (${target.fragmentIds.length} fragments, version ${target.version.substring(0, 12)}...)`
         );
+        if (target.fragmentIds.length === 0) {
+          console.warn(
+            `  ! ${target.output} is empty — list agent directories under the target's include: in .agentquilt/config.yaml`
+          );
+        }
       }
     }
 

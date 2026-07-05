@@ -111,6 +111,27 @@ describe("loadConfig", () => {
     expect(config.targets[0]).toMatchObject({ output: "CLAUDE.md" });
   });
 
+  it("accepts a document target with an empty include (fresh preset scaffold)", () => {
+    const p = writeConfig("agentquilt.config.yaml", [
+      "version: 1",
+      "targets:",
+      "  - preset: gemini",
+      "    include: []",
+    ].join("\n"));
+    const config = loadConfig(p);
+    expect(config.targets[0]).toMatchObject({ output: "GEMINI.md", include: [] });
+  });
+
+  it("defaults include to [] when omitted on a preset target", () => {
+    const p = writeConfig("agentquilt.config.yaml", [
+      "version: 1",
+      "targets:",
+      "  - preset: gemini",
+    ].join("\n"));
+    const config = loadConfig(p);
+    expect(config.targets[0]).toMatchObject({ output: "GEMINI.md", include: [] });
+  });
+
   it("throws ConfigError when config file does not exist", () => {
     expect(() => loadConfig(path.join(tmpDir, "nonexistent.yaml"))).toThrow(ConfigError);
   });

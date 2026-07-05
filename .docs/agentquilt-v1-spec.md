@@ -168,7 +168,7 @@ version: 1                       # config schema version (required)
 sourceDir: agents                # optional, default "agents"
 targets:                         # required, >= 1
   - output: .claude/agents/backend.md    # required, repo-relative path
-    include: [_shared, backend]          # required, order significant
+    include: [_shared, backend]          # order significant; default [] (see 5.3)
     format: markdown                     # optional, default "markdown"
   - output: .cursor/rules/backend.mdc
     include: [_shared, backend]
@@ -199,6 +199,7 @@ A preset is sugar that supplies a default `output` (and possibly `format`). Pres
 - No `output` resolves inside `sourceDir`.
 - Every `include` names an existing directory under `sourceDir`.
 - An empty agent directory in an `include` is a warning, not an error (it contributes nothing).
+- An empty `include` list is a warning, not an error (freshly scaffolded preset targets start empty; the target compiles to a header-only document until directories are listed).
 
 ---
 

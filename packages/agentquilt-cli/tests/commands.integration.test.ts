@@ -82,6 +82,23 @@ describe("generateConfig", () => {
     const config = generateConfig(["agentskills"]);
     expect(config).toContain("agentskills");
   });
+
+  it("leaves defaultModelTier commented out so agents inherit the platform model", () => {
+    const config = generateConfig(["claude"]);
+    expect(config).toContain("# defaultModelTier: balanced");
+    expect(config).not.toMatch(/^defaultModelTier:/m);
+  });
+
+  it("scaffolds preset targets with an empty include and a hint comment", () => {
+    const config = generateConfig(["claude", "gemini"]);
+    expect(config).toContain("preset: gemini");
+    expect(config).toContain("include: []");
+  });
+
+  it("scaffolds preset targets with adopted agent names in include", () => {
+    const config = generateConfig(["gemini"], ["helper", "reviewer"]);
+    expect(config).toContain("include: [helper, reviewer]");
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -127,7 +144,7 @@ describe("agentquilt agents add", () => {
     ).toBe(true);
   });
 
-  it("agent.yaml contains description and model fields", () => {
+  it("agent.yaml contains description but no active model field (inherit by default)", () => {
     addAgentAction("scaffolded-agent", { cwd: tmpDir });
 
     const content = readFileSync(
@@ -135,7 +152,10 @@ describe("agentquilt agents add", () => {
       "utf8"
     );
     expect(content).toContain("description:");
-    expect(content).toContain("model:");
+    expect(content).toContain("permissions:");
+    // model is only a commented hint — omitting it means "inherit platform model"
+    expect(content).toContain("# model: balanced");
+    expect(content).not.toMatch(/^model:/m);
   });
 
   it("exits with code 2 when the agent already exists", () => {

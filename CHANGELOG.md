@@ -74,6 +74,8 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 
 ### Fixed
 
+- `agentquilt init` with a preset platform (`cursor`, `copilot`, `gemini`) used to scaffold a config that failed validation on first build (`include` was required to be non-empty). Empty `include` is now valid: `build` emits a header-only document and warns until agent directories are listed. When init adopts existing agents, they are included in scaffolded preset targets automatically.
+- Agents no longer get a model pinned by default: `agents add` scaffolds `agent.yaml` without a `model` field (commented hint only) and init scaffolds `defaultModelTier` commented out, so agents inherit the platform's current model selection unless a tier or override is set explicitly.
 - Claude adapter output now starts with `---` (YAML frontmatter) rather than an HTML comment, enabling agent discovery in Claude Code.
 - `x-claude` context blocks removed from compiled meta-agents for v1.1 spec compliance.
 - Repository structure aligned with v1/v1.1 specs (CLI binary renamed from `agentctl` to `agentquilt`, package paths corrected).
