@@ -1355,15 +1355,63 @@
       "tags": []
     },
     {
-      "id": "_shared/010-tone.md",
-      "hash": "sha256-75b3f728099bd4d1a2977ce8828d62668b6e1330d5734302f9ce9272e2606aa6",
-      "bytes": 33,
+      "id": "project/010-overview.md",
+      "hash": "sha256-121a6de08289587d1e921f26a6b03a2c9c1e6ad1d0b519c6be284f12e5e97589",
+      "bytes": 1374,
       "tags": []
     },
     {
-      "id": "_shared/020-safety.md",
-      "hash": "sha256-a20609c4110ef51c517580ef61958f9a48243602895c2388a09f2b85d1285724",
-      "bytes": 35,
+      "id": "project/020-architecture.md",
+      "hash": "sha256-34bab42f842f3a051f588177dc28585547d14aedde4cc22bd1bc38043fe0c4d1",
+      "bytes": 3984,
+      "tags": []
+    },
+    {
+      "id": "project/030-documentation.md",
+      "hash": "sha256-6e9c46a5bfbd7b273c767ed9c1390eb6538e1f677f5a4c539fc5a471670c2e97",
+      "bytes": 1411,
+      "tags": []
+    },
+    {
+      "id": "project/040-development-practices.md",
+      "hash": "sha256-04b48f6d17e51251af33c15e30c4924989ccfead24fc78907bb7e2a8faef7d9b",
+      "bytes": 1919,
+      "tags": []
+    },
+    {
+      "id": "project/050-commands.md",
+      "hash": "sha256-e7f60f586530b4a1837bf1330c4413984742d0414d6bb617afe5fab85c8f0d06",
+      "bytes": 831,
+      "tags": []
+    },
+    {
+      "id": "project/060-design-principles.md",
+      "hash": "sha256-0f99452f9e69f25e09985aaea5655901a6c2547ba09d7d929d26dcfeb4d64592",
+      "bytes": 991,
+      "tags": []
+    },
+    {
+      "id": "project/070-schemas.md",
+      "hash": "sha256-c906c7c9e254e16c6a6d761845194a11d5159774dc8286dc688b71ad8f5a36e4",
+      "bytes": 456,
+      "tags": []
+    },
+    {
+      "id": "project/080-status.md",
+      "hash": "sha256-3478fbca60c8a0099960b2a3f58de45912e16bc80cccb174783b452d265610f7",
+      "bytes": 4184,
+      "tags": []
+    },
+    {
+      "id": "project/090-implementation-notes.md",
+      "hash": "sha256-93bdf27a34d31f4e6fc6be4c44f7826fc8a2d001082420a18217faf6cda322c5",
+      "bytes": 729,
+      "tags": []
+    },
+    {
+      "id": "project/100-package-and-links.md",
+      "hash": "sha256-fe8bd864b827f6a293cc5dd1155607e7ae57f94b8956b7c64dce01622f80e924",
+      "bytes": 508,
       "tags": []
     }
   ],
@@ -1372,10 +1420,35 @@
       "output": "AGENTS.md",
       "format": "markdown",
       "fragments": [
-        "_shared/010-tone.md",
-        "_shared/020-safety.md"
+        "project/010-overview.md",
+        "project/020-architecture.md",
+        "project/030-documentation.md",
+        "project/040-development-practices.md",
+        "project/050-commands.md",
+        "project/060-design-principles.md",
+        "project/070-schemas.md",
+        "project/080-status.md",
+        "project/090-implementation-notes.md",
+        "project/100-package-and-links.md"
       ],
-      "version": "sha256-0cc73f4a8247d5bf3e948faff53e0a56cab02024b08ea3be56f1eb4c4f681e57"
+      "version": "sha256-cb0610f468423a2ee416bdf2bde448d179a67c8209ddbdf4dc3da29311fc9457"
+    },
+    {
+      "output": "CLAUDE.md",
+      "format": "markdown",
+      "fragments": [
+        "project/010-overview.md",
+        "project/020-architecture.md",
+        "project/030-documentation.md",
+        "project/040-development-practices.md",
+        "project/050-commands.md",
+        "project/060-design-principles.md",
+        "project/070-schemas.md",
+        "project/080-status.md",
+        "project/090-implementation-notes.md",
+        "project/100-package-and-links.md"
+      ],
+      "version": "sha256-cb0610f468423a2ee416bdf2bde448d179a67c8209ddbdf4dc3da29311fc9457"
     }
   ]
 }

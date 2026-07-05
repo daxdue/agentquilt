@@ -6,8 +6,8 @@
 packages/agentquilt-cli/tests/fixtures/** -text
 
 # mark generated outputs (collapses diffs, signals "do not edit")
-# note: CLAUDE.md in this repo is hand-authored, not a compiled target
 AGENTS.md            linguist-generated=true
+CLAUDE.md            linguist-generated=true
 .claude/agents/*.md  linguist-generated=true
 # test-runner is hand-authored, not an AgentQuilt output
 .claude/agents/test-runner.md  -linguist-generated

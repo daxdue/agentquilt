@@ -10,10 +10,16 @@ modelTiers:
     claude: claude-haiku-4-5
 
 targets:
-  # User agents: fragments compiled into prose documentation
+  # Repo development guide for AI agents, compiled from the same fragments
+  # into both the vendor-neutral AGENTS.md and the Claude Code CLAUDE.md
   - output: AGENTS.md
     include:
-      - _shared
+      - project
+    format: markdown
+
+  - output: CLAUDE.md
+    include:
+      - project
     format: markdown
 
   # User agent definitions (e.g., reviewer)
