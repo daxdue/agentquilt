@@ -32,7 +32,7 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 
 **Adapters**
 
-- **Claude adapter** — compiles agent definitions to `.claude/agents/<name>.md` in Claude Code's required format (YAML frontmatter + plain-text body). Strips emojis and Markdown headers from body per generated-file policy.
+- **Claude adapter** — compiles agent definitions to `.claude/agents/<name>.md` in Claude Code's required format (YAML frontmatter + Markdown body). The body is the composed fragments verbatim (v1.1 §5); emojis and emoticons are stripped per generated-file policy.
 - **AgentSkills adapter** — compiles agent definitions to `.agents/skills/<name>/SKILL.md` for AgentSkills.io compatibility.
 - Adapter plugin interface: `registerAdapter` / `getAdapter` / `knownAdapters` for third-party adapters.
 
@@ -74,6 +74,7 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 
 ### Fixed
 
+- Adapter bodies are now emitted verbatim as the v1.1 spec requires (§5/§7): the Claude adapter no longer strips Markdown headers, and the emoji stripper no longer collapses all whitespace — newlines, blank lines, and list indentation from source fragments are preserved in compiled agent files. Emoticon removal is bounded to standalone tokens so it can no longer mangle prose (`**bold:**`, `https://` URLs, `std::vector`). `stripEmojis` is shared by both adapters (`src/core/adapters/stripEmojis.ts`); adapter versions bumped to 2.
 - `agentquilt init` with a preset platform (`cursor`, `copilot`, `gemini`) used to scaffold a config that failed validation on first build (`include` was required to be non-empty). Empty `include` is now valid: `build` emits a header-only document and warns until agent directories are listed. When init adopts existing agents, they are included in scaffolded preset targets automatically.
 - Agents no longer get a model pinned by default: `agents add` scaffolds `agent.yaml` without a `model` field (commented hint only) and init scaffolds `defaultModelTier` commented out, so agents inherit the platform's current model selection unless a tier or override is set explicitly.
 - Claude adapter output now starts with `---` (YAML frontmatter) rather than an HTML comment, enabling agent discovery in Claude Code.

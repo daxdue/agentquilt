@@ -1,24 +1,7 @@
 import { describe, it, expect } from "vitest";
+import { stripEmojis } from "../src/core/adapters/stripEmojis";
 
-// Test the emoji stripping logic (this tests the pattern, not the actual adapter export)
 describe("emoji-stripping", () => {
-  // Replicate the stripEmojis function to test it
-  function stripEmojis(text: string): string {
-    return text
-      .replace(/[\u{1F000}-\u{1F9FF}][\u{FE00}-\u{FE0F}]?/gu, "")
-      .replace(/[\u{1F300}-\u{1F9FF}]/gu, "")
-      .replace(/[\u{2300}-\u{27BF}][\u{FE00}-\u{FE0F}]?/gu, "")
-      .replace(/[\u{2B50}]/gu, "")
-      .replace(/[\u{2705}-\u{274C}]/gu, "")
-      .replace(/\u{200D}/gu, "")
-      .replace(/\u{200B}/gu, "")
-      .replace(/\u{FE00}-\u{FE0F}/gu, "")
-      .replace(/\s*[:;][-=]?[)D(pP\\/|@:*'`~]\s*/g, " ")
-      .replace(/\s*[-=][-=]?[)D(P\\/]\s*/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-  }
-
   describe("removes common emojis", () => {
     it("should remove check mark emoji", () => {
       const input = "✅ DONE";
@@ -106,6 +89,31 @@ describe("emoji-stripping", () => {
       const input = "[OK] <- proceed";
       const result = stripEmojis(input);
       expect(result).toBe("[OK] <- proceed");
+    });
+
+    it("should preserve bold-with-colon, URLs, and scope operators", () => {
+      const input = "**Governed by:** policies\nSee https://agentquilt.dev\nUse std::vector";
+      const result = stripEmojis(input);
+      expect(result).toBe(input);
+    });
+  });
+
+  describe("preserves document structure", () => {
+    it("keeps Markdown headers intact", () => {
+      const input = "# Role\n\nYou review code.\n\n## Criteria\n\n- correctness\n";
+      expect(stripEmojis(input)).toBe(input);
+    });
+
+    it("keeps newlines and list indentation when removing emojis", () => {
+      const input = "# Role ✅\n\n- first 🚀\n  - nested\n";
+      const result = stripEmojis(input);
+      expect(result).toBe("# Role\n\n- first\n  - nested\n");
+    });
+
+    it("blanks lines that consist only of removed emojis", () => {
+      const input = "before\n✅ 🚀\nafter\n";
+      const result = stripEmojis(input);
+      expect(result).toBe("before\n\nafter\n");
     });
   });
 

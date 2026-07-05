@@ -1,57 +1,24 @@
 import { readFileSync } from "fs";
 import { stringify as yamlStringify } from "yaml";
 import { normalize } from "../normalize.js";
+import { stripEmojis } from "./stripEmojis.js";
 import { registerAdapter, type Adapter, type AdapterOutput } from "./index.js";
 import type { CanonicalAgentRecord } from "../agentLoader.js";
 import type { ResolvedModel } from "../modelResolver.js";
 
-const ADAPTER_VERSION = "1";
-
-// Strip emojis, smileys, and pictographic symbols
-// Policy: AGENTS.md and CLAUDE.md must not contain emojis or smileys
-function stripEmojis(text: string): string {
-  // Remove emoji and emoticon patterns
-  return text
-    // Extended emoji ranges with variation selectors
-    .replace(/[\u{1F000}-\u{1F9FF}][\u{FE00}-\u{FE0F}]?/gu, "") // Main emoji + optional variation selector
-    .replace(/[\u{1F300}-\u{1F9FF}]/gu, "") // Additional emoji coverage
-    .replace(/[\u{2300}-\u{27BF}][\u{FE00}-\u{FE0F}]?/gu, "") // Misc symbols + variation selector
-    .replace(/[\u{2B50}]/gu, "") // Stars
-    .replace(/[\u{2705}-\u{274C}]/gu, "") // Check marks, X marks, etc
-    .replace(/\u{200D}/gu, "") // Zero-width joiner
-    .replace(/\u{200B}/gu, "") // Zero-width space
-    .replace(/\u{FE00}-\u{FE0F}/gu, "") // Variation selectors alone
-    // Text emoticons (colon or semicolon based)
-    .replace(/\s*[:;][-=]?[)D(pP\\/|@:*'`~]\s*/g, " ") // :) :( ;) :D etc with optional dash/equal
-    .replace(/\s*[-=][-=]?[)D(P\\/]\s*/g, " ") // -) =) etc
-    // Cleanup: normalize multiple spaces to single space
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-// Strip Markdown headers and convert to plain system prompt text
-function stripMarkdownHeaders(text: string): string {
-  return text
-    .split("\n")
-    .filter((line) => !line.match(/^#+\s+/)) // Remove lines that are Markdown headers
-    .join("\n")
-    .replace(/\n\n+/g, "\n\n") // Normalize multiple blank lines to single blank line
-    .trim();
-}
+// v2: body is emitted verbatim per v1.1 §5 (Markdown headers and line
+// structure preserved); previously headers were stripped and lines flattened
+const ADAPTER_VERSION = "2";
 
 function assembleBody(record: CanonicalAgentRecord): string {
   const bodies = record.bodyFragments.map((f) => {
     const raw = readFileSync(f.filePath);
-    const normalized = normalize(raw);
-    const withoutHeaders = stripMarkdownHeaders(normalized);
-    return stripEmojis(withoutHeaders); // Remove emojis per AGENTS.md/CLAUDE.md policy
+    return stripEmojis(normalize(raw)); // Remove emojis per AGENTS.md/CLAUDE.md policy
   });
-  // join with blank line
-  return bodies.join("\n\n") + "\n";
+  // normalize() ensures each body ends with exactly one \n; joining with "\n"
+  // therefore puts one blank line between fragments (v1 document body rules)
+  return bodies.join("\n");
 }
-// Note: normalize() ensures each body fragment ends with exactly one \n.
-// Joining with "\n\n" inserts a blank line between fragments.
-// stripMarkdownHeaders removes Markdown headers to produce plain system prompt text.
 
 // Map full model names to tier shortnames for Claude Code format
 function modelToTierName(fullModelName: string | null): string | null {

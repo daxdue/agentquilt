@@ -1,32 +1,13 @@
 import { readFileSync } from "fs";
 import { stringify as yamlStringify } from "yaml";
 import { normalize } from "../normalize.js";
+import { stripEmojis } from "./stripEmojis.js";
 import { registerAdapter, type Adapter, type AdapterOutput } from "./index.js";
 import type { CanonicalAgentRecord } from "../agentLoader.js";
 
-const ADAPTER_VERSION = "1";
-
-// Strip emojis, smileys, and pictographic symbols
-// Policy: Generated files (AGENTS.md, SKILL.md, etc.) must not contain emojis or smileys
-function stripEmojis(text: string): string {
-  // Remove emoji and emoticon patterns
-  return text
-    // Extended emoji ranges with variation selectors
-    .replace(/[\u{1F000}-\u{1F9FF}][\u{FE00}-\u{FE0F}]?/gu, "") // Main emoji + optional variation selector
-    .replace(/[\u{1F300}-\u{1F9FF}]/gu, "") // Additional emoji coverage
-    .replace(/[\u{2300}-\u{27BF}][\u{FE00}-\u{FE0F}]?/gu, "") // Misc symbols + variation selector
-    .replace(/[\u{2B50}]/gu, "") // Stars
-    .replace(/[\u{2705}-\u{274C}]/gu, "") // Check marks, X marks, etc
-    .replace(/\u{200D}/gu, "") // Zero-width joiner
-    .replace(/\u{200B}/gu, "") // Zero-width space
-    .replace(/\u{FE00}-\u{FE0F}/gu, "") // Variation selectors alone
-    // Text emoticons (colon or semicolon based)
-    .replace(/\s*[:;][-=]?[)D(pP\\/|@:*'`~]\s*/g, " ") // :) :( ;) :D etc with optional dash/equal
-    .replace(/\s*[-=][-=]?[)D(P\\/]\s*/g, " ") // -) =) etc
-    // Cleanup: normalize multiple spaces to single space
-    .replace(/\s+/g, " ")
-    .trim();
-}
+// v2: body is emitted verbatim per v1.1 §7 (line structure preserved,
+// blank line between fragments); previously lines were flattened
+const ADAPTER_VERSION = "2";
 
 function toKebabCase(s: string): string {
   return s
@@ -45,10 +26,11 @@ function toKebabCase(s: string): string {
 function assembleBody(record: CanonicalAgentRecord): string {
   const bodies = record.bodyFragments.map((f) => {
     const raw = readFileSync(f.filePath);
-    const normalized = normalize(raw);
-    return stripEmojis(normalized); // Remove emojis per policy
+    return stripEmojis(normalize(raw)); // Remove emojis per policy
   });
-  return bodies.join("\n") + "\n";
+  // normalize() ensures each body ends with exactly one \n; joining with "\n"
+  // therefore puts one blank line between fragments (v1 document body rules)
+  return bodies.join("\n");
 }
 
 function buildFrontmatter(record: CanonicalAgentRecord): string {
