@@ -9,6 +9,8 @@ packages/agentquilt-cli/tests/fixtures/** -text
 # note: CLAUDE.md in this repo is hand-authored, not a compiled target
 AGENTS.md            linguist-generated=true
 .claude/agents/*.md  linguist-generated=true
+# test-runner is hand-authored, not an AgentQuilt output
+.claude/agents/test-runner.md  -linguist-generated
 
 # lock: structured to rarely conflict; union as a free win where honored
 agentquilt.lock      linguist-generated=true merge=union
