@@ -28,15 +28,16 @@ export function registerInitCommand(program: Command): void {
         return prev ? [...prev, ...platforms] : platforms;
       }
     )
-    .action((options: { dir?: string; platform?: string[] }) => {
+    .option("--force", "overwrite an existing .agentquilt/config.yaml")
+    .action((options: { dir?: string; platform?: string[]; force?: boolean }) => {
       const dir = options.dir || process.cwd();
       const platforms = options.platform || ["claude"];
 
-      initProject(dir, platforms);
+      initProject(dir, platforms, options.force ?? false);
     });
 }
 
-export function initProject(dir: string, platforms: string[]): void {
+export function initProject(dir: string, platforms: string[], force = false): void {
   try {
     console.log("Initializing AgentQuilt project...\n");
 
@@ -48,6 +49,17 @@ export function initProject(dir: string, platforms: string[]): void {
       );
     }
 
+    // Refuse to clobber an already-initialized project
+    if (!force) {
+      for (const configName of ["config.yaml", "config.json"]) {
+        if (existsSync(join(dir, ".agentquilt", configName))) {
+          throw new Error(
+            `project already initialized (.agentquilt/${configName} exists). Use --force to overwrite.`
+          );
+        }
+      }
+    }
+
     // Create .agentquilt/agents source directory
     const agentsDir = join(dir, ".agentquilt", "agents");
     mkdirSync(agentsDir, { recursive: true });
@@ -57,7 +69,9 @@ export function initProject(dir: string, platforms: string[]): void {
     writeFileSync(join(dir, ".agentquilt", "config.yaml"), configContent, "utf8");
     console.log("✓ created .agentquilt/config.yaml");
 
-    // Create .gitattributes (spec §7.1)
+    // Create .gitattributes (spec §7.1) — never overwrite an existing one,
+    // even with --force: it usually carries non-AgentQuilt rules
+    const gitattributesPath = join(dir, ".gitattributes");
     const gitattributesContent = `# normalize line endings everywhere — primary CRLF defense in the working tree
 * text=auto eol=lf
 .agentquilt/**/*.md text eol=lf
@@ -73,8 +87,12 @@ GEMINI.md            linguist-generated=true
 # lock: structured to rarely conflict; union as a free win where honored
 agentquilt.lock      linguist-generated=true merge=union
 `;
-    writeFileSync(join(dir, ".gitattributes"), gitattributesContent, "utf8");
-    console.log("✓ created .gitattributes");
+    if (existsSync(gitattributesPath)) {
+      console.log("- skipped .gitattributes (already exists)");
+    } else {
+      writeFileSync(gitattributesPath, gitattributesContent, "utf8");
+      console.log("✓ created .gitattributes");
+    }
 
     // Scan for existing agents and adopt them into the source directory
     const adopted = adoptExistingAgents(dir, platforms, agentsDir);

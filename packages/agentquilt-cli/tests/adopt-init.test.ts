@@ -281,4 +281,61 @@ describe("initProject integration", () => {
     );
     expect(roleBlock).toContain("You are a reviewer.");
   });
+
+  // Same process.exit interception as above, returning the exit code instead
+  // of asserting on it, so tests can check both success and failure paths.
+  function runInit(dir: string, platforms: string[], force?: boolean): number {
+    const origExit = process.exit.bind(process);
+    let exitCode: number | undefined;
+    process.exit = ((code?: number) => {
+      if (exitCode === undefined) {
+        exitCode = code ?? 0;
+        throw new Error("__exit__");
+      }
+    }) as typeof process.exit;
+
+    try {
+      initProject(dir, platforms, force);
+    } catch (e) {
+      if (!(e instanceof Error && e.message === "__exit__")) throw e;
+    } finally {
+      process.exit = origExit;
+    }
+    return exitCode ?? 0;
+  }
+
+  it("refuses to overwrite an existing .agentquilt/config.yaml", () => {
+    const aqDir = join(tmpDir, ".agentquilt");
+    mkdirSync(aqDir, { recursive: true });
+    const existingConfig = "version: 1\nsourceDir: custom/agents\n";
+    writeFileSync(join(aqDir, "config.yaml"), existingConfig, "utf8");
+
+    const code = runInit(tmpDir, ["claude"]);
+
+    expect(code).toBe(3);
+    expect(readFileSync(join(aqDir, "config.yaml"), "utf8")).toBe(existingConfig);
+  });
+
+  it("overwrites existing config when force is true", () => {
+    const aqDir = join(tmpDir, ".agentquilt");
+    mkdirSync(aqDir, { recursive: true });
+    writeFileSync(join(aqDir, "config.yaml"), "version: 1\nsourceDir: custom/agents\n", "utf8");
+
+    const code = runInit(tmpDir, ["claude"], true);
+
+    expect(code).toBe(0);
+    const config = readFileSync(join(aqDir, "config.yaml"), "utf8");
+    expect(config).toContain("sourceDir: .agentquilt/agents");
+  });
+
+  it("never overwrites an existing .gitattributes, even with force", () => {
+    const existing = "*.bin -text\n";
+    writeFileSync(join(tmpDir, ".gitattributes"), existing, "utf8");
+
+    expect(runInit(tmpDir, ["claude"])).toBe(0);
+    expect(readFileSync(join(tmpDir, ".gitattributes"), "utf8")).toBe(existing);
+
+    expect(runInit(tmpDir, ["claude"], true)).toBe(0);
+    expect(readFileSync(join(tmpDir, ".gitattributes"), "utf8")).toBe(existing);
+  });
 });

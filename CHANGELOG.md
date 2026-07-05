@@ -15,7 +15,7 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 
 **CLI (`agentquilt`)**
 
-- `agentquilt init` — scaffold a new project with `.agentquilt/config.yaml`, `.agentquilt/agents/` directory, and `.gitattributes`. Supports `--platform` flag with `claude`, `agentskills`, `cursor`, `copilot`, `gemini`.
+- `agentquilt init` — scaffold a new project with `.agentquilt/config.yaml`, `.agentquilt/agents/` directory, and `.gitattributes`. Supports `--platform` flag with `claude`, `agentskills`, `cursor`, `copilot`, `gemini`. Existing `.claude/agents/*.md` and `.agents/skills/*/SKILL.md` files are adopted into `.agentquilt/agents/` as source agents (frontmatter mapped to manifest fields; adopting compiled outputs is lossy because adapters strip Markdown structure). Refuses to run in an already-initialized project unless `--force` is given; an existing `.gitattributes` is never overwritten.
 - `agentquilt build` — compile all targets (document and agent-definitions), write adapter outputs, and write `agentquilt.lock`.
 - `agentquilt check` — detect drift between source and disk; exits 1 if any output or lock is stale. CI-safe.
 - `agentquilt agents add <name>` — scaffold a new agent directory with `agent.yaml` and `010-role.md`.
