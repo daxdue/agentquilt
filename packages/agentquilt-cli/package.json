@@ -25,7 +25,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node -e \"require('fs').chmodSync('dist/index.js', 0o755)\"",
     "dev": "tsc --watch",
     "test": "vitest run",
     "test:watch": "vitest",

@@ -14,19 +14,19 @@ jobs:
         with:
           node-version: "20"
       - name: Install dependencies
-        working-directory: packages/agentquilt
+        working-directory: packages/agentquilt-cli
         run: npm ci
       - name: Typecheck
-        working-directory: packages/agentquilt
+        working-directory: packages/agentquilt-cli
         run: npx tsc --project tsconfig.test.json
       - name: Run tests
-        working-directory: packages/agentquilt
+        working-directory: packages/agentquilt-cli
         run: npm test -- --run
       - name: Coverage
-        working-directory: packages/agentquilt
+        working-directory: packages/agentquilt-cli
         run: npm run coverage
       - name: Build CLI
-        working-directory: packages/agentquilt
+        working-directory: packages/agentquilt-cli
         run: npm run build
       - name: Drift check
-        run: node packages/agentquilt/dist/index.js check
+        run: node packages/agentquilt-cli/dist/index.js check

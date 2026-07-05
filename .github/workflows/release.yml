@@ -25,23 +25,23 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        working-directory: packages/agentquilt
+        working-directory: packages/agentquilt-cli
         run: npm ci
 
       - name: Run all tests
-        working-directory: packages/agentquilt
+        working-directory: packages/agentquilt-cli
         run: npm test -- --run
 
       - name: Check coverage
-        working-directory: packages/agentquilt
+        working-directory: packages/agentquilt-cli
         run: npm run coverage
 
       - name: Build CLI
-        working-directory: packages/agentquilt
+        working-directory: packages/agentquilt-cli
         run: npm run build
 
       - name: Drift check
-        run: node packages/agentquilt/dist/index.js check
+        run: node packages/agentquilt-cli/dist/index.js check
 
       - name: Verify risk register
         run: |
@@ -55,7 +55,7 @@ jobs:
           echo ""
           echo "Gate: release-gate"
           echo "Release type: ${{ github.event.inputs.release_type }}"
-          echo "Current version: $(jq -r '.version' packages/agentquilt/package.json)"
+          echo "Current version: $(jq -r '.version' packages/agentquilt-cli/package.json)"
           echo ""
           echo "Automated Checks:"
           echo "  OK: All tests pass"
