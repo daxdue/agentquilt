@@ -97,6 +97,16 @@ risks:
     mitigation: "Reject path separators and '..' in agents add name argument (exit 2); either drop integration/ from the published dist or move the SDK dependency when Phase 3.4 auto-invocation is revisited. Post-v0.1.0 patch scope."
     aiAssistance: "security-agent re-checks on next release-gate run"
 
+  - id: RISK-010
+    type: implementation
+    description: "build overwrites pre-existing hand-written document-target outputs without warning — adding a document target (e.g. preset: agents-md/claude or output: AGENTS.md) makes the next build silently replace a hand-authored AGENTS.md/CLAUDE.md/GEMINI.md; no header check, no backup, and no adoption path exists to convert an existing document into fragments (unlike init's agent-definition adoption)"
+    level: medium
+    status: open
+    discovered: "2026-07-05 (dogfooding CLAUDE.md as a compiled target)"
+    owner: "@cli-maintainers"
+    mitigation: "Post-v0.1.0: build refuses to overwrite an existing document-target output that lacks the '<!-- agentquilt: generated file' header unless --force (mirrors init's config-clobber guard); optionally add an adoption flow that snapshots the existing content into a fragment first. Related: init-written .gitattributes marks AGENTS.md/CLAUDE.md/GEMINI.md linguist-generated even when they are hand-authored and unmanaged."
+    aiAssistance: "security-agent and code-review agent flag PRs adding document targets whose output path already exists in the repo"
+
 mitigationProcess: |
   ## AI-Assisted Risk Management
 
