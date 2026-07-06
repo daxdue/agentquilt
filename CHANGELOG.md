@@ -7,9 +7,9 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [0.1.0] — 2026-07-01
+## [0.1.0] — 2026-07-06
 
-Initial release. Core compiler, CLI, adapters, and meta-agent framework.
+Initial release. Core compiler, CLI, adapters, skills, and meta-agent framework.
 
 ### Added
 
@@ -17,9 +17,13 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 
 - `agentquilt init` — scaffold a new project with `.agentquilt/config.yaml`, `.agentquilt/agents/` directory, and `.gitattributes`. Supports `--platform` flag with `claude`, `agentskills`, `cursor`, `copilot`, `gemini`. Existing `.claude/agents/*.md` and `.agents/skills/*/SKILL.md` files are adopted into `.agentquilt/agents/` as source agents (frontmatter mapped to manifest fields; adopting compiled outputs is lossy because adapters strip Markdown structure). Refuses to run in an already-initialized project unless `--force` is given; an existing `.gitattributes` is never overwritten.
 - `agentquilt build` — compile all targets (document and agent-definitions), write adapter outputs, and write `agentquilt.lock`.
+- `agentquilt build --watch` — rebuild automatically when source fragments or config change (debounced; watches `.md`, `.yaml`, `.yml`, `.json`).
 - `agentquilt check` — detect drift between source and disk; exits 1 if any output or lock is stale. CI-safe.
 - `agentquilt agents add <name>` — scaffold a new agent directory with `agent.yaml` and `010-role.md`.
 - `agentquilt agents list` — list all agents and their resolved model per platform.
+- `agentquilt skills add <name>` — scaffold a new skill directory with `agent.yaml` (`model: inherit`, no permissions) and `010-instructions.md`.
+- `agentquilt skills list` — list all skills and their descriptions.
+- Terminal output polish: spinners, color, and aligned status symbols across all commands (`src/ui/terminal.ts`); `--quiet` suppresses all decoration.
 - Documented exit codes for CI integration: 0 success, 1 drift detected (`check`), 2 config or validation error, 3 I/O error.
 
 **Compiler**
@@ -35,6 +39,11 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 - **Claude adapter** — compiles agent definitions to `.claude/agents/<name>.md` in Claude Code's required format (YAML frontmatter + Markdown body). The body is the composed fragments verbatim (v1.1 §5).
 - **AgentSkills adapter** — compiles agent definitions to `.agents/skills/<name>/SKILL.md` for AgentSkills.io compatibility.
 - Adapter plugin interface: `registerAdapter` / `getAdapter` / `knownAdapters` for third-party adapters.
+
+**Skills**
+
+- Skills are a first-class source root (ADR-0011): `.agentquilt/skills/` holds skill records in the identical manifest + block format, compiled to `.agents/skills/<name>/SKILL.md` via an `agentskills` target with `sourceDir: skills`. `init --platform agentskills` scaffolds the skills directory and target; existing `.agents/skills/*/SKILL.md` files are adopted as skill sources.
+- Repo skill `new-agent`: guides an AI coding agent through creating a new AgentQuilt agent or skill (scaffold, manifest, fragments, target registration, build).
 
 **Lock file**
 
@@ -66,11 +75,11 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 **Documentation and governance**
 
 - v1 spec (`agentquilt-v1-spec.md`) and v1.1 addendum (`agentquilt-v1.1-addendum.md`) as authoritative implementation references.
-- 9 Architecture Decision Records (ADRs 0001–0004 and supplementary): project structure, YAML format, generated file policy, AI assistance authority model.
+- 11 Architecture Decision Records (ADRs 0001–0011): project structure, YAML format, generated file policy, AI assistance authority model, CLI naming, compiler target model, hashing and versioning, adapter plugin design, command naming, dotfolder source layout, skills source root.
 - SDLC lifecycle (7 stages, G0–G7 gates), branching strategy, release process, and governance model documented.
 - STLC test strategy, eval strategy, security testing, and regression strategy documented.
-- Risk register with 6 identified risks (4 mitigated at release; RISK-005 open, medium).
-- Emoji policy: no emojis or emoticons in generated files; enforced by adapter layer.
+- Risk register with 10 identified risks (6 mitigated at release; RISK-005, RISK-008, RISK-010 open at medium, RISK-009 open at low; no open high or critical risks).
+- Emoji policy: no emojis or emoticons in this repository's instruction sources; an authoring convention enforced by review, never a compile-time transform of user content (see `.docs/EMOJI_POLICY.md`).
 
 ### Fixed
 
@@ -87,6 +96,7 @@ Initial release. Core compiler, CLI, adapters, and meta-agent framework.
 
 - Path traversal via `include` field in config: `validateConfig()` now resolves each include with `path.resolve(sourceDir, includeName)` and rejects any path that escapes `sourceDir`. Covered by `tests/security.test.ts`.
 - Path traversal via agent `name` fields: names adopted from `.claude/agents/` / `.agents/skills/` frontmatter are bounds-checked against `.agentquilt/agents/` before any write, and `agent.yaml` `name` is schema-validated to reject path separators, absolute paths, and `..` (the name becomes a path component in adapter outputs). Covered by adversarial tests in `tests/adopt-init.test.ts` and `tests/security.test.ts`.
+- Path traversal via the `<name>` argument of `agents add` and `skills add`: the resolved scaffold directory is now bounds-checked against the configured source directory before any write; a traversal name (e.g. `../../evil`) exits 2 without touching the filesystem. Covered by end-to-end tests in `tests/e2e.test.ts` that invoke the compiled binary as a subprocess.
 
 ---
 
@@ -99,5 +109,4 @@ The following are explicitly deferred to future releases:
 - `agentquilt lint` (semantic fragment validation)
 - `agentquilt diff` (semantic diff across Git refs)
 - Codex adapter (`.codex/agents/<name>.toml`)
-- `agentquilt build --watch` (file-watching mode)
 - npm publish automation (currently manual — see release process docs)
