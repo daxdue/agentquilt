@@ -1,93 +1,65 @@
 ---
 ---
 
-<section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 py-32">
-  <!-- Animated gradient orbs -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute -top-40 -left-40 w-80 h-80 bg-indigo-600/30 rounded-full blur-3xl animate-gradient"></div>
-    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-violet-600/20 rounded-full blur-3xl" style="animation: gradient-drift 8s ease-in-out infinite reverse;"></div>
-  </div>
-
-  <div class="relative z-10 max-w-5xl mx-auto text-center space-y-8">
-    <!-- Badge -->
-    <div class="inline-flex items-center gap-2 px-4 py-2 border border-brand-500/40 bg-brand-500/10 rounded-full text-sm text-brand-300">
-      <span>✦</span>
-      <span>v0.1.0 — Now available</span>
-    </div>
-
-    <!-- Headline with gradient -->
-    <h1 class="text-6xl sm:text-7xl lg:text-8xl font-black leading-tight tracking-tight">
-      <span class="bg-gradient-to-br from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
-        Agent instructions
-      </span>
-      <br />
-      <span class="bg-gradient-to-r from-brand-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
-        as code
-      </span>
+<section id="top" style="max-width:1220px;margin:0 auto;padding:76px 28px 64px;display:flex;flex-wrap:wrap;gap:48px;align-items:center;position:relative">
+  <div style="flex:1 1 440px;min-width:0">
+    <h1 style="font-size:clamp(38px,5.2vw,62px);font-weight:800;letter-spacing:-0.04em;line-height:1.02;margin:0 0 22px;text-wrap:balance">
+      Modular AI agents.<br>Built to scale.
+      <span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">Quilt to ship.</span>
     </h1>
-
-    <!-- Subheading -->
-    <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-      AgentQuilt compiles small, reviewable Markdown fragments into deterministic AI agent prompts — for every platform your team uses.
+    <p style="font-size:clamp(17px,2vw,20px);line-height:1.55;color:var(--muted);max-width:520px;margin:0 0 34px">
+      A Git-native framework for AI agent instructions as small, ordered fragments. Edit structured source, then compile deterministic outputs &mdash; <span style="font-family:'Geist Mono',monospace;font-size:.88em;color:var(--fg)">.claude/agents</span>, <span style="font-family:'Geist Mono',monospace;font-size:.88em;color:var(--fg)">AGENTS.md</span>, Agent Skills &mdash; with a lock file that catches drift in CI.
     </p>
-
-    <!-- CTAs -->
-    <div class="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-      <a
-        href="https://github.com/daxdue/agentquilt"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-semibold transition shadow-lg hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] active:scale-95"
-      >
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+      <button id="copy-install-btn" title="Copy install command" class="hover-border-accent" style="font-family:'Geist Mono',monospace;font-size:14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:7px 7px 7px 16px;cursor:pointer;color:var(--fg);display:flex;align-items:center;gap:18px;transition:border-color .15s ease">
+        <span style="display:flex;align-items:center;gap:9px">
+          <span style="color:var(--accent)">$</span>npm install -g agentquilt
+        </span>
+        <span id="copy-label" style="display:flex;align-items:center;justify-content:center;background:var(--grad);color:#fff;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:600;box-shadow:0 6px 16px -8px rgba(91,140,255,.7);position:relative">
+          <span aria-hidden="true" style="display:flex;align-items:center;gap:7px;visibility:hidden">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>copied!
+          </span>
+          <span id="copy-visible" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:7px">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>copy
+          </span>
+        </span>
+      </button>
+      <a href="https://github.com/daxdue/agentquilt" class="hover-border-accent" style="font-family:'Geist',sans-serif;font-weight:700;font-size:14px;background:var(--surface);border:1px solid var(--border);color:var(--fg);border-radius:11px;padding:14px 22px;text-decoration:none;display:flex;align-items:center;gap:9px;transition:border-color .15s ease">
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
         View on GitHub
       </a>
-      <a
-        href="#quick-start"
-        class="px-8 py-4 border border-brand-500/40 hover:border-brand-400 bg-brand-500/10 hover:bg-brand-500/20 text-white rounded-xl font-semibold transition"
-      >
-        Get Started
-      </a>
     </div>
+  </div>
 
-    <!-- Code demo panel -->
-    <div class="pt-12">
-      <div class="glass rounded-2xl p-8 max-w-3xl mx-auto border-brand-500/20 animate-on-scroll">
-        <div class="space-y-4 font-mono text-sm">
-          <!-- Step 1: Source file -->
-          <div class="border border-gray-800 rounded-lg overflow-hidden">
-            <div class="bg-gray-900 px-4 py-3 border-b border-gray-800 text-gray-400 text-xs">
-              📄 agents/coder/010-role.md
-            </div>
-            <div class="bg-gray-950 px-4 py-3 text-gray-300">
-              <span class="text-brand-400">You are</span> a senior TypeScript engineer<span class="text-gray-500">...</span>
-            </div>
-          </div>
-
-          <!-- Arrow + command -->
-          <div class="flex items-center justify-center gap-3 text-gray-500 py-2">
-            <div class="w-12 h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent"></div>
-            <span class="text-xs text-brand-400 font-semibold">agentquilt build</span>
-            <div class="w-12 h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent"></div>
-          </div>
-
-          <!-- Step 2: Output files -->
-          <div class="grid grid-cols-2 gap-4">
-            <div class="border border-gray-800 rounded-lg overflow-hidden">
-              <div class="bg-gray-900 px-4 py-2 border-b border-gray-800 text-gray-400 text-xs">
-                ✓ CLAUDE.md
-              </div>
-              <div class="bg-gray-950 px-4 py-2 text-gray-400 text-xs">
-                <span class="text-green-400">deterministic</span>
-              </div>
-            </div>
-            <div class="border border-gray-800 rounded-lg overflow-hidden">
-              <div class="bg-gray-900 px-4 py-2 border-b border-gray-800 text-gray-400 text-xs">
-                ✓ AGENTS.md
-              </div>
-              <div class="bg-gray-950 px-4 py-2 text-gray-400 text-xs">
-                <span class="text-green-400">deterministic</span>
-              </div>
-            </div>
+  <!-- terminal -->
+  <div style="flex:1 1 480px;min-width:0">
+    <div style="background:var(--term-bg);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 30px 70px -30px rgba(0,0,0,.8),0 0 0 1px rgba(91,140,255,.06);position:relative">
+      <div style="position:absolute;inset:0;border-radius:16px;padding:1px;background:linear-gradient(140deg,rgba(91,140,255,.35),transparent 40%,transparent 70%,rgba(155,108,255,.25));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none"></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid var(--term-seam)">
+        <span style="width:11px;height:11px;border-radius:50%;background:#ff5f57"></span>
+        <span style="width:11px;height:11px;border-radius:50%;background:#febc2e"></span>
+        <span style="width:11px;height:11px;border-radius:50%;background:#28c840"></span>
+        <span style="margin:0 auto;font-family:'Geist Mono',monospace;font-size:12px;color:var(--term-label)">agentquilt</span>
+      </div>
+      <div style="display:flex;min-height:352px">
+        <div id="hero-terminal" style="flex:1 1 0;min-width:0;padding:18px 20px;font-family:'Geist Mono',monospace;font-size:13px;line-height:1.8"></div>
+        <div class="hero-tree" style="flex:none;width:238px;border-left:1px solid var(--term-seam);padding:18px 16px;font-family:'Geist Mono',monospace;font-size:12px;line-height:2.0;background:color-mix(in srgb,var(--term-bg) 70%,var(--surface))">
+          <div style="color:var(--cyan)">.agentquilt/</div>
+          <div style="color:var(--muted);padding-left:12px">config.yaml</div>
+          <div style="color:var(--fg);padding-left:12px">agents/</div>
+          <div style="color:var(--faint);padding-left:26px">_shared/</div>
+          <div style="color:var(--fg);padding-left:26px">reviewer/</div>
+          <div style="color:var(--muted);padding-left:40px">agent.yaml</div>
+          <div style="color:var(--muted);padding-left:40px">010-role.md</div>
+          <div style="color:var(--muted);padding-left:40px">020-style.md</div>
+          <div style="color:var(--fg);padding-left:12px">skills/</div>
+          <div style="margin-top:10px;color:var(--faint)">.claude/agents/ <span style="color:var(--accent);font-size:10px">gen</span></div>
+          <div style="color:var(--faint)">agentquilt.lock <span style="color:var(--accent);font-size:10px">gen</span></div>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--term-seam);color:var(--faint);letter-spacing:.04em">COMPILES FOR</div>
+          <div style="display:flex;gap:11px;margin-top:8px;align-items:center;color:var(--muted)">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><title>Claude Code</title><path d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z"/></svg>
+            <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><title>Agent Skills</title><path d="M12 0L13.96 10.04L24 12L13.96 13.96L12 24L10.04 13.96L0 12L10.04 10.04Z"/></svg>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--faint)">+ more soon</span>
           </div>
         </div>
       </div>

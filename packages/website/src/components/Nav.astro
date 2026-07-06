@@ -1,39 +1,32 @@
 ---
+interface Props {
+  stars?: string;
+}
+const { stars = '1.2k' } = Astro.props;
 ---
 
-<nav class="sticky top-0 z-50 backdrop-blur-md bg-gray-950/80 border-b border-white/5">
-  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-2.5 text-xl font-bold text-white hover:text-brand-400 transition group">
-      <svg class="w-6 h-6 text-brand-500 group-hover:text-brand-400 transition" viewBox="0 0 24 24" fill="currentColor">
-        <rect x="3" y="3" width="4" height="4" rx="1" />
-        <rect x="10" y="3" width="4" height="4" rx="1" />
-        <rect x="17" y="3" width="4" height="4" rx="1" />
-        <rect x="3" y="10" width="4" height="4" rx="1" />
-        <rect x="10" y="10" width="4" height="4" rx="1" />
-        <rect x="17" y="10" width="4" height="4" rx="1" />
-        <rect x="3" y="17" width="4" height="4" rx="1" />
-        <rect x="10" y="17" width="4" height="4" rx="1" />
-        <rect x="17" y="17" width="4" height="4" rx="1" />
-      </svg>
-      AgentQuilt
+<header id="site-nav" style="position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--border)">
+  <div style="max-width:1220px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:20px">
+    <a href="#top" style="display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--fg)">
+      <img src="/logo.png" alt="AgentQuilt logo" width="38" height="38" style="display:block;flex:none;object-fit:contain"/>
+      <span style="font-size:22px;letter-spacing:-0.02em"><span style="font-weight:500">Agent</span><span style="font-weight:800">Quilt</span></span>
+      <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--muted);border:1px solid var(--border);border-radius:6px;padding:2px 7px">v0.1.0</span>
     </a>
 
-    <div class="flex items-center gap-4">
-      <a
-        href="https://github.com/daxdue/agentquilt"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-gray-400 hover:text-white transition"
-      >
-        GitHub
-      </a>
+    <nav class="nav-links" style="display:flex;gap:26px;margin:0 auto">
+      <a href="#why"      class="hover-fg" style="font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s ease">Why AgentQuilt</a>
+      <a href="#features" class="hover-fg" style="font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s ease">Features</a>
+      <a href="#how"      class="hover-fg" style="font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s ease">How it works</a>
+      <a href="#code"     class="hover-fg" style="font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s ease">Docs</a>
+      <a href="#start"    class="hover-fg" style="font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s ease">Get started</a>
+    </nav>
 
-      <a
-        href="#quick-start"
-        class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-medium transition shadow-lg hover:shadow-[0_0_20px_rgba(79,70,229,0.4)]"
-      >
-        Install
+    <div style="display:flex;align-items:center;gap:10px">
+      <button id="theme-toggle" title="Toggle theme" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;padding:4px 8px;border-radius:6px;transition:color .15s ease" class="hover-fg">&#9680;</button>
+      <a href="https://github.com/daxdue/agentquilt" id="github-star-btn" class="hover-border-accent" style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--fg);background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:8px 13px;text-decoration:none;display:flex;align-items:center;gap:8px;transition:border-color .15s ease">
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        <span>Star</span>{stars !== '0' && <span id="star-count" style="color:var(--muted)">{stars}</span>}
       </a>
     </div>
   </div>
-</nav>
+</header>

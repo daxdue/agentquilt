@@ -1,87 +1,22 @@
 ---
-const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-gray-800 py-12 px-6">
-  <div class="max-w-6xl mx-auto">
-    <div class="grid md:grid-cols-3 gap-12 mb-12">
-      <div class="space-y-4">
-        <h3 class="font-bold text-white">AgentQuilt</h3>
-        <p class="text-gray-400 text-sm">
-          A Git-native framework for maintaining AI agent instructions as code.
-        </p>
-      </div>
+<footer style="border-top:1px solid var(--border)">
+  <div style="max-width:1220px;margin:0 auto;padding:36px 28px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between">
 
-      <div class="space-y-4">
-        <h3 class="font-semibold text-white text-sm">Resources</h3>
-        <ul class="space-y-2 text-gray-400">
-          <li>
-            <a
-              href="https://github.com/daxdue/agentquilt"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hover:text-white transition"
-            >
-              GitHub Repository
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/daxdue/agentquilt/blob/main/.docs/agentquilt-v1-spec.md"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hover:text-white transition"
-            >
-              v1 Specification
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/daxdue/agentquilt/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hover:text-white transition"
-            >
-              Issues & Feedback
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="space-y-4">
-        <h3 class="font-semibold text-white text-sm">Legal</h3>
-        <ul class="space-y-2 text-gray-400">
-          <li>
-            <a
-              href="https://github.com/daxdue/agentquilt/blob/main/LICENSE"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hover:text-white transition"
-            >
-              MIT License
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/daxdue"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hover:text-white transition"
-            >
-              GitHub Profile
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div style="display:flex;align-items:center;gap:11px">
+      <img src="/logo.png" alt="AgentQuilt logo" width="30" height="30" style="display:block;flex:none;object-fit:contain"/>
+      <span style="font-size:15px"><span style="font-weight:500">Agent</span><span style="font-weight:800">Quilt</span></span>
+      <span style="font-family:'Geist',sans-serif;font-size:12px;color:var(--faint);margin-left:6px">agentquilt.dev</span>
     </div>
 
-    <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-      <p class="text-gray-500 text-sm">
-        © {year} AgentQuilt. MIT License.
-      </p>
-      <p class="text-gray-500 text-sm mt-4 md:mt-0">
-        Built with <span class="text-brand-400">Astro</span> and <span class="text-brand-400">Tailwind</span>
-      </p>
+    <div style="display:flex;gap:22px;font-family:'Geist',sans-serif;font-size:13px">
+      <a href="https://github.com/daxdue/agentquilt"           class="hover-fg" style="color:var(--muted);text-decoration:none;transition:color .15s ease">GitHub</a>
+      <a href="https://www.npmjs.com/package/agentquilt"       class="hover-fg" style="color:var(--muted);text-decoration:none;transition:color .15s ease">npm</a>
+      <a href="#how"                                            class="hover-fg" style="color:var(--muted);text-decoration:none;transition:color .15s ease">Docs</a>
+      <a href="https://opensource.org/license/mit"             class="hover-fg" style="color:var(--muted);text-decoration:none;transition:color .15s ease">MIT License</a>
+      <a href="/privacy"                                        class="hover-fg" style="color:var(--muted);text-decoration:none;transition:color .15s ease">Privacy</a>
     </div>
+
   </div>
 </footer>

@@ -1,81 +1,48 @@
 ---
 ---
 
-<section class="py-24 px-6">
-  <div class="max-w-6xl mx-auto space-y-16">
-    <div class="space-y-4">
-      <h2 class="text-5xl font-black">Why AgentQuilt</h2>
-      <p class="text-lg text-gray-400">
-        Built for teams managing AI agents at scale.
-      </p>
-    </div>
+<section id="features" style="max-width:1220px;margin:0 auto;padding:8px 28px">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));overflow:hidden">
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Deterministic Output -->
-      <div class="glass rounded-xl p-8 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition group animate-on-scroll" style="animation-delay: 0ms;">
-        <div class="mb-4">
-          <svg class="w-10 h-10 text-brand-400 group-hover:text-brand-300 transition" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-3">Deterministic</h3>
-        <p class="text-gray-400">Same source always produces identical Markdown. No randomness. Hashes enable diffs that mean something.</p>
-      </div>
-
-      <!-- Platform-Agnostic -->
-      <div class="glass rounded-xl p-8 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition group animate-on-scroll" style="animation-delay: 100ms;">
-        <div class="mb-4">
-          <svg class="w-10 h-10 text-brand-400 group-hover:text-brand-300 transition" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-3">Platform-Agnostic</h3>
-        <p class="text-gray-400">One source, many targets. Compile fragments to Claude, Cursor, GitHub Copilot, internal docs, and more.</p>
-      </div>
-
-      <!-- CI Integration -->
-      <div class="glass rounded-xl p-8 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition group animate-on-scroll" style="animation-delay: 200ms;">
-        <div class="mb-4">
-          <svg class="w-10 h-10 text-brand-400 group-hover:text-brand-300 transition" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-3">CI Gates</h3>
-        <p class="text-gray-400"><code class="bg-gray-800 px-2 py-1 rounded text-sm text-brand-300">agentquilt check</code> fails the build on drift. Prevent stale agent files.</p>
-      </div>
-
-      <!-- Git-Native -->
-      <div class="glass rounded-xl p-8 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition group animate-on-scroll" style="animation-delay: 300ms;">
-        <div class="mb-4">
-          <svg class="w-10 h-10 text-brand-400 group-hover:text-brand-300 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-3">Git-Native</h3>
-        <p class="text-gray-400">Fragments are files. Diffs are readable. No merge conflict hell. No manual conflict resolution.</p>
-      </div>
-
-      <!-- Validation -->
-      <div class="glass rounded-xl p-8 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition group animate-on-scroll" style="animation-delay: 400ms;">
-        <div class="mb-4">
-          <svg class="w-10 h-10 text-brand-400 group-hover:text-brand-300 transition" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-3">Validation</h3>
-        <p class="text-gray-400">Schema-driven validation for agent metadata. Catch errors before compilation, not in production.</p>
-      </div>
-
-      <!-- Evals -->
-      <div class="glass rounded-xl p-8 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition group animate-on-scroll" style="animation-delay: 500ms;">
-        <div class="mb-4">
-          <svg class="w-10 h-10 text-brand-400 group-hover:text-brand-300 transition" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M9 3h6v2H9V3zm0 16h6v2H9v-2zm13-5.5h-2v-3h2v3zM2 12.5h2v-3H2v3zm18-8h-2v3h2v-3zM2 4.5h2v3H2v-3zM21 15H3v-2h18v2z"/>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-3">Evals & Testing</h3>
-        <p class="text-gray-400">Built-in eval framework for regression testing. Ensure agent behavior changes are intentional.</p>
+    <div class="feature-card" style="padding:32px 26px 34px;border-right:1px solid var(--border);border-top:2px solid transparent;display:flex;flex-direction:column;gap:18px;transition:background .2s ease,border-top-color .2s ease">
+      <span style="font-family:'Geist Mono',monospace;font-size:15px;font-weight:600;letter-spacing:.04em;color:var(--accent)">01</span>
+      <div>
+        <p style="font-size:17px;font-weight:700;margin:0 0 8px;letter-spacing:-0.015em">Modular by design</p>
+        <p style="font-size:13.5px;line-height:1.55;color:var(--muted);margin:0">Author agents as small, ordered instruction blocks &mdash; plus shared fragments reused across agents.</p>
       </div>
     </div>
+
+    <div class="feature-card" style="padding:32px 26px 34px;border-right:1px solid var(--border);border-top:2px solid transparent;display:flex;flex-direction:column;gap:18px;transition:background .2s ease,border-top-color .2s ease">
+      <span style="font-family:'Geist Mono',monospace;font-size:15px;font-weight:600;letter-spacing:.04em;color:var(--accent)">02</span>
+      <div>
+        <p style="font-size:17px;font-weight:700;margin:0 0 8px;letter-spacing:-0.015em">Fewer merge conflicts</p>
+        <p style="font-size:13.5px;line-height:1.55;color:var(--muted);margin:0">Tiny files edited in parallel collide far less than one giant hand-maintained prompt.</p>
+      </div>
+    </div>
+
+    <div class="feature-card" style="padding:32px 26px 34px;border-right:1px solid var(--border);border-top:2px solid transparent;display:flex;flex-direction:column;gap:18px;transition:background .2s ease,border-top-color .2s ease">
+      <span style="font-family:'Geist Mono',monospace;font-size:15px;font-weight:600;letter-spacing:.04em;color:var(--accent)">03</span>
+      <div>
+        <p style="font-size:17px;font-weight:700;margin:0 0 8px;letter-spacing:-0.015em">CLI-first</p>
+        <p style="font-size:13.5px;line-height:1.55;color:var(--muted);margin:0">One tool to <span style="font-family:'Geist Mono',monospace;font-size:.9em;color:var(--fg)">init</span>, <span style="font-family:'Geist Mono',monospace;font-size:.9em;color:var(--fg)">build</span>, <span style="font-family:'Geist Mono',monospace;font-size:.9em;color:var(--fg)">check</span> and scaffold agents &amp; skills.</p>
+      </div>
+    </div>
+
+    <div class="feature-card" style="padding:32px 26px 34px;border-right:1px solid var(--border);border-top:2px solid transparent;display:flex;flex-direction:column;gap:18px;transition:background .2s ease,border-top-color .2s ease">
+      <span style="font-family:'Geist Mono',monospace;font-size:15px;font-weight:600;letter-spacing:.04em;color:var(--accent)">04</span>
+      <div>
+        <p style="font-size:17px;font-weight:700;margin:0 0 8px;letter-spacing:-0.015em">Multi-platform</p>
+        <p style="font-size:13.5px;line-height:1.55;color:var(--muted);margin:0">Claude Code and Agent Skills adapters ship today. Cursor, Copilot, Gemini, and more coming soon.</p>
+      </div>
+    </div>
+
+    <div class="feature-card" style="padding:32px 26px 34px;border-top:2px solid transparent;display:flex;flex-direction:column;gap:18px;transition:background .2s ease,border-top-color .2s ease">
+      <span style="font-family:'Geist Mono',monospace;font-size:15px;font-weight:600;letter-spacing:.04em;color:var(--accent)">05</span>
+      <div>
+        <p style="font-size:17px;font-weight:700;margin:0 0 8px;letter-spacing:-0.015em">Deterministic &amp; drift-checked</p>
+        <p style="font-size:13.5px;line-height:1.55;color:var(--muted);margin:0">Content-hashed outputs and a lock file. <span style="font-family:'Geist Mono',monospace;font-size:.9em;color:var(--fg)">check</span> fails CI on any stale or hand-edited file.</p>
+      </div>
+    </div>
+
   </div>
 </section>
