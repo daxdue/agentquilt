@@ -391,12 +391,60 @@ function writeSkillYaml(skillDir: string, description: string): void {
   writeFileSync(join(skillDir, "agent.yaml"), yaml, "utf8");
 }
 
+export function splitBodyIntoSections(
+  body: string,
+  firstFilename = "010-role.md"
+): Array<{ filename: string; content: string }> {
+  const h1Regex = /^# .+/gm;
+  const h1Matches = [...body.matchAll(h1Regex)];
+
+  if (h1Matches.length <= 1) {
+    const content = body.endsWith("\n") ? body : body + "\n";
+    return [{ filename: firstFilename, content }];
+  }
+
+  const result: Array<{ filename: string; content: string }> = [];
+
+  for (let i = 0; i < h1Matches.length; i++) {
+    const matchStart = h1Matches[i].index!;
+    const nextMatchStart =
+      i + 1 < h1Matches.length ? h1Matches[i + 1].index! : body.length;
+
+    let sectionContent = body.slice(matchStart, nextMatchStart).trimEnd() + "\n";
+
+    // Prepend any preamble (content before first H1) into the first section
+    if (i === 0 && matchStart > 0) {
+      sectionContent = body.slice(0, matchStart) + sectionContent;
+    }
+
+    let filename: string;
+    if (i === 0) {
+      filename = firstFilename;
+    } else {
+      const num = String((i + 1) * 10).padStart(3, "0");
+      const headingText = h1Matches[i][0].slice(2).trim();
+      const slug =
+        headingText
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "") || `section-${i + 1}`;
+      filename = `${num}-${slug}.md`;
+    }
+
+    result.push({ filename, content: sectionContent });
+  }
+
+  return result;
+}
+
 function writeRoleBlock(agentDir: string, body: string): void {
-  const content = body.endsWith("\n") ? body : body + "\n";
-  writeFileSync(join(agentDir, "010-role.md"), content, "utf8");
+  for (const { filename, content } of splitBodyIntoSections(body, "010-role.md")) {
+    writeFileSync(join(agentDir, filename), content, "utf8");
+  }
 }
 
 function writeInstructionsBlock(skillDir: string, body: string): void {
-  const content = body.endsWith("\n") ? body : body + "\n";
-  writeFileSync(join(skillDir, "010-instructions.md"), content, "utf8");
+  for (const { filename, content } of splitBodyIntoSections(body, "010-instructions.md")) {
+    writeFileSync(join(skillDir, filename), content, "utf8");
+  }
 }
