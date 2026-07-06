@@ -1,0 +1,4 @@
+name: test-automation
+description: Meta-agent for stlc workflow - test-automation
+model: balanced
+permissions: read-only

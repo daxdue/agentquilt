@@ -1,0 +1,45 @@
+name: intake-gate
+phase: intake
+description: |
+  Entry point for new work. Validates that issues/features are well-formed
+  before they enter the requirements phase. Self-service intake with AI assistance.
+enabled: true
+
+requiredChecks:
+  - Issue template completed (title, problem, expected value, initial risk)
+  - Owner identified
+  - Category labeled (bug, feature, docs, refactor, etc.)
+  - No obvious duplicate
+
+requiredApprovals: 0
+
+riskCriteria:
+  - type: scope
+    condition: No clear acceptance criteria
+    level: medium
+  - type: process
+    condition: Missing owner assignment
+    level: medium
+  - type: architecture
+    condition: Hints of schema or CLI changes without design sketch
+    level: high
+
+escalationPath:
+  - "@maintainers"
+
+aiAssistance:
+  enabled: true
+  agents:
+    - name: triage-agent
+      role: Intake triage and deduplication
+      tasks:
+        - Summarize issue in one sentence
+        - Flag missing required fields (owner, risk level, acceptance criteria)
+        - Suggest risk level based on change type
+        - Identify similar open/closed issues (potential duplicates)
+        - Draft initial acceptance criteria for human review if missing
+      mustNotDo:
+        - Assign the issue (requires human decision)
+        - Approve or close the issue (requires human decision)
+        - Estimate effort (domain knowledge only)
+      output: Draft issue summary with flags and suggestions

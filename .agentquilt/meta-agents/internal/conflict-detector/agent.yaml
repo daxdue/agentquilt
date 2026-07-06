@@ -1,0 +1,4 @@
+name: conflict-detector
+description: Meta-agent for internal workflow - conflict-detector
+model: balanced
+permissions: read-only

@@ -1,0 +1,4 @@
+name: definition-architect
+description: Meta-agent for internal workflow - definition-architect
+model: balanced
+permissions: read-only

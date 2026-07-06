@@ -1,0 +1,4 @@
+name: documentation
+description: Meta-agent for sdlc workflow - documentation
+model: balanced
+permissions: read-only

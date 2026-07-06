@@ -1,0 +1,23 @@
+{
+  "files.associations": {
+    "agent.yaml": "yaml",
+    "*.yaml": "yaml"
+  },
+  "yaml.schemaStore.enable": true,
+  "yaml.validate": true,
+  "[yaml]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "search.exclude": {
+    "packages/agentquilt/node_modules": true,
+    "packages/agentquilt/dist": true,
+    "agents/*/generated": true
+  },
+  "files.exclude": {
+    "packages/agentquilt/node_modules": true,
+    "packages/agentquilt/dist": true,
+    "agents/*/generated": true
+  }
+}

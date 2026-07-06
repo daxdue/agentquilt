@@ -1,1 +1,22 @@
+# macOS
+**/.DS_Store
+
+# Dependencies
+node_modules/
+packages/**/node_modules/
+
+# Build output
+packages/**/dist/
+*.tsbuildinfo
+
+# Test coverage
+packages/**/coverage/
+
+# Environment
+.env.local
+
+# Generated agent fragments (runtime output)
+.agentquilt/agents/*/generated/
+
+# Local planning docs (not shipped)
 .planning/

@@ -1,0 +1,4 @@
+name: performance-test
+description: Meta-agent for stlc workflow - performance-test
+model: balanced
+permissions: read-only

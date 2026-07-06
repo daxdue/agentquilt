@@ -1,0 +1,4 @@
+name: evidence-collector
+description: Meta-agent for release workflow - evidence-collector
+model: balanced
+permissions: read-only

@@ -1,0 +1,4 @@
+name: adr-writer
+description: Meta-agent for sdlc workflow - adr-writer
+model: balanced
+permissions: read-only

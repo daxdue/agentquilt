@@ -1,0 +1,120 @@
+# AgentQuilt Risk Register
+# Format: ID, Type, Description, Level, Status, Mitigation
+# Updated: ongoing (AI risk agent monitors and updates)
+
+risks:
+  - id: RISK-001
+    type: implementation
+    description: "agentCompiler.ts has 0% test coverage — agent compilation logic untested"
+    level: medium
+    status: mitigated
+    discovered: "2026-06-23 (SDLC/STLC review)"
+    mitigatedDate: "2026-06-30"
+    owner: "@cli-maintainers"
+    mitigation: "Added tests/agentCompiler.test.ts with 9 test cases covering: single-agent compilation, Claude adapter output format (starts with ---), missing agent.yaml, invalid manifest, multi-agent target, wildcard discovery, AdapterOutput path/kind, and fragmentMap population."
+    aiAssistance: "risk-agent monitors this, escalates if new changes to agentCompiler.ts merge without tests"
+
+  - id: RISK-002
+    type: implementation
+    description: "build --watch claimed complete in CLAUDE.md but absent from source code"
+    level: low
+    status: mitigated
+    discovered: "2026-06-23 (SDLC/STLC review)"
+    owner: "@cli-maintainers"
+    mitigation: "Marked [DEFERRED] in CLAUDE.md. Future work tracked in project plan."
+    aiAssistance: "Removed from false completion claims; now in backlog with explicit defer marker"
+
+  - id: RISK-003
+    type: compliance
+    description: "Planning docs (PROJECT_PLAN.md, WORK_BREAKDOWN.md, test-strategy.md) reference agentctl CLI and compile command, not agentquilt build/check"
+    level: low
+    status: mitigated
+    discovered: "2026-06-23 (SDLC/STLC review)"
+    owner: "@maintainers"
+    mitigation: "PROJECT_PLAN.md updated 2026-06-24 to use correct CLI names (agentquilt build/check). Deferred tasks marked clearly. Week 1-3 status reconciled with actual completion."
+    aiAssistance: "requirements-agent flags mismatches between docs and reality on intake"
+
+  - id: RISK-004
+    type: security
+    description: "Path traversal via include field not validated — include: ../../../../etc/passwd is not rejected by validateConfig"
+    level: medium
+    status: mitigated
+    discovered: "2026-06-23 (SDLC/STLC review)"
+    mitigatedDate: "2026-06-30"
+    owner: "@cli-maintainers"
+    mitigation: "Added path traversal check in validateConfig() Rule 5 (configLoader.ts): each include is resolved with path.resolve(sourceDir, includeName) and asserted to start with path.resolve(sourceDir). Traversal paths push a ConfigError entry. Covered by tests/security.test.ts (8 cases)."
+    aiAssistance: "security-agent flags any PR touching configLoader.ts or fragmentScanner.ts; generates adversarial test inputs"
+
+  - id: RISK-005
+    type: process
+    description: "No npm publish workflow — releases are currently manual (npm publish run by human from CI)"
+    level: medium
+    status: open
+    discovered: "2026-06-23 (SDLC/STLC review)"
+    owner: "@maintainers"
+    mitigation: "Create release.yml GitHub workflow that publishes on git tag. Week 4 scope."
+    aiAssistance: "release-agent reminds of this risk during release-gate check"
+
+  - id: RISK-006
+    type: test
+    description: "Integration tests only cover build→check happy path; CLI commands add/list not integration-tested"
+    level: low
+    status: mitigated
+    discovered: "2026-06-23 (SDLC/STLC review)"
+    mitigatedDate: "2026-06-30"
+    owner: "@qa-owners"
+    mitigation: "Added tests/commands.integration.test.ts covering: init (config.yaml, .gitattributes, agents/ dir creation, platform config, invalid platform exit), generateConfig (content structure), agents add (agent.yaml, 010-role.md, duplicate guard, no-overwrite), and agents list via library functions (discovery, model resolution, empty directory)."
+    aiAssistance: "qa-agent tracks this; eval-agent tests CLI behavior changes"
+
+  - id: RISK-007
+    type: security
+    description: "Path traversal via frontmatter/manifest name fields — adopted agent names and agent.yaml name flowed unvalidated into filesystem paths (init adoption and Claude adapter output)"
+    level: high
+    status: mitigated
+    discovered: "2026-07-05 (pre-v0.1.0 security-review + code-review agents)"
+    mitigatedDate: "2026-07-05"
+    owner: "@cli-maintainers"
+    mitigation: "init.ts resolveAdoptionDir() bounds-checks adopted names against .agentquilt/agents/ (same pattern as RISK-004 fix); AgentNameSchema in agentDefinition.schema.ts rejects separators, absolute paths, and '..' at manifest load, covering the build/adapter path. Covered by adversarial tests in adopt-init.test.ts and security.test.ts."
+    aiAssistance: "security-agent generates adversarial name inputs on PRs touching init.ts, agentLoader.ts, or adapters"
+
+  - id: RISK-008
+    type: security
+    description: "agent-definitions target.sourceDir in config.yaml not validated for traversal — a config with sourceDir: ../../../etc directs the loader outside the project"
+    level: medium
+    status: open
+    discovered: "2026-07-05 (pre-v0.1.0 security-review agent)"
+    owner: "@cli-maintainers"
+    mitigation: "Extend validateConfig() to bounds-check per-target sourceDir against the project root, mirroring the RISK-004 include check. Post-v0.1.0 patch scope: config.yaml is author-controlled, so exploitation requires a malicious config passing PR review."
+    aiAssistance: "security-agent flags PRs adding sourceDir values containing '..'"
+
+  - id: RISK-009
+    type: security
+    description: "agentquilt agents add <name> accepts raw CLI argument as path component (low: requires direct CLI control); dead src/integration/claude-agent.ts ships in dist with unresolvable @anthropic-ai/sdk import"
+    level: low
+    status: open
+    discovered: "2026-07-05 (pre-v0.1.0 security-review agent)"
+    owner: "@cli-maintainers"
+    mitigation: "Reject path separators and '..' in agents add name argument (exit 2); either drop integration/ from the published dist or move the SDK dependency when Phase 3.4 auto-invocation is revisited. Post-v0.1.0 patch scope."
+    aiAssistance: "security-agent re-checks on next release-gate run"
+
+  - id: RISK-010
+    type: implementation
+    description: "build overwrites pre-existing hand-written document-target outputs without warning — adding a document target (e.g. preset: agents-md/claude or output: AGENTS.md) makes the next build silently replace a hand-authored AGENTS.md/CLAUDE.md/GEMINI.md; no header check, no backup, and no adoption path exists to convert an existing document into fragments (unlike init's agent-definition adoption)"
+    level: medium
+    status: open
+    discovered: "2026-07-05 (dogfooding CLAUDE.md as a compiled target)"
+    owner: "@cli-maintainers"
+    mitigation: "Post-v0.1.0: build refuses to overwrite an existing document-target output that lacks the '<!-- agentquilt: generated file' header unless --force (mirrors init's config-clobber guard); optionally add an adoption flow that snapshots the existing content into a fragment first. Related: init-written .gitattributes marks AGENTS.md/CLAUDE.md/GEMINI.md linguist-generated even when they are hand-authored and unmanaged."
+    aiAssistance: "security-agent and code-review agent flag PRs adding document targets whose output path already exists in the repo"
+
+mitigationProcess: |
+  ## AI-Assisted Risk Management
+
+  1. **Discovery** — requirements-agent flags issues that match risk criteria on intake. security-agent probes high-risk code changes.
+  2. **Classification** — risk-agent classifies level (low/medium/high/critical) based on impact domain (architecture, security, compliance, process).
+  3. **Assignment** — triage-agent suggests owner based on change area (cli-maintainers, qa-owners, etc.).
+  4. **Monitoring** — risk-agent monitors all PRs; escalates if high/critical risks remain open and unmitigated.
+  5. **Closure** — human decides when risk is resolved; ai-agent updates status and documents final mitigation.
+
+escalationThreshold: "Any critical risk blocks release. Any high risk requires explicit human acceptance."
+auditCycle: "Review all open risks monthly. Close mitigated risks. Promote new risks discovered in PRs."

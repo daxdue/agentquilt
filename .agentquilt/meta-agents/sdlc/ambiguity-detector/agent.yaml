@@ -1,0 +1,4 @@
+name: ambiguity-detector
+description: Meta-agent for sdlc workflow - ambiguity-detector
+model: balanced
+permissions: read-only

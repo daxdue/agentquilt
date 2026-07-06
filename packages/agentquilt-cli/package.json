@@ -1,0 +1,55 @@
+{
+  "name": "agentquilt",
+  "version": "0.1.0",
+  "description": "CLI tool for AgentQuilt agent framework — compiles Markdown fragments into deployment-ready agent instructions with deterministic versioning",
+  "type": "module",
+  "license": "MIT",
+  "author": "daxdue",
+  "homepage": "https://agentquilt.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daxdue/agentquilt.git",
+    "directory": "packages/agentquilt-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/daxdue/agentquilt/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "dist/index.js",
+  "bin": {
+    "agentquilt": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node -e \"require('fs').rmSync('dist', {recursive:true, force:true})\" && tsc && node -e \"require('fs').chmodSync('dist/index.js', 0o755)\"",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write src tests",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "dependencies": {
+    "commander": "^11.1.0",
+    "yaml": "^2.4.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.105.0",
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "@vitest/coverage-v8": "^1.6.1",
+    "@vitest/ui": "^1.1.1",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.1"
+  }
+}

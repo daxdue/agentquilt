@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentquilt.dev/schemas/instruction-block.json",
+  "title": "Instruction Block Front-Matter (optional YAML)",
+  "description": "Schema for optional YAML front-matter in agent instruction block files. Front-matter is delimited by --- and stripped before output/hashing. The v1 spec defines 'tags' as the recognized key; unknown keys are preserved but do not affect compilation.",
+  "type": "object",
+  "properties": {
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of topic tags (reserved for future topic index). Editing tags does NOT bump target version."
+    }
+  },
+  "additionalProperties": true,
+  "additionalPropertiesDescription": "Unknown keys are preserved in the lock file but otherwise ignored and do not affect output or hashing.",
+  "examples": [
+    {
+      "tags": ["testing", "ci"]
+    },
+    {
+      "tags": ["security", "authentication"],
+      "status": "draft",
+      "author": "team-a"
+    }
+  ],
+  "notes": [
+    "Front-matter block must be delimited by --- at start and end.",
+    "Example usage in a fragment file:",
+    "---",
+    "tags: [testing, ci]",
+    "---",
+    "Run the full test suite with npm test.",
+    "Empty front-matter (just ---, no content) is valid but has no effect."
+  ]
+}

@@ -1,0 +1,4 @@
+name: schema-design
+description: Meta-agent for sdlc workflow - schema-design
+model: balanced
+permissions: read-only

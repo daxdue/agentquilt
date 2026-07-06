@@ -1,0 +1,78 @@
+name: pr-quality-gate
+phase: verification
+description: |
+  All PRs must pass CI checks and code review before merge.
+  This is the primary quality gate enforced in CI workflow.
+enabled: true
+
+requiredChecks:
+  - TypeScript: tsc --project tsconfig.test.json (exits 0)
+  - Unit tests: npm test -- --run (all pass)
+  - Coverage: npm run coverage (meets threshold: 75% lines, 65% branches)
+  - Drift check: agentquilt check (exits 0)
+  - Human code review: at least 1 approval
+
+requiredApprovals: 1
+
+riskCriteria:
+  - type: architecture
+    condition: Changes to src/core/compiler.ts, src/core/configLoader.ts, or src/core/fragmentScanner.ts
+    level: high
+  - type: architecture
+    condition: Changes to agent manifest schema or lock file format
+    level: high
+  - type: architecture
+    condition: Changes to adapter system or model resolution
+    level: medium
+  - type: security
+    condition: Changes to input validation, path resolution, or YAML parsing
+    level: high
+  - type: security
+    condition: Changes affecting generated output that could influence agent behavior
+    level: high
+  - type: test
+    condition: Coverage drops below 70% lines
+    level: medium
+
+escalationPath:
+  - "@maintainers"
+  - "@cli-maintainers"
+
+aiAssistance:
+  enabled: true
+  agents:
+    - name: code-review-agent
+      role: Automated code review for correctness and security
+      tasks:
+        - Review diff for type safety issues and potential bugs
+        - Flag security risks (path traversal, injection, resource exhaustion)
+        - Check test coverage for changed functions (should have tests)
+        - Verify error handling exists for all paths
+        - Suggest simplifications and reuse opportunities
+      mustNotDo:
+        - Approve the PR (only humans can approve)
+        - Merge the PR
+        - Override CI gate failures
+      output: Inline review comments with findings and suggestions
+
+    - name: eval-agent
+      role: Validate compiled agent outputs for behavior regressions
+      tasks:
+        - If agent-definitions or fragment changes: compile agents and check for regressions
+        - Run static evals (prompt-presence checks) against golden outputs
+        - Flag semantic changes in compiled prompts (same words, different meaning)
+        - Run mock-response evals if available
+      mustNotDo:
+        - Approve behavior changes (only humans decide if regression is acceptable)
+      output: Eval results with any failures or warnings
+
+    - name: security-agent
+      role: Targeted security review for high-risk changes
+      tasks:
+        - If touching configLoader.ts or fragmentScanner.ts: review for path traversal risk
+        - Verify input validation boundaries exist for all user inputs
+        - Check for secrets in added test fixtures or example configs
+        - Flag hardcoded paths or assumptions that may break on Windows/macOS
+      mustNotDo:
+        - Approve security decisions (requires human security judgment)
+      output: Security findings with risk level and mitigation suggestions

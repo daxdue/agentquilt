@@ -1,0 +1,4 @@
+name: instruction-block-author
+description: Meta-agent for internal workflow - instruction-block-author
+model: balanced
+permissions: read-only

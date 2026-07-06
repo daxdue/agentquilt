@@ -1,0 +1,51 @@
+name: architecture-gate
+phase: architecture
+description: |
+  Non-trivial changes require an ADR. Required before implementation.
+  AI agents validate ADR necessity and generate drafts for human review.
+enabled: true
+
+requiredChecks:
+  - ADR present (if change affects architecture, source format, CI gates, security model, eval strategy, or release process)
+  - Alternatives considered
+  - Backward compatibility impact assessed
+  - Security impact documented
+  - Testing impact documented
+
+requiredApprovals: 1
+
+riskCriteria:
+  - type: architecture
+    condition: No ADR for schema format changes, manifest structure changes, or lock file changes
+    level: critical
+  - type: architecture
+    condition: CLI command name or binary rename without ADR
+    level: high
+  - type: security
+    condition: Changes to fragment scanning, input validation, or path resolution without security analysis
+    level: high
+  - type: process
+    condition: CI gate policy changes without documented rationale
+    level: medium
+
+escalationPath:
+  - "@maintainers"
+  - "@architecture-reviewers"
+
+aiAssistance:
+  enabled: true
+  agents:
+    - name: architecture-agent
+      role: ADR validation and draft generation
+      tasks:
+        - Check if change requires an ADR per CONTRIBUTING.md policy
+        - Validate ADR structure (context, decision, rationale, consequences)
+        - Flag missing rationale for positive/negative consequences
+        - Generate a draft ADR if one is required but missing (for human refinement)
+        - Highlight backward compatibility breaks
+        - Flag security implications (input validation, resource limits, side effects)
+      mustNotDo:
+        - Approve the architecture (requires human review)
+        - Finalize ADR content (must be authored by human)
+        - Bypass the ADR requirement
+      output: ADR completeness report + draft if needed

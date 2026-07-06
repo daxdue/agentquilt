@@ -1,0 +1,55 @@
+name: issue-intake
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  intake-notification:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate intake fields
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.issue.body || '';
+            const missing = [];
+            if (!/problem|Problem/i.test(body)) missing.push('Problem statement');
+            if (!/owner|Owner/i.test(body)) missing.push('Owner');
+            if (!/risk|Risk/i.test(body)) missing.push('Risk level');
+
+            if (missing.length > 0) {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `**Intake gate (G0): Missing required fields**\n\n${missing.map(f => `- [ ] ${f}`).join('\n')}\n\nPlease update the issue with these fields before proceeding to requirements. See [intake-gate.yaml](policies/gates/intake-gate.yaml) for the full checklist.\n\n**Authority:** Informational only — maintainer decides whether to proceed.`
+              });
+            }
+
+      - name: Post triage reminder comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## Issue Intake Gate
+
+This issue is ready for triage. Use Claude Code to invoke the **product-discovery agent** for automated analysis:
+
+1. Open this issue in Claude Code
+2. Select the **product-discovery** agent from the agents list
+3. Agent will analyze and suggest:
+   - Risk level assessment
+   - Missing required fields
+   - Potential duplicates
+   - Initial acceptance criteria
+
+See [.docs/PHASE_3_COMPLETION.md](.docs/PHASE_3_COMPLETION.md) for agent details.
+
+**Authority:** Agent suggests; maintainer decides.`
+            })

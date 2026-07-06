@@ -1,0 +1,4 @@
+name: supply-chain-risk
+description: Meta-agent for governance workflow - supply-chain-risk
+model: balanced
+permissions: read-only

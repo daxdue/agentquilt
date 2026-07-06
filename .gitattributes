@@ -1,0 +1,16 @@
+# normalize line endings everywhere — primary CRLF defense in the working tree
+* text=auto eol=lf
+.agentquilt/**/*.md text eol=lf
+
+# test fixtures with intentional CRLF/BOM content — leave byte-exact
+packages/agentquilt-cli/tests/fixtures/** -text
+
+# mark generated outputs (collapses diffs, signals "do not edit")
+AGENTS.md            linguist-generated=true
+CLAUDE.md            linguist-generated=true
+.claude/agents/*.md  linguist-generated=true
+# test-runner is hand-authored, not an AgentQuilt output
+.claude/agents/test-runner.md  -linguist-generated
+
+# lock: structured to rarely conflict; union as a free win where honored
+agentquilt.lock      linguist-generated=true merge=union

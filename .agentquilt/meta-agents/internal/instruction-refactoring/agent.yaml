@@ -1,0 +1,4 @@
+name: instruction-refactoring
+description: Meta-agent for internal workflow - instruction-refactoring
+model: balanced
+permissions: read-only

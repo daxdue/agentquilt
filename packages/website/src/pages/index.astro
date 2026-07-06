@@ -1,0 +1,191 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Features from '../components/Features.astro';
+import Problem from '../components/Problem.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import CodeShowcase from '../components/CodeShowcase.astro';
+import QuickStart from '../components/QuickStart.astro';
+import Footer from '../components/Footer.astro';
+
+// Fetch star count at build time — no client-side third-party request
+let stars = '0';
+try {
+  const res = await fetch('https://api.github.com/repos/daxdue/agentquilt');
+  if (res.ok) {
+    const data = await res.json();
+    const n: number = data.stargazers_count ?? 0;
+    stars = n >= 1000 ? (n / 1000).toFixed(n % 1000 === 0 ? 0 : 1) + 'k' : String(n);
+  }
+} catch {}
+---
+
+<Base title="AgentQuilt — Agent Instructions as Code">
+  <!-- ambient glow -->
+  <div style="position:fixed;top:-140px;left:0;right:0;height:620px;background:radial-gradient(ellipse at 60% 0%,rgba(91,140,255,.18),transparent 60%),radial-gradient(ellipse at 85% 20%,rgba(155,108,255,.14),transparent 55%);pointer-events:none;filter:blur(4px);z-index:0"></div>
+
+  <div style="position:relative;z-index:1">
+    <Nav stars={stars} />
+    <main>
+      <Hero />
+      <Features />
+      <Problem />
+      <HowItWorks />
+      <CodeShowcase />
+      <QuickStart />
+    </main>
+    <Footer />
+  </div>
+</Base>
+
+<script>
+// ─── Data ───────────────────────────────────────────────────────────────────
+const A = 'var(--accent)', M = 'var(--muted)', T = 'var(--term-text)', F = 'var(--fg)', G = 'var(--cyan)';
+
+const TERM_LINES = [
+  { mark: '$', markColor: A, body: 'agentquilt init --platform claude', color: F, weight: 500, pad: '0' },
+  { mark: '✓', markColor: A, body: 'created .agentquilt/config.yaml',   color: T, weight: 400, pad: '14px' },
+  { mark: '✓', markColor: A, body: 'created .agentquilt/agents/',       color: T, weight: 400, pad: '14px' },
+  { mark: '$', markColor: A, body: 'agentquilt agents add reviewer',    color: F, weight: 500, pad: '0' },
+  { mark: '✓', markColor: A, body: 'agent.yaml + 010-role.md',          color: T, weight: 400, pad: '14px' },
+  { mark: '$', markColor: A, body: 'agentquilt build',                  color: F, weight: 500, pad: '0' },
+  { mark: '✓', markColor: A, body: 'compiled .claude/agents/reviewer.md', color: T, weight: 400, pad: '14px' },
+  { mark: '✓', markColor: A, body: 'wrote agentquilt.lock',            color: T, weight: 400, pad: '14px' },
+  { mark: '',  markColor: A, body: 'Built 6 targets · 0 conflicts',     color: G, weight: 700, pad: '0' },
+  { mark: '$', markColor: A, body: 'agentquilt check',                  color: F, weight: 500, pad: '0' },
+  { mark: '',  markColor: A, body: 'No drift — outputs in sync',        color: G, weight: 700, pad: '0' },
+];
+
+const TAB_SETS = [
+  [ // Init
+    { mark: '$', markColor: A, body: 'agentquilt init --platform claude', color: F, weight: 500, pad: '0' },
+    { mark: '✓', markColor: A, body: 'created .agentquilt/config.yaml', color: T, weight: 400, pad: '14px' },
+    { mark: '✓', markColor: A, body: 'scaffolded .agentquilt/agents/', color: T, weight: 400, pad: '14px' },
+    { mark: '✓', markColor: A, body: 'wrote .gitattributes',          color: T, weight: 400, pad: '14px' },
+    { mark: '',  markColor: A, body: 'Ready — project scaffolded.',    color: G, weight: 700, pad: '0' },
+  ],
+  [ // Build
+    { mark: '$', markColor: A, body: 'agentquilt build',              color: F, weight: 500, pad: '0' },
+    { mark: '✓', markColor: A, body: 'loaded 3 blocks · reviewer',    color: T, weight: 400, pad: '14px' },
+    { mark: '✓', markColor: A, body: 'resolved model tier · balanced', color: T, weight: 400, pad: '14px' },
+    { mark: '✓', markColor: A, body: 'compiled .claude/agents/reviewer.md', color: T, weight: 400, pad: '14px' },
+    { mark: '',  markColor: A, body: 'Built 6 targets · wrote agentquilt.lock', color: G, weight: 700, pad: '0' },
+  ],
+  [ // Check
+    { mark: '$', markColor: A, body: 'agentquilt check',             color: F, weight: 500, pad: '0' },
+    { mark: '»', markColor: M, body: 'comparing sources ↔ outputs',  color: M, weight: 400, pad: '0' },
+    { mark: '✓', markColor: A, body: '.claude/agents/reviewer.md fresh', color: T, weight: 400, pad: '14px' },
+    { mark: '✓', markColor: A, body: 'agentquilt.lock verified',     color: T, weight: 400, pad: '14px' },
+    { mark: '',  markColor: A, body: 'Pass — 0 drift (exit 0)',      color: G, weight: 700, pad: '0' },
+  ],
+  [ // Watch
+    { mark: '$', markColor: A, body: 'agentquilt build --watch',     color: F, weight: 500, pad: '0' },
+    { mark: '»', markColor: M, body: 'watching .agentquilt/ …',      color: M, weight: 400, pad: '0' },
+    { mark: '✓', markColor: A, body: '020-style.md changed',         color: T, weight: 400, pad: '14px' },
+    { mark: '✓', markColor: A, body: 'rebuilt 6 targets',            color: T, weight: 400, pad: '14px' },
+    { mark: '',  markColor: A, body: 'Up to date · watching',        color: G, weight: 700, pad: '0' },
+  ],
+];
+
+// ─── Helpers ────────────────────────────────────────────────────────────────
+function renderLines(lines: typeof TERM_LINES): string {
+  return lines.map(ln => `
+    <div style="display:flex;gap:9px;animation:fadeup .18s ease;padding-left:${ln.pad}">
+      <span style="color:${ln.markColor};flex:none;width:13px">${ln.mark}</span>
+      <span style="color:${ln.color};font-weight:${ln.weight}">${ln.body}</span>
+    </div>`).join('');
+}
+
+// ─── Hero terminal animation ─────────────────────────────────────────────────
+// Runs once on page load, append-only, stops when all lines are visible.
+const heroEl = document.getElementById('hero-terminal');
+let t = 0;
+let renderedCount = 0;
+let heroInterval: ReturnType<typeof setInterval> | null = null;
+
+function tickHero() {
+  if (!heroEl) return;
+  const total = TERM_LINES.length;
+  const visible = Math.min(t, total);
+
+  while (renderedCount < visible) {
+    const ln = TERM_LINES[renderedCount];
+    const row = document.createElement('div');
+    row.style.cssText = `display:flex;gap:9px;animation:fadeup .18s ease;padding-left:${ln.pad}`;
+    row.innerHTML = `<span style="color:${ln.markColor};flex:none;width:13px">${ln.mark}</span><span style="color:${ln.color};font-weight:${ln.weight}">${ln.body}</span>`;
+    heroEl.insertBefore(row, heroEl.lastElementChild?.id === 'hero-cursor' ? heroEl.lastElementChild : null);
+    renderedCount++;
+  }
+
+  let cursorEl = document.getElementById('hero-cursor');
+  if (visible < total) {
+    if (!cursorEl) {
+      cursorEl = document.createElement('div');
+      cursorEl.id = 'hero-cursor';
+      cursorEl.style.cssText = 'display:flex;gap:9px';
+      cursorEl.innerHTML = '<span style="flex:none;width:13px;color:var(--accent)">❯</span><span style="display:inline-block;width:9px;height:17px;background:var(--accent);animation:blink 1s steps(1) infinite"></span>';
+      heroEl.appendChild(cursorEl);
+    }
+  } else {
+    cursorEl?.remove();
+    if (heroInterval) clearInterval(heroInterval);
+  }
+
+  t++;
+}
+
+tickHero();
+heroInterval = setInterval(tickHero, 300);
+
+// ─── "How it works" tabs ──────────────────────────────────────────────────────
+const howTermEl = document.getElementById('how-terminal');
+const tabBtns = document.querySelectorAll<HTMLButtonElement>('.how-tab');
+let activeTab = 0;
+
+function renderHowTab(idx: number) {
+  activeTab = idx;
+  if (howTermEl) howTermEl.innerHTML = renderLines(TAB_SETS[idx]);
+  tabBtns.forEach((btn) => {
+    const isActive = Number(btn.dataset.tab) === idx;
+    btn.style.borderBottom = isActive ? '2px solid var(--accent)' : '2px solid transparent';
+    btn.style.color = isActive ? 'var(--fg)' : 'var(--muted)';
+  });
+}
+
+tabBtns.forEach((btn) => {
+  btn.addEventListener('click', () => renderHowTab(Number(btn.dataset.tab)));
+});
+
+renderHowTab(0);
+
+// ─── Copy install button ──────────────────────────────────────────────────────
+const copyBtn = document.getElementById('copy-install-btn');
+const copyVisible = document.getElementById('copy-visible');
+let copyTimeout: ReturnType<typeof setTimeout> | null = null;
+
+copyBtn?.addEventListener('click', () => {
+  try { navigator.clipboard?.writeText('npm install -g agentquilt'); } catch {}
+  if (copyVisible) copyVisible.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>copied!`;
+  if (copyTimeout) clearTimeout(copyTimeout);
+  copyTimeout = setTimeout(() => {
+    if (copyVisible) copyVisible.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>copy`;
+  }, 1500);
+});
+
+// ─── Theme toggle ────────────────────────────────────────────────────────────
+const root = document.documentElement;
+const themeBtn = document.getElementById('theme-toggle');
+
+const stored = localStorage.getItem('aq-theme');
+if (stored) root.setAttribute('data-theme', stored);
+
+themeBtn?.addEventListener('click', () => {
+  const current = root.getAttribute('data-theme') || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  root.setAttribute('data-theme', next);
+  localStorage.setItem('aq-theme', next);
+});
+
+// Star count is baked in at build time (no client-side GitHub request)
+</script>

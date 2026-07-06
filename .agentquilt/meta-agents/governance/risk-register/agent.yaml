@@ -1,0 +1,4 @@
+name: risk-register
+description: Meta-agent for governance workflow - risk-register
+model: balanced
+permissions: read-only

@@ -1,15 +1,8 @@
 {
-  "name": "agentquilt",
-  "version": "0.0.1",
-  "description": "AgentQuilt — a framework for maintaining AI agent instruction files as structured, composable, validated source files that compile deterministically into a deployable prompt. Placeholder release; the agentctl CLI is in active development.",
-  "keywords": [
-    "ai",
-    "agents",
-    "prompt-engineering",
-    "llm",
-    "cli",
-    "agent-instructions"
-  ],
+  "name": "agentquilt-workspace",
+  "version": "0.0.0",
+  "private": true,
+  "description": "AgentQuilt monorepo — workspace root for the framework and related tools",
   "homepage": "https://agentquilt.dev",
   "bugs": {
     "url": "https://github.com/daxdue/agentquilt/issues"
@@ -20,17 +13,16 @@
   },
   "license": "MIT",
   "author": "daxdue",
-  "type": "commonjs",
-  "main": "index.js",
-  "files": [
-    "index.js",
-    "README.md",
-    "LICENSE"
+  "workspaces": [
+    "packages/*"
   ],
   "engines": {
     "node": ">=18"
   },
   "scripts": {
-    "test": "echo \"no tests yet\""
+    "build": "npm run build -w packages/agentquilt-cli",
+    "test": "npm test -w packages/agentquilt-cli",
+    "website:dev": "npm run dev -w packages/website",
+    "website:build": "npm run build -w packages/website"
   }
 }

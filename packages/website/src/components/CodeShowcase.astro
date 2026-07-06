@@ -1,0 +1,75 @@
+---
+---
+
+<section id="code" style="max-width:1220px;margin:0 auto;padding:72px 28px;border-top:1px solid var(--border)">
+  <p style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 16px">The source model</p>
+  <h2 style="font-size:clamp(28px,3.8vw,38px);font-weight:700;letter-spacing:-0.025em;margin:0 0 12px;line-height:1.12;max-width:640px">A manifest, some blocks, a generated agent.</h2>
+  <p style="font-family:'Geist Mono',monospace;font-size:13px;color:var(--muted);margin:0 0 40px">Agent = Manifest + Instruction Blocks + Generated Prompt</p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
+
+    <!-- left column -->
+    <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:20px">
+
+      <div style="background:#080b15;border:1px solid var(--border);border-radius:14px;overflow:hidden">
+        <div style="padding:11px 16px;border-bottom:1px solid var(--term-seam);font-family:'Geist Mono',monospace;font-size:12px;color:#c9ced6;background:color-mix(in srgb,var(--term-bg) 60%,var(--surface))">.agentquilt/agents/reviewer/agent.yaml</div>
+        <div style="padding:18px 20px;overflow-x:auto;font-family:'Geist Mono',monospace;font-size:12.5px;line-height:1.75">
+          <div><span style="color:var(--cyan)">description</span><span style="color:#8b929c">:</span> <span style="color:#c9ced6">Code reviewer for pull requests</span></div>
+          <div><span style="color:var(--cyan)">model</span><span style="color:#8b929c">:</span> <span style="color:#c9ced6">balanced</span>&nbsp;&nbsp;<span style="color:#6b7079"># frontier | balanced | fast</span></div>
+          <div><span style="color:var(--cyan)">permissions</span><span style="color:#8b929c">:</span> <span style="color:#c9ced6">workspace</span>&nbsp;&nbsp;<span style="color:#6b7079"># read-only | workspace | full</span></div>
+          <div><span style="color:var(--cyan)">x-claude</span><span style="color:#8b929c">:</span></div>
+          <div style="color:#c9ced6">&nbsp;&nbsp;tools: [Read, Grep, Edit]</div>
+        </div>
+      </div>
+
+      <div style="background:#080b15;border:1px solid var(--border);border-radius:14px;overflow:hidden;flex:1">
+        <div style="padding:11px 16px;border-bottom:1px solid var(--term-seam);font-family:'Geist Mono',monospace;font-size:12px;color:#c9ced6;background:color-mix(in srgb,var(--term-bg) 60%,var(--surface))">.agentquilt/agents/reviewer/020-style.md</div>
+        <div style="padding:18px 20px;overflow-x:auto;font-family:'Geist Mono',monospace;font-size:12.5px;line-height:1.75">
+          <div style="color:#8b929c">---</div>
+          <div><span style="color:var(--cyan)">tags</span><span style="color:#8b929c">:</span> <span style="color:#c9ced6">[style, review]</span></div>
+          <div style="color:#8b929c">---</div>
+          <div style="color:var(--purple);font-weight:700">## Style</div>
+          <div style="color:#c9ced6">- Prefer composition over inheritance.</div>
+          <div style="color:#c9ced6">- Keep functions under 40 lines.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- right column -->
+    <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:20px">
+
+      <div style="background:#080b15;border:1px solid var(--border);border-radius:14px;overflow:hidden">
+        <div style="padding:11px 16px;border-bottom:1px solid var(--term-seam);font-family:'Geist Mono',monospace;font-size:12px;color:#6a7285">.agentquilt/config.yaml</div>
+        <div style="padding:18px 20px;overflow-x:auto;font-family:'Geist Mono',monospace;font-size:12.5px;line-height:1.7">
+          <div><span style="color:var(--cyan)">version</span><span style="color:#8b929c">:</span> <span style="color:#e0b878">1</span></div>
+          <div><span style="color:var(--cyan)">sourceDir</span><span style="color:#8b929c">:</span> <span style="color:#c9ced6">.agentquilt/agents</span></div>
+          <div><span style="color:var(--cyan)">defaultModelTier</span><span style="color:#8b929c">:</span> <span style="color:#c9ced6">balanced</span></div>
+          <div><span style="color:var(--cyan)">modelTiers</span><span style="color:#8b929c">:</span></div>
+          <div style="color:#c9ced6">&nbsp;&nbsp;balanced: &#123; claude: claude-sonnet-4-6 &#125;</div>
+          <div><span style="color:var(--cyan)">targets</span><span style="color:#8b929c">:</span></div>
+          <div style="color:#c9ced6">&nbsp;&nbsp;- output: AGENTS.md&nbsp;&nbsp;<span style="color:#6b7079"># doc target</span></div>
+          <div style="color:#c9ced6">&nbsp;&nbsp;- kind: agent-definitions</div>
+          <div style="color:#c9ced6">&nbsp;&nbsp;&nbsp;&nbsp;agents: [reviewer]</div>
+          <div style="color:#c9ced6">&nbsp;&nbsp;&nbsp;&nbsp;platforms: [claude]</div>
+        </div>
+      </div>
+
+      <div style="background:#080b15;border:1px solid var(--border);border-radius:14px;overflow:hidden;flex:1">
+        <div style="padding:11px 16px;border-bottom:1px solid var(--term-seam);font-family:'Geist Mono',monospace;font-size:12px;color:#6a7285">.claude/agents/reviewer.md <span style="color:var(--accent)">(generated)</span></div>
+        <div style="padding:18px 20px;overflow-x:auto;font-family:'Geist Mono',monospace;font-size:12.5px;line-height:1.7">
+          <div style="color:#8b929c">---</div>
+          <div><span style="color:var(--cyan)">name</span><span style="color:#8b929c">:</span> <span style="color:#c9ced6">reviewer</span></div>
+          <div><span style="color:var(--cyan)">description</span><span style="color:#8b929c">:</span> <span style="color:#c9ced6">Code reviewer for pull requests</span></div>
+          <div><span style="color:var(--cyan)">model</span><span style="color:#8b929c">:</span> <span style="color:#c9ced6">claude-sonnet-4-6</span></div>
+          <div style="color:#8b929c">---</div>
+          <div style="color:#6b7079"># compiled by agentquilt &middot; do not edit</div>
+          <div style="color:var(--purple);font-weight:700;margin-top:4px">## Style</div>
+          <div style="color:#c9ced6">- Prefer composition over inheritance.</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>

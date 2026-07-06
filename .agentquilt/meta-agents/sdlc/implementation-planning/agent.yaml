@@ -1,0 +1,4 @@
+name: implementation-planning
+description: Meta-agent for sdlc workflow - implementation-planning
+model: balanced
+permissions: read-only

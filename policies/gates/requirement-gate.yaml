@@ -1,0 +1,45 @@
+name: requirement-gate
+phase: requirement
+description: |
+  Requirements are testable, complete, and traceable. Required before
+  architecture work begins. AI agents validate completeness and flag ambiguities.
+enabled: true
+
+requiredChecks:
+  - Acceptance criteria are testable and unambiguous
+  - Non-functional requirements considered (perf, security, backward compat)
+  - Requirement ID assigned (REQ-XXX)
+  - Traceability documented (links to existing tests or planned tests)
+  - Change scope bounded (affects which files/modules?)
+
+requiredApprovals: 1
+
+riskCriteria:
+  - type: scope
+    condition: Acceptance criteria are vague or untestable
+    level: high
+  - type: architecture
+    condition: Schema or CLI command changes without explicit breaking change note
+    level: high
+  - type: security
+    condition: Input validation or access control changes without security review
+    level: high
+
+escalationPath:
+  - "@maintainers"
+
+aiAssistance:
+  enabled: true
+  agents:
+    - name: requirements-agent
+      role: Validate requirements completeness and testability
+      tasks:
+        - Flag acceptance criteria that are not testable (too vague, no pass/fail condition)
+        - Check for non-functional requirements (security, performance, backward compat)
+        - Generate traceability links to existing tests in tests/ directory
+        - Identify missing acceptance criteria (e.g., error cases, edge cases)
+        - Flag breaking changes and suggest migration notes
+      mustNotDo:
+        - Approve the requirements (requires human judgment)
+        - Change the acceptance criteria (must stay as authored)
+      output: Completeness report with gaps and suggestions

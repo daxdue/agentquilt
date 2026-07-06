@@ -1,0 +1,4 @@
+description: "Create a new AgentQuilt agent or skill from a plain-language description. Scaffolds the source directory, writes the manifest and instruction fragments, registers the target in config.yaml, and compiles it. Use when the user asks to create, add, or init a new agent or skill in a repository that uses AgentQuilt."
+name: new-agent
+model: inherit
+permissions: workspace
