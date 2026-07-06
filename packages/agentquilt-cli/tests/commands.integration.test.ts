@@ -4,6 +4,7 @@ import path from "path";
 import os from "os";
 import { initProject, generateConfig } from "../src/commands/init";
 import { addAgentAction } from "../src/commands/agents/add";
+import { addSkillAction } from "../src/commands/skills/add";
 import { discoverAgentDirs, loadAgentDir } from "../src/core/agentLoader";
 import { resolveModel } from "../src/core/modelResolver";
 import type { AgentQuiltConfig } from "../src/schemas/config.schema";
@@ -63,6 +64,19 @@ describe("agentquilt init", () => {
 
     expect(mockExit).toHaveBeenCalledWith(2);
   });
+
+  it("creates the .agentquilt/skills/ directory when agentskills selected", () => {
+    initProject(tmpDir, ["agentskills"]);
+
+    expect(existsSync(path.join(tmpDir, ".agentquilt", "skills"))).toBe(true);
+    expect(mockExit).toHaveBeenCalledWith(0);
+  });
+
+  it("does not create .agentquilt/skills/ for claude-only projects", () => {
+    initProject(tmpDir, ["claude"]);
+
+    expect(existsSync(path.join(tmpDir, ".agentquilt", "skills"))).toBe(false);
+  });
 });
 
 describe("generateConfig", () => {
@@ -78,9 +92,17 @@ describe("generateConfig", () => {
     expect(config).toContain("claude");
   });
 
-  it("includes agentskills model mapping when agentskills selected", () => {
+  it("generates a dedicated skills target when agentskills selected", () => {
     const config = generateConfig(["agentskills"]);
-    expect(config).toContain("agentskills");
+    expect(config).toContain("sourceDir: skills");
+    expect(config).toContain("platforms: [agentskills]");
+  });
+
+  it("keeps agents and skills targets separate when both platforms selected", () => {
+    const config = generateConfig(["claude", "agentskills"]);
+    expect(config).toContain("platforms: [claude]");
+    expect(config).toContain("platforms: [agentskills]");
+    expect(config).not.toContain("platforms: [claude, agentskills]");
   });
 
   it("leaves defaultModelTier commented out so agents inherit the platform model", () => {
@@ -170,6 +192,66 @@ describe("agentquilt agents add", () => {
   });
 
 
+});
+
+// ---------------------------------------------------------------------------
+// agentquilt skills add
+// ---------------------------------------------------------------------------
+
+describe("agentquilt skills add", () => {
+  it("creates agent.yaml and 010-instructions.md at the default skills location", () => {
+    addSkillAction("my-skill", { cwd: tmpDir });
+
+    expect(
+      existsSync(path.join(tmpDir, ".agentquilt", "skills", "my-skill", "agent.yaml"))
+    ).toBe(true);
+    expect(
+      existsSync(path.join(tmpDir, ".agentquilt", "skills", "my-skill", "010-instructions.md"))
+    ).toBe(true);
+    expect(mockExit).toHaveBeenCalledWith(0);
+  });
+
+  it("manifest sets model: inherit and no permissions", () => {
+    addSkillAction("inherit-skill", { cwd: tmpDir });
+
+    const content = readFileSync(
+      path.join(tmpDir, ".agentquilt", "skills", "inherit-skill", "agent.yaml"),
+      "utf8"
+    );
+    expect(content).toContain("description:");
+    expect(content).toMatch(/^model: inherit/m);
+    expect(content).not.toContain("permissions:");
+  });
+
+  it("resolves the skills dir as a sibling of a configured sourceDir", () => {
+    writeFileSync(
+      path.join(tmpDir, "agentquilt.config.yaml"),
+      [
+        "version: 1",
+        "sourceDir: custom/agents",
+        "targets:",
+        "  - output: AGENTS.md",
+        "    include: [_shared]",
+      ].join("\n"),
+      "utf8"
+    );
+    mkdirSync(path.join(tmpDir, "custom", "agents", "_shared"), { recursive: true });
+
+    addSkillAction("my-skill", { cwd: tmpDir });
+
+    expect(
+      existsSync(path.join(tmpDir, "custom", "skills", "my-skill", "agent.yaml"))
+    ).toBe(true);
+  });
+
+  it("exits with code 2 when the skill already exists", () => {
+    addSkillAction("dupe-skill", { cwd: tmpDir });
+    mockExit.mockClear();
+
+    addSkillAction("dupe-skill", { cwd: tmpDir });
+
+    expect(mockExit).toHaveBeenCalledWith(2);
+  });
 });
 
 // ---------------------------------------------------------------------------

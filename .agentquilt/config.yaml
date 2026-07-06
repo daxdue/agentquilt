@@ -29,6 +29,15 @@ targets:
     platforms:
       - claude
 
+  # Repo-level skill: LLM-assisted agent authoring, compiled to the
+  # vendor-neutral Agent Skills format so Claude Code and Codex can both use it
+  - kind: agent-definitions
+    sourceDir: skills  # resolved against .agentquilt/ (parent of sourceDir)
+    agents:
+      - new-agent
+    platforms:
+      - agentskills
+
   # Governance meta-agents (AI-assisted gate policies)
   - kind: agent-definitions
     sourceDir: meta-agents  # resolved against .agentquilt/ (parent of sourceDir)

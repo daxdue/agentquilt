@@ -249,18 +249,24 @@ export function validateConfig(config: AgentQuiltConfig, sourceDir: string): boo
     }
   }
 
-  // Rule C: global uniqueness of agent names (across all targets)
-  const allAgentNames = new Set<string>();
+  // Rule C: global uniqueness of agent names (across all targets). Two
+  // targets may intentionally list the same agent (e.g. compiling one record
+  // for several platforms), so uniqueness is per source directory: the same
+  // name in the same source root listed twice is fine, but two different
+  // source roots must not both claim a name.
+  const agentNameRoots = new Map<string, string>();
   for (const target of config.targets) {
     if (target.kind !== "agent-definitions") continue;
+    const targetSourceDir = target.sourceDir ? path.resolve(sourceDir, "..", target.sourceDir) : sourceDir;
     const agentNames = target.agents === "*"
-      ? discoverAgentDirsForValidation(sourceDir).map((d) => path.basename(d))
+      ? discoverAgentDirsForValidation(targetSourceDir).map((d) => path.basename(d))
       : target.agents;
     for (const name of agentNames) {
-      if (allAgentNames.has(name)) {
+      const existingRoot = agentNameRoots.get(name);
+      if (existingRoot !== undefined && existingRoot !== targetSourceDir) {
         agentErrors.push(`Duplicate agent name: "${name}"`);
       }
-      allAgentNames.add(name);
+      agentNameRoots.set(name, targetSourceDir);
     }
   }
 

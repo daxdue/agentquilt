@@ -3,8 +3,9 @@ import { mkdirSync, writeFileSync, rmSync } from "fs";
 import path from "path";
 import os from "os";
 
-// Importing the claude adapter registers it in the global adapter registry
+// Importing the adapters registers them in the global adapter registry
 import "../src/core/adapters/claude";
+import "../src/core/adapters/agentskills";
 
 import { compileAgentDefinitionsTarget } from "../src/core/agentCompiler";
 import type { AgentDefinitionsTarget } from "../src/core/agentCompiler";
@@ -87,6 +88,26 @@ describe("compileAgentDefinitionsTarget", () => {
 
     expect(claudeOut.content).toMatch(/^---/);
     expect(claudeOut.content).not.toContain("<!-- agentquilt:");
+  });
+
+  it("agentskills SKILL.md starts with --- (not an HTML comment) so frontmatter parses", async () => {
+    scaffoldAgent(tmpDir, "clean-skill", {
+      yaml: 'description: "A clean skill"\nmodel: inherit\n',
+    });
+
+    const result = await compileAgentDefinitionsTarget(
+      makeTarget(["clean-skill"], ["agentskills"]),
+      makeConfig(),
+      tmpDir,
+      tmpDir
+    );
+
+    const skillOut = result.outputs.get("clean-skill")!.find((o) =>
+      o.path.includes(".agents/skills/")
+    )!;
+
+    expect(skillOut.content).toMatch(/^---\n/);
+    expect(skillOut.content).not.toContain("<!-- agentquilt:");
   });
 
   it("claude adapter output includes agent name, description, and body text", async () => {

@@ -86,14 +86,16 @@ export async function compileAgentDefinitionsTarget(
     // Finalize agent version with output entries
     const finalVersion = computeAgentVersion(record.name, bodyHash, metaHash, outputEntries);
 
-    // Prepend HTML comment header to adapter outputs (except Claude, which needs clean YAML start for discovery)
+    // Prepend HTML comment header to adapter outputs — except outputs that
+    // begin with YAML frontmatter (.claude/agents/*.md, SKILL.md): platform
+    // parsers require the frontmatter delimiter at byte 0, and their bodies
+    // are loaded into model context, so a banner would both break parsing and
+    // pollute the prompt. Provenance for those lives in agentquilt.lock.
     for (const out of adapterOutputsByPlatform) {
-      // Claude Code agents must start with --- for agent discovery; skip HTML comment for claude adapter
-      if (out.platform !== "claude") {
+      if (!out.content.startsWith("---\n")) {
         const header = `<!-- agentquilt: generated file — do not edit. version=${finalVersion} · regenerate: npx agentquilt build -->\n`;
         out.content = `${header}${out.content}`;
       }
-      // For Claude adapter, content starts directly with --- (YAML frontmatter)
     }
 
     // Store adapter outputs in allOutputs map for later retrieval

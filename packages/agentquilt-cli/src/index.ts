@@ -5,6 +5,7 @@ import { registerInitCommand } from "./commands/init.js";
 import { registerBuildCommand } from "./commands/build.js";
 import { registerCheckCommand } from "./commands/check.js";
 import { registerAgentsCommand } from "./commands/agents/index.js";
+import { registerSkillsCommand } from "./commands/skills/index.js";
 import "./core/adapters/claude.js";
 import "./core/adapters/agentskills.js";
 
@@ -19,6 +20,7 @@ registerInitCommand(program);
 registerBuildCommand(program);
 registerCheckCommand(program);
 registerAgentsCommand(program);
+registerSkillsCommand(program);
 
 program.parse(process.argv);
 

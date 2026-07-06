@@ -5,6 +5,7 @@ import { findConfigFile, loadConfig, validateConfig, ConfigError } from "../core
 import { compile } from "../core/compiler.js";
 import { compileAgentDefinitionsTarget } from "../core/agentCompiler.js";
 import { createLock, readLock, diffLock } from "../core/lockWriter.js";
+import { cyan, dim, green, sym, formatDuration, createSpinner } from "../ui/terminal.js";
 
 interface CheckOptions {
   config?: string;
@@ -32,31 +33,46 @@ export function registerCheckCommand(program: Command): void {
 async function checkAction(options: CheckOptions): Promise<void> {
   try {
     const cwd = options.cwd || process.cwd();
+    const startedAt = performance.now();
 
-    // Find and load config
-    const configPath = options.config || findConfigFile(cwd);
-    const config = loadConfig(configPath);
-    const sourceDir = path.join(cwd, config.sourceDir);
+    // Compile everything in memory before any output, so the spinner never
+    // interleaves with result lines.
+    const spinner = createSpinner("Checking for drift…");
+    if (!options.quiet) spinner.start();
 
-    // Validate config
-    validateConfig(config, sourceDir);
-
-    // Compile document targets (in-memory)
-    const result = await compile(config, sourceDir);
-    const allFragmentMap = new Map(result.fragmentMap);
+    let result: Awaited<ReturnType<typeof compile>>;
+    const allFragmentMap = new Map<string, any>();
     let agentRecords: any[] = [];
 
-    // Compile agent-definitions targets
-    for (const target of config.targets) {
-      if (target.kind !== "agent-definitions") continue;
+    try {
+      // Find and load config
+      const configPath = options.config || findConfigFile(cwd);
+      const config = loadConfig(configPath);
+      const sourceDir = path.join(cwd, config.sourceDir);
 
-      const agentResult = await compileAgentDefinitionsTarget(target, config, sourceDir, cwd);
-      agentRecords.push(...agentResult.agentRecords);
+      // Validate config
+      validateConfig(config, sourceDir);
 
-      // Merge fragment maps
-      for (const [id, meta] of agentResult.fragmentMap) {
+      // Compile document targets (in-memory)
+      result = await compile(config, sourceDir);
+      for (const [id, meta] of result.fragmentMap) {
         allFragmentMap.set(id, meta);
       }
+
+      // Compile agent-definitions targets
+      for (const target of config.targets) {
+        if (target.kind !== "agent-definitions") continue;
+
+        const agentResult = await compileAgentDefinitionsTarget(target, config, sourceDir, cwd);
+        agentRecords.push(...agentResult.agentRecords);
+
+        // Merge fragment maps
+        for (const [id, meta] of agentResult.fragmentMap) {
+          allFragmentMap.set(id, meta);
+        }
+      }
+    } finally {
+      spinner.stop();
     }
 
     const newLock = createLock(allFragmentMap, result.targets, agentRecords);
@@ -69,7 +85,7 @@ async function checkAction(options: CheckOptions): Promise<void> {
 
       if (!existsSync(outputPath)) {
         if (!options.quiet) {
-          console.error(`✗ ${target.output}: file does not exist`);
+          console.error(`${sym.fail} ${target.output}: file does not exist`);
         }
         hasDrift = true;
         continue;
@@ -78,20 +94,20 @@ async function checkAction(options: CheckOptions): Promise<void> {
       const diskContent = readFileSync(outputPath, "utf8");
       if (diskContent !== target.content) {
         if (!options.quiet) {
-          console.error(`✗ ${target.output}: content differs`);
+          console.error(`${sym.fail} ${target.output}: content differs`);
           console.error(
-            `  Expected version: ${target.version}`
+            dim(`  Expected version: ${target.version}`)
           );
           // Try to extract version from disk for comparison
           const versionMatch = diskContent.match(/version=([a-f0-9-]+)/);
           if (versionMatch) {
-            console.error(`  Disk version:     ${versionMatch[1]}`);
+            console.error(dim(`  Disk version:     ${versionMatch[1]}`));
           }
-          console.error(`  Regenerate with: npx agentquilt build`);
+          console.error(`  Regenerate with: ${cyan("npx agentquilt build")}`);
         }
         hasDrift = true;
       } else if (!options.quiet) {
-        console.log(`✓ ${target.output} matches`);
+        console.log(`${sym.ok} ${target.output} ${dim("matches")}`);
       }
     }
 
@@ -101,15 +117,15 @@ async function checkAction(options: CheckOptions): Promise<void> {
 
     if (!diskLock) {
       if (!options.quiet) {
-        console.error(`✗ agentquilt.lock: file does not exist`);
-        console.error(`  Regenerate with: npx agentquilt build`);
+        console.error(`${sym.fail} agentquilt.lock: file does not exist`);
+        console.error(`  Regenerate with: ${cyan("npx agentquilt build")}`);
       }
       hasDrift = true;
     } else {
       const diff = diffLock(diskLock, newLock);
       if (diff.changed) {
         if (!options.quiet) {
-          console.error(`✗ agentquilt.lock: content differs`);
+          console.error(`${sym.fail} agentquilt.lock: content differs`);
           if (diff.fragmentChanges.added.length > 0) {
             console.error(`  Added fragments: ${diff.fragmentChanges.added.join(", ")}`);
           }
@@ -137,34 +153,36 @@ async function checkAction(options: CheckOptions): Promise<void> {
           if (diff.agentChanges.modified.length > 0) {
             console.error(`  Modified agents: ${diff.agentChanges.modified.join(", ")}`);
           }
-          console.error(`  Regenerate with: npx agentquilt build`);
+          console.error(`  Regenerate with: ${cyan("npx agentquilt build")}`);
         }
         hasDrift = true;
       } else if (!options.quiet) {
-        console.log(`✓ agentquilt.lock matches`);
+        console.log(`${sym.ok} agentquilt.lock ${dim("matches")}`);
       }
     }
 
     if (!options.quiet && !hasDrift) {
-      console.log(`All targets up to date.`);
+      console.log(
+        `${green("All targets up to date.")} ${dim(`(checked in ${formatDuration(performance.now() - startedAt)})`)}`
+      );
     }
 
     process.exit(hasDrift ? 1 : 0);
   } catch (err) {
     if (err instanceof ConfigError) {
-      console.error(`✗ ${err.message}`);
+      console.error(`${sym.fail} ${err.message}`);
       process.exit(2);
     }
 
     if (err instanceof Error) {
-      console.error(`✗ Error: ${err.message}`);
+      console.error(`${sym.fail} Error: ${err.message}`);
       if ((err as any).code === "ENOENT" || (err as any).code === "EACCES") {
         process.exit(3);
       }
       process.exit(2);
     }
 
-    console.error(`✗ Unknown error`);
+    console.error(`${sym.fail} Unknown error`);
     process.exit(3);
   }
 }

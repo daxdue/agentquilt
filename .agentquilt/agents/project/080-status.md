@@ -6,7 +6,7 @@
 - Agent compiler: metadata hashing, adapter system, per-platform serialization
 - Claude and AgentSkills adapters (v1.1 addendum)
 - Lock writer and drift checker
-- CLI: init, build, check, agents add, agents list
+- CLI: init, build (with --watch), check, agents add, agents list
 
 [DONE] **Completed (Phase 3.0 — Agent Scaffolding & Discovery)**
 - 44 meta-agents scaffolded across 5 categories (governance, SDLC, STLC, release, internal)
@@ -62,7 +62,6 @@
 - Week 2: Lint rules, semantic diff, additional enforcement
 - Week 3: Eval runner, regression testing
 - Week 4: Release packaging, migration tools
-- [DEFERRED] `agentquilt build --watch` — file-watching mode (requires chokidar or equivalent)
 - [DEFERRED] Codex adapter — `.codex/agents/<name>.toml` + managed-region injection in `.codex/config.toml` (v1.1 §6.2–6.3)
 
 See [PROJECT_PLAN.md](.planning/PROJECT_PLAN.md) for historical context and full roadmap.

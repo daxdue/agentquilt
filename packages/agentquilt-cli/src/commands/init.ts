@@ -3,6 +3,7 @@ import { join, basename, extname, resolve, sep } from "path";
 import { parse as parseYaml } from "yaml";
 import type { Command } from "commander";
 import { ConfigError } from "../core/configLoader.js";
+import { bold, cyan, dim, green, sym } from "../ui/terminal.js";
 
 const ADAPTER_PLATFORMS = ["claude", "agentskills"];
 const PRESET_PLATFORMS = ["cursor", "copilot", "gemini"];
@@ -43,7 +44,7 @@ export function registerInitCommand(program: Command): void {
 
 export function initProject(dir: string, platforms: string[], force = false): void {
   try {
-    console.log("Initializing AgentQuilt project...\n");
+    console.log(`${bold("Initializing AgentQuilt project")}\n`);
 
     // Validate platforms
     const invalidPlatforms = platforms.filter((p) => !ALL_PLATFORMS.includes(p));
@@ -68,17 +69,27 @@ export function initProject(dir: string, platforms: string[], force = false): vo
     const agentsDir = join(dir, ".agentquilt", "agents");
     mkdirSync(agentsDir, { recursive: true });
 
-    // Scan for existing agents and adopt them into the source directory
+    // Skills get their own source directory, sibling to agents/
+    const skillsSelected = platforms.includes("agentskills");
+    const skillsDir = join(dir, ".agentquilt", "skills");
+    if (skillsSelected) {
+      mkdirSync(skillsDir, { recursive: true });
+    }
+
+    // Scan for existing agents/skills and adopt them into the source directories
     // (before config generation, so preset targets can include them)
-    const adopted = adoptExistingAgents(dir, platforms, agentsDir);
-    if (adopted.length > 0) {
-      console.log(`✓ adopted ${adopted.length} existing agent(s) into .agentquilt/agents/`);
+    const adopted = adoptExistingAgents(dir, platforms, agentsDir, skillsDir);
+    if (adopted.agents.length > 0) {
+      console.log(`${sym.ok} adopted ${adopted.agents.length} existing agent(s) into .agentquilt/agents/`);
+    }
+    if (adopted.skills.length > 0) {
+      console.log(`${sym.ok} adopted ${adopted.skills.length} existing skill(s) into .agentquilt/skills/`);
     }
 
     // Generate config file based on selected platforms
-    const configContent = generateConfig(platforms, adopted);
+    const configContent = generateConfig(platforms, adopted.agents);
     writeFileSync(join(dir, ".agentquilt", "config.yaml"), configContent, "utf8");
-    console.log("✓ created .agentquilt/config.yaml");
+    console.log(`${sym.ok} created .agentquilt/config.yaml`);
 
     // Create .gitattributes (spec §7.1) — never overwrite an existing one,
     // even with --force: it usually carries non-AgentQuilt rules
@@ -99,43 +110,46 @@ GEMINI.md            linguist-generated=true
 agentquilt.lock      linguist-generated=true merge=union
 `;
     if (existsSync(gitattributesPath)) {
-      console.log("- skipped .gitattributes (already exists)");
+      console.log(dim("- skipped .gitattributes (already exists)"));
     } else {
       writeFileSync(gitattributesPath, gitattributesContent, "utf8");
-      console.log("✓ created .gitattributes");
+      console.log(`${sym.ok} created .gitattributes`);
     }
 
-    console.log("\n✓ Project initialized successfully!");
-    console.log("\nConfigured platforms:");
+    console.log(`\n${green("✓ Project initialized successfully!")}`);
+    console.log(`\n${bold("Configured platforms:")}`);
     for (const platform of platforms) {
       const desc = PLATFORM_DESCRIPTIONS[platform];
       if (desc) {
-        console.log(`  ${platform}  →  ${desc.output}`);
+        console.log(`  ${cyan(platform)}  ${dim("→")}  ${dim(desc.output)}`);
       }
     }
     const hasPresetTargets = platforms.some((p) => PRESET_PLATFORMS.includes(p));
 
-    console.log("\nNext steps:");
-    if (adopted.length > 0) {
-      console.log("  1. Review the adopted agents under .agentquilt/agents/");
-      console.log("  2. Run: agentquilt build");
-      console.log("  3. Commit agentquilt.lock and your .agentquilt/ sources");
+    console.log(`\n${bold("Next steps:")}`);
+    if (adopted.agents.length > 0 || adopted.skills.length > 0) {
+      console.log(`  ${dim("1.")} Review the adopted sources under .agentquilt/`);
+      console.log(`  ${dim("2.")} Run: ${cyan("agentquilt build")}`);
+      console.log(`  ${dim("3.")} Commit agentquilt.lock and your .agentquilt/ sources`);
     } else {
       let step = 1;
-      console.log(`  ${step++}. Run: agentquilt agents add <name>`);
-      console.log(`  ${step++}. Edit .agentquilt/agents/<name>/010-role.md and other blocks`);
+      const addCmds = skillsSelected
+        ? `${cyan("agentquilt agents add <name>")} or ${cyan("agentquilt skills add <name>")}`
+        : cyan("agentquilt agents add <name>");
+      console.log(`  ${dim(`${step++}.`)} Run: ${addCmds}`);
+      console.log(`  ${dim(`${step++}.`)} Edit .agentquilt/agents/<name>/010-role.md and other blocks`);
       if (hasPresetTargets) {
-        console.log(`  ${step++}. List the agent directory under the preset target's include: in .agentquilt/config.yaml`);
+        console.log(`  ${dim(`${step++}.`)} List the agent directory under the preset target's include: in .agentquilt/config.yaml`);
       }
-      console.log(`  ${step++}. Run: agentquilt build`);
-      console.log(`  ${step++}. Commit agentquilt.lock and platform-specific agent files`);
+      console.log(`  ${dim(`${step++}.`)} Run: ${cyan("agentquilt build")}`);
+      console.log(`  ${dim(`${step++}.`)} Commit agentquilt.lock and platform-specific agent files`);
     }
-    console.log("\nFor more info: https://agentquilt.dev");
+    console.log(`\nFor more info: ${cyan("https://agentquilt.dev")}`);
 
     process.exit(0);
   } catch (err) {
     console.error(
-      `✗ Init failed: ${err instanceof Error ? err.message : String(err)}`
+      `${sym.fail} Init failed: ${err instanceof Error ? err.message : String(err)}`
     );
     process.exit(err instanceof ConfigError ? 2 : 3);
   }
@@ -144,6 +158,10 @@ agentquilt.lock      linguist-generated=true merge=union
 export function generateConfig(platforms: string[], adoptedAgents: string[] = []): string {
   const adapterPlatforms = platforms.filter((p) => ADAPTER_PLATFORMS.includes(p));
   const presetPlatforms = platforms.filter((p) => PRESET_PLATFORMS.includes(p));
+  // agentskills compiles skills from their own source root; every other
+  // adapter platform compiles agents from the global sourceDir
+  const agentPlatforms = adapterPlatforms.filter((p) => p !== "agentskills");
+  const skillsSelected = adapterPlatforms.includes("agentskills");
 
   let config = `version: 1
 sourceDir: .agentquilt/agents
@@ -156,41 +174,31 @@ sourceDir: .agentquilt/agents
 modelTiers:
   balanced:
     claude: claude-sonnet-4-6
-`;
-
-  // Add agentskills model mapping if it's in the platforms
-  if (adapterPlatforms.includes("agentskills")) {
-    config += `    agentskills: placeholder
-`;
-  }
-
-  config += `  frontier:
+  frontier:
     claude: claude-opus-4-8
-`;
-
-  if (adapterPlatforms.includes("agentskills")) {
-    config += `    agentskills: placeholder
-`;
-  }
-
-  config += `  fast:
+  fast:
     claude: claude-haiku-4-5-20251001
-`;
 
-  if (adapterPlatforms.includes("agentskills")) {
-    config += `    agentskills: placeholder
-`;
-  }
-
-  config += `
 targets:
 `;
 
-  // Add adapter-based target if any adapter platforms selected
-  if (adapterPlatforms.length > 0) {
+  // Add agent target if any agent platforms selected
+  if (agentPlatforms.length > 0) {
     config += `  - kind: agent-definitions
     agents: "*"
-    platforms: [${adapterPlatforms.map((p) => `${p}`).join(", ")}]
+    platforms: [${agentPlatforms.map((p) => `${p}`).join(", ")}]
+`;
+    if (skillsSelected || presetPlatforms.length > 0) {
+      config += "\n";
+    }
+  }
+
+  // Skills authored under .agentquilt/skills/ compile to Agent Skills format
+  if (skillsSelected) {
+    config += `  - kind: agent-definitions
+    sourceDir: skills  # resolved against the parent of sourceDir (.agentquilt/)
+    agents: "*"
+    platforms: [agentskills]
 `;
     if (presetPlatforms.length > 0) {
       config += "\n";
@@ -244,12 +252,12 @@ export function reverseMapPermissions(tools: unknown, permissionMode: unknown): 
 }
 
 // Frontmatter names come from files an attacker may have committed; the name
-// becomes a directory under agentsDir, so it must stay inside that boundary.
-function resolveAdoptionDir(agentsDir: string, name: string): string | undefined {
-  const boundary = resolve(agentsDir);
-  const target = resolve(agentsDir, name);
+// becomes a directory under the adoption root, so it must stay inside that boundary.
+function resolveAdoptionDir(rootDir: string, name: string): string | undefined {
+  const boundary = resolve(rootDir);
+  const target = resolve(rootDir, name);
   if (target === boundary || !target.startsWith(boundary + sep)) {
-    console.warn(`  ! skipped ${JSON.stringify(name)}: name escapes .agentquilt/agents/`);
+    console.warn(`  ${sym.warn} skipped ${JSON.stringify(name)}: name escapes the source directory`);
     return undefined;
   }
   return target;
@@ -260,8 +268,18 @@ const PLATFORM_SCAN: Record<string, { dir: string; glob: string }> = {
   agentskills: { dir: ".agents/skills", glob: "*/SKILL.md" },
 };
 
-export function adoptExistingAgents(cwd: string, platforms: string[], agentsDir: string): string[] {
-  const adopted: string[] = [];
+export interface AdoptedSources {
+  agents: string[];
+  skills: string[];
+}
+
+export function adoptExistingAgents(
+  cwd: string,
+  platforms: string[],
+  agentsDir: string,
+  skillsDir: string
+): AdoptedSources {
+  const adopted: AdoptedSources = { agents: [], skills: [] };
 
   for (const platform of platforms) {
     const scan = PLATFORM_SCAN[platform];
@@ -271,9 +289,9 @@ export function adoptExistingAgents(cwd: string, platforms: string[], agentsDir:
     if (!existsSync(scanDir)) continue;
 
     if (platform === "claude") {
-      adopted.push(...adoptClaudeAgents(scanDir, agentsDir));
+      adopted.agents.push(...adoptClaudeAgents(scanDir, agentsDir));
     } else if (platform === "agentskills") {
-      adopted.push(...adoptAgentSkillsAgents(scanDir, agentsDir));
+      adopted.skills.push(...adoptAgentSkillsSkills(scanDir, skillsDir));
     }
   }
 
@@ -310,14 +328,14 @@ function adoptClaudeAgents(scanDir: string, agentsDir: string): string[] {
     writeAgentYaml(agentDir, description, modelTier, permissions);
     writeRoleBlock(agentDir, body);
 
-    console.log(`  ✓ adopted ${name} from .claude/agents/${entry.name}`);
+    console.log(`  ${sym.ok} adopted ${name} ${dim(`from .claude/agents/${entry.name}`)}`);
     adopted.push(name);
   }
 
   return adopted;
 }
 
-function adoptAgentSkillsAgents(scanDir: string, agentsDir: string): string[] {
+function adoptAgentSkillsSkills(scanDir: string, skillsDir: string): string[] {
   const adopted: string[] = [];
   const skillDirs = readdirSync(scanDir, { withFileTypes: true })
     .filter((e) => e.isDirectory())
@@ -334,18 +352,18 @@ function adoptAgentSkillsAgents(scanDir: string, agentsDir: string): string[] {
       ? fm["name"]
       : skillDir.name;
 
-    const agentDir = resolveAdoptionDir(agentsDir, name);
-    if (agentDir === undefined || existsSync(agentDir)) continue;
+    const sourceDir = resolveAdoptionDir(skillsDir, name);
+    if (sourceDir === undefined || existsSync(sourceDir)) continue;
 
     const description = typeof fm["description"] === "string" && fm["description"].length > 0
       ? fm["description"]
       : `Adopted from .agents/skills/${skillDir.name}/SKILL.md`;
 
-    mkdirSync(agentDir, { recursive: true });
-    writeAgentYaml(agentDir, description, undefined, "workspace");
-    writeRoleBlock(agentDir, body);
+    mkdirSync(sourceDir, { recursive: true });
+    writeSkillYaml(sourceDir, description);
+    writeInstructionsBlock(sourceDir, body);
 
-    console.log(`  ✓ adopted ${name} from .agents/skills/${skillDir.name}/SKILL.md`);
+    console.log(`  ${sym.ok} adopted ${name} ${dim(`from .agents/skills/${skillDir.name}/SKILL.md`)}`);
     adopted.push(name);
   }
 
@@ -366,7 +384,19 @@ function writeAgentYaml(
   writeFileSync(join(agentDir, "agent.yaml"), yaml, "utf8");
 }
 
+function writeSkillYaml(skillDir: string, description: string): void {
+  const yaml =
+    `description: ${JSON.stringify(description)}\n` +
+    `model: inherit  # skills carry no model of their own; the platform decides at runtime\n`;
+  writeFileSync(join(skillDir, "agent.yaml"), yaml, "utf8");
+}
+
 function writeRoleBlock(agentDir: string, body: string): void {
   const content = body.endsWith("\n") ? body : body + "\n";
   writeFileSync(join(agentDir, "010-role.md"), content, "utf8");
+}
+
+function writeInstructionsBlock(skillDir: string, body: string): void {
+  const content = body.endsWith("\n") ? body : body + "\n";
+  writeFileSync(join(skillDir, "010-instructions.md"), content, "utf8");
 }

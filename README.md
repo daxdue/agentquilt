@@ -54,7 +54,7 @@ npm run build
 agentquilt init --platform claude
 ```
 
-This creates `.agentquilt/config.yaml`, the `.agentquilt/agents/` source tree, and a `.gitattributes`. If you already have agents in `.claude/agents/` or `.agents/skills/`, `init` adopts them as source agents automatically. It refuses to overwrite an existing config unless you pass `--force`, and never overwrites an existing `.gitattributes`.
+This creates `.agentquilt/config.yaml`, the `.agentquilt/agents/` source tree (plus `.agentquilt/skills/` when the `agentskills` platform is selected), and a `.gitattributes`. If you already have agents in `.claude/agents/` or skills in `.agents/skills/`, `init` adopts them as sources automatically. It refuses to overwrite an existing config unless you pass `--force`, and never overwrites an existing `.gitattributes`.
 
 ```bash
 # 2. Add an agent
@@ -70,6 +70,8 @@ This scaffolds `.agentquilt/agents/reviewer/` with a manifest and a first instru
 ```
 
 Edit `010-role.md`, and add more blocks as separate files — `020-style.md`, `030-testing.md`, … Blocks compile in filename order; use gaps of 10 so you can insert later without renumbering. Fragments in `.agentquilt/agents/_shared/` can be included across agents.
+
+Skills work the same way from their own source root: `agentquilt skills add <name>` scaffolds `.agentquilt/skills/<name>/` with a manifest and a `010-instructions.md`, compiled to `.agents/skills/<name>/SKILL.md` by an `agentskills` target.
 
 ```bash
 # 3. Compile
@@ -91,10 +93,12 @@ agentquilt check
 
 ```bash
 agentquilt init [--platform <p>...] [--force]   # Scaffold project; adopt existing agents
-agentquilt build                                # Compile all targets, write outputs and lock
+agentquilt build [--watch]                      # Compile all targets, write outputs and lock
 agentquilt check                                # CI gate: detect drift between source and outputs
 agentquilt agents add <name>                    # Scaffold a new agent directory
 agentquilt agents list                          # List agents and resolved models per platform
+agentquilt skills add <name>                    # Scaffold a new skill directory
+agentquilt skills list                          # List skills and their descriptions
 ```
 
 ## Repository Structure
@@ -108,6 +112,7 @@ repo/
 │   │   └── <agent-id>/
 │   │       ├── agent.yaml     # Agent manifest
 │   │       └── NNN-block.md   # Instruction blocks (ordered by prefix)
+│   ├── skills/                # Source skill definitions (same manifest + block format)
 │   └── meta-agents/           # AgentQuilt's own meta-agents (framework development)
 ├── .claude/agents/            # Compiled Claude Code agent outputs (generated)
 ├── AGENTS.md                  # Compiled document target (generated)

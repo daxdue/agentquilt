@@ -10,6 +10,7 @@ Agent = Manifest + Instruction Blocks + Evals + Generated Prompt
 
 - **Fragment**: A small Markdown file representing one concern (role, build commands, testing rules, etc.). Fragments are the unit of authoring and versioning.
 - **Agent**: A directory under `.agentquilt/agents/` containing a manifest and instruction blocks.
+- **Skill**: A directory under `.agentquilt/skills/` using the same manifest + block format, compiled to the vendor-neutral Agent Skills format (`.agents/skills/<name>/SKILL.md`) via an `agentskills` target with `sourceDir: skills`.
 - **Manifest**: `agent.yaml` file with minimal metadata (`description`, `name`, `model`, `permissions`, `x-<platform>` extensions) for agent-definition targets.
 - **Instruction Block**: An optional numbered fragment (`.md` file) with optional YAML front-matter (`tags`, etc.). Multiple blocks compose a body via deterministic order.
 - **Target**: The central abstraction—an output path + ordered list of includes. Enables multi-agent support and platform-agnostic output (same fragments → `AGENTS.md` + `CLAUDE.md` + Cursor rules + Copilot instructions).
@@ -31,6 +32,8 @@ repo/
 │   │       ├── agent.yaml           # Manifest
 │   │       ├── 010-role.md          # Instruction blocks (ordered by NNN prefix)
 │   │       └── 020-criteria.md
+│   ├── skills/                      # Source directory for skills (same format)
+│   │   └── new-agent/               # Repo skill: assisted agent/skill authoring
 │   └── meta-agents/                 # Meta-agents: AgentQuilt's own internal agents
 │       ├── governance/              # Policy compliance, gate policy, risk review
 │       ├── sdlc/                    # Requirements, architecture, code review, planning

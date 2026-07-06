@@ -107,15 +107,28 @@ describe("adoptExistingAgents", () => {
     return join(tmpDir, ".agentquilt", "agents");
   }
 
+  function skillsDir(): string {
+    return join(tmpDir, ".agentquilt", "skills");
+  }
+
   function initAgentsDir(): string {
     const dir = agentsDir();
     mkdirSync(dir, { recursive: true });
     return dir;
   }
 
-  it("returns 0 when no .claude/agents/ directory exists", () => {
+  function initSkillsDir(): string {
+    const dir = skillsDir();
+    mkdirSync(dir, { recursive: true });
+    return dir;
+  }
+
+  it("returns no adoptions when no .claude/agents/ directory exists", () => {
     const dir = initAgentsDir();
-    expect(adoptExistingAgents(tmpDir, ["claude"], dir)).toEqual([]);
+    expect(adoptExistingAgents(tmpDir, ["claude"], dir, skillsDir())).toEqual({
+      agents: [],
+      skills: [],
+    });
   });
 
   it("adopts a claude agent with full frontmatter", () => {
@@ -124,9 +137,9 @@ describe("adoptExistingAgents", () => {
       "---\nname: my-agent\ndescription: Does things\nmodel: sonnet\ntools: Read, Grep, Glob\n---\n\nYou are helpful.\n"
     );
     const dir = initAgentsDir();
-    const adopted = adoptExistingAgents(tmpDir, ["claude"], dir);
+    const adopted = adoptExistingAgents(tmpDir, ["claude"], dir, skillsDir());
 
-    expect(adopted).toHaveLength(1);
+    expect(adopted.agents).toHaveLength(1);
 
     const agentYaml = readFileSync(join(dir, "my-agent", "agent.yaml"), "utf8");
     expect(agentYaml).toContain('description: "Does things"');
@@ -143,7 +156,7 @@ describe("adoptExistingAgents", () => {
       "---\nname: no-model\ndescription: No model\n---\n\nBody.\n"
     );
     const dir = initAgentsDir();
-    adoptExistingAgents(tmpDir, ["claude"], dir);
+    adoptExistingAgents(tmpDir, ["claude"], dir, skillsDir());
 
     const agentYaml = readFileSync(join(dir, "no-model", "agent.yaml"), "utf8");
     expect(agentYaml).not.toContain("model:");
@@ -156,7 +169,7 @@ describe("adoptExistingAgents", () => {
       "---\nname: big-agent\ndescription: Big\nmodel: opus\npermissionMode: acceptEdits\n---\n\nBody.\n"
     );
     const dir = initAgentsDir();
-    adoptExistingAgents(tmpDir, ["claude"], dir);
+    adoptExistingAgents(tmpDir, ["claude"], dir, skillsDir());
 
     const yaml = readFileSync(join(dir, "big-agent", "agent.yaml"), "utf8");
     expect(yaml).toContain("model: frontier");
@@ -173,8 +186,8 @@ describe("adoptExistingAgents", () => {
     mkdirSync(join(dir, "existing"), { recursive: true });
     writeFileSync(join(dir, "existing", "agent.yaml"), "description: hand-authored\n", "utf8");
 
-    const adopted = adoptExistingAgents(tmpDir, ["claude"], dir);
-    expect(adopted).toEqual([]);
+    const adopted = adoptExistingAgents(tmpDir, ["claude"], dir, skillsDir());
+    expect(adopted.agents).toEqual([]);
 
     // Original hand-authored file must not be overwritten
     const content = readFileSync(join(dir, "existing", "agent.yaml"), "utf8");
@@ -187,7 +200,7 @@ describe("adoptExistingAgents", () => {
       "---\ndescription: No name in FM\nmodel: haiku\n---\n\nBody.\n"
     );
     const dir = initAgentsDir();
-    adoptExistingAgents(tmpDir, ["claude"], dir);
+    adoptExistingAgents(tmpDir, ["claude"], dir, skillsDir());
 
     expect(existsSync(join(dir, "no-name-in-fm", "agent.yaml"))).toBe(true);
     const yaml = readFileSync(join(dir, "no-name-in-fm", "agent.yaml"), "utf8");
@@ -200,7 +213,7 @@ describe("adoptExistingAgents", () => {
       "---\nname: no-desc\nmodel: sonnet\n---\n\nBody.\n"
     );
     const dir = initAgentsDir();
-    adoptExistingAgents(tmpDir, ["claude"], dir);
+    adoptExistingAgents(tmpDir, ["claude"], dir, skillsDir());
 
     const yaml = readFileSync(join(dir, "no-desc", "agent.yaml"), "utf8");
     expect(yaml).toContain("Adopted from .claude/agents/no-desc.md");
@@ -210,16 +223,19 @@ describe("adoptExistingAgents", () => {
     writeClaudeAgent("alpha", "---\nname: alpha\ndescription: Alpha\nmodel: sonnet\n---\n\nAlpha.\n");
     writeClaudeAgent("beta", "---\nname: beta\ndescription: Beta\nmodel: opus\n---\n\nBeta.\n");
     const dir = initAgentsDir();
-    const adopted = adoptExistingAgents(tmpDir, ["claude"], dir);
+    const adopted = adoptExistingAgents(tmpDir, ["claude"], dir, skillsDir());
 
-    expect(adopted).toHaveLength(2);
+    expect(adopted.agents).toHaveLength(2);
     expect(existsSync(join(dir, "alpha", "agent.yaml"))).toBe(true);
     expect(existsSync(join(dir, "beta", "agent.yaml"))).toBe(true);
   });
 
   it("returns 0 for platforms with no known scan (e.g. cursor)", () => {
     const dir = initAgentsDir();
-    expect(adoptExistingAgents(tmpDir, ["cursor"], dir)).toEqual([]);
+    expect(adoptExistingAgents(tmpDir, ["cursor"], dir, skillsDir())).toEqual({
+      agents: [],
+      skills: [],
+    });
   });
 
   it("rejects a claude agent whose frontmatter name escapes agentsDir", () => {
@@ -228,9 +244,9 @@ describe("adoptExistingAgents", () => {
       '---\nname: "../../evil-escape"\ndescription: Bad\n---\n\nPayload.\n'
     );
     const dir = initAgentsDir();
-    const adopted = adoptExistingAgents(tmpDir, ["claude"], dir);
+    const adopted = adoptExistingAgents(tmpDir, ["claude"], dir, skillsDir());
 
-    expect(adopted).toEqual([]);
+    expect(adopted.agents).toEqual([]);
     expect(existsSync(join(tmpDir, "evil-escape"))).toBe(false);
     expect(existsSync(join(tmpDir, ".agentquilt", "evil-escape"))).toBe(false);
   });
@@ -243,7 +259,7 @@ describe("adoptExistingAgents", () => {
     );
     const dir = initAgentsDir();
 
-    expect(adoptExistingAgents(tmpDir, ["claude"], dir)).toEqual([]);
+    expect(adoptExistingAgents(tmpDir, ["claude"], dir, skillsDir()).agents).toEqual([]);
     expect(existsSync(escapeTarget)).toBe(false);
   });
 
@@ -253,34 +269,37 @@ describe("adoptExistingAgents", () => {
     writeFileSync(join(dir, "SKILL.md"), content, "utf8");
   }
 
-  it("adopts an agentskills skill", () => {
+  it("adopts an agentskills skill into the skills source directory", () => {
     writeSkill("helper", "---\nname: helper\ndescription: Helps out\n---\n\nYou help.\n");
     const dir = initAgentsDir();
-    const adopted = adoptExistingAgents(tmpDir, ["agentskills"], dir);
+    const sDir = initSkillsDir();
+    const adopted = adoptExistingAgents(tmpDir, ["agentskills"], dir, sDir);
 
-    expect(adopted).toHaveLength(1);
-    const agentYaml = readFileSync(join(dir, "helper", "agent.yaml"), "utf8");
-    expect(agentYaml).toContain('description: "Helps out"');
-    expect(agentYaml).toContain("permissions: workspace");
-    expect(readFileSync(join(dir, "helper", "010-role.md"), "utf8")).toContain("You help.");
+    expect(adopted.skills).toHaveLength(1);
+    const skillYaml = readFileSync(join(sDir, "helper", "agent.yaml"), "utf8");
+    expect(skillYaml).toContain('description: "Helps out"');
+    expect(skillYaml).toContain("model: inherit");
+    expect(skillYaml).not.toContain("permissions:");
+    expect(readFileSync(join(sDir, "helper", "010-instructions.md"), "utf8")).toContain("You help.");
   });
 
   it("skips an agentskills skill whose source dir already exists", () => {
     writeSkill("helper", "---\nname: helper\ndescription: Helps out\n---\n\nYou help.\n");
     const dir = initAgentsDir();
-    mkdirSync(join(dir, "helper"), { recursive: true });
+    const sDir = initSkillsDir();
+    mkdirSync(join(sDir, "helper"), { recursive: true });
 
-    expect(adoptExistingAgents(tmpDir, ["agentskills"], dir)).toEqual([]);
+    expect(adoptExistingAgents(tmpDir, ["agentskills"], dir, sDir).skills).toEqual([]);
   });
 
-  it("rejects an agentskills skill whose frontmatter name escapes agentsDir", () => {
+  it("rejects an agentskills skill whose frontmatter name escapes the skills dir", () => {
     writeSkill(
       "evil-skill",
       '---\nname: "../../../skill-escape"\ndescription: Bad\n---\n\nPayload.\n'
     );
     const dir = initAgentsDir();
 
-    expect(adoptExistingAgents(tmpDir, ["agentskills"], dir)).toEqual([]);
+    expect(adoptExistingAgents(tmpDir, ["agentskills"], dir, skillsDir()).skills).toEqual([]);
     expect(existsSync(join(tmpDir, "skill-escape"))).toBe(false);
   });
 });

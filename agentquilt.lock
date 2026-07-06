@@ -435,6 +435,25 @@
       ]
     },
     {
+      "name": "new-agent",
+      "dir": ".agentquilt/skills/new-agent",
+      "bodyFragments": [
+        ".agentquilt/skills/new-agent/010-purpose.md",
+        ".agentquilt/skills/new-agent/020-workflow.md",
+        ".agentquilt/skills/new-agent/030-authoring-guidelines.md"
+      ],
+      "metaHash": "sha256-37311f8de7638a6ee968d7414ad56c950688dfbea63283852d109c7e9b68af44",
+      "version": "sha256-0a12173c906e97eb95a3f66fc79c8f4f043a69659701060e5b3b409b81ee865e",
+      "outputs": [
+        {
+          "platform": "agentskills",
+          "path": ".agents/skills/new-agent/SKILL.md",
+          "kind": "file",
+          "hash": "sha256-7f1eacc593d75b89acf51efa007c6a92272cfb82c4d7c4933f7d01f485a74056"
+        }
+      ]
+    },
+    {
       "name": "performance-test",
       "dir": ".agentquilt/meta-agents/stlc/performance-test",
       "bodyFragments": [
@@ -1355,6 +1374,24 @@
       "tags": []
     },
     {
+      "id": ".agentquilt/skills/new-agent/010-purpose.md",
+      "hash": "sha256-494e4039facfc2f4ba79325e34a87a15e805160e3cc2f3cd6ae5f22751caf1e3",
+      "bytes": 953,
+      "tags": []
+    },
+    {
+      "id": ".agentquilt/skills/new-agent/020-workflow.md",
+      "hash": "sha256-670e0569ffb91b115d4711f14b87cb409d4eb3f357260afbb5c368cf8c46c5e2",
+      "bytes": 2730,
+      "tags": []
+    },
+    {
+      "id": ".agentquilt/skills/new-agent/030-authoring-guidelines.md",
+      "hash": "sha256-bd6784a5eeae5073c4d18c248447f4fc2de6a9e1239662d669ea81250b9f12dc",
+      "bytes": 1151,
+      "tags": []
+    },
+    {
       "id": "project/010-overview.md",
       "hash": "sha256-121a6de08289587d1e921f26a6b03a2c9c1e6ad1d0b519c6be284f12e5e97589",
       "bytes": 1374,
@@ -1362,8 +1399,8 @@
     },
     {
       "id": "project/020-architecture.md",
-      "hash": "sha256-34bab42f842f3a051f588177dc28585547d14aedde4cc22bd1bc38043fe0c4d1",
-      "bytes": 3984,
+      "hash": "sha256-da6d734b29b9dd8f7656a14a45a92710d7e2e56acb9a7fe34bacc485eed921c8",
+      "bytes": 4398,
       "tags": []
     },
     {
@@ -1380,8 +1417,8 @@
     },
     {
       "id": "project/050-commands.md",
-      "hash": "sha256-e7f60f586530b4a1837bf1330c4413984742d0414d6bb617afe5fab85c8f0d06",
-      "bytes": 831,
+      "hash": "sha256-e61d93ef5ceec4454a24da9a4e0568612dfd78aa6380c717fe770d8bf4158baf",
+      "bytes": 1554,
       "tags": []
     },
     {
@@ -1398,8 +1435,8 @@
     },
     {
       "id": "project/080-status.md",
-      "hash": "sha256-3478fbca60c8a0099960b2a3f58de45912e16bc80cccb174783b452d265610f7",
-      "bytes": 4184,
+      "hash": "sha256-63a67e5d3b4d4e75f726d682997555b26901103d86264e000b5b6b74cb06dc64",
+      "bytes": 4102,
       "tags": []
     },
     {
@@ -1431,7 +1468,7 @@
         "project/090-implementation-notes.md",
         "project/100-package-and-links.md"
       ],
-      "version": "sha256-a81ef37f62483d375d14eef75ea810cfe7aa8461c3a561cf1804a83d5cb97b2b"
+      "version": "sha256-fe3fab9a255794b2452535525439501f7a650d5b8697ab43cc9c7c7caed206c8"
     },
     {
       "output": "CLAUDE.md",
@@ -1448,7 +1485,7 @@
         "project/090-implementation-notes.md",
         "project/100-package-and-links.md"
       ],
-      "version": "sha256-a81ef37f62483d375d14eef75ea810cfe7aa8461c3a561cf1804a83d5cb97b2b"
+      "version": "sha256-fe3fab9a255794b2452535525439501f7a650d5b8697ab43cc9c7c7caed206c8"
     }
   ]
 }

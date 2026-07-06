@@ -203,4 +203,69 @@ describe("validateConfig", () => {
     const config = loadConfig(cfgPath);
     expect(() => validateConfig(config, path.join(tmpDir, "agents"))).toThrow(ConfigError);
   });
+
+  function writeAgentRecord(root: string, name: string): void {
+    const dir = path.join(tmpDir, root, name);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(path.join(dir, "agent.yaml"), `description: "${name}"\n`);
+    writeFileSync(path.join(dir, "010-role.md"), "Role.\n");
+  }
+
+  it("accepts two wildcard targets over different source roots (agents + skills)", () => {
+    writeAgentRecord("agents", "helper");
+    writeAgentRecord("skills", "deploy-guide");
+
+    const cfgPath = writeConfig("agentquilt.config.yaml", [
+      "version: 1",
+      "sourceDir: agents",
+      "targets:",
+      "  - kind: agent-definitions",
+      '    agents: "*"',
+      "    platforms: [claude]",
+      "  - kind: agent-definitions",
+      "    sourceDir: skills",
+      '    agents: "*"',
+      "    platforms: [agentskills]",
+    ].join("\n"));
+    const config = loadConfig(cfgPath);
+    expect(validateConfig(config, path.join(tmpDir, "agents"))).toBe(true);
+  });
+
+  it("allows the same agent listed in two targets over the same source root", () => {
+    writeAgentRecord("agents", "helper");
+
+    const cfgPath = writeConfig("agentquilt.config.yaml", [
+      "version: 1",
+      "sourceDir: agents",
+      "targets:",
+      "  - kind: agent-definitions",
+      "    agents: [helper]",
+      "    platforms: [claude]",
+      "  - kind: agent-definitions",
+      "    agents: [helper]",
+      "    platforms: [agentskills]",
+    ].join("\n"));
+    const config = loadConfig(cfgPath);
+    expect(validateConfig(config, path.join(tmpDir, "agents"))).toBe(true);
+  });
+
+  it("throws ConfigError when two source roots claim the same agent name", () => {
+    writeAgentRecord("agents", "helper");
+    writeAgentRecord("skills", "helper");
+
+    const cfgPath = writeConfig("agentquilt.config.yaml", [
+      "version: 1",
+      "sourceDir: agents",
+      "targets:",
+      "  - kind: agent-definitions",
+      '    agents: "*"',
+      "    platforms: [claude]",
+      "  - kind: agent-definitions",
+      "    sourceDir: skills",
+      '    agents: "*"',
+      "    platforms: [agentskills]",
+    ].join("\n"));
+    const config = loadConfig(cfgPath);
+    expect(() => validateConfig(config, path.join(tmpDir, "agents"))).toThrow(/Duplicate agent name/);
+  });
 });

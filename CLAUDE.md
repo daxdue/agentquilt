@@ -1,4 +1,4 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-a81ef37f62483d375d14eef75ea810cfe7aa8461c3a561cf1804a83d5cb97b2b · source: .agentquilt/agents/ · regenerate: npx agentquilt build -->
+<!-- agentquilt: generated file — do not edit. version=sha256-fe3fab9a255794b2452535525439501f7a650d5b8697ab43cc9c7c7caed206c8 · source: .agentquilt/agents/ · regenerate: npx agentquilt build -->
 
 # AgentQuilt Development Guide
 
@@ -28,6 +28,7 @@ Agent = Manifest + Instruction Blocks + Evals + Generated Prompt
 
 - **Fragment**: A small Markdown file representing one concern (role, build commands, testing rules, etc.). Fragments are the unit of authoring and versioning.
 - **Agent**: A directory under `.agentquilt/agents/` containing a manifest and instruction blocks.
+- **Skill**: A directory under `.agentquilt/skills/` using the same manifest + block format, compiled to the vendor-neutral Agent Skills format (`.agents/skills/<name>/SKILL.md`) via an `agentskills` target with `sourceDir: skills`.
 - **Manifest**: `agent.yaml` file with minimal metadata (`description`, `name`, `model`, `permissions`, `x-<platform>` extensions) for agent-definition targets.
 - **Instruction Block**: An optional numbered fragment (`.md` file) with optional YAML front-matter (`tags`, etc.). Multiple blocks compose a body via deterministic order.
 - **Target**: The central abstraction—an output path + ordered list of includes. Enables multi-agent support and platform-agnostic output (same fragments → `AGENTS.md` + `CLAUDE.md` + Cursor rules + Copilot instructions).
@@ -49,6 +50,8 @@ repo/
 │   │       ├── agent.yaml           # Manifest
 │   │       ├── 010-role.md          # Instruction blocks (ordered by NNN prefix)
 │   │       └── 020-criteria.md
+│   ├── skills/                      # Source directory for skills (same format)
+│   │   └── new-agent/               # Repo skill: assisted agent/skill authoring
 │   └── meta-agents/                 # Meta-agents: AgentQuilt's own internal agents
 │       ├── governance/              # Policy compliance, gate policy, risk review
 │       ├── sdlc/                    # Requirements, architecture, code review, planning
@@ -173,10 +176,17 @@ npm test
 # CLI commands (available after npm run build or npm install -g):
 agentquilt init                          # Scaffold a new project with config and shared fragments
 agentquilt build                         # Compile all targets, write outputs and lock file
+agentquilt build --watch                 # Rebuild automatically when fragments or config change
 agentquilt check                         # CI gate: detect drift between source and disk
 agentquilt agents add <name>             # Scaffold a new agent directory with agent.yaml
 agentquilt agents list                   # List all agents and resolved models per platform
+agentquilt skills add <name>             # Scaffold a new skill directory under .agentquilt/skills/
+agentquilt skills list                   # List all skills and their descriptions
 ```
+
+### Creating a new agent or skill (assisted)
+
+The repo-level skill `.agents/skills/new-agent/SKILL.md` (compiled from `.agentquilt/skills/new-agent/`) guides an AI coding agent through creating a new AgentQuilt agent or skill: scaffolding sources, writing the manifest and fragments, registering the target, and building. When asked to create or init a new agent or skill, follow that skill's workflow instead of writing output files by hand.
 
 **Exit codes:**
 - 0: success
@@ -213,7 +223,7 @@ JSON schemas for validation:
 - Agent compiler: metadata hashing, adapter system, per-platform serialization
 - Claude and AgentSkills adapters (v1.1 addendum)
 - Lock writer and drift checker
-- CLI: init, build, check, agents add, agents list
+- CLI: init, build (with --watch), check, agents add, agents list
 
 [DONE] **Completed (Phase 3.0 — Agent Scaffolding & Discovery)**
 - 44 meta-agents scaffolded across 5 categories (governance, SDLC, STLC, release, internal)
@@ -269,7 +279,6 @@ JSON schemas for validation:
 - Week 2: Lint rules, semantic diff, additional enforcement
 - Week 3: Eval runner, regression testing
 - Week 4: Release packaging, migration tools
-- [DEFERRED] `agentquilt build --watch` — file-watching mode (requires chokidar or equivalent)
 - [DEFERRED] Codex adapter — `.codex/agents/<name>.toml` + managed-region injection in `.codex/config.toml` (v1.1 §6.2–6.3)
 
 See [PROJECT_PLAN.md](.planning/PROJECT_PLAN.md) for historical context and full roadmap.

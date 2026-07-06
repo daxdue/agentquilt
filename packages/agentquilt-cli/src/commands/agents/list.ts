@@ -8,6 +8,7 @@ import {
 import { discoverAgentDirs, loadAgentDir } from "../../core/agentLoader.js";
 import { resolveModel } from "../../core/modelResolver.js";
 import path from "path";
+import { bold, dim, red, sym } from "../../ui/terminal.js";
 
 interface ListAgentsOptions {
   config?: string;
@@ -46,18 +47,23 @@ function listAgentsAction(options: ListAgentsOptions): void {
     for (const agentDir of agentDirs) {
       const record = loadAgentDir(agentDir, cwd);
 
-      // Get unique platforms from config
+      // Platforms come only from targets that actually include this agent.
+      // Targets with a sourceDir override compile a different source root
+      // than the global sourceDir scanned here, so they never apply.
       const platforms = new Set<string>();
       for (const target of config.targets) {
-        if (target.kind === "agent-definitions") {
-          for (const plat of target.platforms) {
-            platforms.add(plat);
-          }
+        if (target.kind !== "agent-definitions" || target.sourceDir) continue;
+        const included =
+          target.agents === "*" ||
+          (Array.isArray(target.agents) && target.agents.includes(record.name));
+        if (!included) continue;
+        for (const plat of target.platforms) {
+          platforms.add(plat);
         }
       }
 
       if (platforms.size === 0) {
-        console.warn(`Warning: no platforms defined in config`);
+        console.warn(`Warning: ${record.name} is not included in any agent-definitions target`);
         continue;
       }
 
@@ -80,24 +86,31 @@ function listAgentsAction(options: ListAgentsOptions): void {
     // Print table
     if (rows.length > 0) {
       console.log("");
-      console.log("Agents:");
+      console.log(bold("Agents:"));
       console.log("");
 
       const agentWidth = Math.max(5, ...rows.map((r) => r.agent.length));
       const platformWidth = Math.max(8, ...rows.map((r) => r.platform.length));
 
       console.log(
-        "agent" + " ".repeat(agentWidth - 5) + "  " +
-        "platform" + " ".repeat(platformWidth - 8) + "  " +
-        "model"
+        dim(
+          "agent" + " ".repeat(agentWidth - 5) + "  " +
+          "platform" + " ".repeat(platformWidth - 8) + "  " +
+          "model"
+        )
       );
-      console.log("-".repeat(agentWidth + platformWidth + 6));
+      console.log(dim("─".repeat(agentWidth + platformWidth + 6)));
 
       for (const row of rows) {
+        const model = row.model.startsWith("ERROR:")
+          ? red(row.model)
+          : row.model === "(inherit)"
+            ? dim(row.model)
+            : row.model;
         console.log(
           row.agent.padEnd(agentWidth) + "  " +
-          row.platform.padEnd(platformWidth) + "  " +
-          row.model
+          dim(row.platform.padEnd(platformWidth)) + "  " +
+          model
         );
       }
       console.log("");
@@ -106,11 +119,11 @@ function listAgentsAction(options: ListAgentsOptions): void {
     process.exit(hasErrors ? 1 : 0);
   } catch (err) {
     if (err instanceof ConfigError) {
-      console.error(`✗ ${err.message}`);
+      console.error(`${sym.fail} ${err.message}`);
       process.exit(2);
     }
     console.error(
-      `✗ Error: ${err instanceof Error ? err.message : String(err)}`
+      `${sym.fail} Error: ${err instanceof Error ? err.message : String(err)}`
     );
     process.exit(3);
   }
