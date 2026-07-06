@@ -7,6 +7,17 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.1.1] — 2026-07-06
+
+### Fixed
+
+- `agentquilt init` adoption now splits multi-section agent bodies into separate
+  numbered fragment files (`010-role.md`, `020-<slug>.md`, ...) instead of
+  writing all content into a single `010-role.md`. Agents with a single section
+  or no H1 headings are unchanged.
+
+---
+
 ## [0.1.0] — 2026-07-06
 
 Initial release. Core compiler, CLI, adapters, skills, and meta-agent framework.

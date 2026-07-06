@@ -1,6 +1,6 @@
 {
   "name": "agentquilt",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI tool for AgentQuilt agent framework — compiles Markdown fragments into deployment-ready agent instructions with deterministic versioning",
   "type": "module",
   "license": "MIT",
