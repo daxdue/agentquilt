@@ -8,7 +8,75 @@ import {
   reverseMapPermissions,
   adoptExistingAgents,
   initProject,
+  splitBodyIntoSections,
 } from "../src/commands/init.js";
+
+// --- splitBodyIntoSections ---
+
+describe("splitBodyIntoSections", () => {
+  it("returns single 010-role.md when body has no H1 headings", () => {
+    const body = "You are helpful.\n";
+    expect(splitBodyIntoSections(body)).toEqual([
+      { filename: "010-role.md", content: "You are helpful.\n" },
+    ]);
+  });
+
+  it("returns single 010-role.md when body has exactly one H1 heading", () => {
+    const body = "# My Agent\n\nDoes things.\n";
+    expect(splitBodyIntoSections(body)).toEqual([
+      { filename: "010-role.md", content: "# My Agent\n\nDoes things.\n" },
+    ]);
+  });
+
+  it("splits two H1 sections into 010-role.md and 020-<slug>.md", () => {
+    const body = "# Role\n\nBe helpful.\n\n# Guidelines\n\nFollow rules.\n";
+    const sections = splitBodyIntoSections(body);
+    expect(sections).toHaveLength(2);
+    expect(sections[0]).toEqual({ filename: "010-role.md", content: "# Role\n\nBe helpful.\n" });
+    expect(sections[1]).toEqual({ filename: "020-guidelines.md", content: "# Guidelines\n\nFollow rules.\n" });
+  });
+
+  it("slugifies special characters in H1 heading for filename", () => {
+    const body = "# Role\n\nBody.\n\n# ADR Validation & Generation\n\nCheck.\n";
+    const sections = splitBodyIntoSections(body);
+    expect(sections[1].filename).toBe("020-adr-validation-generation.md");
+  });
+
+  it("handles three sections with sequential numbering", () => {
+    const body = "# Role\n\nA.\n\n# Guidelines\n\nB.\n\n# Examples\n\nC.\n";
+    const sections = splitBodyIntoSections(body);
+    expect(sections).toHaveLength(3);
+    expect(sections[0].filename).toBe("010-role.md");
+    expect(sections[1].filename).toBe("020-guidelines.md");
+    expect(sections[2].filename).toBe("030-examples.md");
+  });
+
+  it("prepends preamble text before first H1 into 010 section", () => {
+    const body = "Preamble line.\n\n# Role\n\nBody.\n";
+    const sections = splitBodyIntoSections(body);
+    expect(sections).toHaveLength(1);
+    expect(sections[0].content).toBe("Preamble line.\n\n# Role\n\nBody.\n");
+  });
+
+  it("respects custom firstFilename for skills", () => {
+    const body = "# Instructions\n\nDo stuff.\n";
+    expect(splitBodyIntoSections(body, "010-instructions.md")).toEqual([
+      { filename: "010-instructions.md", content: "# Instructions\n\nDo stuff.\n" },
+    ]);
+  });
+
+  it("adds trailing newline when body lacks one", () => {
+    const body = "# Role\n\nContent.";
+    const sections = splitBodyIntoSections(body);
+    expect(sections[0].content).toMatch(/\n$/);
+  });
+
+  it("falls back to section-N slug when heading text slugifies to empty", () => {
+    const body = "# Role\n\nBody.\n\n# ---\n\nOther.\n";
+    const sections = splitBodyIntoSections(body);
+    expect(sections[1].filename).toBe("020-section-2.md");
+  });
+});
 
 // --- parseFrontmatter ---
 
@@ -217,6 +285,21 @@ describe("adoptExistingAgents", () => {
 
     const yaml = readFileSync(join(dir, "no-desc", "agent.yaml"), "utf8");
     expect(yaml).toContain("Adopted from .claude/agents/no-desc.md");
+  });
+
+  it("splits multi-section body into separate fragment files on adoption", () => {
+    writeClaudeAgent(
+      "multi",
+      "---\nname: multi\ndescription: Multi-section\nmodel: sonnet\ntools: Read\n---\n\n# Role\n\nBe helpful.\n\n# Guidelines\n\nFollow rules.\n"
+    );
+    const dir = initAgentsDir();
+    adoptExistingAgents(tmpDir, ["claude"], dir, skillsDir());
+
+    expect(existsSync(join(dir, "multi", "010-role.md"))).toBe(true);
+    expect(existsSync(join(dir, "multi", "020-guidelines.md"))).toBe(true);
+
+    expect(readFileSync(join(dir, "multi", "010-role.md"), "utf8")).toContain("Be helpful.");
+    expect(readFileSync(join(dir, "multi", "020-guidelines.md"), "utf8")).toContain("Follow rules.");
   });
 
   it("adopts multiple agents and returns their names", () => {
