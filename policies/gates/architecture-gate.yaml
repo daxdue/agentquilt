@@ -34,8 +34,11 @@ escalationPath:
 
 aiAssistance:
   enabled: true
+  # Assistance is manual: a maintainer invokes the named agent through a
+  # provider CLI (Claude Code). No automation invokes agents or calls a
+  # model API.
   agents:
-    - name: architecture-agent
+    - name: adr-writer
       role: ADR validation and draft generation
       tasks:
         - Check if change requires an ADR per CONTRIBUTING.md policy

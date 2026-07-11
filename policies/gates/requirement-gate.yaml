@@ -30,8 +30,11 @@ escalationPath:
 
 aiAssistance:
   enabled: true
+  # Assistance is manual: a maintainer invokes the named agent through a
+  # provider CLI (Claude Code). No automation invokes agents or calls a
+  # model API.
   agents:
-    - name: requirements-agent
+    - name: requirements-analyst
       role: Validate requirements completeness and testability
       tasks:
         - Flag acceptance criteria that are not testable (too vague, no pass/fail condition)

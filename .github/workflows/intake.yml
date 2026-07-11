@@ -39,17 +39,15 @@ jobs:
               repo: context.repo.repo,
               body: `## Issue Intake Gate
 
-This issue is ready for triage. Use Claude Code to invoke the **product-discovery agent** for automated analysis:
+This issue is ready for triage. The maintainer may manually invoke the **product-discovery agent** through a provider CLI (Claude Code) to assist:
 
 1. Open this issue in Claude Code
 2. Select the **product-discovery** agent from the agents list
-3. Agent will analyze and suggest:
+3. The agent can analyze and suggest:
    - Risk level assessment
    - Missing required fields
    - Potential duplicates
    - Initial acceptance criteria
-
-See [.docs/PHASE_3_COMPLETION.md](.docs/PHASE_3_COMPLETION.md) for agent details.
 
 **Authority:** Agent suggests; maintainer decides.`
             })

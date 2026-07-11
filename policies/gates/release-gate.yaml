@@ -35,8 +35,11 @@ escalationPath:
 
 aiAssistance:
   enabled: true
+  # Assistance is manual: a maintainer invokes the named agent through a
+  # provider CLI (Claude Code). No automation invokes agents or calls a
+  # model API.
   agents:
-    - name: release-agent
+    - name: release-manager
       role: Prepare release artifacts and verify readiness
       tasks:
         - Generate CHANGELOG draft from commit history (for human review)

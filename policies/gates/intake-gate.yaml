@@ -29,8 +29,11 @@ escalationPath:
 
 aiAssistance:
   enabled: true
+  # Assistance is manual: a maintainer invokes the named agent through a
+  # provider CLI (Claude Code). No automation invokes agents or calls a
+  # model API.
   agents:
-    - name: triage-agent
+    - name: product-discovery
       role: Intake triage and deduplication
       tasks:
         - Summarize issue in one sentence
