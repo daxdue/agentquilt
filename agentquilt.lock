@@ -1411,7 +1411,102 @@
       "hash": "sha256-79afdbe2a1c759b2911331ed6368fb6e036ee8ace667584f4b9af165c7eecaba",
       "bytes": 1144,
       "tags": []
+    },
+    {
+      "id": "project/010-overview.md",
+      "hash": "sha256-fe3f2e650b2c6542028dface2161d90d8deb5a5d74c4d6da19e6189d8c5c89f3",
+      "bytes": 1373,
+      "tags": []
+    },
+    {
+      "id": "project/020-architecture.md",
+      "hash": "sha256-13aff3a4ee05390f76fab45613488679a2a959db02dd8b48f33f9d68007ac46c",
+      "bytes": 3704,
+      "tags": []
+    },
+    {
+      "id": "project/030-documentation.md",
+      "hash": "sha256-6e9c46a5bfbd7b273c767ed9c1390eb6538e1f677f5a4c539fc5a471670c2e97",
+      "bytes": 1411,
+      "tags": []
+    },
+    {
+      "id": "project/040-development-practices.md",
+      "hash": "sha256-1d39324769b977b18fdebe03b7c5b6df170a5074b9d5bf52bd39b3ff508492bf",
+      "bytes": 2082,
+      "tags": []
+    },
+    {
+      "id": "project/050-commands.md",
+      "hash": "sha256-ee2cdb5a0c6fefc1b77c5dacc3aed64577d502fa42495f3981713e5b3b47a40e",
+      "bytes": 1110,
+      "tags": []
+    },
+    {
+      "id": "project/060-design-principles.md",
+      "hash": "sha256-0f99452f9e69f25e09985aaea5655901a6c2547ba09d7d929d26dcfeb4d64592",
+      "bytes": 991,
+      "tags": []
+    },
+    {
+      "id": "project/070-schemas.md",
+      "hash": "sha256-c906c7c9e254e16c6a6d761845194a11d5159774dc8286dc688b71ad8f5a36e4",
+      "bytes": 456,
+      "tags": []
+    },
+    {
+      "id": "project/080-status.md",
+      "hash": "sha256-b3a4b92561ad95ee00d6bde311733c6dedd05369f4e20fb4fe803658b089daf8",
+      "bytes": 1670,
+      "tags": []
+    },
+    {
+      "id": "project/090-implementation-notes.md",
+      "hash": "sha256-93bdf27a34d31f4e6fc6be4c44f7826fc8a2d001082420a18217faf6cda322c5",
+      "bytes": 729,
+      "tags": []
+    },
+    {
+      "id": "project/100-package-and-links.md",
+      "hash": "sha256-fe8bd864b827f6a293cc5dd1155607e7ae57f94b8956b7c64dce01622f80e924",
+      "bytes": 508,
+      "tags": []
     }
   ],
-  "targets": []
+  "targets": [
+    {
+      "output": "AGENTS.md",
+      "format": "markdown",
+      "fragments": [
+        "project/010-overview.md",
+        "project/020-architecture.md",
+        "project/030-documentation.md",
+        "project/040-development-practices.md",
+        "project/050-commands.md",
+        "project/060-design-principles.md",
+        "project/070-schemas.md",
+        "project/080-status.md",
+        "project/090-implementation-notes.md",
+        "project/100-package-and-links.md"
+      ],
+      "version": "sha256-5ceeedc175a0acf91eae7c2b38d415d3455668e93f9a19daf16b953e5bcf9e8e"
+    },
+    {
+      "output": "CLAUDE.md",
+      "format": "markdown",
+      "fragments": [
+        "project/010-overview.md",
+        "project/020-architecture.md",
+        "project/030-documentation.md",
+        "project/040-development-practices.md",
+        "project/050-commands.md",
+        "project/060-design-principles.md",
+        "project/070-schemas.md",
+        "project/080-status.md",
+        "project/090-implementation-notes.md",
+        "project/100-package-and-links.md"
+      ],
+      "version": "sha256-5ceeedc175a0acf91eae7c2b38d415d3455668e93f9a19daf16b953e5bcf9e8e"
+    }
+  ]
 }

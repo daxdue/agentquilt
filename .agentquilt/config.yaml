@@ -15,6 +15,18 @@ modelTiers:
     claude: claude-haiku-4-5-20251001
 
 targets:
+  # Repo development guide for AI agents, compiled from the same fragments
+  # into both the vendor-neutral AGENTS.md and the Claude Code CLAUDE.md
+  - output: AGENTS.md
+    include:
+      - project
+    format: markdown
+
+  - output: CLAUDE.md
+    include:
+      - project
+    format: markdown
+
   - kind: agent-definitions
     agents: "*"
     platforms: [claude]
