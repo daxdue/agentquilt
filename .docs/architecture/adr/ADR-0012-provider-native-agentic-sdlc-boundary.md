@@ -13,7 +13,7 @@ built a Claude API integration layer inside the product package
 (`packages/agentquilt-cli/src/integration/claude-agent.ts`, an
 `@anthropic-ai/sdk` dependency, and GitHub Actions that invoked agents
 automatically). That approach was retracted (see
-`.docs/CLAUDE_CODE_ONLY_AGENTS.md`): it coupled development tooling to the
+`.docs/archive/api-integration/CLAUDE_CODE_ONLY_AGENTS.md`): it coupled development tooling to the
 product package, added API cost and secret-management surface to CI, and
 conflicted with the authority model in ADR-0004 (humans decide; agents advise).
 Dead code and stale documentation from that era remain in the tree (inventoried
