@@ -1,0 +1,3 @@
+description: "Meta-agent for release workflow - changelog"
+model: balanced
+permissions: read-only

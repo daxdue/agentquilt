@@ -1,4 +1,0 @@
-name: security-review
-description: Meta-agent for governance workflow - security-review
-model: balanced
-permissions: read-only

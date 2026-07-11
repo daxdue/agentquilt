@@ -1,4 +1,3 @@
 description: "A code review expert who provides detailed feedback on pull requests, identifying bugs, performance issues, and suggesting improvements."
-name: reviewer
 model: balanced
 permissions: read-only

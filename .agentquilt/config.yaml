@@ -1,118 +1,20 @@
 version: 1
 sourceDir: .agentquilt/agents
-defaultModelTier: balanced
+
+# Agents without an explicit `model:` in agent.yaml inherit the platform's
+# current model selection. Uncomment to give them a default tier instead:
+# defaultModelTier: balanced
+
+# Tiers are opt-in: reference one from agent.yaml (e.g. `model: balanced`)
 modelTiers:
-  frontier:
-    claude: claude-opus-4-8
   balanced:
     claude: claude-sonnet-4-6
+  frontier:
+    claude: claude-opus-4-8
   fast:
-    claude: claude-haiku-4-5
+    claude: claude-haiku-4-5-20251001
 
 targets:
-  # Repo development guide for AI agents, compiled from the same fragments
-  # into both the vendor-neutral AGENTS.md and the Claude Code CLAUDE.md
-  - output: AGENTS.md
-    include:
-      - project
-    format: markdown
-
-  - output: CLAUDE.md
-    include:
-      - project
-    format: markdown
-
-  # User agent definitions (e.g., reviewer)
   - kind: agent-definitions
-    agents:
-      - reviewer
-    platforms:
-      - claude
-
-  # Repo-level skill: LLM-assisted agent authoring, compiled to the
-  # vendor-neutral Agent Skills format so Claude Code and Codex can both use it
-  - kind: agent-definitions
-    sourceDir: skills  # resolved against .agentquilt/ (parent of sourceDir)
-    agents:
-      - new-agent
-    platforms:
-      - agentskills
-
-  # Governance meta-agents (AI-assisted gate policies)
-  - kind: agent-definitions
-    sourceDir: meta-agents  # resolved against .agentquilt/ (parent of sourceDir)
-    agents:
-      - governance/risk-register
-      - governance/security-review
-      - governance/gatekeeper
-      - governance/policy-compliance
-      - governance/prompt-injection-test
-      - governance/supply-chain-risk
-      - governance/traceability
-      - governance/secret-leakage-detection
-    platforms:
-      - claude
-
-  # SDLC meta-agents (AI-assisted development workflow)
-  - kind: agent-definitions
-    sourceDir: meta-agents  # resolved against .agentquilt/ (parent of sourceDir)
-    agents:
-      - sdlc/product-discovery
-      - sdlc/requirements-analyst
-      - sdlc/ambiguity-detector
-      - sdlc/architecture
-      - sdlc/adr-writer
-      - sdlc/schema-design
-      - sdlc/code-review
-      - sdlc/developer-experience
-      - sdlc/documentation
-      - sdlc/implementation-planning
-    platforms:
-      - claude
-
-  # STLC meta-agents (AI-assisted testing workflow)
-  - kind: agent-definitions
-    sourceDir: meta-agents  # resolved against .agentquilt/ (parent of sourceDir)
-    agents:
-      - stlc/eval-designer
-      - stlc/golden-file-test
-      - stlc/semantic-regression
-      - stlc/test-design
-      - stlc/test-automation
-      - stlc/regression-scope
-      - stlc/qa-strategy
-      - stlc/compatibility-test
-      - stlc/defect-triage
-      - stlc/performance-test
-    platforms:
-      - claude
-
-  # Release meta-agents (AI-assisted release coordination)
-  - kind: agent-definitions
-    sourceDir: meta-agents  # resolved against .agentquilt/ (parent of sourceDir)
-    agents:
-      - release/release-manager
-      - release/changelog
-      - release/migration-guide
-      - release/evidence-collector
-      - release/post-release-review
-      - release/versioning
-    platforms:
-      - claude
-
-  # Internal meta-agents (AgentQuilt framework internal use)
-  - kind: agent-definitions
-    sourceDir: meta-agents  # resolved against .agentquilt/ (parent of sourceDir)
-    agents:
-      - internal/main-orchestrator
-      - internal/agent-registry
-      - internal/conflict-detector
-      - internal/agent-behavior-reviewer
-      - internal/agent-documentation
-      - internal/agent-migration
-      - internal/definition-architect
-      - internal/instruction-block-author
-      - internal/instruction-refactoring
-      - internal/prompt-compiler-guardian
-    platforms:
-      - claude
+    agents: "*"
+    platforms: [claude]

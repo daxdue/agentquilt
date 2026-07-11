@@ -1,0 +1,3 @@
+description: "Meta-agent for governance workflow - policy-compliance"
+model: balanced
+permissions: read-only

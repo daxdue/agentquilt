@@ -1,4 +1,0 @@
-name: release-manager
-description: Meta-agent for release workflow - release-manager
-model: balanced
-permissions: read-only

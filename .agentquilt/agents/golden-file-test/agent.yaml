@@ -1,0 +1,3 @@
+description: "Meta-agent for stlc workflow - golden-file-test"
+model: balanced
+permissions: read-only

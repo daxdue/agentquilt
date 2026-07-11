@@ -182,6 +182,61 @@ describe("check: exits 1 when source has drifted since last build", () => {
   });
 });
 
+describe("check: detects drift in compiled agent-definitions outputs", () => {
+  /** Minimal project with one agent compiled to .claude/agents/helper.md. */
+  function setupAgentProject(dir: string): void {
+    const agentDir = join(dir, ".agentquilt", "agents", "helper");
+    mkdirSync(agentDir, { recursive: true });
+    writeFileSync(join(agentDir, "agent.yaml"), "description: Helps out\n", "utf8");
+    writeFileSync(join(agentDir, "010-role.md"), "You are a helper.\n", "utf8");
+    writeFileSync(
+      join(dir, ".agentquilt", "config.yaml"),
+      [
+        "version: 1",
+        "sourceDir: .agentquilt/agents",
+        "targets:",
+        "  - kind: agent-definitions",
+        '    agents: "*"',
+        "    platforms: [claude]",
+      ].join("\n") + "\n",
+      "utf8"
+    );
+  }
+
+  it("exits 1 when a compiled agent output was hand-edited after the build", () => {
+    setupAgentProject(tmpDir);
+    runCLI(["build", "--cwd", tmpDir, "--quiet"]);
+
+    const compiledPath = join(tmpDir, ".claude", "agents", "helper.md");
+    expect(existsSync(compiledPath)).toBe(true);
+    writeFileSync(compiledPath, readFileSync(compiledPath, "utf8") + "TAMPERED\n", "utf8");
+
+    const result = runCLI(["check", "--cwd", tmpDir]);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain("helper.md");
+    expect(result.stderr).toContain("content differs");
+  });
+
+  it("exits 1 when a compiled agent output was deleted after the build", () => {
+    setupAgentProject(tmpDir);
+    runCLI(["build", "--cwd", tmpDir, "--quiet"]);
+
+    rmSync(join(tmpDir, ".claude", "agents", "helper.md"));
+
+    const result = runCLI(["check", "--cwd", tmpDir]);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain("does not exist");
+  });
+
+  it("exits 0 when compiled agent outputs match the last build", () => {
+    setupAgentProject(tmpDir);
+    runCLI(["build", "--cwd", tmpDir, "--quiet"]);
+
+    const result = runCLI(["check", "--cwd", tmpDir, "--quiet"]);
+    expect(result.status).toBe(0);
+  });
+});
+
 describe("check: exits 2 on an invalid config", () => {
   it("rejects a config with wrong field types", () => {
     mkdirSync(join(tmpDir, ".agentquilt"), { recursive: true });

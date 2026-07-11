@@ -1,4 +1,0 @@
-name: semantic-regression
-description: Meta-agent for stlc workflow - semantic-regression
-model: balanced
-permissions: read-only

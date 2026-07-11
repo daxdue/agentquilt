@@ -51,6 +51,7 @@ Run behavioral evals on compiled agent outputs. Detect regressions, semantic shi
 ## Static Evals (Deterministic, no LLM)
 
 ```yaml
+
 # Example eval case:
 - id: EVAL-001
   type: static
@@ -82,6 +83,7 @@ Run behavioral evals on compiled agent outputs. Detect regressions, semantic shi
 ## Mock-Response Evals
 
 ```yaml
+
 # Example baseline interaction:
 - id: EVAL-002
   type: mock-response

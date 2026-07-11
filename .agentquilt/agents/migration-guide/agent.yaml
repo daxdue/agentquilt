@@ -1,0 +1,3 @@
+description: "Meta-agent for release workflow - migration-guide"
+model: balanced
+permissions: read-only

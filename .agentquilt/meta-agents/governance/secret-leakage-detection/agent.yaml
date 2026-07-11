@@ -1,4 +1,0 @@
-name: secret-leakage-detection
-description: Meta-agent for governance workflow - secret-leakage-detection
-model: balanced
-permissions: read-only

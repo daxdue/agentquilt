@@ -1,4 +1,0 @@
-name: product-discovery
-description: Meta-agent for sdlc workflow - product-discovery
-model: balanced
-permissions: read-only

@@ -1,0 +1,3 @@
+description: "Meta-agent for governance workflow - traceability"
+model: balanced
+permissions: read-only

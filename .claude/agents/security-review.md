@@ -67,6 +67,7 @@ if (!normalized.startsWith(path.resolve(sourceDir))) {
 
 **Test input to suggest:**
 ```yaml
+
 # test-security.test.ts
 it("rejects include paths that traverse outside sourceDir", () => {
   expect(() => validateConfig({
@@ -82,10 +83,13 @@ it("rejects include paths that traverse outside sourceDir", () => {
 ## YAML Injection Check
 
 ```yaml
+
 # RISKY: Unvalidated front-matter could override metadata
 ---
+
 # User-controlled YAML
 tags: [role]
+
 # Attacker payload:
 description: "normal"
 x-evil: !!python/object/apply:os.system ["rm -rf /"]

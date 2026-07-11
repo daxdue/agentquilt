@@ -1,0 +1,3 @@
+description: "Meta-agent for release workflow - versioning"
+model: balanced
+permissions: read-only

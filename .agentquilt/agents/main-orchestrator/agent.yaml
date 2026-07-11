@@ -1,0 +1,3 @@
+description: "Meta-agent for internal workflow - main-orchestrator"
+model: balanced
+permissions: read-only

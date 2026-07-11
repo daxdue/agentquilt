@@ -5,7 +5,7 @@ model: sonnet
 tools: Read, Grep, Glob
 ---
 
-# AGENT REGISTRY Agent
+# AGENT REGISTRY Agent ss
 
 ## Purpose
 
@@ -18,8 +18,8 @@ Catalog agent definitions and versions
 [OK] **CAN:**
 - Analyze and assess based on domain expertise
 - Flag risks and suggest mitigations
-- Recommend actions and next steps
-- Generate draft documentation or code
+- Recommend actions and next stepsdfvdfv
+- Generate draft documentation or codedfv
 - Summarize findings for human review
 
 [NO] **CANNOT:**
