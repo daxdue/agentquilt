@@ -467,8 +467,8 @@
     },
     {
       "id": "project/020-architecture.md",
-      "hash": "sha256-13aff3a4ee05390f76fab45613488679a2a959db02dd8b48f33f9d68007ac46c",
-      "bytes": 3704,
+      "hash": "sha256-f0d86c5bc6c3043cd9a4930ddf4ce15f1e92a0f340c1271292111009eb44facb",
+      "bytes": 3898,
       "tags": []
     },
     {
@@ -503,8 +503,8 @@
     },
     {
       "id": "project/080-status.md",
-      "hash": "sha256-b3a4b92561ad95ee00d6bde311733c6dedd05369f4e20fb4fe803658b089daf8",
-      "bytes": 1670,
+      "hash": "sha256-cfd82cd77d195b734f0ecf0eb6f220d4b25dcb41caafba7d64dfbebd52be895d",
+      "bytes": 1836,
       "tags": []
     },
     {
@@ -536,7 +536,7 @@
         "project/090-implementation-notes.md",
         "project/100-package-and-links.md"
       ],
-      "version": "sha256-5ceeedc175a0acf91eae7c2b38d415d3455668e93f9a19daf16b953e5bcf9e8e"
+      "version": "sha256-5445f5816dd6e4f6ce350aa1516eaebf40220d046aa7e1dae30e724174d17ff1"
     },
     {
       "output": "CLAUDE.md",
@@ -553,7 +553,7 @@
         "project/090-implementation-notes.md",
         "project/100-package-and-links.md"
       ],
-      "version": "sha256-5ceeedc175a0acf91eae7c2b38d415d3455668e93f9a19daf16b953e5bcf9e8e"
+      "version": "sha256-5445f5816dd6e4f6ce350aa1516eaebf40220d046aa7e1dae30e724174d17ff1"
     }
   ]
 }

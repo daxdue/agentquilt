@@ -9,7 +9,7 @@
 - CLI: init, build (with --watch), check, agents add, agents list
 
 [DONE] **Agent scaffolding and adoption**
-- 46 agent definitions under `.agentquilt/agents/<name>/` (flat layout), all compiler-managed and compiled to `.claude/agents/*.md`
+- 14 development-agent definitions under `.agentquilt/agents/<name>/` (flat layout), all compiler-managed and compiled to `.claude/agents/*.md`: 8 core lifecycle roles plus 6 conditional specialists, rationalized from an earlier 46 (see [agent-portfolio.md](.docs/agentic-sdlc/agent-portfolio.md))
 - `agentquilt check` verifies agent-definition outputs byte-for-byte in addition to the lock file
 - Five gate policies defined (intake, requirement, architecture, pr-quality, release)
 - Risk register and SDLC/STLC strategies documented

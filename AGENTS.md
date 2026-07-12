@@ -1,4 +1,4 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-5ceeedc175a0acf91eae7c2b38d415d3455668e93f9a19daf16b953e5bcf9e8e · source: .agentquilt/agents/ · regenerate: npx agentquilt build -->
+<!-- agentquilt: generated file — do not edit. version=sha256-5445f5816dd6e4f6ce350aa1516eaebf40220d046aa7e1dae30e724174d17ff1 · source: .agentquilt/agents/ · regenerate: npx agentquilt build -->
 
 # AgentQuilt Development Guide
 
@@ -63,7 +63,7 @@ repo/
 
 Config discovery order: `.agentquilt/config.yaml`, `.agentquilt/config.json`, then the legacy root `agentquilt.config.yaml` / `agentquilt.config.json` (see ADR-0010).
 
-**Development agents**: `.agentquilt/agents/` also contains the repository's own development agents (code review, testing, governance, release support, etc.), managed the same way as any other agent and compiled to `.claude/agents/*.md` by a single wildcard `agent-definitions` target. They are invoked manually through provider CLIs (Claude Code); no automation invokes them programmatically. Many are stubs pending rationalization.
+**Development agents**: `.agentquilt/agents/` also contains the repository's own development agents (repository investigation, planning, implementation, testing, review, release readiness, etc.), managed the same way as any other agent and compiled to `.claude/agents/*.md` by a single wildcard `agent-definitions` target. They are invoked manually through provider CLIs (Claude Code); no automation invokes them programmatically. The portfolio is rationalized to 8 core lifecycle roles plus 6 conditional specialists; see [agent-portfolio.md](.docs/agentic-sdlc/agent-portfolio.md) for the full disposition and role contracts.
 
 ## Key Documentation
 
@@ -211,7 +211,7 @@ JSON schemas for validation:
 - CLI: init, build (with --watch), check, agents add, agents list
 
 [DONE] **Agent scaffolding and adoption**
-- 46 agent definitions under `.agentquilt/agents/<name>/` (flat layout), all compiler-managed and compiled to `.claude/agents/*.md`
+- 14 development-agent definitions under `.agentquilt/agents/<name>/` (flat layout), all compiler-managed and compiled to `.claude/agents/*.md`: 8 core lifecycle roles plus 6 conditional specialists, rationalized from an earlier 46 (see [agent-portfolio.md](.docs/agentic-sdlc/agent-portfolio.md))
 - `agentquilt check` verifies agent-definition outputs byte-for-byte in addition to the lock file
 - Five gate policies defined (intake, requirement, architecture, pr-quality, release)
 - Risk register and SDLC/STLC strategies documented
