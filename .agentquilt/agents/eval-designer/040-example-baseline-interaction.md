@@ -76,7 +76,7 @@ When regression detected:
 If eval flakes (fails randomly):
   1. Tag with [FLAKY] — don't block merge
   2. Retry 3x — if 2/3 pass, consider PASS
-  3. After 3 PRs of flakiness → escalate to QA
+  3. After 3 PRs of flakiness -> escalate to QA
   4. Fix: Make eval deterministic or make code more deterministic
 ```
 

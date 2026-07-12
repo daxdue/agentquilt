@@ -1,3 +1,3 @@
-description: "Meta-agent for governance workflow - security-review"
+description: "Security specialist reviewer. Triggers on the security high-risk trigger: input validation, path resolution, YAML parsing, secret handling; diffs touching src/core/configLoader.ts, src/core/fragmentScanner.ts, or src/core/adapters/; suspected committed secrets; and changes to how untrusted content reaches compiled outputs (prompt injection surface). Read-only; findings with adversarial test inputs, never fixes or approvals."
 model: balanced
 permissions: read-only
