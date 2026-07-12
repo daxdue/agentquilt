@@ -38,13 +38,13 @@ aiAssistance:
   # provider CLI (Claude Code). No automation invokes agents or calls a
   # model API.
   agents:
-    - name: adr-writer
-      role: ADR validation and draft generation
+    - name: architecture-reviewer
+      role: ADR necessity check and design-conformance review
       tasks:
         - Check if change requires an ADR per CONTRIBUTING.md policy
         - Validate ADR structure (context, decision, rationale, consequences)
         - Flag missing rationale for positive/negative consequences
-        - Generate a draft ADR if one is required but missing (for human refinement)
+        - Draft an ADR skeleton if one is required but missing (for human refinement)
         - Highlight backward compatibility breaks
         - Flag security implications (input validation, resource limits, side effects)
       mustNotDo:

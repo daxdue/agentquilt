@@ -32,17 +32,10 @@ aiAssistance:
   # Assistance is manual: a maintainer invokes the named agent through a
   # provider CLI (Claude Code). No automation invokes agents or calls a
   # model API.
-  agents:
-    - name: product-discovery
-      role: Intake triage and deduplication
-      tasks:
-        - Summarize issue in one sentence
-        - Flag missing required fields (owner, risk level, acceptance criteria)
-        - Suggest risk level based on change type
-        - Identify similar open/closed issues (potential duplicates)
-        - Draft initial acceptance criteria for human review if missing
-      mustNotDo:
-        - Assign the issue (requires human decision)
-        - Approve or close the issue (requires human decision)
-        - Estimate effort (domain knowledge only)
-      output: Draft issue summary with flags and suggestions
+  # No dedicated intake agent in the current portfolio (development-agent
+  # portfolio rationalization, .docs/agentic-sdlc/agent-portfolio.md
+  # section 3.4): intake triage is upstream of the development lifecycle
+  # and is handled by structured issue-form fields plus human triage.
+  # Acceptance-criteria testability is checked once a task is picked up,
+  # by the ambiguity-detector at classification (CLS).
+  agents: []

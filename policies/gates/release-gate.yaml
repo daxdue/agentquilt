@@ -39,18 +39,17 @@ aiAssistance:
   # provider CLI (Claude Code). No automation invokes agents or calls a
   # model API.
   agents:
-    - name: release-manager
-      role: Prepare release artifacts and verify readiness
+    - name: release-reviewer
+      role: Assemble and verify release readiness evidence
       tasks:
-        - Generate CHANGELOG draft from commit history (for human review)
-        - Extract breaking changes and generate migration guide skeleton
+        - Check CHANGELOG completeness and categorization against commit history
+        - Extract breaking changes and check for migration notes
         - Verify version bump is semver-compliant (major.minor.patch)
         - Check risk register for any critical/high risks
-        - Generate release announcement draft with feature summary
         - Verify all generated outputs are up to date (agentquilt.lock, AGENTS.md, CLAUDE.md)
       mustNotDo:
         - Approve the release (requires human decision)
         - Publish to npm (requires human action)
         - Close critical risks (requires human triage and fix)
         - Modify CHANGELOG without explicit human approval
-      output: Release readiness report + changelog/migration/announcement drafts
+      output: Release readiness report

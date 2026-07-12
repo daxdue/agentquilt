@@ -44,8 +44,8 @@ aiAssistance:
   # provider CLI (Claude Code). No automation invokes agents or calls a
   # model API.
   agents:
-    - name: code-review
-      role: Code review for correctness and security
+    - name: architecture-reviewer
+      role: Independent review for correctness, design conformance, and security
       tasks:
         - Review diff for type safety issues and potential bugs
         - Flag security risks (path traversal, injection, resource exhaustion)

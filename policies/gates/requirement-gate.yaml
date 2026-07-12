@@ -34,14 +34,14 @@ aiAssistance:
   # provider CLI (Claude Code). No automation invokes agents or calls a
   # model API.
   agents:
-    - name: requirements-analyst
-      role: Validate requirements completeness and testability
+    - name: ambiguity-detector
+      role: Flag untestable or ambiguous acceptance criteria
       tasks:
         - Flag acceptance criteria that are not testable (too vague, no pass/fail condition)
         - Check for non-functional requirements (security, performance, backward compat)
-        - Generate traceability links to existing tests in tests/ directory
         - Identify missing acceptance criteria (e.g., error cases, edge cases)
-        - Flag breaking changes and suggest migration notes
+        - Flag breaking changes and require migration notes
+        - Propose concrete, testable phrasing for flagged criteria
       mustNotDo:
         - Approve the requirements (requires human judgment)
         - Change the acceptance criteria (must stay as authored)
