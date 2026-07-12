@@ -1,3 +1,0 @@
-description: "Meta-agent for release workflow - post-release-review"
-model: balanced
-permissions: read-only
