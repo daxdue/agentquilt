@@ -1,0 +1,116 @@
+name: Bug report
+description: Something in AgentQuilt does not work as documented or expected.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Fill in as much of this form as you can -- it is
+        the intake evidence a maintainer or an agentic-loop session (Claude Code /
+        Codex, invoked manually per `.docs/agentic-sdlc/github-provider-handoff.md`)
+        will use to investigate.
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: Problem statement
+      description: What is currently happening? Be specific -- command run, output seen.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What should happen instead?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: How will we know this is fixed? List testable conditions.
+      placeholder: |
+        - [ ] Running `agentquilt <command>` produces ...
+        - [ ] `npx agentquilt check` reports ...
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-evidence
+    attributes:
+      label: Reproduction evidence
+      description: Minimal reproduction steps, example fragments/config, and the exact output or error observed.
+      placeholder: |
+        1. ...
+        2. ...
+        Observed output:
+    validations:
+      required: true
+  - type: dropdown
+    id: risk-indicators
+    attributes:
+      label: Risk indicators
+      description: Your best-guess severity, subject to triage.
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility-concerns
+    attributes:
+      label: Compatibility concerns
+      description: Does this bug or its likely fix touch CLI flags, exit codes, config format, or the manifest/block schema? Leave blank if not applicable.
+    validations:
+      required: false
+  - type: dropdown
+    id: generated-output-impact
+    attributes:
+      label: Generated-output impact
+      description: Does this bug affect AGENTS.md, CLAUDE.md, compiled agent definitions, or agentquilt.lock?
+      options:
+        - None
+        - AGENTS.md and CLAUDE.md
+        - Compiled agent definitions (.claude/agents/*.md)
+        - agentquilt.lock
+        - Not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: documentation-impact
+    attributes:
+      label: Documentation impact
+      description: Does fixing this require a documentation update?
+      options:
+        - None
+        - README
+        - CLAUDE.md/AGENTS.md fragments (.agentquilt/agents/project/)
+        - .docs architecture or ADR
+        - .docs sdlc/stlc
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: test-expectations
+    attributes:
+      label: Test expectations
+      description: What test coverage should confirm the fix -- new unit test, golden-fixture update, eval update, none?
+    validations:
+      required: true
+  - type: checkboxes
+    id: affected-area
+    attributes:
+      label: Affected area
+      description: Select all that apply.
+      options:
+        - label: CLI
+        - label: Schemas
+        - label: Compiler
+        - label: Adapters (Claude / AgentSkills)
+        - label: Evals
+        - label: Generated agents
+        - label: Documentation
+        - label: CI/CD
+        - label: Security / Governance

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Contributing Guide
+    url: https://github.com/daxdue/agentquilt/blob/main/CONTRIBUTING.md
+    about: Branch naming, commit message format, and PR expectations before you start.

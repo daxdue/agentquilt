@@ -1,0 +1,111 @@
+name: Documentation
+description: Report a documentation gap, error, or improvement.
+title: "[Docs]: "
+labels:
+  - documentation
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form covers documentation under `README.md`, `.docs/`, or the
+        `AGENTS.md`/`CLAUDE.md` fragments. Remember: `AGENTS.md` and `CLAUDE.md` are
+        generated from `.agentquilt/agents/project/` fragments and must never be
+        hand-edited -- see the Generated Files Policy in the root `CLAUDE.md`.
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: Problem statement
+      description: What is missing, wrong, or unclear in the current documentation?
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What should the documentation say instead?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: How will we know this is fixed? List testable conditions.
+      placeholder: |
+        - [ ] `README.md` section X describes ...
+        - [ ] Fragment `.agentquilt/agents/project/0NN-*.md` updated and `npx agentquilt build` re-run
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-evidence
+    attributes:
+      label: Location evidence
+      description: Link or path to the specific file and section this concerns.
+    validations:
+      required: false
+  - type: dropdown
+    id: risk-indicators
+    attributes:
+      label: Risk indicators
+      description: Your best-guess risk level for this change, subject to triage.
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility-concerns
+    attributes:
+      label: Compatibility concerns
+      description: Does this documentation change describe a behavior that has itself changed (i.e. is this docs-only or does it reveal a code gap)? Leave blank if not applicable.
+    validations:
+      required: false
+  - type: dropdown
+    id: generated-output-impact
+    attributes:
+      label: Generated-output impact
+      description: Does this require a rebuild of AGENTS.md/CLAUDE.md or a compiled agent definition?
+      options:
+        - None
+        - AGENTS.md and CLAUDE.md
+        - Compiled agent definitions (.claude/agents/*.md)
+        - agentquilt.lock
+        - Not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: documentation-impact
+    attributes:
+      label: Documentation impact
+      description: Which documentation area is affected?
+      options:
+        - README
+        - CLAUDE.md/AGENTS.md fragments (.agentquilt/agents/project/)
+        - .docs architecture or ADR
+        - .docs sdlc/stlc
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: test-expectations
+    attributes:
+      label: Test expectations
+      description: Is there a doc-consistency check that should catch this in future (drift check, link check), or is this purely manual review?
+    validations:
+      required: true
+  - type: checkboxes
+    id: affected-area
+    attributes:
+      label: Affected area
+      description: Select all that apply.
+      options:
+        - label: CLI
+        - label: Schemas
+        - label: Compiler
+        - label: Adapters (Claude / AgentSkills)
+        - label: Evals
+        - label: Generated agents
+        - label: Documentation
+        - label: CI/CD
+        - label: Security / Governance
