@@ -40,13 +40,21 @@ default_permissions = ":read-only"
 # consumer and is not defined here to avoid implying an attachment path that
 # does not exist.
 
-# No [hooks] table is defined in this file (Phase 5 design decision D6): the
-# per-agent sandbox_mode assignment above and in .codex/agents/*.toml already
-# covers this phase's guardrail goals for every spawned custom agent, and the
-# documented PreToolUse interception gaps (codex-pipeline.md section 2.5)
-# mean a hook would add a false sense of completeness for a goal the sandbox
-# already covers more reliably for spawned agents. If the Maintainer later
-# wants an explicit guard against the MAIN interactive session (not a
-# spawned agent) attempting a generated-file edit or an absolute-rule
-# command, that remains the one case where a hook would be justified -- not
-# built here.
+# No [hooks] table is defined in THIS file. Phase 6 (design decision D1,
+# .docs/agentic-sdlc/guardrails-design.md section 4.1/8) added a project-
+# local .codex/hooks.json file instead, kept separate from this file for the
+# same "keep the guardrail mechanism visually separate from the
+# agent-registry/permission-default file" reasoning already used above to
+# justify not defining an orphaned permission profile here. That hook denies
+# apply_patch edits to the generated-file set (AGENTS.md, CLAUDE.md,
+# .claude/agents/**, agentquilt.lock) and a narrow secret-adjacent filename
+# set (D6), plus Bash/exec matches against the absolute-rule command set
+# (git push, git tag, npm publish, npm version, gh pr merge, gh release), for
+# EVERY caller including the main interactive session -- closing the gap the
+# original comment here named as "not built here." It does not, and cannot,
+# add per-agent (per custom-agent-name) scoping: Codex's PreToolUse payload
+# has no caller-identity field analogous to Claude Code's agent_type
+# (confirmed by direct documentation query, guardrails-design.md section
+# 4.2), so it applies uniformly rather than narrowly the way the Claude
+# Code-side D2 hook does. See .codex/hooks.json and
+# .codex/hooks/pretooluse-guard.sh for the mechanism itself.
