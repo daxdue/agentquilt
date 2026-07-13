@@ -1,0 +1,7 @@
+interface:
+  display_name: "Review Tree"
+  short_description: "Independent review with specialist fan-out"
+  default_prompt: "Use $review-tree to run independent review of the working tree, fanning out to whichever conditional specialists the touched areas require, and merge into one Review Findings artifact."
+
+policy:
+  allow_implicit_invocation: true

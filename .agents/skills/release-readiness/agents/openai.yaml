@@ -1,0 +1,7 @@
+interface:
+  display_name: "Release Readiness"
+  short_description: "Assemble the Release-Readiness Summary"
+  default_prompt: "Use $release-readiness to assemble and print the Release-Readiness Summary for main's current state. Never bumps versions, tags, or publishes."
+
+policy:
+  allow_implicit_invocation: false

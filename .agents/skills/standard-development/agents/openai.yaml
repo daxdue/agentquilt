@@ -1,0 +1,7 @@
+interface:
+  display_name: "Standard Development"
+  short_description: "Run the full classify-to-PR loop end to end"
+  default_prompt: "Use $standard-development to run the complete AgentQuilt development loop for this issue end to end: classify, investigate, plan, pause for approval, implement, validate, review, and prepare PR evidence."
+
+policy:
+  allow_implicit_invocation: true

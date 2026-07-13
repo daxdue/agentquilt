@@ -1,0 +1,7 @@
+interface:
+  display_name: "Plan Change"
+  short_description: "Plan bounded tasks and flag approval gates"
+  default_prompt: "Use $plan-change to turn the Repository Investigation into an Implementation Plan of ordered bounded tasks, flagging every approval-gate trigger."
+
+policy:
+  allow_implicit_invocation: true
