@@ -40,8 +40,10 @@ Rules:
    handoff's allowed file set) and the test engineer (test execution, test
    code) write; every other role is read-only.
 5. **Sequential by default.** Parallel handoffs are limited to high-risk
-   read-only investigation until Phase 9 defines the wider coordination
-   contract.
+   read-only investigation, plus the read-heavy fan-out and (authorized but
+   not yet exercised) write-parallel modes defined by the coordination
+   contract in [controlled-multi-agent-parallelism.md](controlled-multi-agent-parallelism.md)
+   (Phase 9).
 6. **Where artifacts live.** In the issue, the PR description/comments, or a
    scratch file that does not get committed — except artifacts this contract
    or the completion contract require in the PR itself. Artifacts are plain
