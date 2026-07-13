@@ -1,5 +1,23 @@
 {
   "enabledPlugins": {
     "github@claude-plugins-official": true
+  },
+  "permissions": {
+    "deny": [
+      "Edit(/AGENTS.md)",
+      "Write(/AGENTS.md)",
+      "Edit(/CLAUDE.md)",
+      "Write(/CLAUDE.md)",
+      "Edit(/.claude/agents/**)",
+      "Write(/.claude/agents/**)",
+      "Edit(/agentquilt.lock)",
+      "Write(/agentquilt.lock)",
+      "Bash(git push*)",
+      "Bash(git tag*)",
+      "Bash(npm publish*)",
+      "Bash(npm version*)",
+      "Bash(gh pr merge*)",
+      "Bash(gh release*)"
+    ]
   }
 }
