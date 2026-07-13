@@ -43,12 +43,26 @@ jobs:
       - name: Drift check
         run: node packages/agentquilt-cli/dist/index.js check
 
-      - name: Verify risk register
-        run: |
-          echo "Checking policies/risks/risk-register.yaml for open critical/high risks..."
-          echo "OK: No blocking risks found"
+      - name: Package validation
+        working-directory: packages/agentquilt-cli
+        run: npm pack --dry-run
 
-      - name: Release readiness check
+      - name: Verify risk register
+        working-directory: packages/agentquilt-cli
+        run: |
+          node -e "
+            const fs = require('fs');
+            const YAML = require('yaml');
+            const doc = YAML.parse(fs.readFileSync('../../policies/risks/risk-register.yaml', 'utf8'));
+            const blocking = doc.risks.filter(r => r.status === 'open' && (r.level === 'high' || r.level === 'critical'));
+            if (blocking.length > 0) {
+              console.error('BLOCKED: open high/critical risks found: ' + blocking.map(r => r.id).join(', '));
+              process.exit(1);
+            }
+            console.log('OK: no open high/critical risks in policies/risks/risk-register.yaml');
+          "
+
+      - name: Release readiness report
         run: |
           echo "Release Readiness Report"
           echo "========================"
@@ -57,46 +71,24 @@ jobs:
           echo "Release type: ${{ github.event.inputs.release_type }}"
           echo "Current version: $(jq -r '.version' packages/agentquilt-cli/package.json)"
           echo ""
-          echo "Automated Checks:"
-          echo "  OK: All tests pass"
-          echo "  OK: Drift check passes"
-          echo "  OK: Risk register: No blocking risks"
-          echo "  OK: Generated outputs: Up to date"
+          echo "Automated checks (see step results above for pass/fail):"
+          echo "  - All tests pass"
+          echo "  - Drift check passes"
+          echo "  - Package validation (npm pack --dry-run) passes"
+          echo "  - Risk register: no open high/critical risks"
           echo ""
-          echo "For release planning, use Claude Code agents:"
-          echo "  - release-manager: Orchestrate release"
-          echo "  - changelog: Generate CHANGELOG from commits"
-          echo "  - versioning: Validate semver compliance"
+          echo "This report is informational only -- no step in this workflow tags, pushes,"
+          echo "bumps a version, or publishes. Every one of those remains a manual step run"
+          echo "by a human maintainer, per the Release Gate in .docs/sdlc/gates.md."
           echo ""
-          echo "Next: Maintainer reviews checklist and approves release"
-
-      - name: Post release checklist
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: 1,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## Release Ready: ${{ github.event.inputs.release_type }}
-
-Pre-release checks: PASSED
-- All tests: OK
-- Drift check: OK
-- Risk register: Clean
-- Version bump: Ready
-
-For detailed release planning, use Claude Code agents:
-- **release-manager** - Coordinate release process
-- **changelog** - Generate changelog from commits
-- **versioning** - Validate version compliance
-- **migration-guide** - Document breaking changes
-
-Manual steps:
-1. Use Claude Code agents to plan release
-2. Update CHANGELOG.md manually if needed
-3. Bump version: \`npm version ${{ github.event.inputs.release_type }}\`
-4. Push: \`git push origin main --tags\`
-5. Publish: \`npm publish\``
-            })
-        continue-on-error: true
+          echo "For detailed release planning, invoke Claude Code or Codex manually per"
+          echo ".docs/agentic-sdlc/github-provider-handoff.md and run:"
+          echo "  - release-reviewer (Claude Code / Codex agent): assembles release-readiness evidence"
+          echo "  - release-readiness (Claude Code command / Codex skill): prints the Release-Readiness Summary"
+          echo ""
+          echo "Next: Maintainer reviews this report and the release-readiness output, then"
+          echo "manually runs:"
+          echo "  1. Update CHANGELOG.md if needed"
+          echo "  2. npm version ${{ github.event.inputs.release_type }}"
+          echo "  3. git push origin main --tags"
+          echo "  4. npm publish"
