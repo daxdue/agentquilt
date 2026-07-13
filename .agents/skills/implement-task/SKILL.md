@@ -17,6 +17,12 @@ Handoff at a time. Also reused, unmodified in procedure, for the correction
 loop (COR) when a review finding needs a fix -- the "handoff" in that case
 is the finding plus its proposed verification method, treated the same way.
 
+Before proceeding: note the current branch and working-tree cleanliness
+(`git status`, `git branch --show-current`), and keep the canonical-vs-
+generated file distinction in view throughout (`AGENTS.md`, `CLAUDE.md`,
+`.claude/agents/*.md`, and `agentquilt.lock` are rebuild outputs only; their
+sources live under `.agentquilt/`).
+
 ## Steps
 
 1. **Confirm entry criteria.** A dispatchable Implementation Handoff must

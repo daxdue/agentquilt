@@ -20,6 +20,12 @@ generated, its approval recorded if the task carries a trigger. This is step
 invoked standalone once a plan is already approved. It is reused for step 9
 (fix accepted review findings) -- see "Reused for correction" below.
 
+Before proceeding: note the current branch and working-tree cleanliness
+(`git status`, `git branch --show-current`), and keep the canonical-vs-
+generated file distinction in view throughout (`AGENTS.md`, `CLAUDE.md`,
+`.claude/agents/*.md`, and `agentquilt.lock` are rebuild outputs only; their
+sources live under `.agentquilt/`).
+
 ## Steps
 
 1. **Delegate implementation.** Delegate to the `feature-implementer` agent

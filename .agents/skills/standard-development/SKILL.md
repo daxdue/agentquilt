@@ -12,6 +12,12 @@ subagent-dispatch tool. The 10 steps below are this repository's Phase 5
 phase doc's own required list; each step names the custom agent(s) it
 delegates to.
 
+Before proceeding: note the current branch and working-tree cleanliness
+(`git status`, `git branch --show-current`), and keep the canonical-vs-
+generated file distinction in view throughout (`AGENTS.md`, `CLAUDE.md`,
+`.claude/agents/*.md`, and `agentquilt.lock` are rebuild outputs only; their
+sources live under `.agentquilt/`).
+
 ## The 10-step loop
 
 1. **Classify (CLS).** Delegate to `implementation-planner` (or invoke the

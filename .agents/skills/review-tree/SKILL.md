@@ -15,6 +15,12 @@ ready for independent review -- either as part of the `standard-development`
 loop's step 7, or standalone for a working-tree diff review outside that
 loop.
 
+Before proceeding: note the current branch and working-tree cleanliness
+(`git status`, `git branch --show-current`), and keep the canonical-vs-
+generated file distinction in view throughout (`AGENTS.md`, `CLAUDE.md`,
+`.claude/agents/*.md`, and `agentquilt.lock` are rebuild outputs only; their
+sources live under `.agentquilt/`).
+
 ## Steps
 
 1. **Delegate primary review.** Delegate to the `architecture-reviewer`

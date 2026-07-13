@@ -16,6 +16,12 @@ Stage: REL (release readiness), per
 Operates on `main`'s current state (not a feature branch) and assembles the
 evidence that a release is or is not safe to execute.
 
+Before proceeding: note the current branch and working-tree cleanliness
+(`git status`, `git branch --show-current`), and keep the canonical-vs-
+generated file distinction in view throughout (`AGENTS.md`, `CLAUDE.md`,
+`.claude/agents/*.md`, and `agentquilt.lock` are rebuild outputs only; their
+sources live under `.agentquilt/`).
+
 ## Steps
 
 1. **Delegate assembly.** Delegate to the `release-reviewer` agent to assemble

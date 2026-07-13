@@ -16,6 +16,12 @@ Entry condition: a Repository Investigation exists, either produced by the
 of `develop-issue`'s loop and can also be invoked standalone to (re-)plan a
 change, including re-entry after a mid-implementation reclassification.
 
+Before proceeding: note the current branch and working-tree cleanliness
+(`git status`, `git branch --show-current`), and keep the canonical-vs-
+generated file distinction in view throughout (`AGENTS.md`, `CLAUDE.md`,
+`.claude/agents/*.md`, and `agentquilt.lock` are rebuild outputs only; their
+sources live under `.agentquilt/`).
+
 ## Steps
 
 1. **Produce the Implementation Plan.** Delegate to the

@@ -23,6 +23,12 @@ and waits for the Maintainer regardless of how this skill was invoked --
 auto-triggering this skill carries no more risk than the loop already carries
 by design.
 
+Before proceeding: note the current branch and working-tree cleanliness
+(`git status`, `git branch --show-current`), and keep the canonical-vs-
+generated file distinction in view throughout (`AGENTS.md`, `CLAUDE.md`,
+`.claude/agents/*.md`, and `agentquilt.lock` are rebuild outputs only; their
+sources live under `.agentquilt/`).
+
 ## The 13-step loop
 
 | # | Step (phase doc) | Stage | Handled by | Agent(s) |

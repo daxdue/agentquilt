@@ -16,6 +16,12 @@ categorization, semver compliance of the version bump, migration notes for
 breaking changes, risk register status, validation evidence and drift-check
 state.
 
+Before proceeding: note the current branch and working-tree cleanliness
+(`git status`, `git branch --show-current`), and keep the canonical-vs-
+generated file distinction in view throughout (`AGENTS.md`, `CLAUDE.md`,
+`.claude/agents/*.md`, and `agentquilt.lock` are rebuild outputs only; their
+sources live under `.agentquilt/`).
+
 ## Steps
 
 1. **Delegate to release-reviewer.** Delegate to the `release-reviewer`

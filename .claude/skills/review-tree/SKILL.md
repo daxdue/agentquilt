@@ -17,6 +17,12 @@ diff review. This is step 8 of `develop-issue`'s loop and can also be invoked
 standalone against the current working tree's diff at any time, for example
 before manually starting `/prepare-pr`.
 
+Before proceeding: note the current branch and working-tree cleanliness
+(`git status`, `git branch --show-current`), and keep the canonical-vs-
+generated file distinction in view throughout (`AGENTS.md`, `CLAUDE.md`,
+`.claude/agents/*.md`, and `agentquilt.lock` are rebuild outputs only; their
+sources live under `.agentquilt/`).
+
 ## Steps
 
 1. **Delegate the primary review.** Delegate to the `architecture-reviewer`

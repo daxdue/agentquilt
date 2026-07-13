@@ -17,6 +17,12 @@ free-text request from the Maintainer. This is the entry point for
 when only classification and investigation are needed, without continuing to
 planning or implementation.
 
+Before proceeding: note the current branch and working-tree cleanliness
+(`git status`, `git branch --show-current`), and keep the canonical-vs-
+generated file distinction in view throughout (`AGENTS.md`, `CLAUDE.md`,
+`.claude/agents/*.md`, and `agentquilt.lock` are rebuild outputs only; their
+sources live under `.agentquilt/`).
+
 ## Steps
 
 1. **Record a Task Classification.** Delegate to the `implementation-planner`

@@ -17,6 +17,12 @@ Trigger: the Maintainer reports, or the session observes, a failing
 deterministic check on an existing branch or PR -- a build error, a test
 failure, a coverage shortfall, or `npx agentquilt check` drift.
 
+Before proceeding: note the current branch and working-tree cleanliness
+(`git status`, `git branch --show-current`), and keep the canonical-vs-
+generated file distinction in view throughout (`AGENTS.md`, `CLAUDE.md`,
+`.claude/agents/*.md`, and `agentquilt.lock` are rebuild outputs only; their
+sources live under `.agentquilt/`).
+
 ## Steps
 
 1. **Read the failing command's exact output.** Do not guess at the cause

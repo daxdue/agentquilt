@@ -17,6 +17,12 @@ reference), Review Findings (with resolutions), and Validation Evidence
 already produced earlier in this session, and assembles them into the PR
 Summary format.
 
+Before proceeding: note the current branch and working-tree cleanliness
+(`git status`, `git branch --show-current`), and keep the canonical-vs-
+generated file distinction in view throughout (`AGENTS.md`, `CLAUDE.md`,
+`.claude/agents/*.md`, and `agentquilt.lock` are rebuild outputs only; their
+sources live under `.agentquilt/`).
+
 ## Steps
 
 1. **Gather artifacts already produced this session.** Do not re-derive them
