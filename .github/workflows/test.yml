@@ -38,6 +38,9 @@ jobs:
         run: npm run build
       - name: Drift check
         run: node packages/agentquilt-cli/dist/index.js check
+      - name: Pipeline agent drift check
+        run: node scripts/check-pipeline-agent-drift.mjs
+        continue-on-error: true
       - name: Package validation
         working-directory: packages/agentquilt-cli
         run: npm pack --dry-run
@@ -64,6 +67,7 @@ jobs:
               - Coverage: produced, not threshold-enforced
               - Build: required
               - AgentQuilt drift check: required
+              - Pipeline agent drift check (Claude Code vs Codex roster parity): informational only, not yet blocking (new check, promotable once proven stable)
               - Package validation (npm pack --dry-run): required
               - Dependency audit (npm audit, high severity): informational only, not blocking
 
