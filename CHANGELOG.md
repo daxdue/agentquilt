@@ -22,6 +22,10 @@ Versioning follows [Semantic Versioning](https://semver.org/).
   `@anthropic-ai/sdk` devDependency) — dead code from an earlier,
   since-reverted approach to agent invocation. No published package surface
   changes.
+- `agentquilt --version` now reads from `package.json` at runtime instead
+  of a hardcoded literal. It had been silently stuck reporting `0.1.0`
+  since before this release — found while installing this build locally
+  via `npm link`.
 
 ### Added
 
