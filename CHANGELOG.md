@@ -7,11 +7,14 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [0.1.2] — 2026-07-14
+## [Unreleased]
 
-Version number is a suggested patch bump, not yet applied to
-`packages/agentquilt-cli/package.json` — prepared ahead of an actual
-release decision, per the documented [release process](.docs/sdlc/release-process.md).
+Prepared ahead of an actual release decision. No version has been chosen
+yet and `packages/agentquilt-cli/package.json` has not been bumped — both
+happen together, at release time, per the documented
+[release process](.docs/sdlc/release-process.md). A plausible patch bump
+(`0.1.2`) given the changes below are fixes with no manifest format or CLI
+command changes, but that's a call for whoever cuts the release.
 
 ### Fixed
 
