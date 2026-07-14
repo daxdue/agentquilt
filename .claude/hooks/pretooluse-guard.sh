@@ -70,10 +70,45 @@ if [ "$TOOL_NAME" = "Bash" ]; then
   # .claude/agents/repository-analyst.md, regression-reviewer.md,
   # deterministic-output.md, supply-chain-risk.md). Matched as a command
   # PREFIX check against the first word(s) of the command string -- this is
-  # a simple fixed-table lookup, not a general parser: a caller could still
-  # chain commands with && or ; to smuggle a denied command after an
-  # allowed prefix, which is a known limitation of this narrow mechanism
-  # (documented in the phase report, not silently assumed away).
+  # a simple fixed-table lookup, not a general parser.
+  #
+  # Chaining guard (Phase 10 segment 4, tuning action "strengthen hooks
+  # that catch real mistakes", applied to the real, disclosed bypass this
+  # comment previously named: a caller could chain a denied command after
+  # an allowed prefix, e.g. "git log && rm -rf /" or "git log; npm
+  # publish", and the prefix check alone would pass it). Before the
+  # per-agent prefix check runs, reject outright any command containing a
+  # shell metacharacter commonly used for chaining, substitution, or
+  # piping: && || ; | backtick $( or a literal newline. This is a fixed
+  # metacharacter denylist, not a shell parser -- it does not attempt to
+  # understand quoting or escaping, so it does not catch every conceivable
+  # obfuscation technique (for example a metacharacter smuggled through an
+  # intermediate variable expansion the hook does not evaluate), but it
+  # closes the specific, simple bypass this comment previously disclosed
+  # as open. Applies only to the four scoped agent_types below -- the
+  # metacharacter check is inline in each branch, not a separate function,
+  # so an agent_type outside the four scoped ones remains completely
+  # unaffected, matching the hook's own existing pass-through behavior.
+  case "$AGENT_TYPE" in
+    repository-analyst|regression-reviewer|deterministic-output|supply-chain-risk)
+      case "$COMMAND" in
+        *'&&'*|*'||'*|*';'*|*'|'*|*'`'*|*'$('*)
+          deny "Blocked by D2 chaining guard: $AGENT_TYPE's command contains a shell metacharacter (&&, ||, ;, |, backtick, or \$() used for chaining, substitution, or piping, which is never permitted regardless of whether the individual commands it chains would otherwise be allowed. Command was: $COMMAND"
+          ;;
+      esac
+      # Literal-newline check: a case-pattern match against
+      # "$(printf '\n')" does not work reliably in POSIX sh (command
+      # substitution strips the trailing newline, leaving an empty-string
+      # pattern that matches everything) -- use a line count instead. A
+      # single-line command always yields exactly 1 line through
+      # "printf '%s\n' | wc -l"; a command containing an embedded newline
+      # yields more than 1.
+      if [ "$(printf '%s\n' "$COMMAND" | wc -l)" -gt 1 ]; then
+        deny "Blocked by D2 chaining guard: $AGENT_TYPE's command contains a literal newline, which is never permitted. Command was: $COMMAND"
+      fi
+      ;;
+  esac
+
   case "$AGENT_TYPE" in
     repository-analyst)
       case "$COMMAND" in
