@@ -1,10 +1,15 @@
-# Agentic SDLC — Claude Code-Native Development Pipeline (Proposal)
+# Agentic SDLC -- Claude Code-Native Development Pipeline
 
 Date: 2026-07-13
-Status: Proposal (Phase 4 segment 1 deliverable; awaiting Maintainer approval at
-the gate recorded in section 9). Not yet built — this document specifies what
-segment 2 creates, after approval, and nothing under `.claude/` or
-`.agentquilt/` has been changed to produce it.
+Status: Built (Phase 4 segment 2). Segment 1 was a proposal awaiting
+Maintainer approval; the Maintainer approved the design at the gate
+recorded in section 9, and segment 2 built it in full -- 6 skills, 2
+commands, and the `.claude/settings.json` guardrail block are committed
+and live under `.claude/`. Status corrected 2026-07-13 (Phase 10 segment 2,
+documentation-currency pilot instance; previously read "Proposal... Not yet
+built" despite the artifacts below having been live since Phase 4's own
+segment 2 -- see [phase-10-pipeline-cross-reference.md](phase-10-pipeline-cross-reference.md)
+section 3 for the finding this correction resolves).
 Companion documents: [agent-portfolio.md](agent-portfolio.md) (the 14-agent
 portfolio this pipeline routes to; section 6 role contracts are the normative
 source and are not restated here), [lifecycle.md](lifecycle.md) (stage

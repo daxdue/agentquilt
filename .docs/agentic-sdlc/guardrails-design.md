@@ -1,12 +1,19 @@
-# Agentic SDLC -- Provider-Native Guardrails, Permissions, and Hooks (Design)
+# Agentic SDLC -- Provider-Native Guardrails, Permissions, and Hooks
 
 Date: 2026-07-13
-Status: Proposal (Phase 6 segment 1 deliverable; awaiting Maintainer approval at
-the gate recorded in section 7). Not yet built -- no file under
-`.claude/settings.json`, `.codex/config.toml`, `.codex/agents/`,
-`.agents/skills/`, or any hook script has been created or modified to produce
-this document. This segment is design only, mirroring the design-then-gate-
-then-build split already used for Phases 3, 4, and 5.
+Status: Built (Phase 6 segment 2). Segment 1 was a proposal awaiting
+Maintainer approval; the Maintainer approved the design at the gate
+recorded in section 7, and segment 2 built it in full -- the
+`.claude/settings.json` guardrail block (generated-file deny, absolute-rule
+deny, secret-filename deny, the per-agent Bash-scoping hook) and
+`.codex/hooks.json` plus `.codex/hooks/pretooluse-guard.sh` (the Codex-side
+`PreToolUse` guard, D1 and D6 there) are committed and confirmed live (a
+guard hook fired correctly during Phase 9's own live investigation). Status
+corrected 2026-07-13 (Phase 10 segment 2, documentation-currency pilot
+instance; previously read "Proposal... Not yet built" despite these
+artifacts having been live since Phase 6's own segment 2 -- see
+[phase-10-pipeline-cross-reference.md](phase-10-pipeline-cross-reference.md)
+section 3 for the finding this correction resolves).
 Companion documents: [claude-code-pipeline.md](claude-code-pipeline.md) and
 [codex-pipeline.md](codex-pipeline.md) (the two pipelines this phase
 hardens), [agent-portfolio.md](agent-portfolio.md) (the 14-agent portfolio,

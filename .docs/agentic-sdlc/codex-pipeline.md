@@ -1,10 +1,21 @@
-# Agentic SDLC -- Codex-Native Development Pipeline (Proposal)
+# Agentic SDLC -- Codex-Native Development Pipeline
 
 Date: 2026-07-13
-Status: Proposal (Phase 5 segment 1 deliverable; awaiting Maintainer approval at
-the gate recorded in section 9). Not yet built -- this document specifies what
-segment 2 creates, after approval, and nothing under `.codex/`, `.agents/skills/`,
-or `AGENTS.md` has been changed to produce it.
+Status: Built (Phase 5 segment 2 and segment 3). Segment 1 was a proposal
+awaiting Maintainer approval; the Maintainer approved the design at the
+gate recorded in section 9, and segments 2-3 built it in full -- 14 custom
+agents (8 core plus, per D7's resolution, all 6 conditional specialists),
+8 skills under `.agents/skills/`, and `.codex/config.toml` are committed
+and live. Status corrected 2026-07-13 (Phase 10 segment 2,
+documentation-currency pilot instance; previously read "Proposal... Not yet
+built" despite the artifacts below having been live since Phase 5's own
+build segments -- see [phase-10-pipeline-cross-reference.md](phase-10-pipeline-cross-reference.md)
+section 3 for the finding this correction resolves). D1 and D6 below are
+also corrected in place to reflect their as-built, revised state (see the
+inline notes on each) rather than their original segment-1 proposal text,
+since both were substantively revised or overridden after this document was
+first written and neither revision had been folded back into this
+document's own prose until now.
 Companion documents: [agent-portfolio.md](agent-portfolio.md) (the 14-agent
 portfolio this pipeline routes to; section 6 role contracts are the normative
 source and are not restated here), [lifecycle.md](lifecycle.md) (stage catalog
@@ -411,18 +422,25 @@ Two notes on faithful mapping, named explicitly rather than glossed over:
   agent-portfolio.md's own D2 (section 10) already named and left as a
   documented risk for Phase 6 in the Claude Code design (Phase 4 section
   4.5's "regression-reviewer... may additionally execute deterministic
-  checks"). Codex's permission-profile system gives this design a real
-  answer Claude Code's Phase 4 could not fully give: a custom **profile**
-  (not just the built-in `:read-only`) can allow specific commands while
-  denying file writes. This design proposes a custom `[permissions.
-  read-only-with-checks]` profile (section 6, decision D6) that extends
-  `:read-only` but allows the specific authoritative check commands
+  checks"). This segment-1 text originally proposed a custom `[permissions.
+  read-only-with-checks]` profile (section 6, decision D1) that would extend
+  `:read-only` but allow the specific authoritative check commands
   ([validation-evidence section 3](validation-evidence.md#3-authoritative-commands):
   `npm test`, `npx agentquilt check`) to execute without granting general
-  write access -- genuinely narrower than Claude Code's Phase 4 D5 residual
-  risk (a broad `Bash` grant restricted only by instruction-body text). This
-  is a concrete Codex-side improvement over the Claude Code design worth
-  flagging plainly, not just a duplicated pattern.
+  write access. **Corrected 2026-07-13 (Phase 10 documentation-currency
+  pilot instance): segment 2 found no documented way for a custom-agent TOML
+  file to attach a named permissions profile -- only `sandbox_mode` is
+  supported there (confirmed in `.codex/config.toml`'s own D1 comment).**
+  `regression-reviewer` and `deterministic-output` instead use
+  `sandbox_mode = "workspace-write"` directly in their own
+  `.codex/agents/*.toml` files, restricted to the authoritative check
+  commands by `developer_instructions` text only -- narrower in intent than
+  Claude Code's Phase 4 D5 residual risk (a broad `Bash` grant restricted
+  only by instruction-body text) but enforced the same way (instruction
+  text, not a native per-command allow-list), not the stronger,
+  profile-enforced mechanism this section originally described. No
+  project-level `[permissions.read-only-with-checks]` profile is defined in
+  `.codex/config.toml`, since it would have no per-agent consumer.
 
 ## 5. Required skills -- design and workflow mapping
 
@@ -525,35 +543,41 @@ rather than elaborated here.
 Mirroring [ADR-0012 point 7](../architecture/adr/ADR-0012-provider-native-agentic-sdlc-boundary.md)
 and Phase 4's own section 8.1 "native rule before hook" principle, this
 design's primary enforcement mechanism is the permission-profile assignment
-on each `.codex/agents/*.toml` file (section 4), not a `.codex/hooks.json`
-script. Unlike Claude Code, Codex has no repository-wide declarative path-
-pattern deny list equivalent to `permissions.deny` (confirmed absent from the
-fetched permission reference, section 2.2) -- so the two designs' guardrail
-SHAPE differs even though the underlying policy (read-only roles cannot
-write; generated files and absolute-rule commands are never touched by an
-agent) is identical. Codex's per-agent sandbox scoping happens to be the
-better-fitting native primitive for restricting the 8 required agents
-themselves; it does nothing to stop the human's own interactive session (main
-Codex thread, not a spawned custom agent) from attempting a generated-file
-edit, which is where a `.codex/hooks.json` PreToolUse rule would add value if
-added at all (decision D6).
+on each `.codex/agents/*.toml` file (section 4). Unlike Claude Code, Codex
+has no repository-wide declarative path-pattern deny list equivalent to
+`permissions.deny` (confirmed absent from the fetched permission reference,
+section 2.2) -- so the two designs' guardrail SHAPE differs even though the
+underlying policy (read-only roles cannot write; generated files and
+absolute-rule commands are never touched by an agent) is identical. Codex's
+per-agent sandbox scoping is the better-fitting native primitive for
+restricting the 8 required agents themselves; by itself it does nothing to
+stop the human's own interactive session (main Codex thread, not a spawned
+custom agent) from attempting a generated-file edit or an absolute-rule
+command. **As built (corrected 2026-07-13, Phase 10 documentation-currency
+pilot instance): a `.codex/hooks.json` PreToolUse hook WAS added, in Phase
+6, overriding this document's own original D6 recommendation below.** See
+[guardrails-design.md](guardrails-design.md) section 4.1's D1 decision (that
+document's own D1, not this one) and `.codex/hooks/pretooluse-guard.sh`'s
+header comment for the mechanism and its stated reasoning: Phase 6 judged
+the MAIN-interactive-session gap this section originally left open (no
+guard against the human's own session attempting a generated-file edit or
+an absolute-rule command) as meeting the ADR-0012 point 7 hook-necessity
+bar after all, superseding this document's own D6 recommendation not to
+build one. Section 6.2 and 6.3 below are corrected to match.
 
-### 6.2 Proposed `.codex/config.toml` additions (segment 2, not built this segment)
+### 6.2 `.codex/config.toml` (as built, corrected from the original segment-1 proposal)
 
 ```toml
-# Codex-native custom-agent registry is file-based (.codex/agents/*.toml);
-# this file carries only the project-level default permission profile and
-# the custom "read-only-with-checks" profile section 4 relies on.
+# Project-level default only. See the actual, current file
+# (.codex/config.toml) for the authoritative, fully-commented version; this
+# is a representative excerpt.
 
 default_permissions = ":read-only"
 
-[permissions.read-only-with-checks]
-extends = ":read-only"
-# Allows the authoritative deterministic check commands
-# (validation-evidence.md section 3) to execute without granting general
-# write access. Exact allow-list syntax confirmed empirically in segment 2
-# against the installed 0.144.x permission-profile schema (see decision D6
-# and section 10's validation-plan item).
+# No [permissions.read-only-with-checks] custom profile is defined -- see
+# section 4's D1 correction above: no documented mechanism exists for a
+# custom-agent TOML file to attach a named permissions profile, so this
+# project-level profile would have no per-agent consumer and was not built.
 ```
 
 The project-level `default_permissions = ":read-only"` sets the SESSION
@@ -561,23 +585,37 @@ default (the main interactive Codex thread a Maintainer starts manually) to
 read-only, matching this repository's overall bias toward review before
 write; a Maintainer doing hands-on implementation work overrides per-session
 with `-s workspace-write` or `--profile <name>` exactly as today, unaffected
-by this file. Each custom agent's own TOML (section 4) sets its OWN profile,
-which is what actually enforces the read-only/workspace-write split for the
-8 required agents regardless of the project default.
+by this file. Each custom agent's own TOML (section 4) sets its OWN
+`sandbox_mode` (not a named permissions profile -- see the D1 correction
+above), which is what actually enforces the read-only/workspace-write split
+for the 14 built agents regardless of the project default. The
+`.codex/hooks.json` file (section 6.1's correction) is a separate file,
+kept deliberately apart from this one for the same "keep the guardrail
+mechanism visually separate from the agent-registry/permission-default
+file" reasoning stated directly in `.codex/config.toml`'s own comments.
 
-### 6.3 What is deliberately left alone
+### 6.3 What was originally left alone, and what Phase 6 later added
 
-- No `.codex/hooks.json` is added in segment 2 by this design's
-  recommendation (decision D6) -- the permission-profile assignment already
-  covers this phase's guardrail goals for every spawned custom agent, and
-  the documented `PreToolUse` interception gaps (section 2.5) mean a hook
+- **Original segment-1 recommendation (D6, superseded -- see the section 6.1
+  correction above): no `.codex/hooks.json` in segment 2**, on the
+  reasoning that the permission-profile assignment already covered this
+  phase's guardrail goals for every spawned custom agent, and that the
+  documented `PreToolUse` interception gaps (section 2.5) meant a hook
   would add a false sense of completeness for a goal the sandbox already
-  covers more reliably. If the Maintainer wants an explicit guard against
-  the MAIN interactive session (not a spawned agent) attempting a generated-
-  file edit or an absolute-rule command (`git push`, `npm publish`, etc.),
-  that is the one case in this design where a hook script would be
-  justified under the ADR-0012 point 7 bar -- flagged as the D6 alternative,
-  not built by default.
+  covers more reliably. **As built: Phase 6 chose the alternative named at
+  D6's own original gate instead** -- a `PreToolUse` hook denying
+  `apply_patch` edits to the generated-file set and `Bash`/exec matches
+  against the absolute-rule command set, for every caller including the
+  MAIN interactive session, closing the gap this section originally
+  described as "not built by default." The hook does not, and per its own
+  documented limitation cannot, add per-agent (per-custom-agent-name)
+  scoping the way the Claude Code-side hook does, since Codex's
+  `PreToolUse` payload has no caller-identity field (confirmed in
+  `guardrails-design.md` section 4.2 and restated in the hook script's own
+  header comment) -- it applies uniformly rather than narrowly.
+  This was the one case this design originally flagged as justified under
+  the ADR-0012 point 7 bar even under the "no hook by default" D6
+  recommendation, and it is exactly the case Phase 6 built the hook for.
 - Destructive-but-sometimes-legitimate git operations (`rm -rf`, `git reset
   --hard`, `git clean -f`, `git branch -D`, history rewrites) are not
   targeted by any new rule. Codex's approval-policy/permission system already
@@ -724,8 +762,11 @@ delegation model (section 2.4):
   Phase 3 role.
 - No hand-edit of root `AGENTS.md` and no new nested `AGENTS.md` file
   (section 2.6's finding: not needed for segment 2).
-- No `.codex/hooks.json` by default (section 6.3, decision D6's recommended
-  path).
+- No `.codex/hooks.json` was proposed by this document's own original
+  scope (section 6.3, D6's original recommendation) -- **corrected
+  2026-07-13: one was added later, by Phase 6, superseding D6; see the
+  section 6.1/6.3 corrections above.** This document's own segment 2/3
+  build did not include it; Phase 6's separate, later build did.
 - No change to `.github/workflows/*.yml` (Phase 7 scope, matching Phase 4's
   own boundary).
 - No live model calls in any deterministic path; every `codex exec`/`codex
@@ -778,17 +819,29 @@ is created or modified. Approving the recommended option on every point below
 approves exactly the design in sections 3-8; segment 2 executes it verbatim
 plus the empirical syntax checks named as prerequisites.
 
-- **D1 -- Permission system choice (section 2.2, section 6).** Use the
-  current `default_permissions`/`[permissions.<profile>]` system exclusively,
-  never the legacy `sandbox_mode`/`approval_policy` pair. Recommendation:
-  approve as specified -- the fetched documentation states the two systems
-  "do not compose," the legacy pair is explicitly documented as not
-  overridable at the project-scoped layer (making it unusable for this
-  design's per-agent, project-scoped goal regardless of preference), and the
+- **D1 -- Permission system choice (section 2.2, section 6). REVISED, Phase
+  5 segment 3 -- see the section 4 and 6.1-6.3 corrections above, and
+  `.codex/config.toml`'s own D1 comment for the authoritative current
+  text.** Original segment-1 recommendation: use the current
+  `default_permissions`/`[permissions.<profile>]` system exclusively, never
+  the legacy `sandbox_mode`/`approval_policy` pair, on the reasoning that
+  the fetched documentation states the two systems "do not compose," the
+  legacy pair is not overridable at the project-scoped layer, and the
   current system is what the fetched subagent schema's own worked examples
-  assume for new custom-agent files. Alternative: none credible, given the
-  project-scoped-override limitation is a hard technical blocker for the
-  legacy pair, not a style preference.
+  assumed. **As built: this distinction turned out to be layered, not
+  either/or.** At the PROJECT-scoped `.codex/config.toml` layer,
+  `default_permissions`/`[permissions.<profile>]` remains the mechanism, as
+  originally recommended -- unchanged. But for PER-AGENT scoping on the 14
+  individual `.codex/agents/*.toml` files specifically, segment 2 found no
+  documented way for a custom-agent TOML file to attach a named
+  `[permissions.<profile>]` profile at all (only `sandbox_mode` is
+  supported there) -- so per-agent scoping uses `sandbox_mode` exclusively
+  after all, the opposite of this decision's original "never" for that one
+  layer. The two layers are not combined on the same object; this
+  document's original alternative-rejection reasoning (the project-scoped
+  override limitation) is still correct for the project layer, it just
+  does not extend to the separate per-agent layer the way segment 1
+  assumed it would.
 - **D2 -- `.agents/skills/` and the AgentQuilt adapter coincidence (section
   2.3, section 9).** Hand-author this phase's 8 skills directly at
   `.agents/skills/<name>/SKILL.md`, unmanaged by AgentQuilt, explicitly
@@ -852,32 +905,43 @@ plus the empirical syntax checks named as prerequisites.
   to run test commands itself), at the cost of a 9th agent file and a
   more complex handoff between two write-capable roles for one bounded task.
 - **D6 -- Whether to add `.codex/hooks.json` at all this phase (section 6.1,
-  section 6.3).** Recommendation: do not add one in segment 2; rely
-  exclusively on per-agent permission-profile scoping (section 4, section
-  6.2), which this design judges sufficient for the phase doc's guardrail
-  goals and avoids relying on the documented-incomplete `PreToolUse`
-  interception surface (section 2.5) for a guarantee the sandbox already
-  gives more reliably. Alternative: add a `PreToolUse` hook denying `Bash`
-  matches against `git push`, `git tag`, `npm publish`, `npm version`, `gh pr
-  merge`, `gh release` (the same absolute-rule command set Phase 4's
-  `permissions.deny` covers) as a backstop against the MAIN interactive
-  session, not just spawned agents -- the one case section 6.3 named as
-  potentially justified under the ADR-0012 point 7 bar, since Codex has no
-  declarative equivalent to Claude Code's repository-wide `permissions.deny`
-  for this. If the Maintainer wants guardrail parity with Phase 4's covered
-  absolute-rule set for the MAIN session (not just spawned custom agents),
-  this alternative should be chosen instead.
+  section 6.3). OVERRIDDEN, Phase 6 -- see the section 6.1/6.3 corrections
+  above.** Original segment-1 recommendation: do not add one in segment 2;
+  rely exclusively on per-agent permission-profile scoping (section 4,
+  section 6.2), which this design judged sufficient for the phase doc's
+  guardrail goals and avoided relying on the documented-incomplete
+  `PreToolUse` interception surface (section 2.5) for a guarantee the
+  sandbox already gave more reliably. The named alternative: add a
+  `PreToolUse` hook denying `Bash` matches against `git push`, `git tag`,
+  `npm publish`, `npm version`, `gh pr merge`, `gh release` (the same
+  absolute-rule command set Phase 4's `permissions.deny` covers) as a
+  backstop against the MAIN interactive session, not just spawned agents --
+  the one case section 6.3 named as potentially justified under the
+  ADR-0012 point 7 bar, since Codex has no declarative equivalent to Claude
+  Code's repository-wide `permissions.deny` for this. **As built: Phase 6
+  chose this alternative.** `.codex/hooks.json` plus
+  `.codex/hooks/pretooluse-guard.sh` were added, denying `apply_patch`
+  edits to the generated-file set and `Bash`/exec matches against the
+  absolute-rule command set, for every caller including the MAIN
+  interactive session -- exactly the guardrail parity with Phase 4's
+  covered absolute-rule set this decision's own alternative described,
+  now confirmed live (not merely designed) per
+  [guardrails-design.md](guardrails-design.md) section 4.1's own D1
+  decision (a distinct, later, guardrails-document-scoped D1, not this
+  document's D1 above) and Phase 9's cross-reference finding that the hook
+  fired correctly during a live investigation.
 - **D7 -- Whether to also create `.codex/agents/*.toml` files for the 6
   conditional specialists now (section 5.1) or defer them to when
-  `review-tree`'s fan-out first needs one.** Recommendation: defer to
-  segment 2's own judgment at build time -- creating all 6 alongside the
-  required 8 is low-risk (each is a direct, low-judgment mapping from its
-  existing agent-portfolio.md contract, section 5.1) and keeps `review-tree`
-  fully capable from day one rather than partially stubbed; the phase doc's
-  "at minimum" list does not exclude them, it just does not require them
-  explicitly. Alternative: build only the required 8 this round and add
-  specialists individually as each is first triggered by a real change --
-  more minimal, defers file-count growth, but leaves `review-tree` unable to
-  fan out on day one for, say, a schema change, which would be a visible gap
-  against Phase 4's Claude Code design (which already has all 6 specialists
-  compiled and available via the shared 14-agent `.claude/agents/` roster).
+  `review-tree`'s fan-out first needs one. RESOLVED -- built.**
+  Recommendation at the time: defer to segment 2's own judgment at build
+  time -- creating all 6 alongside the required 8 is low-risk (each is a
+  direct, low-judgment mapping from its existing agent-portfolio.md
+  contract, section 5.1) and keeps `review-tree` fully capable from day one
+  rather than partially stubbed; the phase doc's "at minimum" list does not
+  exclude them, it just does not require them explicitly. The named
+  alternative: build only the required 8 this round and add specialists
+  individually as each is first triggered by a real change. **As built:
+  segment 2/3 chose to build all 6 specialists alongside the 8 core
+  agents** -- confirmed directly: `.codex/agents/` contains 14 files today,
+  matching the recommendation above and giving `review-tree` full fan-out
+  capability from day one, at parity with Phase 4's Claude Code design.
