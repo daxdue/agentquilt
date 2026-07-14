@@ -1,6 +1,6 @@
 {
   "name": "agentquilt-website",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "AgentQuilt landing page",
   "private": true,
   "type": "module",
