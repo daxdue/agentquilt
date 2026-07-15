@@ -14,6 +14,18 @@
   "bugs": {
     "url": "https://github.com/daxdue/agentquilt/issues"
   },
+  "keywords": [
+    "ai-agents",
+    "agent-instructions",
+    "prompt-management",
+    "claude",
+    "agents-md",
+    "llm",
+    "markdown-compiler",
+    "cli",
+    "developer-tools",
+    "agentic"
+  ],
   "engines": {
     "node": ">=18"
   },

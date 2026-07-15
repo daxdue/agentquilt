@@ -3,7 +3,7 @@ import { readFileSync, existsSync } from "fs";
 import path from "path";
 import { findConfigFile, loadConfig, validateConfig, ConfigError } from "../core/configLoader.js";
 import { compile } from "../core/compiler.js";
-import { compileAgentDefinitionsTarget } from "../core/agentCompiler.js";
+import { compileAgentDefinitionsTarget, type AdapterOutput } from "../core/agentCompiler.js";
 import { createLock, readLock, diffLock } from "../core/lockWriter.js";
 import { cyan, dim, green, sym, formatDuration, createSpinner } from "../ui/terminal.js";
 
@@ -43,6 +43,7 @@ async function checkAction(options: CheckOptions): Promise<void> {
     let result: Awaited<ReturnType<typeof compile>>;
     const allFragmentMap = new Map<string, any>();
     let agentRecords: any[] = [];
+    const agentOutputs: AdapterOutput[] = [];
 
     try {
       // Find and load config
@@ -65,6 +66,10 @@ async function checkAction(options: CheckOptions): Promise<void> {
 
         const agentResult = await compileAgentDefinitionsTarget(target, config, sourceDir, cwd);
         agentRecords.push(...agentResult.agentRecords);
+
+        for (const outputs of agentResult.outputs.values()) {
+          agentOutputs.push(...outputs);
+        }
 
         // Merge fragment maps
         for (const [id, meta] of agentResult.fragmentMap) {
@@ -108,6 +113,36 @@ async function checkAction(options: CheckOptions): Promise<void> {
         hasDrift = true;
       } else if (!options.quiet) {
         console.log(`${sym.ok} ${target.output} ${dim("matches")}`);
+      }
+    }
+
+    // Check agent-definitions outputs against disk. Build writes each adapter
+    // output verbatim to path.join(cwd, output.path), so compare the same way.
+    for (const output of agentOutputs) {
+      // Managed regions live inside user-owned files and cannot be compared
+      // whole-file; no adapter emits them yet (Codex deferred).
+      if (output.kind === "region") continue;
+
+      const outputPath = path.join(cwd, output.path);
+
+      if (!existsSync(outputPath)) {
+        if (!options.quiet) {
+          console.error(`${sym.fail} ${output.path}: file does not exist`);
+          console.error(`  Regenerate with: ${cyan("npx agentquilt build")}`);
+        }
+        hasDrift = true;
+        continue;
+      }
+
+      const diskContent = readFileSync(outputPath, "utf8");
+      if (diskContent !== output.content) {
+        if (!options.quiet) {
+          console.error(`${sym.fail} ${output.path}: content differs`);
+          console.error(`  Regenerate with: ${cyan("npx agentquilt build")}`);
+        }
+        hasDrift = true;
+      } else if (!options.quiet) {
+        console.log(`${sym.ok} ${output.path} ${dim("matches")}`);
       }
     }
 
