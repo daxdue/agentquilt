@@ -74,6 +74,25 @@ afterEach(() => {
 });
 
 // ---------------------------------------------------------------------------
+// --version stays in sync with package.json (regression: it was hardcoded
+// to a stale literal, silently wrong across 0.1.0/0.1.1, until fixed).
+// ---------------------------------------------------------------------------
+
+describe("--version", () => {
+  it("matches package.json's version field, not a hardcoded literal", () => {
+    const packageJsonPath = fileURLToPath(
+      new URL("../package.json", import.meta.url)
+    );
+    const { version } = JSON.parse(readFileSync(packageJsonPath, "utf8"));
+
+    const result = runCLI(["--version"]);
+
+    expect(result.status).toBe(0);
+    expect(result.stdout.trim()).toBe(version);
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Scenario 1: init on an empty directory
 // ---------------------------------------------------------------------------
 
