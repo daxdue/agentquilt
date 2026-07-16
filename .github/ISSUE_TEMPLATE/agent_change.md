@@ -24,19 +24,19 @@ If known:
 
 ## Eval Impact
 
-- [ ] Existing evals should pass
-- [ ] New eval needed
-- [ ] Existing eval needs update
-- [ ] Not sure
+Options: Existing evals should pass, New eval needed, Existing eval needs update, Not sure
+
+Selected:
 
 ## Risk Level
 
-- [ ] Low
-- [ ] Medium
-- [ ] High
-- [ ] Critical
+Options: Low, Medium, High, Critical
+
+Selected:
 
 ## Acceptance Criteria
+
+<!-- These are real, trackable to-do items -- checkboxes are correct here. -->
 
 - [ ] 
 - [ ] 

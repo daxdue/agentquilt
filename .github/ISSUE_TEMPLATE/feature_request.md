@@ -16,26 +16,22 @@ So that ...
 
 ## Acceptance Criteria
 
+<!-- These are real, trackable to-do items -- checkboxes are correct here. -->
+
 - [ ] 
 - [ ] 
 - [ ] 
 
 ## Affected Area
 
-- [ ] CLI
-- [ ] Schema
-- [ ] Compiler
-- [ ] Linter
-- [ ] Diff
-- [ ] Eval
-- [ ] Governance
-- [ ] Documentation
+Options: CLI, Schema, Compiler, Linter, Diff, Eval, Governance, Documentation
+
+Selected:
 
 ## Risk Level
 
-- [ ] Low
-- [ ] Medium
-- [ ] High
-- [ ] Critical
+Options: Low, Medium, High, Critical
+
+Selected:
 
 ## Additional Context
