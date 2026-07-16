@@ -1,20 +1,31 @@
 name: release
 
+# Automates the *mechanics* of a release only. Per ADR-0004 (AI agents assist
+# but do not approve or release) and ADR-0013 (automated release harness),
+# no step in this workflow ever decides whether or when to release:
+#
+#   - "whether": a human decides this by adding a changeset
+#     (`npx changeset add`) to a PR -- that's what marks a change
+#     release-worthy in the first place.
+#   - "when": a human decides this by merging the bot-maintained
+#     "Version Packages" PR that changesets/action opens. Nothing publishes
+#     until that PR is merged.
+#
+# Everything downstream of those two human decisions -- running the full
+# gate suite, bumping package.json, writing the changelog, publishing to
+# npm with provenance, tagging, and creating the GitHub Release -- is
+# mechanical and safe to automate.
+
 on:
-  workflow_dispatch:
-    inputs:
-      release_type:
-        description: "Release type (major, minor, patch)"
-        required: true
-        default: "patch"
-        type: choice
-        options:
-          - major
-          - minor
-          - patch
+  push:
+    branches: [main]
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  release-gate-check:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -43,60 +54,94 @@ jobs:
       - name: Drift check
         run: node packages/agentquilt-cli/dist/index.js check
 
+      - name: Package validation
+        working-directory: packages/agentquilt-cli
+        run: npm pack --dry-run
+
       - name: Verify risk register
+        working-directory: packages/agentquilt-cli
         run: |
-          echo "Checking policies/risks/risk-register.yaml for open critical/high risks..."
-          echo "OK: No blocking risks found"
+          node -e "
+            const fs = require('fs');
+            const YAML = require('yaml');
+            const doc = YAML.parse(fs.readFileSync('../../policies/risks/risk-register.yaml', 'utf8'));
+            const blocking = doc.risks.filter(r => r.status === 'open' && (r.level === 'high' || r.level === 'critical'));
+            if (blocking.length > 0) {
+              console.error('BLOCKED: open high/critical risks found: ' + blocking.map(r => r.id).join(', '));
+              process.exit(1);
+            }
+            console.log('OK: no open high/critical risks in policies/risks/risk-register.yaml');
+          "
 
-      - name: Release readiness check
-        run: |
-          echo "Release Readiness Report"
-          echo "========================"
-          echo ""
-          echo "Gate: release-gate"
-          echo "Release type: ${{ github.event.inputs.release_type }}"
-          echo "Current version: $(jq -r '.version' packages/agentquilt-cli/package.json)"
-          echo ""
-          echo "Automated Checks:"
-          echo "  OK: All tests pass"
-          echo "  OK: Drift check passes"
-          echo "  OK: Risk register: No blocking risks"
-          echo "  OK: Generated outputs: Up to date"
-          echo ""
-          echo "For release planning, use Claude Code agents:"
-          echo "  - release-manager: Orchestrate release"
-          echo "  - changelog: Generate CHANGELOG from commits"
-          echo "  - versioning: Validate semver compliance"
-          echo ""
-          echo "Next: Maintainer reviews checklist and approves release"
-
-      - name: Post release checklist
-        uses: actions/github-script@v7
+  release:
+    needs: checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write # required for npm provenance
+    steps:
+      - uses: actions/checkout@v4
         with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: 1,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## Release Ready: ${{ github.event.inputs.release_type }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
 
-Pre-release checks: PASSED
-- All tests: OK
-- Drift check: OK
-- Risk register: Clean
-- Version bump: Ready
+      - name: Install dependencies (workspace root)
+        run: npm ci
 
-For detailed release planning, use Claude Code agents:
-- **release-manager** - Coordinate release process
-- **changelog** - Generate changelog from commits
-- **versioning** - Validate version compliance
-- **migration-guide** - Document breaking changes
+      # Two possible outcomes, decided entirely by repo state -- not by
+      # this workflow:
+      #   1. Changesets are pending on main -> opens/updates the
+      #      "Version Packages" PR (bumps package.json, writes
+      #      CHANGELOG.md). Nothing is published. Waits for a human to
+      #      merge that PR.
+      #   2. No changesets pending (i.e. this push *is* that PR having
+      #      just been merged) -> runs `npm run release`, which publishes
+      #      to npm and pushes the resulting git tag.
+      - name: Create release PR or publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: npm run version-packages
+          publish: npm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-Manual steps:
-1. Use Claude Code agents to plan release
-2. Update CHANGELOG.md manually if needed
-3. Bump version: \`npm version ${{ github.event.inputs.release_type }}\`
-4. Push: \`git push origin main --tags\`
-5. Publish: \`npm publish\``
-            })
-        continue-on-error: true
+      - name: Create GitHub Release
+        if: steps.changesets.outputs.published == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for pkg in $(echo '${{ steps.changesets.outputs.publishedPackages }}' | node -e "
+            const data = JSON.parse(require('fs').readFileSync(0, 'utf8'));
+            data.forEach(p => console.log(p.name + '@' + p.version));
+          "); do
+            name="${pkg%@*}"
+            version="${pkg##*@}"
+            tag="v${version}"
+            body=$(node -e "
+              const fs = require('fs');
+              const changelog = fs.readFileSync('packages/agentquilt-cli/CHANGELOG.md', 'utf8');
+              const marker = '## ${version}';
+              const start = changelog.indexOf(marker);
+              if (start === -1) { console.log('See CHANGELOG.md.'); process.exit(0); }
+              const rest = changelog.slice(start + marker.length);
+              const next = rest.search(/\n## /);
+              console.log(rest.slice(0, next === -1 ? undefined : next).trim());
+            ")
+            gh release create "$tag" \
+              --title "$name $version" \
+              --notes "$body"
+          done
+
+# One-time setup this workflow depends on, outside this repo (a human,
+# Maintainer-only action -- cannot be automated by a workflow or agent):
+#   - Add an npm automation token as the `NPM_TOKEN` secret under
+#     GitHub repo Settings -> Secrets and variables -> Actions.
+#     (npm's newer Trusted Publishing / OIDC flow removes the need for a
+#     stored token at all, configured from the package's settings page on
+#     npmjs.com -- a good next step once this token-based flow is proven.)

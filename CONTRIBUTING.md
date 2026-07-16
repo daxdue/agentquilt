@@ -48,6 +48,13 @@ Each PR should include:
 - Affected components
 - Expected behavior change, if any
 
+If your change is user-visible (bug fix, new feature, CLI behavior
+change), also run `npx changeset add` and commit the resulting file under
+`.changeset/`. This is what marks a change as release-worthy and drives
+the automated version bump and CHANGELOG entry — see
+[release-process.md](.docs/sdlc/release-process.md). Purely internal
+changes (docs, tests, CI tuning) don't need one.
+
 ## Generated Files Policy
 
 Generated files must not be manually edited. If generated output changes, regenerate it using the appropriate command once the CLI exists.
