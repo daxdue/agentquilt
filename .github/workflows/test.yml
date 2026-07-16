@@ -39,15 +39,15 @@ jobs:
       - name: Typecheck
         working-directory: packages/agentquilt-cli
         run: npx tsc --project tsconfig.test.json
+      - name: Build CLI
+        working-directory: packages/agentquilt-cli
+        run: npm run build
       - name: Run tests (unit, integration, golden-fixture)
         working-directory: packages/agentquilt-cli
         run: npm test -- --run
       - name: Coverage
         working-directory: packages/agentquilt-cli
         run: npm run coverage
-      - name: Build CLI
-        working-directory: packages/agentquilt-cli
-        run: npm run build
       - name: Drift check
         run: node packages/agentquilt-cli/dist/index.js check
       - name: Pipeline agent drift check
