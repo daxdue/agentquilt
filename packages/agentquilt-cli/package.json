@@ -1,6 +1,6 @@
 {
   "name": "agentquilt",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "CLI tool for AgentQuilt agent framework — compiles Markdown fragments into deployment-ready agent instructions with deterministic versioning",
   "type": "module",
   "license": "MIT",
@@ -14,6 +14,18 @@
   "bugs": {
     "url": "https://github.com/daxdue/agentquilt/issues"
   },
+  "keywords": [
+    "ai-agents",
+    "agent-instructions",
+    "prompt-management",
+    "claude",
+    "agents-md",
+    "llm",
+    "markdown-compiler",
+    "cli",
+    "developer-tools",
+    "agentic"
+  ],
   "engines": {
     "node": ">=18"
   },
@@ -41,7 +53,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@anthropic-ai/sdk": "^0.105.0",
     "@types/node": "^20.10.6",
     "@typescript-eslint/eslint-plugin": "^6.17.0",
     "@typescript-eslint/parser": "^6.17.0",

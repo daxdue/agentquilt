@@ -7,6 +7,36 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.1.2] — 2026-07-14
+
+### Fixed
+
+- `agentquilt check` now verifies agent-definition adapter outputs
+  (`.claude/agents/*.md`) against their actual on-disk content, not just the
+  lock file's own internal consistency. Previously, hand-editing a compiled
+  `.claude/agents/*.md` file was not detected by `check` at all; it is now
+  reported the same way any other drifted target is, with the same
+  `npx agentquilt build` remediation hint.
+- Removed the retracted Claude API integration layer
+  (`src/integration/claude-agent.ts`, its test suite, and the
+  `@anthropic-ai/sdk` devDependency) — dead code from an earlier,
+  since-reverted approach to agent invocation. No published package surface
+  changes.
+- `agentquilt --version` now reads from `package.json` at runtime instead
+  of a hardcoded literal. It had been silently stuck reporting `0.1.0`
+  since before this release — found while installing this build locally
+  via `npm link`.
+
+### Added
+
+- ESLint configuration for the CLI package
+  (`packages/agentquilt-cli/.eslintrc.json`), so `npm run lint` runs
+  instead of failing outright with "no config found."
+- `keywords` field in `packages/agentquilt-cli/package.json` for npm
+  registry discoverability.
+
+---
+
 ## [0.1.1] — 2026-07-06
 
 ### Fixed
