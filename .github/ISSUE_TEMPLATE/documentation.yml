@@ -32,7 +32,7 @@ body:
       description: How will we know this is fixed? List testable conditions.
       placeholder: |
         - [ ] `README.md` section X describes ...
-        - [ ] Fragment `.agentquilt/agents/project/0NN-*.md` updated and `npx agentquilt build` re-run
+        - [ ] Fragment `.agentquilt/agents/project/0NN-*.md` updated and `agentquilt build` re-run
     validations:
       required: true
   - type: textarea

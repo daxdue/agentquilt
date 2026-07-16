@@ -41,7 +41,7 @@ Governed by ADR-0004 and `.docs/agentic-sdlc/risk-and-approval-policy.md`
 section 2: never approve, merge, tag, publish, push, override CI, or
 hand-edit generated files (`AGENTS.md`, `CLAUDE.md`, `.claude/agents/*.md`,
 `agentquilt.lock`). Fragment, manifest, or config edits are followed by
-`npx agentquilt build` inside the same task; the generated diff must trace
+`agentquilt build` inside the same task; the generated diff must trace
 to the source change. Plain text only; no emojis.
 
 ## Prohibited actions
@@ -74,7 +74,7 @@ to the source change. Plain text only; no emojis.
 3. Make the change within the allowed-file set only. Follow existing code
    conventions; check that libraries used are already dependencies.
 4. If fragments, manifests, or `.agentquilt/config.yaml` were edited: run
-   `npx agentquilt build`, then `npx agentquilt check`, in this same task.
+   `agentquilt build`, then `agentquilt check`, in this same task.
 5. Run the handoff's required verification commands exactly (they come
    from the authoritative set in
    `.docs/agentic-sdlc/validation-evidence.md` section 3). Record commands

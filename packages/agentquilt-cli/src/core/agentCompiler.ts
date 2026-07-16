@@ -93,7 +93,7 @@ export async function compileAgentDefinitionsTarget(
     // pollute the prompt. Provenance for those lives in agentquilt.lock.
     for (const out of adapterOutputsByPlatform) {
       if (!out.content.startsWith("---\n")) {
-        const header = `<!-- agentquilt: generated file — do not edit. version=${finalVersion} · regenerate: npx agentquilt build -->\n`;
+        const header = `<!-- agentquilt: generated file — do not edit. version=${finalVersion} · regenerate: agentquilt build -->\n`;
         out.content = `${header}${out.content}`;
       }
     }

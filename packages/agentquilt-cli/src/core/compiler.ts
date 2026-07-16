@@ -20,7 +20,7 @@ export interface CompileResult {
  * Generate HTML comment header per v1 spec §4.2.
  */
 function generateHeader(targetVersion: string, sourceLabel: string): string {
-  return `<!-- agentquilt: generated file — do not edit. version=${targetVersion} · source: ${sourceLabel} · regenerate: npx agentquilt build -->\n`;
+  return `<!-- agentquilt: generated file — do not edit. version=${targetVersion} · source: ${sourceLabel} · regenerate: agentquilt build -->\n`;
 }
 
 /**

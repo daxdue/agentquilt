@@ -21,7 +21,7 @@ golden-file-test agents.
 ## Access
 
 Read-only for files; never edits anything. Bash is granted exclusively for
-deterministic checks: `npx agentquilt check`, `npm test` (full or with
+deterministic checks: `agentquilt check`, `npm test` (full or with
 standard vitest filters, notably the golden suite), `npm run build`, and
 read-only git commands. Running any state-changing command is prohibited.
 

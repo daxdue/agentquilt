@@ -36,7 +36,7 @@ sources live under `.agentquilt/`).
    the handoff's allowed set.
 3. **Rebuild generated files if fragments changed.** If the task edited any
    fragment under `.agentquilt/agents/project/` or any other AgentQuilt
-   source, the same `feature-implementer` turn runs `npx agentquilt build`
+   source, the same `feature-implementer` turn runs `agentquilt build`
    immediately after the fragment edit -- the generated file itself
    (`AGENTS.md`, `CLAUDE.md`, `.claude/agents/*.md`) is never hand-edited.
 4. **Run focused verification (VER).** As part of the same

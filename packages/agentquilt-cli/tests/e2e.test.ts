@@ -256,6 +256,83 @@ describe("check: detects drift in compiled agent-definitions outputs", () => {
   });
 });
 
+describe("build: refuses to overwrite generated files hand-edited since the last build", () => {
+  function setupAgentProject(dir: string): void {
+    const agentDir = join(dir, ".agentquilt", "agents", "helper");
+    mkdirSync(agentDir, { recursive: true });
+    writeFileSync(join(agentDir, "agent.yaml"), "description: Helps out\n", "utf8");
+    writeFileSync(join(agentDir, "010-role.md"), "You are a helper.\n", "utf8");
+    writeFileSync(
+      join(dir, ".agentquilt", "config.yaml"),
+      [
+        "version: 1",
+        "sourceDir: .agentquilt/agents",
+        "targets:",
+        "  - kind: agent-definitions",
+        '    agents: "*"',
+        "    platforms: [claude]",
+      ].join("\n") + "\n",
+      "utf8"
+    );
+  }
+
+  it("blocks a hand-edited document target (exit 1) and leaves the manual edit in place", () => {
+    setupMinimalProject(tmpDir);
+    runCLI(["build", "--cwd", tmpDir, "--quiet"]);
+
+    const outputPath = join(tmpDir, "AGENTS.md");
+    const original = readFileSync(outputPath, "utf8");
+    writeFileSync(outputPath, original + "MANUAL EDIT\n", "utf8");
+
+    const result = runCLI(["build", "--cwd", tmpDir, "--quiet"]);
+    expect(result.status).toBe(1);
+    expect(readFileSync(outputPath, "utf8")).toContain("MANUAL EDIT");
+  });
+
+  it("--force discards the manual edit and rebuilds the document target (exit 0)", () => {
+    setupMinimalProject(tmpDir);
+    runCLI(["build", "--cwd", tmpDir, "--quiet"]);
+
+    const outputPath = join(tmpDir, "AGENTS.md");
+    const original = readFileSync(outputPath, "utf8");
+    writeFileSync(outputPath, original + "MANUAL EDIT\n", "utf8");
+
+    const result = runCLI(["build", "--cwd", tmpDir, "--quiet", "--force"]);
+    expect(result.status).toBe(0);
+    expect(readFileSync(outputPath, "utf8")).not.toContain("MANUAL EDIT");
+
+    expect(runCLI(["check", "--cwd", tmpDir, "--quiet"]).status).toBe(0);
+  });
+
+  it("blocks a hand-edited compiled agent output (exit 1) and leaves the manual edit in place", () => {
+    setupAgentProject(tmpDir);
+    runCLI(["build", "--cwd", tmpDir, "--quiet"]);
+
+    const outputPath = join(tmpDir, ".claude", "agents", "helper.md");
+    writeFileSync(outputPath, readFileSync(outputPath, "utf8") + "TAMPERED\n", "utf8");
+
+    const result = runCLI(["build", "--cwd", tmpDir, "--quiet"]);
+    expect(result.status).toBe(1);
+    expect(readFileSync(outputPath, "utf8")).toContain("TAMPERED");
+  });
+
+  it("does not block a legitimate rebuild after a fragment source edit", () => {
+    setupMinimalProject(tmpDir);
+    runCLI(["build", "--cwd", tmpDir, "--quiet"]);
+
+    writeFileSync(
+      join(tmpDir, ".agentquilt", "agents", "_shared", "010-tone.md"),
+      "Be verbose.\n",
+      "utf8"
+    );
+
+    const result = runCLI(["build", "--cwd", tmpDir, "--quiet"]);
+    expect(result.status).toBe(0);
+    expect(readFileSync(join(tmpDir, "AGENTS.md"), "utf8")).toContain("Be verbose.");
+    expect(runCLI(["check", "--cwd", tmpDir, "--quiet"]).status).toBe(0);
+  });
+});
+
 describe("check: exits 2 on an invalid config", () => {
   it("rejects a config with wrong field types", () => {
     mkdirSync(join(tmpDir, ".agentquilt"), { recursive: true });

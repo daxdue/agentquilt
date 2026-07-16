@@ -108,7 +108,7 @@ async function checkAction(options: CheckOptions): Promise<void> {
           if (versionMatch) {
             console.error(dim(`  Disk version:     ${versionMatch[1]}`));
           }
-          console.error(`  Regenerate with: ${cyan("npx agentquilt build")}`);
+          console.error(`  Regenerate with: ${cyan("agentquilt build")}`);
         }
         hasDrift = true;
       } else if (!options.quiet) {
@@ -128,7 +128,7 @@ async function checkAction(options: CheckOptions): Promise<void> {
       if (!existsSync(outputPath)) {
         if (!options.quiet) {
           console.error(`${sym.fail} ${output.path}: file does not exist`);
-          console.error(`  Regenerate with: ${cyan("npx agentquilt build")}`);
+          console.error(`  Regenerate with: ${cyan("agentquilt build")}`);
         }
         hasDrift = true;
         continue;
@@ -138,7 +138,7 @@ async function checkAction(options: CheckOptions): Promise<void> {
       if (diskContent !== output.content) {
         if (!options.quiet) {
           console.error(`${sym.fail} ${output.path}: content differs`);
-          console.error(`  Regenerate with: ${cyan("npx agentquilt build")}`);
+          console.error(`  Regenerate with: ${cyan("agentquilt build")}`);
         }
         hasDrift = true;
       } else if (!options.quiet) {
@@ -153,7 +153,7 @@ async function checkAction(options: CheckOptions): Promise<void> {
     if (!diskLock) {
       if (!options.quiet) {
         console.error(`${sym.fail} agentquilt.lock: file does not exist`);
-        console.error(`  Regenerate with: ${cyan("npx agentquilt build")}`);
+        console.error(`  Regenerate with: ${cyan("agentquilt build")}`);
       }
       hasDrift = true;
     } else {
@@ -188,7 +188,7 @@ async function checkAction(options: CheckOptions): Promise<void> {
           if (diff.agentChanges.modified.length > 0) {
             console.error(`  Modified agents: ${diff.agentChanges.modified.join(", ")}`);
           }
-          console.error(`  Regenerate with: ${cyan("npx agentquilt build")}`);
+          console.error(`  Regenerate with: ${cyan("agentquilt build")}`);
         }
         hasDrift = true;
       } else if (!options.quiet) {

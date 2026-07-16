@@ -38,7 +38,7 @@ body:
       label: Acceptance criteria
       description: How will we know this release is ready and complete? List testable conditions.
       placeholder: |
-        - [ ] All tests pass; `npx agentquilt check` reports no drift
+        - [ ] All tests pass; `agentquilt check` reports no drift
         - [ ] CHANGELOG.md updated and categorized
         - [ ] Risk register has no open critical/high items
         - [ ] Version bumped per semver; tag pushed; package published

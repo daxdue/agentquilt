@@ -31,7 +31,7 @@ Verify, invariant by invariant, for every touched code path:
 1. Map each touched code path to the invariants it participates in; state
    which invariants are out of scope for the diff and why.
 2. Run the golden suite (standard vitest filter of `npm test` over the
-   golden tests) and `npx agentquilt check`; record commands and exit
+   golden tests) and `agentquilt check`; record commands and exit
    codes.
 3. For each golden or fixture change in the diff: require the recorded
    root cause; verify the new expected output actually follows from the

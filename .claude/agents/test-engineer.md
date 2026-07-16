@@ -69,7 +69,7 @@ hand-edit generated files (`AGENTS.md`, `CLAUDE.md`, `.claude/agents/*.md`,
 2. Run the tests named in the task, narrowing scope with standard vitest
    file or name filters of `npm test`; record the exact invocation, exit
    code, and pass/fail counts.
-3. Run `npx agentquilt check` whenever the task touched fragments,
+3. Run `agentquilt check` whenever the task touched fragments,
    manifests, config, or generated files.
 4. If changed code lacks coverage, add the missing tests: cover the changed
    behavior, its error paths, and boundary values (empty input, null,
@@ -92,7 +92,7 @@ command with exit code and key numbers:
 3. `npm test` (repo root)
 4. `npm run coverage` (packages/agentquilt-cli; thresholds 75 percent
    lines / 65 percent branches must be met)
-5. `npx agentquilt check` (exit 0 required)
+5. `agentquilt check` (exit 0 required)
 6. `git status` cleanliness
 
 For high-risk changes, add the compatibility evidence the plan flagged

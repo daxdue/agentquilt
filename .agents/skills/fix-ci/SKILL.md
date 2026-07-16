@@ -12,7 +12,7 @@ output here, versus a Review Findings artifact there.
 ## When to use this skill
 
 Use when a deterministic check is failing -- `npm run build`, `npm test`,
-`npx agentquilt check` -- on an existing branch or PR, independent of
+`agentquilt check` -- on an existing branch or PR, independent of
 whether a full `standard-development` loop is in progress.
 
 Before proceeding: note the current branch and working-tree cleanliness

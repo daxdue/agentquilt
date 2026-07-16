@@ -142,7 +142,7 @@ Clean assembled Markdown. **No inline source markers** — they are noise for an
 - Prepend a single HTML-comment header (invisible when rendered, one line to a model) and one blank line:
 
   ```
-  <!-- agentquilt: generated file — do not edit. version=<full-target-version> · source: agents/ · regenerate: npx agentquilt build -->
+  <!-- agentquilt: generated file — do not edit. version=<full-target-version> · source: agents/ · regenerate: agentquilt build -->
 
   <assembled body>
   ```
@@ -282,7 +282,7 @@ jobs:
 Whatever a merge mangles — stale output, odd lock state, hash mismatch — the universal fix is:
 
 ```
-npx agentquilt build && git add -A && git commit
+agentquilt build && git add -A && git commit
 ```
 
 Deterministic regeneration means there is exactly one recovery path, and CI tells you precisely when you need it.
@@ -369,7 +369,7 @@ targets:
 
 Generated `AGENTS.md`
 ```markdown
-<!-- agentquilt: generated file — do not edit. version=sha256-9f3c…a1 · source: agents/ · regenerate: npx agentquilt build -->
+<!-- agentquilt: generated file — do not edit. version=sha256-9f3c…a1 · source: agents/ · regenerate: agentquilt build -->
 
 Be concise. Prefer direct, technical language over hedging.
 

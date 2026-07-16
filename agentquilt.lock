@@ -47,13 +47,13 @@
         ".agentquilt/agents/deterministic-output/020-determinism-review-workflow.md"
       ],
       "metaHash": "sha256-2eebc0d214d049935da598023bff93b3d344e6c8e47c40fad822f69841176c21",
-      "version": "sha256-2e718dc98ea21a5cf060f0e2a97eae517c5df23b9459a60289be3d7799426cce",
+      "version": "sha256-adf289f7547512e288b255137f75fe5ad659512481d3968a62aaea2187ce1a50",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/deterministic-output.md",
           "kind": "file",
-          "hash": "sha256-1b3bfff48026897c9e7922634af9ba818a3fedcc7c3ad8c4ce7a2173d9ba6bc2"
+          "hash": "sha256-05d8645abbedd6f13d59deb64095f2f36c2bae43fe5b79f144f8590ebda70a14"
         }
       ]
     },
@@ -104,13 +104,13 @@
         ".agentquilt/agents/feature-implementer/020-implementation-workflow.md"
       ],
       "metaHash": "sha256-c58f295ed4b9d48d73c9252833e7f29bd782a94ffb83469959a4272bcd12d042",
-      "version": "sha256-8a13233c944757cb98025b1d85f2936e3427cba6b7420fd9216d06a8bd64f404",
+      "version": "sha256-fa87d6a0b954f04bfb6fcf652d1f35ea25ce037e84d305a9eac04d59fb0cf619",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/feature-implementer.md",
           "kind": "file",
-          "hash": "sha256-6dedf303f5531ef658c01f57d7efdc2afd71c2b4316431e8ba3071d16a8ad5f3"
+          "hash": "sha256-bef93f4c4aa1ef3b88226680d01e7a20661ebd0e9b2f08e24dc6e9b22ad3b85c"
         }
       ]
     },
@@ -122,13 +122,13 @@
         ".agentquilt/agents/implementation-planner/020-planning-workflow.md"
       ],
       "metaHash": "sha256-3dc9d4552f41edbd42f98c40cecfb61b827cc7a34ca113f334ed6c0a6b4fa43c",
-      "version": "sha256-598d4b734985956c4923b0c043f6d2c63d365289a48d971c68a3daaf209476a4",
+      "version": "sha256-86888bf9e1aa7a7085285fb8527aa7ed9a3489f5a2b91fff15e5c5c7c2a9fa6f",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/implementation-planner.md",
           "kind": "file",
-          "hash": "sha256-df13afecf60da4e514b4c941c6161bbc41664e43b696d0f0a5aec7f110df15d2"
+          "hash": "sha256-496c4ac8ca955d62c6a55f016dc5fbceb4f177f3fa798bf89f078a603b838570"
         }
       ]
     },
@@ -139,14 +139,14 @@
         ".agentquilt/agents/regression-reviewer/010-role.md",
         ".agentquilt/agents/regression-reviewer/020-regression-workflow.md"
       ],
-      "metaHash": "sha256-d9f34d67ae80ebd5b843a6594392091db0fc3fa2471762b0f0d849cad8240e61",
-      "version": "sha256-53f97edbcbf380439352c3b6f66f6bb4d6f601cc6fa979ad94a483f925f15cd4",
+      "metaHash": "sha256-e99eac74307faf5204a8c204acc786e6d4b85196e758631643a98e8a066bf297",
+      "version": "sha256-0aeaa9e5634cfff81294a51834bcb2bce0bec274a62c13eb9147160fa007232d",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/regression-reviewer.md",
           "kind": "file",
-          "hash": "sha256-95525a29d2c54685a3c816f8d2edd3bab0b2a78f2ccc9440442e769b9b070a33"
+          "hash": "sha256-67c746ff818cc9b6e777ce15552b868d0fab9364161287ee079fb879f3349a63"
         }
       ]
     },
@@ -158,13 +158,13 @@
         ".agentquilt/agents/release-reviewer/020-release-readiness-workflow.md"
       ],
       "metaHash": "sha256-79aa5f220838f5eadfa2bd5c93860a41f41e83818caf88f159804fa8e26b3872",
-      "version": "sha256-246f26191ff30dca956df60eca42e9f5a7a0f77717ef895b7cedb7d1c7f81666",
+      "version": "sha256-b4c959311a64bcda3ff01c6afc9cc958fa0bcba104330d8387a19a8bd0f494a0",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/release-reviewer.md",
           "kind": "file",
-          "hash": "sha256-297248c9dda49caca442746db8a6b18eb585f417781a729c4585a5449c74de55"
+          "hash": "sha256-56f5faeffd3f1b142e79882d5ac513d154925b8d9427e99c967116aeb6c473a0"
         }
       ]
     },
@@ -249,13 +249,13 @@
         ".agentquilt/agents/test-engineer/020-verification-workflow.md"
       ],
       "metaHash": "sha256-bc559436644917c35394d2e46b99cefa7e507c3fb17609caa7abd2538008dfe4",
-      "version": "sha256-03472387807580a8e4c6361828a29f71da022224ae26bff02b0f1eb61405c06c",
+      "version": "sha256-8f1e160412a9e963af2284e0d7279aceadcefd121530521a51f3afd405ebc143",
       "outputs": [
         {
           "platform": "claude",
           "path": ".claude/agents/test-engineer.md",
           "kind": "file",
-          "hash": "sha256-a342ee28b0645371f06c560f834839c41905ddeec5494a179617dbc4022f6b73"
+          "hash": "sha256-d57d6a8eedc0848a60aa69a150cb10700dcec211629dc4fc4b283d999395f64a"
         }
       ]
     }
@@ -293,14 +293,14 @@
     },
     {
       "id": ".agentquilt/agents/deterministic-output/010-role.md",
-      "hash": "sha256-b8f2e1c2d751da07ac019249fc907a54002e9ebae6e6b10e57fb186e42f4962a",
-      "bytes": 1690,
+      "hash": "sha256-0c79f24a9bdb60ff34c15d660f0c8fe6eca535e32fabc4ac635f508c41db632f",
+      "bytes": 1686,
       "tags": []
     },
     {
       "id": ".agentquilt/agents/deterministic-output/020-determinism-review-workflow.md",
-      "hash": "sha256-0b692280cbefe93058e672bc5845f6a0983bbcbd2c17651e6de974b7e69c5a67",
-      "bytes": 2509,
+      "hash": "sha256-0d6e31dc803ec392a02570d637525966dab1c024416d4bbbb9f168f785ac464d",
+      "bytes": 2505,
       "tags": []
     },
     {
@@ -347,14 +347,14 @@
     },
     {
       "id": ".agentquilt/agents/feature-implementer/010-role.md",
-      "hash": "sha256-7611151fd386f224b6dea13b08b4ab878aa70524c03186be92203dec4067478d",
-      "bytes": 1860,
+      "hash": "sha256-c138495e87949cc54c6d93fc880ff83052214bcc429d8ea8d416844b1f4cb934",
+      "bytes": 1856,
       "tags": []
     },
     {
       "id": ".agentquilt/agents/feature-implementer/020-implementation-workflow.md",
-      "hash": "sha256-6163d3d6c495a3a44a744f6affc6e69a6db095956cd1c2f459f12e53a7a620d4",
-      "bytes": 2584,
+      "hash": "sha256-158ff9c8c608d4a16f187da72bd9665162e736ddf1883ab9f7f9621d72edc914",
+      "bytes": 2576,
       "tags": []
     },
     {
@@ -365,20 +365,20 @@
     },
     {
       "id": ".agentquilt/agents/implementation-planner/020-planning-workflow.md",
-      "hash": "sha256-f5cd82212341f683976386ed1c65e8102b596e1c8af079ca61b69960cc67f364",
-      "bytes": 2749,
+      "hash": "sha256-6b910429fcabd29ff4ff686f98d957ced332a2f59ca0fee65c91c734a801b530",
+      "bytes": 2741,
       "tags": []
     },
     {
       "id": ".agentquilt/agents/regression-reviewer/010-role.md",
-      "hash": "sha256-42ec6ca3f0d8749404ef8d9f1c761dddabd6b5eecdaf41a2709c0ef7e7255f97",
-      "bytes": 1805,
+      "hash": "sha256-4b030645e52b4dea8a3a20d3be762fabea10991294141fb8072f4587b2b98577",
+      "bytes": 1801,
       "tags": []
     },
     {
       "id": ".agentquilt/agents/regression-reviewer/020-regression-workflow.md",
-      "hash": "sha256-9e30090d74547ecaa500f66e5773ad93a5311131391d8145dad3790b835a3fb4",
-      "bytes": 2388,
+      "hash": "sha256-c9715ceabe7367bad6a58ea160ce992b63a06c0ceffc1b41b69912e7dbd7a821",
+      "bytes": 2380,
       "tags": []
     },
     {
@@ -389,8 +389,8 @@
     },
     {
       "id": ".agentquilt/agents/release-reviewer/020-release-readiness-workflow.md",
-      "hash": "sha256-a614cdfbc460d58cf2b2f5d155c13dcc236d0c0b951d1134cc9821338ac51a0a",
-      "bytes": 2336,
+      "hash": "sha256-fcaca2dffa8957ecdb39faff58d300fce374716f08a7351811439d41dd197683",
+      "bytes": 2332,
       "tags": []
     },
     {
@@ -455,14 +455,14 @@
     },
     {
       "id": ".agentquilt/agents/test-engineer/020-verification-workflow.md",
-      "hash": "sha256-ea1892665437b0be7f77ad432385987ca2558350957f3935b86d7a2136d9e6be",
-      "bytes": 2515,
+      "hash": "sha256-8f8f8417559989a27b0c88682426a50e001cc25800d7f2da63b5b4c2fb7455a8",
+      "bytes": 2507,
       "tags": []
     },
     {
       "id": "project/010-overview.md",
-      "hash": "sha256-fe3f2e650b2c6542028dface2161d90d8deb5a5d74c4d6da19e6189d8c5c89f3",
-      "bytes": 1373,
+      "hash": "sha256-93033742435f7716fe066845ad4532aab4d124273a073597064d4c35defc3896",
+      "bytes": 1369,
       "tags": []
     },
     {
@@ -479,8 +479,8 @@
     },
     {
       "id": "project/040-development-practices.md",
-      "hash": "sha256-1d39324769b977b18fdebe03b7c5b6df170a5074b9d5bf52bd39b3ff508492bf",
-      "bytes": 2082,
+      "hash": "sha256-6f7f208183220c107bb88426acd0739720f84b525cb7dbcae1c879ad64a4f00d",
+      "bytes": 2568,
       "tags": []
     },
     {
@@ -536,7 +536,7 @@
         "project/090-implementation-notes.md",
         "project/100-package-and-links.md"
       ],
-      "version": "sha256-5445f5816dd6e4f6ce350aa1516eaebf40220d046aa7e1dae30e724174d17ff1"
+      "version": "sha256-8d3d313013af39e080a31b71d95ed33a9fd60df284be3eac1448c607f075c5b7"
     },
     {
       "output": "CLAUDE.md",
@@ -553,7 +553,7 @@
         "project/090-implementation-notes.md",
         "project/100-package-and-links.md"
       ],
-      "version": "sha256-5445f5816dd6e4f6ce350aa1516eaebf40220d046aa7e1dae30e724174d17ff1"
+      "version": "sha256-8d3d313013af39e080a31b71d95ed33a9fd60df284be3eac1448c607f075c5b7"
     }
   ]
 }

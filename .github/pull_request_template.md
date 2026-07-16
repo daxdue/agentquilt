@@ -65,7 +65,7 @@ elsewhere in this repository):
 ## Generated-output changes
 
 Yes / No. If yes: which targets (`AGENTS.md`, `CLAUDE.md`, `.claude/agents/*.md`,
-`agentquilt.lock`), and confirmation that `npx agentquilt build` produced them (never hand-edited).
+`agentquilt.lock`), and confirmation that `agentquilt build` produced them (never hand-edited).
 
 ## Fixture or snapshot explanation
 

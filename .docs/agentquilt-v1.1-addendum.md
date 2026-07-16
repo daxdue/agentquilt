@@ -157,7 +157,7 @@ Each adapter is `(canonicalRecord, resolvedModel, config) → files`. Each carri
 Output: `.claude/agents/<name>.md` (Markdown + YAML frontmatter; body is the system prompt verbatim).
 
 ```markdown
-<!-- agentquilt: generated file — do not edit. version=sha256-… regenerate: npx agentquilt build -->
+<!-- agentquilt: generated file — do not edit. version=sha256-… regenerate: agentquilt build -->
 ---
 name: reviewer
 description: Reviews a diff for correctness, security, and missing tests. Use after code changes, before opening a PR.
@@ -183,7 +183,7 @@ Two outputs per agent:
 **(a)** `.codex/agents/<name>.toml`
 
 ```toml
-# agentquilt: generated file — do not edit. version=sha256-… regenerate: npx agentquilt build
+# agentquilt: generated file — do not edit. version=sha256-… regenerate: agentquilt build
 name = "reviewer"
 description = "Reviews a diff for correctness, security, and missing tests. Use after code changes, before opening a PR."
 model = "gpt-5-codex"
@@ -229,7 +229,7 @@ Injection rules:
 2. If no region exists → append one at EOF (preceded by one blank line).
 3. If `.codex/config.toml` does not exist → create it containing only the region.
 4. The region's normalized content is hashed and recorded in the lock; `agentquilt check` drift-checks **only the region**, so hand-edits outside it never trip the check and hand-edits *inside* it are caught.
-5. Recovery is the universal one: `npx agentquilt build` regenerates the region.
+5. Recovery is the universal one: `agentquilt build` regenerates the region.
 
 This is the v1 "never hand-edit a generated artifact" rule applied to a *slice* of someone else's file. It is the most failure-prone adapter behavior; cover it with focused tests (no region, empty file, region present, user text adjacent to sentinels, user edit inside region).
 
@@ -416,4 +416,4 @@ targets:
     platforms: [claude, codex]
 ```
 
-`npx agentquilt build` produces: `.claude/agents/reviewer.md` (frontmatter `model: sonnet`, `tools: Read, Grep, Glob`, `color: blue`), `.codex/agents/reviewer.toml` (`model = "gpt-5-codex"`, `sandbox_mode = "read-only"`), and a `[agents.reviewer]` stanza inside the managed region of `.codex/config.toml` — all recorded in `agentquilt.lock` and verified by `agentquilt check`.
+`agentquilt build` produces: `.claude/agents/reviewer.md` (frontmatter `model: sonnet`, `tools: Read, Grep, Glob`, `color: blue`), `.codex/agents/reviewer.toml` (`model = "gpt-5-codex"`, `sandbox_mode = "read-only"`), and a `[agents.reviewer]` stanza inside the managed region of `.codex/config.toml` — all recorded in `agentquilt.lock` and verified by `agentquilt check`.

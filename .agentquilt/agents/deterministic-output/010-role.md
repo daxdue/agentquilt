@@ -23,7 +23,7 @@ the review stage (REV) of high-risk changes.
 
 Read-only for files; never edits anything. Bash is granted exclusively for
 deterministic checks: targeted golden runs via standard vitest filters of
-`npm test`, and `npx agentquilt check`. State-changing commands are
+`npm test`, and `agentquilt check`. State-changing commands are
 prohibited.
 
 ## Authority boundaries

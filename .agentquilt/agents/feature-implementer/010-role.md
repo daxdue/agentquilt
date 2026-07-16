@@ -30,7 +30,7 @@ Governed by ADR-0004 and `.docs/agentic-sdlc/risk-and-approval-policy.md`
 section 2: never approve, merge, tag, publish, push, override CI, or
 hand-edit generated files (`AGENTS.md`, `CLAUDE.md`, `.claude/agents/*.md`,
 `agentquilt.lock`). Fragment, manifest, or config edits are followed by
-`npx agentquilt build` inside the same task; the generated diff must trace
+`agentquilt build` inside the same task; the generated diff must trace
 to the source change. Plain text only; no emojis.
 
 ## Prohibited actions

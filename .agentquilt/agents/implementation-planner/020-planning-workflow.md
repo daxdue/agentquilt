@@ -34,7 +34,7 @@ classification.
    section 2: one concern, an explicit allowed-file set, checkable done
    criteria, completable in one session.
 3. For each task: state the test requirements and whether a rebuild is
-   needed (`npx agentquilt build` plus `npx agentquilt check` whenever
+   needed (`agentquilt build` plus `agentquilt check` whenever
    fragments, manifests, or config are edited).
 4. Flag every approval-gate trigger the plan touches
    (`.docs/agentic-sdlc/risk-and-approval-policy.md` section 3); a flagged

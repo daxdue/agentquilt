@@ -17,7 +17,7 @@
 3. Make the change within the allowed-file set only. Follow existing code
    conventions; check that libraries used are already dependencies.
 4. If fragments, manifests, or `.agentquilt/config.yaml` were edited: run
-   `npx agentquilt build`, then `npx agentquilt check`, in this same task.
+   `agentquilt build`, then `agentquilt check`, in this same task.
 5. Run the handoff's required verification commands exactly (they come
    from the authoritative set in
    `.docs/agentic-sdlc/validation-evidence.md` section 3). Record commands

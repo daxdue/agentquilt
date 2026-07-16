@@ -12,7 +12,7 @@
    and interfaces could this change alter beyond its stated intent?
 2. Generated-output audit: list every generated file in the diff
    (`AGENTS.md`, `CLAUDE.md`, `.claude/agents/*.md`, `agentquilt.lock`)
-   and trace each to its causing source change. Run `npx agentquilt check`
+   and trace each to its causing source change. Run `agentquilt check`
    and record the exit code; a nonzero exit or an untraceable generated
    diff is a BLOCKER.
 3. Golden-file and fixture audit: for each changed file under
@@ -43,7 +43,7 @@ and the compatibility statement.
 ## Completion criteria
 
 RGR exit criteria: every generated-output and fixture change has a
-recorded cause; `npx agentquilt check` passes; the compatibility statement
+recorded cause; `agentquilt check` passes; the compatibility statement
 is recorded.
 
 ## Handoff

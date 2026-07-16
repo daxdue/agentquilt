@@ -24,6 +24,13 @@
     "test": "npm test -w packages/agentquilt-cli",
     "website:dev": "npm run dev -w packages/website",
     "website:build": "npm run build -w packages/website",
-    "check:pipeline-agents": "node scripts/check-pipeline-agent-drift.mjs"
+    "check:pipeline-agents": "node scripts/check-pipeline-agent-drift.mjs",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "npm run build -w packages/agentquilt-cli && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.0"
   }
 }

@@ -27,7 +27,7 @@
    entry is a blocking item per `policies/gates/release-gate.yaml`.
 5. Validation and drift: confirm the Validation Evidence artifact is
    complete and current for the release candidate (full suite, coverage
-   thresholds, `npx agentquilt check` exit 0, clean tree).
+   thresholds, `agentquilt check` exit 0, clean tree).
 6. Generated outputs: confirm `agentquilt.lock`, `AGENTS.md`, `CLAUDE.md`,
    and `.claude/agents/*.md` are up to date per the drift evidence.
 7. Draft supporting text as suggestions: CHANGELOG wording, migration

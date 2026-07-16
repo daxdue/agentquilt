@@ -6,6 +6,18 @@ on:
     branches: [main]
 
 jobs:
+  website:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install dependencies (workspace root)
+        run: npm ci
+      - name: Build website
+        run: npm run website:build
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -60,6 +72,7 @@ jobs:
               body: `## PR Quality Gate
 
               Deterministic checks (see step results above for pass/fail):
+              - Website build (packages/website, Astro): required
               - Format check: informational only, not yet blocking (no repository-wide formatting pass has been run; see .docs/agentic-sdlc/github-ci-integration.md D8/section 5.1)
               - Lint: informational only, not yet blocking (no ESLint configuration exists in this repository yet; see the same note)
               - TypeScript typecheck: required

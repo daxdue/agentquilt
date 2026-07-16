@@ -33,7 +33,7 @@ body:
       placeholder: |
         - [ ] All existing tests pass unchanged
         - [ ] No CLI-visible output changes
-        - [ ] `npx agentquilt check` reports no drift
+        - [ ] `agentquilt check` reports no drift
     validations:
       required: true
   - type: textarea

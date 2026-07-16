@@ -61,7 +61,7 @@ RGR/DOC/VAL as loop stages, not entry points):
   remain current via their source fragments under
   `.agentquilt/agents/project/`.
 - **Step 12 (VAL).** Delegate to the `test-engineer` agent for full repository
-  checks (build, full test suite, and `npx agentquilt check` if anything under
+  checks (build, full test suite, and `agentquilt check` if anything under
   `.agentquilt/` or a generated file's source changed).
 
 ## Non-negotiable loop rules

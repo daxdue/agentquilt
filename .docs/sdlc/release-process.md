@@ -2,91 +2,86 @@
 
 ## Overview
 
-Releases follow the milestone roadmap defined in [roadmap.md](..//roadmap.md). The release unit is a semver version tag (`v0.x.0`). npm publish is the primary distribution channel.
+Releases follow the milestone roadmap defined in [roadmap.md](../roadmap.md). The release unit is a semver version tag (`v0.x.0`). npm publish is the primary distribution channel.
+
+Versioning, changelog generation, and publishing are automated via
+[Changesets](https://github.com/changesets/changesets) and the
+`.github/workflows/release.yml` GitHub Actions workflow. Per
+[ADR-0004](../architecture/adr/ADR-0004-ai-assistance-authority-model.md)
+and [ADR-0013](../architecture/adr/ADR-0013-automated-release-harness.md),
+a human always makes the two decisions that matter — *whether* a change is
+release-worthy, and *when* to cut the release — everything mechanical after
+that runs without a human touching `npm publish` directly.
 
 ---
 
-## Release Checklist (G6 Gate)
+## How it works
 
-Before cutting any release, all of the following must be true:
+### 1. Contributors add a changeset for user-visible changes
 
-- [ ] All tests pass on `main` (`npm test -- --run` exits 0)
-- [ ] Typecheck clean (`npx tsc --project tsconfig.test.json` exits 0)
-- [ ] Drift check passes (`node dist/index.js check` exits 0 against the repo's own config)
-- [ ] `CHANGELOG.md` updated with entries for all user-visible changes since last release
-- [ ] `package.json` version bumped to the new version
-- [ ] No open critical or high-severity issues in the risk register
-- [ ] Migration notes written if any manifest format or CLI command changed
+Any PR with a user-visible change (bug fix, new feature, CLI behavior
+change) should include a changeset:
+
+```bash
+npx changeset add
+```
+
+This prompts for the affected package (normally just `agentquilt`), the
+semver bump type (patch/minor/major — see Versioning Policy below), and a
+short summary. It writes a small Markdown file under `.changeset/` that
+gets committed alongside the PR's other changes. This is the "whether" —
+a human decides a change is release-worthy by adding a changeset at all.
+
+PRs that are purely internal (docs, tests, CI tuning, `.agentquilt/`
+fragment refactors that don't change compiled agent behavior) don't need
+one.
+
+### 2. Merges to `main` keep a "Version Packages" PR up to date
+
+Every push to `main` runs `.github/workflows/release.yml`. If there are
+pending changesets, the workflow opens or updates a bot-owned PR titled
+something like `chore: version packages`. That PR:
+
+- bumps `packages/agentquilt-cli/package.json` to the next version implied
+  by the accumulated changesets,
+- writes the corresponding section into `CHANGELOG.md` (accessible from
+  either the repo root or `packages/agentquilt-cli/CHANGELOG.md`, which is
+  a symlink to the same file),
+- consumes (deletes) the changeset files that fed it.
+
+Nothing publishes at this point. The PR just sits there, accumulating
+further changesets as more PRs merge, until a Maintainer is ready to
+release.
+
+### 3. Merging the Version Packages PR cuts the release
+
+This is the "when" — a human decides to release by merging that PR. Once
+merged, the next run of `release.yml` finds no pending changesets (they
+were already consumed) and instead runs the publish path: builds the CLI,
+runs `changeset publish` (which runs `npm publish` with npm provenance for
+each changed package), pushes the resulting `vX.Y.Z` git tag, and creates
+a GitHub Release with the changelog section as its body.
+
+### 4. Everything else in the gate suite still runs first
+
+Before either the version-PR or the publish path executes, `release.yml`
+runs the same deterministic checks that have always gated a release: full
+test suite, coverage, CLI build, `agentquilt check` drift check, pipeline
+agent drift check, `npm pack --dry-run` package validation, and the
+open-high/critical-risk check against `policies/risks/risk-register.yaml`.
+A failure in any of these blocks both the version PR and the publish step.
 
 ---
 
-## Step-by-Step
+## One-time setup (Maintainer only, outside this repo)
 
-### 1. Prepare the release branch
-
-```bash
-git checkout main && git pull
-git checkout -b release/v<VERSION>
-```
-
-### 2. Bump version
-
-Edit `packages/agentquilt-cli/package.json`:
-
-```json
-"version": "0.x.0"
-```
-
-### 3. Update CHANGELOG.md
-
-Add a new section at the top:
-
-```markdown
-## [0.x.0] — YYYY-MM-DD
-
-### Added
-- ...
-
-### Fixed
-- ...
-
-### Changed
-- ...
-```
-
-### 4. Regenerate outputs
-
-```bash
-npm run build              # from repo root (builds the CLI workspace)
-node packages/agentquilt-cli/dist/index.js build   # regenerate outputs
-node packages/agentquilt-cli/dist/index.js check   # must exit 0
-```
-
-### 5. Commit and open PR
-
-```bash
-git add packages/agentquilt-cli/package.json CHANGELOG.md agentquilt.lock AGENTS.md .claude/agents/
-git commit -m "chore(release): prepare v<VERSION>"
-```
-
-Open a PR against `main` titled `chore(release): v<VERSION>`. It must pass all CI gates.
-
-### 6. Tag and publish
-
-After merge:
-
-```bash
-git tag v<VERSION>
-git push origin v<VERSION>
-```
-
-The `release.yml` CI workflow (to be implemented — see [roadmap.md](../roadmap.md) Week 4) will automatically publish to npm on tag push.
-
-Until the workflow exists, publish manually:
-
-```bash
-cd packages/agentquilt-cli && npm publish
-```
+- Create an npm automation token and add it as the `NPM_TOKEN` secret
+  under GitHub repo Settings -> Secrets and variables -> Actions. This is
+  required for the publish step and cannot be done by an agent or
+  workflow.
+- npm's newer Trusted Publishing (OIDC) flow removes the need for a
+  stored token entirely — worth adopting once this token-based flow is
+  proven, configured from the package's settings page on npmjs.com.
 
 ---
 
@@ -97,3 +92,23 @@ cd packages/agentquilt-cli && npm publish
 - **Major** (`X.0.0`): breaking changes to manifest format, lock format, or CLI behavior (reserved for post-v1.0.0)
 
 During pre-release (`0.x`), minor versions may include breaking changes with ADR documentation.
+
+---
+
+## G6 Release Gate
+
+Before a Version Packages PR is merged, all of the following must be true
+(mechanically enforced by `release.yml`'s `checks` job, except where
+noted):
+
+- [ ] All tests pass on `main`
+- [ ] Coverage produced and reviewed
+- [ ] Drift check passes (`agentquilt check` against the repo's own config)
+- [ ] `CHANGELOG.md` entry present and accurately categorized (written by
+      Changesets from the accumulated changeset summaries — Maintainer
+      reviews wording in the Version Packages PR before merging)
+- [ ] `package.json` version bumped to the new version (done by Changesets)
+- [ ] No open critical or high-severity issues in the risk register
+- [ ] Migration notes written if any manifest format or CLI command changed
+      (not automated — add these by hand to the relevant changeset's
+      summary, or amend the Version Packages PR before merging)

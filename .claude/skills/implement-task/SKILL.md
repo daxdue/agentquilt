@@ -33,7 +33,7 @@ sources live under `.agentquilt/`).
    the handoff before passing it on.
 2. **Delegate focused verification.** Delegate to the `test-engineer` agent
    for the task's named focused verification. Always include
-   `npx agentquilt check` whenever the task touched fragments, manifests,
+   `agentquilt check` whenever the task touched fragments, manifests,
    config, or a generated file
    ([validation-evidence.md section 4](../../../.docs/agentic-sdlc/validation-evidence.md#4-validation-levels)).
 3. **Assemble the Return Handoff.** Produce the Return Handoff
@@ -59,6 +59,6 @@ never a fresh reviewer starting over
 - Never hand-edits a generated file (`AGENTS.md`, `CLAUDE.md`,
   `.claude/agents/*.md`, `agentquilt.lock`). If a task's handoff carries a
   rebuild flag because it edits fragments or a manifest, run
-  `npx agentquilt build` inside this same task and verify with
-  `npx agentquilt check` -- never write the generated output directly.
+  `agentquilt build` inside this same task and verify with
+  `agentquilt check` -- never write the generated output directly.
 - Never marks a finding resolved without the original reviewer's re-check.

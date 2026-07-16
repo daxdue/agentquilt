@@ -15,7 +15,7 @@ failing command's output, not a Review Findings artifact.
 
 Trigger: the Maintainer reports, or the session observes, a failing
 deterministic check on an existing branch or PR -- a build error, a test
-failure, a coverage shortfall, or `npx agentquilt check` drift.
+failure, a coverage shortfall, or `agentquilt check` drift.
 
 Before proceeding: note the current branch and working-tree cleanliness
 (`git status`, `git branch --show-current`), and keep the canonical-vs-
@@ -53,8 +53,8 @@ sources live under `.agentquilt/`).
   If a fixture genuinely needs to change, that change needs its own root-cause
   explanation in the fix's evidence, not a silent update.
 - Never hand-edits a generated file to force a drift check green -- if
-  `npx agentquilt check` is failing, the fix is to correct the source fragment
-  or manifest and rebuild with `npx agentquilt build`, never to hand-edit
+  `agentquilt check` is failing, the fix is to correct the source fragment
+  or manifest and rebuild with `agentquilt build`, never to hand-edit
   `AGENTS.md`, `CLAUDE.md`, `.claude/agents/*.md`, or `agentquilt.lock`.
 - Never re-runs only a narrower check than the one that failed and calls it
   verified.
