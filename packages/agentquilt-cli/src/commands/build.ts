@@ -1,19 +1,41 @@
 import { Command } from "commander";
-import { mkdirSync, writeFileSync } from "fs";
+import { mkdirSync, writeFileSync, existsSync, readFileSync } from "fs";
 import path from "path";
 import { findConfigFile, loadConfig, validateConfig, ConfigError } from "../core/configLoader.js";
 import { compile } from "../core/compiler.js";
 import { compileAgentDefinitionsTarget } from "../core/agentCompiler.js";
-import { createLock, writeLock } from "../core/lockWriter.js";
+import { createLock, writeLock, readLock } from "../core/lockWriter.js";
 import { watchTree, watchFile, WatchHandle } from "../core/watcher.js";
 import type { AgentQuiltConfig } from "../schemas/config.schema.js";
-import { bold, cyan, dim, sym, formatDuration, createSpinner } from "../ui/terminal.js";
+import { bold, cyan, dim, red, sym, formatDuration, createSpinner } from "../ui/terminal.js";
 
 interface BuildOptions {
   config?: string;
   cwd: string;
   quiet?: boolean;
   watch?: boolean;
+  force?: boolean;
+}
+
+/**
+ * A generated file was found on disk with content that doesn't match what a
+ * fresh build would produce, AND its recorded source version in the previous
+ * lock is unchanged from the version we'd compute now. That combination is
+ * only possible if the file was hand-edited outside of `agentquilt build`
+ * since the last build — a deterministic compiler would have produced
+ * identical bytes for identical source. Refuse to clobber it silently.
+ */
+function isTampered(
+  outputPath: string,
+  freshContent: string,
+  oldVersion: string | undefined,
+  newVersion: string
+): boolean {
+  if (!existsSync(outputPath)) return false;
+  if (oldVersion === undefined) return false; // never built before — nothing to protect
+  if (oldVersion !== newVersion) return false; // legitimate source change — self-heal
+  const diskContent = readFileSync(outputPath, "utf8");
+  return diskContent !== freshContent;
 }
 
 const WATCH_DEBOUNCE_MS = 150;
@@ -27,6 +49,10 @@ export function registerBuildCommand(program: Command): void {
     .option("--cwd <dir>", "working directory", process.cwd())
     .option("--quiet", "suppress output")
     .option("--watch", "rebuild when source fragments or config change")
+    .option(
+      "--force",
+      "overwrite generated files even if they were hand-edited outside of build since the last build"
+    )
     .action(buildAction);
 }
 
@@ -35,9 +61,11 @@ interface BuildResult {
   configPath: string;
   /** Absolute paths of every file the build wrote (outputs + lock). */
   writtenPaths: Set<string>;
+  /** Repo-relative output paths skipped because they were hand-edited since the last build. */
+  blocked: string[];
 }
 
-async function executeBuild(options: BuildOptions): Promise<BuildResult> {
+export async function executeBuild(options: BuildOptions): Promise<BuildResult> {
   const cwd = options.cwd || process.cwd();
   const writtenPaths = new Set<string>();
   const startedAt = performance.now();
@@ -70,9 +98,34 @@ async function executeBuild(options: BuildOptions): Promise<BuildResult> {
     spinner.stop();
   }
 
+  // Read the previous lock (if any) to tell a legitimate rebuild (source
+  // changed since last build) apart from a hand-edited generated file (source
+  // unchanged, disk content unchanged from last known version, yet the file
+  // on disk no longer matches what that version compiles to).
+  const oldLock = options.force ? null : readLock(path.join(cwd, "agentquilt.lock"));
+  const oldTargetVersionByOutput = new Map((oldLock?.targets ?? []).map((t) => [t.output, t.version]));
+  const oldAgentVersionByName = new Map((oldLock?.agents ?? []).map((a) => [a.name, a.version]));
+
+  const blocked: string[] = [];
+
   // Phase 2: write outputs and report.
   for (const target of result.targets) {
     const outputPath = path.join(cwd, target.output);
+
+    if (
+      !options.force &&
+      isTampered(outputPath, target.content, oldTargetVersionByOutput.get(target.output), target.version)
+    ) {
+      blocked.push(target.output);
+      if (!options.quiet) {
+        console.error(
+          `${sym.fail} ${bold(target.output)}: hand-edited outside of build since the last build — refusing to overwrite`
+        );
+        console.error(dim(`  Revert the manual edit, or rerun with ${cyan("--force")} to discard it.`));
+      }
+      continue;
+    }
+
     mkdirSync(path.dirname(outputPath), { recursive: true });
     writeFileSync(outputPath, target.content, "utf8");
     writtenPaths.add(outputPath);
@@ -101,9 +154,24 @@ async function executeBuild(options: BuildOptions): Promise<BuildResult> {
     }
 
     // Write adapter outputs
-    for (const outputs of agentResult.outputs.values()) {
+    for (const record of agentResult.agentRecords) {
+      const outputs = agentResult.outputs.get(record.name) ?? [];
+      const oldAgentVersion = oldAgentVersionByName.get(record.name);
+
       for (const output of outputs) {
         const outputPath = path.join(cwd, output.path);
+
+        if (!options.force && isTampered(outputPath, output.content, oldAgentVersion, record.version)) {
+          blocked.push(output.path);
+          if (!options.quiet) {
+            console.error(
+              `${sym.fail} ${output.path}: hand-edited outside of build since the last build — refusing to overwrite`
+            );
+            console.error(dim(`  Revert the manual edit, or rerun with ${cyan("--force")} to discard it.`));
+          }
+          continue;
+        }
+
         mkdirSync(path.dirname(outputPath), { recursive: true });
         writeFileSync(outputPath, output.content, "utf8");
         writtenPaths.add(outputPath);
@@ -112,6 +180,12 @@ async function executeBuild(options: BuildOptions): Promise<BuildResult> {
         }
       }
     }
+  }
+
+  if (blocked.length > 0 && !options.quiet) {
+    console.error(
+      `${sym.fail} ${red(`${blocked.length} generated file(s) blocked`)} — rerun with ${cyan("--force")} to discard the manual edits.`
+    );
   }
 
   // Create and write lock (with agents)
@@ -127,7 +201,7 @@ async function executeBuild(options: BuildOptions): Promise<BuildResult> {
     console.log(dim(`Done in ${formatDuration(performance.now() - startedAt)}`));
   }
 
-  return { config, configPath, writtenPaths };
+  return { config, configPath, writtenPaths, blocked };
 }
 
 function reportError(err: unknown): number {
@@ -155,8 +229,8 @@ async function buildAction(options: BuildOptions): Promise<void> {
   }
 
   try {
-    await executeBuild(options);
-    process.exit(0);
+    const result = await executeBuild(options);
+    process.exit(result.blocked.length > 0 ? 1 : 0);
   } catch (err) {
     process.exit(reportError(err));
   }

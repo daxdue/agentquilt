@@ -1,0 +1,120 @@
+name: Provider compatibility
+description: Report an issue with a specific AI provider/platform target (Claude, Codex, AgentSkills, or a new platform).
+title: "[Provider]: "
+labels:
+  - provider-compatibility
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for problems specific to a compiled target -- Claude Code
+        (`.claude/agents/*.md`), the vendor-neutral AgentSkills format
+        (`.agents/skills/*/SKILL.md`), Codex (`.codex/agents/*.toml`), or a request
+        to support a new provider/platform. Platform-agnostic design is a project
+        requirement: named providers are concrete examples, not the limit of scope.
+  - type: input
+    id: provider
+    attributes:
+      label: Provider or platform
+      description: Which provider/platform is affected (Claude Code, AgentSkills, Codex, other)?
+    validations:
+      required: true
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: Problem statement
+      description: What does this provider/platform do differently than expected, or not support at all?
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What should the compiled output or provider-specific mechanism do instead?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: How will we know this is fixed? List testable conditions.
+      placeholder: |
+        - [ ] Adapter output for <provider> matches ...
+        - [ ] Golden fixture for <provider> updated and passing
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-evidence
+    attributes:
+      label: Reproduction evidence
+      description: Minimal manifest/block fragments, the adapter/target config used, and the actual vs. expected compiled output.
+    validations:
+      required: true
+  - type: dropdown
+    id: risk-indicators
+    attributes:
+      label: Risk indicators
+      description: Your best-guess risk level for this change, subject to triage.
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility-concerns
+    attributes:
+      label: Compatibility concerns
+      description: Does the fix affect other providers/targets sharing the same fragments or adapter code path? Leave blank if not applicable.
+    validations:
+      required: false
+  - type: dropdown
+    id: generated-output-impact
+    attributes:
+      label: Generated-output impact
+      description: Does this affect AGENTS.md, CLAUDE.md, compiled agent definitions, or agentquilt.lock?
+      options:
+        - None
+        - AGENTS.md and CLAUDE.md
+        - Compiled agent definitions (.claude/agents/*.md)
+        - agentquilt.lock
+        - Not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: documentation-impact
+    attributes:
+      label: Documentation impact
+      description: Does provider-specific documentation need updating (adapter docs, provider pipeline design docs)?
+      options:
+        - None
+        - README
+        - CLAUDE.md/AGENTS.md fragments (.agentquilt/agents/project/)
+        - .docs architecture or ADR
+        - .docs sdlc/stlc
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: test-expectations
+    attributes:
+      label: Test expectations
+      description: What test coverage should confirm the fix -- new adapter unit test, new golden fixture, eval update?
+    validations:
+      required: true
+  - type: checkboxes
+    id: affected-area
+    attributes:
+      label: Affected area
+      description: Select all that apply.
+      options:
+        - label: CLI
+        - label: Schemas
+        - label: Compiler
+        - label: Adapters (Claude / AgentSkills)
+        - label: Evals
+        - label: Generated agents
+        - label: Documentation
+        - label: CI/CD
+        - label: Security / Governance

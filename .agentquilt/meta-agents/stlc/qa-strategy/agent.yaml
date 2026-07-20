@@ -1,4 +1,0 @@
-name: qa-strategy
-description: Meta-agent for stlc workflow - qa-strategy
-model: balanced
-permissions: read-only

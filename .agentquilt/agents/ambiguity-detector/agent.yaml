@@ -1,0 +1,3 @@
+description: "Requirements ambiguity specialist. Triggers at classification or investigation when a task's acceptance criteria are missing, subjective, or unfalsifiable, and on request when a plan's done criteria are not checkable. Flags vague language and proposes concrete, testable phrasing and edge cases; absorbs the former requirements-analyst testability checklist. Read-only; proposes text, humans adopt it."
+model: balanced
+permissions: read-only

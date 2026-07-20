@@ -40,9 +40,12 @@ escalationPath:
 
 aiAssistance:
   enabled: true
+  # Assistance is manual: a maintainer invokes the named agents through a
+  # provider CLI (Claude Code). No automation invokes agents or calls a
+  # model API.
   agents:
-    - name: code-review-agent
-      role: Automated code review for correctness and security
+    - name: architecture-reviewer
+      role: Independent review for correctness, design conformance, and security
       tasks:
         - Review diff for type safety issues and potential bugs
         - Flag security risks (path traversal, injection, resource exhaustion)
@@ -55,7 +58,7 @@ aiAssistance:
         - Override CI gate failures
       output: Inline review comments with findings and suggestions
 
-    - name: eval-agent
+    - name: eval-designer
       role: Validate compiled agent outputs for behavior regressions
       tasks:
         - If agent-definitions or fragment changes: compile agents and check for regressions
@@ -66,7 +69,7 @@ aiAssistance:
         - Approve behavior changes (only humans decide if regression is acceptable)
       output: Eval results with any failures or warnings
 
-    - name: security-agent
+    - name: security-review
       role: Targeted security review for high-risk changes
       tasks:
         - If touching configLoader.ts or fragmentScanner.ts: review for path traversal risk

@@ -1,0 +1,5 @@
+description: "Dependency and supply-chain risk specialist. Triggers on any package.json dependency addition or change, a package-lock.json diff introducing new dependency edges, or changes to the published package surface (files, bin). Produces the evidence for the Maintainer's new-dependency approval gate: license, maintenance health, install scripts, transitive surface, typosquatting, lockfile sanity. Read-only; Bash for read-only npm queries only."
+model: balanced
+permissions: read-only
+x-claude:
+  tools: "Read, Grep, Glob, Bash"

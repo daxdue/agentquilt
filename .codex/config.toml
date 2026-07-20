@@ -1,0 +1,60 @@
+# Project-scoped Codex configuration for AgentQuilt's development pipeline
+# (Phase 5 of the agentic-SDLC effort). This file only loads for a session in
+# this repository when the repository is marked trusted in the operator's own
+# ~/.codex/config.toml -- see .docs/agentic-sdlc/codex-pipeline.md section 2.4.
+#
+# Scope note: this is development infrastructure only. It configures the
+# Codex CLI's own behavior in this repository; it is not read by the
+# AgentQuilt compiler and does not affect product behavior.
+#
+# D1 (revised, Phase 5 segment 3): per-agent permission scoping for the 14
+# custom agents under .codex/agents/*.toml uses sandbox_mode exclusively
+# (read-only | workspace-write | danger-full-access) -- the only documented
+# per-agent permission override. That is a DIFFERENT layer from this file.
+# At THIS layer (project-scoped config.toml), default_permissions and
+# [permissions.<name>] remain the documented, current, project-overridable
+# mechanism for the MAIN interactive session's own default -- re-verified
+# current as of this build (see the Phase 5 report's segment-3 log). The two
+# layers are not combined on the same object; this file sets the session
+# default only, and does not attempt to reference a named profile from
+# inside any .codex/agents/*.toml file.
+
+# Session default for the MAIN interactive Codex thread a Maintainer starts
+# manually in this repository: read-only, matching this repository's overall
+# bias toward review before write. A Maintainer doing hands-on implementation
+# work overrides per-session with `-s workspace-write` / `--profile <name>`
+# exactly as today; this default is unaffected by that override and applies
+# only when no override is given.
+default_permissions = ":read-only"
+
+# NOTE: no [permissions.read-only-with-checks] custom profile is defined
+# here. Segment 1's design (codex-pipeline.md section 6.2) originally
+# proposed one for regression-reviewer/deterministic-output to select via a
+# per-agent default_permissions reference; segment 2 found no documented way
+# for a custom agent TOML file to attach a named profile (only sandbox_mode
+# is supported there), so that attachment mechanism does not exist. Per
+# revised D1, those two agents instead use sandbox_mode = "workspace-write"
+# directly in their own .codex/agents/*.toml files, restricted to specific
+# commands by developer_instructions text only. A project-level
+# [permissions.read-only-with-checks] profile would have no per-agent
+# consumer and is not defined here to avoid implying an attachment path that
+# does not exist.
+
+# No [hooks] table is defined in THIS file. Phase 6 (design decision D1,
+# .docs/agentic-sdlc/guardrails-design.md section 4.1/8) added a project-
+# local .codex/hooks.json file instead, kept separate from this file for the
+# same "keep the guardrail mechanism visually separate from the
+# agent-registry/permission-default file" reasoning already used above to
+# justify not defining an orphaned permission profile here. That hook denies
+# apply_patch edits to the generated-file set (AGENTS.md, CLAUDE.md,
+# .claude/agents/**, agentquilt.lock) and a narrow secret-adjacent filename
+# set (D6), plus Bash/exec matches against the absolute-rule command set
+# (git push, git tag, npm publish, npm version, gh pr merge, gh release), for
+# EVERY caller including the main interactive session -- closing the gap the
+# original comment here named as "not built here." It does not, and cannot,
+# add per-agent (per custom-agent-name) scoping: Codex's PreToolUse payload
+# has no caller-identity field analogous to Claude Code's agent_type
+# (confirmed by direct documentation query, guardrails-design.md section
+# 4.2), so it applies uniformly rather than narrowly the way the Claude
+# Code-side D2 hook does. See .codex/hooks.json and
+# .codex/hooks/pretooluse-guard.sh for the mechanism itself.

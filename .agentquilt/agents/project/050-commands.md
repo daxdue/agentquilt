@@ -23,10 +23,6 @@ agentquilt skills add <name>             # Scaffold a new skill directory under 
 agentquilt skills list                   # List all skills and their descriptions
 ```
 
-### Creating a new agent or skill (assisted)
-
-The repo-level skill `.agents/skills/new-agent/SKILL.md` (compiled from `.agentquilt/skills/new-agent/`) guides an AI coding agent through creating a new AgentQuilt agent or skill: scaffolding sources, writing the manifest and fragments, registering the target, and building. When asked to create or init a new agent or skill, follow that skill's workflow instead of writing output files by hand.
-
 **Exit codes:**
 - 0: success
 - 1: drift detected (check failed)

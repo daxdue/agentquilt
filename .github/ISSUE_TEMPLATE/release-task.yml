@@ -1,0 +1,121 @@
+name: Release task
+description: Track work needed for an upcoming AgentQuilt release.
+title: "[Release]: "
+labels:
+  - release
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Release tasks are tracked here for visibility; the actual release still
+        requires a human-triggered `release.yml` run and manual `npm version`/
+        `git push --tags`/`npm publish` steps. No agent or workflow performs those
+        steps automatically -- see the Release Gate in `.docs/sdlc/gates.md`.
+  - type: input
+    id: target-version
+    attributes:
+      label: Target version
+      description: The version this release task is for (semver, or "next patch/minor/major" if undecided).
+    validations:
+      required: true
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: Problem statement
+      description: Why is this release needed now (accumulated fixes, a specific feature, a security fix)?
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What should be true once this release ships (CHANGELOG updated, version bumped, tag pushed, package published)?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: How will we know this release is ready and complete? List testable conditions.
+      placeholder: |
+        - [ ] All tests pass; `agentquilt check` reports no drift
+        - [ ] CHANGELOG.md updated and categorized
+        - [ ] Risk register has no open critical/high items
+        - [ ] Version bumped per semver; tag pushed; package published
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-evidence
+    attributes:
+      label: Scope evidence
+      description: List of merged PRs/issues this release covers, or a link to the milestone/comparison range.
+    validations:
+      required: false
+  - type: dropdown
+    id: risk-indicators
+    attributes:
+      label: Risk indicators
+      description: Your best-guess risk level for this release, subject to triage.
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility-concerns
+    attributes:
+      label: Compatibility concerns
+      description: Any breaking changes in this release requiring a major version bump or migration notes? Leave blank if not applicable.
+    validations:
+      required: false
+  - type: dropdown
+    id: generated-output-impact
+    attributes:
+      label: Generated-output impact
+      description: Does this release include a change to AGENTS.md, CLAUDE.md, compiled agent definitions, or agentquilt.lock?
+      options:
+        - None
+        - AGENTS.md and CLAUDE.md
+        - Compiled agent definitions (.claude/agents/*.md)
+        - agentquilt.lock
+        - Not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: documentation-impact
+    attributes:
+      label: Documentation impact
+      description: Does the release require CHANGELOG.md, README, or migration-guide updates?
+      options:
+        - None
+        - README
+        - CLAUDE.md/AGENTS.md fragments (.agentquilt/agents/project/)
+        - .docs architecture or ADR
+        - .docs sdlc/stlc
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: test-expectations
+    attributes:
+      label: Test expectations
+      description: Full deterministic suite (build, test, coverage, drift check) plus any release-specific validation expected before publish.
+    validations:
+      required: true
+  - type: checkboxes
+    id: affected-area
+    attributes:
+      label: Affected area
+      description: Select all that apply.
+      options:
+        - label: CLI
+        - label: Schemas
+        - label: Compiler
+        - label: Adapters (Claude / AgentSkills)
+        - label: Evals
+        - label: Generated agents
+        - label: Documentation
+        - label: CI/CD
+        - label: Security / Governance

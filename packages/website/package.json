@@ -1,6 +1,6 @@
 {
   "name": "agentquilt-website",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "AgentQuilt landing page",
   "private": true,
   "type": "module",
@@ -10,6 +10,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
     "@fontsource-variable/geist": "^5.2.9",
     "@fontsource-variable/geist-mono": "^5.2.8",
     "@vercel/analytics": "^2.0.1",

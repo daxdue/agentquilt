@@ -54,6 +54,10 @@ jobs:
       - name: Drift check
         run: node packages/agentquilt-cli/dist/index.js check
 
+      - name: Pipeline agent drift check
+        run: node scripts/check-pipeline-agent-drift.mjs
+        continue-on-error: true
+
       - name: Package validation
         working-directory: packages/agentquilt-cli
         run: npm pack --dry-run

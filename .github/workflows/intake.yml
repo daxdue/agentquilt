@@ -25,7 +25,7 @@ jobs:
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: `**Intake gate (G0): Missing required fields**\n\n${missing.map(f => `- [ ] ${f}`).join('\n')}\n\nPlease update the issue with these fields before proceeding to requirements. See [intake-gate.yaml](policies/gates/intake-gate.yaml) for the full checklist.\n\n**Authority:** Informational only — maintainer decides whether to proceed.`
+                body: `**Intake gate (G0): Missing required fields**\n\n${missing.map(f => `- [ ] ${f}`).join('\n')}\n\nPlease update the issue with these fields before proceeding to requirements. See [intake-gate.yaml](policies/gates/intake-gate.yaml) for the full checklist.\n\n**Authority:** Informational only -- maintainer decides whether to proceed.`
               });
             }
 
@@ -39,17 +39,18 @@ jobs:
               repo: context.repo.repo,
               body: `## Issue Intake Gate
 
-This issue is ready for triage. Use Claude Code to invoke the **product-discovery agent** for automated analysis:
+              This issue is ready for triage. The maintainer may manually invoke Claude Code or Codex
+              against this issue -- see .docs/agentic-sdlc/github-provider-handoff.md for the gh-CLI-based
+              handoff steps, then run the **analyze-issue** skill/agent to assist:
 
-1. Open this issue in Claude Code
-2. Select the **product-discovery** agent from the agents list
-3. Agent will analyze and suggest:
-   - Risk level assessment
-   - Missing required fields
-   - Potential duplicates
-   - Initial acceptance criteria
+              1. Bring this issue's content into a Claude Code or Codex session (gh CLI or the provider's
+                 own native GitHub integration -- never a custom API layer)
+              2. Invoke **analyze-issue** (Claude Code skill) or the equivalent Codex entry skill
+              3. The agent can analyze and suggest:
+                 - Risk level assessment
+                 - Missing required fields
+                 - Potential duplicates
+                 - Initial acceptance criteria
 
-See [.docs/PHASE_3_COMPLETION.md](.docs/PHASE_3_COMPLETION.md) for agent details.
-
-**Authority:** Agent suggests; maintainer decides.`
+              **Authority:** Agent suggests; maintainer decides.`
             })

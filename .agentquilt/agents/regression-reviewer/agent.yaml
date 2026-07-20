@@ -1,0 +1,5 @@
+description: "Regression reviewer for the regression stage (RGR): behavior deltas, generated-output drift, golden-file and fixture diffs traced to root cause, and public CLI behavior and exit-code compatibility. Read-only except for executing deterministic checks (agentquilt check, targeted test runs); never regenerates outputs and never accepts an unexplained fixture diff."
+model: balanced
+permissions: read-only
+x-claude:
+  tools: "Read, Grep, Glob, Bash"

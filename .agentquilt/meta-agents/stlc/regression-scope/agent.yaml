@@ -1,4 +1,0 @@
-name: regression-scope
-description: Meta-agent for stlc workflow - regression-scope
-model: balanced
-permissions: read-only

@@ -28,13 +28,21 @@ jobs:
       - name: Install dependencies
         working-directory: packages/agentquilt-cli
         run: npm ci
+      - name: Format check
+        working-directory: packages/agentquilt-cli
+        run: npx prettier --check src tests
+        continue-on-error: true
+      - name: Lint
+        working-directory: packages/agentquilt-cli
+        run: npm run lint
+        continue-on-error: true
       - name: Typecheck
         working-directory: packages/agentquilt-cli
         run: npx tsc --project tsconfig.test.json
       - name: Build CLI
         working-directory: packages/agentquilt-cli
         run: npm run build
-      - name: Run tests
+      - name: Run tests (unit, integration, golden-fixture)
         working-directory: packages/agentquilt-cli
         run: npm test -- --run
       - name: Coverage
@@ -42,3 +50,46 @@ jobs:
         run: npm run coverage
       - name: Drift check
         run: node packages/agentquilt-cli/dist/index.js check
+      - name: Pipeline agent drift check
+        run: node scripts/check-pipeline-agent-drift.mjs
+        continue-on-error: true
+      - name: Package validation
+        working-directory: packages/agentquilt-cli
+        run: npm pack --dry-run
+      - name: Dependency audit
+        working-directory: packages/agentquilt-cli
+        run: npm audit --audit-level=high
+        continue-on-error: true
+      - name: Post review reminder
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## PR Quality Gate
+
+              Deterministic checks (see step results above for pass/fail):
+              - Website build (packages/website, Astro): required
+              - Format check: informational only, not yet blocking (no repository-wide formatting pass has been run; see .docs/agentic-sdlc/github-ci-integration.md D8/section 5.1)
+              - Lint: informational only, not yet blocking (no ESLint configuration exists in this repository yet; see the same note)
+              - TypeScript typecheck: required
+              - Unit / integration / golden-fixture tests: required
+              - Coverage: produced, not threshold-enforced
+              - Build: required
+              - AgentQuilt drift check: required
+              - Pipeline agent drift check (Claude Code vs Codex roster parity): informational only, not yet blocking (new check, promotable once proven stable)
+              - Package validation (npm pack --dry-run): required
+              - Dependency audit (npm audit, high severity): informational only, not blocking
+
+              For detailed review, invoke Claude Code or Codex manually per
+              .docs/agentic-sdlc/github-provider-handoff.md:
+              - **architecture-reviewer** - review diff for design conformance and correctness
+              - **eval-designer** - check for regressions (if agent instruction sources changed)
+              - **security-review** - security assessment (if high-risk files changed)
+
+              **Authority:** Agents advise; maintainer approves. No agent or workflow merges,
+              tags, or publishes.`
+            })

@@ -1,4 +1,0 @@
-name: defect-triage
-description: Meta-agent for stlc workflow - defect-triage
-model: balanced
-permissions: read-only

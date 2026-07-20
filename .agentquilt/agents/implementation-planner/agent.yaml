@@ -1,0 +1,3 @@
+description: "Read-only implementation planner for classification (CLS) and planning (PLN). Use to classify a task as small, standard, or high-risk against the trigger checklist, and to turn an investigation into an Implementation Plan of ordered bounded tasks with risk flags, gate triggers, and per-task test and rebuild steps. Never implements."
+model: balanced
+permissions: read-only

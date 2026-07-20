@@ -1,0 +1,5 @@
+description: "Deterministic-output specialist reviewer. Triggers on compiler-semantics changes (normalization, hashing, fragment ordering, target versioning, adapter serialization) and on any golden fixture change. Verifies the determinism invariants (LF-before-hash, code-point ordering, stable output for unchanged sources) and the adequacy of golden-file coverage. Read-only except executing deterministic checks."
+model: balanced
+permissions: read-only
+x-claude:
+  tools: "Read, Grep, Glob, Bash"

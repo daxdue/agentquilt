@@ -1,0 +1,7 @@
+interface:
+  display_name: "Implement Task"
+  short_description: "Execute one bounded task and verify it"
+  default_prompt: "Use $implement-task to execute exactly one approved bounded task from its Implementation Handoff, run focused verification, and produce a Return Handoff."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,4 +1,0 @@
-name: eval-designer
-description: Meta-agent for stlc workflow - eval-designer
-model: balanced
-permissions: read-only

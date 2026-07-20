@@ -23,26 +23,15 @@ Agent = Manifest + Instruction Blocks + Evals + Generated Prompt
 repo/
 ├── .agentquilt/                     # All AgentQuilt sources (config + fragments)
 │   ├── config.yaml                  # Global config (targets, model tiers, sourceDir)
-│   ├── agents/                      # Source directory for user agents
-│   │   ├── _shared/                 # Fragments shared across agents
-│   │   │   ├── 010-tone.md
-│   │   │   └── 020-safety.md
-│   │   ├── project/                 # Fragments for this guide (AGENTS.md + CLAUDE.md)
-│   │   └── <agent-id>/
-│   │       ├── agent.yaml           # Manifest
-│   │       ├── 010-role.md          # Instruction blocks (ordered by NNN prefix)
-│   │       └── 020-criteria.md
-│   ├── skills/                      # Source directory for skills (same format)
-│   │   └── new-agent/               # Repo skill: assisted agent/skill authoring
-│   └── meta-agents/                 # Meta-agents: AgentQuilt's own internal agents
-│       ├── governance/              # Policy compliance, gate policy, risk review
-│       ├── sdlc/                    # Requirements, architecture, code review, planning
-│       ├── stlc/                    # Testing, evals, regression, security testing
-│       ├── release/                 # Release coordination, migration, documentation
-│       └── internal/                # Agent registry, conflict detection, refactoring
+│   └── agents/                      # Source directory for all agents (flat)
+│       ├── project/                 # Fragments for this guide (AGENTS.md + CLAUDE.md); no agent.yaml
+│       └── <agent-id>/              # One directory per agent, incl. the repo's own development agents
+│           ├── agent.yaml           # Manifest
+│           └── 010-role.md          # Instruction blocks (ordered by NNN prefix)
 ├── agentquilt.lock                  # Generated—do not hand-edit (version matrix)
 ├── AGENTS.md                        # Generated target—do not hand-edit
 ├── CLAUDE.md                        # Generated target—do not hand-edit (same fragments)
+├── .claude/agents/                  # Generated agent definitions—do not hand-edit
 ├── .docs/                           # Architecture specs, ADRs, SDLC, STLC docs
 ├── .github/                         # GitHub workflows, PR/issue templates
 ├── .planning/                       # Planning docs (not committed to releases)
@@ -56,4 +45,4 @@ repo/
 
 Config discovery order: `.agentquilt/config.yaml`, `.agentquilt/config.json`, then the legacy root `agentquilt.config.yaml` / `agentquilt.config.json` (see ADR-0010).
 
-**`.agentquilt/meta-agents/` directory** contains the framework's own internal agent definitions (meta-agents). These are structured the same way as user agents but are intended to support the framework's own workflows (policy review, code review, release coordination, etc.). They are stub implementations to be populated as the project matures and is self-hosted.
+**Development agents**: `.agentquilt/agents/` also contains the repository's own development agents (repository investigation, planning, implementation, testing, review, release readiness, etc.), managed the same way as any other agent and compiled to `.claude/agents/*.md` by a single wildcard `agent-definitions` target. They are invoked manually through provider CLIs (Claude Code); no automation invokes them programmatically. The portfolio is rationalized to 8 core lifecycle roles plus 6 conditional specialists; see [agent-portfolio.md](.docs/agentic-sdlc/agent-portfolio.md) for the full disposition and role contracts.

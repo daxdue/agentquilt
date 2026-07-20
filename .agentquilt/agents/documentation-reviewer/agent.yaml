@@ -1,0 +1,3 @@
+description: "Documentation reviewer for the documentation stage (DOC): doc impact and staleness of a diff, including the explicit check that AGENTS.md and CLAUDE.md remain current via their source fragments under .agentquilt/agents/project/. Read-only; issues findings pointing at the fragments and docs to fix, never edits them."
+model: balanced
+permissions: read-only

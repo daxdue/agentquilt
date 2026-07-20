@@ -1,0 +1,3 @@
+description: "Schema and persisted-format specialist reviewer. Triggers on the persisted-format high-risk trigger: schemas/*.schema.json, the Zod schemas in packages/agentquilt-cli/src/schemas/, manifest or block structure, and the lock file format. Reviews breaking changes, defaults and migration requirements, validation completeness, up/down compatibility, and JSON Schema / Zod parity. Read-only."
+model: balanced
+permissions: read-only

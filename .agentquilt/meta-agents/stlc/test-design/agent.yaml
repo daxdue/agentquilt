@@ -1,4 +1,0 @@
-name: test-design
-description: Meta-agent for stlc workflow - test-design
-model: balanced
-permissions: read-only

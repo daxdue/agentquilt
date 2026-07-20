@@ -36,7 +36,9 @@ Each PR must include:
 
 ### Generated Files Policy
 
-Generated files (`agentquilt.lock`, `AGENTS.md`, `CLAUDE.md`, `.claude/agents/*.md`) must **never** be manually edited. `AGENTS.md` and `CLAUDE.md` are compiled from the fragments under `.agentquilt/agents/project/` — edit those fragments and regenerate with `npx agentquilt build`. Changes to generated files should only come from manifest or block changes.
+Generated files (`agentquilt.lock`, `AGENTS.md`, `CLAUDE.md`, `.claude/agents/*.md`) must **never** be manually edited. `AGENTS.md` and `CLAUDE.md` are compiled from the fragments under `.agentquilt/agents/project/` — edit those fragments and regenerate with `agentquilt build`. Changes to generated files should only come from manifest or block changes.
+
+`agentquilt build` enforces this: if a generated file's on-disk content no longer matches what its last-recorded source version compiled to (i.e. it was hand-edited since the last build, with no corresponding fragment change), build refuses to overwrite that file and exits non-zero rather than silently discarding the edit. Use `agentquilt build --force` only after confirming the manual edit should be discarded — see [ADR-0014](.docs/architecture/adr/ADR-0014-build-tamper-guard.md).
 
 **Strict Rule for this repository's instruction sources (and thus AGENTS.md, CLAUDE.md, compiled agents):**
 - NO emojis (check marks, crosses, rockets, clipboards, etc.)

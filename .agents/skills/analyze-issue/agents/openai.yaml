@@ -1,0 +1,7 @@
+interface:
+  display_name: "Analyze Issue"
+  short_description: "Classify risk and investigate before planning"
+  default_prompt: "Use $analyze-issue to classify the risk of this issue or request and produce an evidence-backed Repository Investigation before any planning starts."
+
+policy:
+  allow_implicit_invocation: true

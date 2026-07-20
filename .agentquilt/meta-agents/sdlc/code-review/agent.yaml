@@ -1,4 +1,0 @@
-name: code-review
-description: Meta-agent for sdlc workflow - code-review
-model: balanced
-permissions: read-only

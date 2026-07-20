@@ -1,0 +1,3 @@
+description: "Release reviewer for release readiness (REL): assembles the evidence that a release is safe to execute - CHANGELOG completeness and categorization, semver compliance of the version bump, migration notes for breaking changes, risk register status, validation evidence and drift state. Read-only; never publishes, tags, pushes, bumps versions, or edits the CHANGELOG."
+model: balanced
+permissions: read-only

@@ -1,0 +1,113 @@
+name: Refactoring
+description: Propose a structural or internal change with no intended behavior change.
+title: "[Refactor]: "
+labels:
+  - refactor
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Refactoring changes should preserve observable behavior. This form collects
+        the intake evidence a maintainer or an agentic-loop session (Claude Code /
+        Codex, invoked manually per `.docs/agentic-sdlc/github-provider-handoff.md`)
+        needs to confirm that is true before and after.
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: Problem statement
+      description: What is wrong with the current structure (duplication, unclear boundaries, hard to test, etc.)?
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: Confirm explicitly -- what should NOT change from a user's or caller's perspective?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: How will we know this refactor is safe and complete? List testable conditions.
+      placeholder: |
+        - [ ] All existing tests pass unchanged
+        - [ ] No CLI-visible output changes
+        - [ ] `agentquilt check` reports no drift
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-evidence
+    attributes:
+      label: Current-structure evidence
+      description: Point at the specific files/functions this refactor targets and why.
+    validations:
+      required: false
+  - type: dropdown
+    id: risk-indicators
+    attributes:
+      label: Risk indicators
+      description: Your best-guess risk level for this change, subject to triage.
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility-concerns
+    attributes:
+      label: Compatibility concerns
+      description: Any chance this refactor touches CLI flags, exit codes, config format, or the manifest/block schema even incidentally? Leave blank if not applicable.
+    validations:
+      required: false
+  - type: dropdown
+    id: generated-output-impact
+    attributes:
+      label: Generated-output impact
+      description: Should AGENTS.md, CLAUDE.md, compiled agent definitions, or agentquilt.lock byte-output change as a result of this refactor?
+      options:
+        - None (byte-identical output expected)
+        - AGENTS.md and CLAUDE.md
+        - Compiled agent definitions (.claude/agents/*.md)
+        - agentquilt.lock
+        - Not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: documentation-impact
+    attributes:
+      label: Documentation impact
+      description: Does internal architecture documentation need updating to match the new structure?
+      options:
+        - None
+        - README
+        - CLAUDE.md/AGENTS.md fragments (.agentquilt/agents/project/)
+        - .docs architecture or ADR
+        - .docs sdlc/stlc
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: test-expectations
+    attributes:
+      label: Test expectations
+      description: How will regression be ruled out -- existing suite only, or new tests covering the boundary being changed?
+    validations:
+      required: true
+  - type: checkboxes
+    id: affected-area
+    attributes:
+      label: Affected area
+      description: Select all that apply.
+      options:
+        - label: CLI
+        - label: Schemas
+        - label: Compiler
+        - label: Adapters (Claude / AgentSkills)
+        - label: Evals
+        - label: Generated agents
+        - label: Documentation
+        - label: CI/CD
+        - label: Security / Governance

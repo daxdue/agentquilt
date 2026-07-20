@@ -1,0 +1,7 @@
+interface:
+  display_name: "Prepare PR"
+  short_description: "Assemble and print the PR Summary"
+  default_prompt: "Use $prepare-pr to assemble and print the PR Summary from this session's already-produced artifacts. Never pushes or opens a PR."
+
+policy:
+  allow_implicit_invocation: false

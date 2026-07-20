@@ -1,0 +1,7 @@
+interface:
+  display_name: "Fix CI"
+  short_description: "Diagnose and fix a failing deterministic check"
+  default_prompt: "Use $fix-ci to diagnose why a build, test, or drift check is failing, fix it, and re-verify with the authoritative command."
+
+policy:
+  allow_implicit_invocation: true
