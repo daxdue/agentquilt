@@ -10,7 +10,7 @@ import {
 } from "../schemas/config.schema.js";
 import { knownAdapters } from "./adapters/index.js";
 import { byteCompare } from "./sortUtil.js";
-import { isPathContained, prospectiveRealPath } from "./pathSecurity.js";
+import { isPathContained, prospectiveRealPath, checkContained } from "./pathSecurity.js";
 
 export class ConfigError extends Error {
   constructor(message: string) {
@@ -138,16 +138,13 @@ export function validateConfig(
 ): boolean {
   const errors: string[] = [];
   const resolvedRepoRoot = path.resolve(repoRoot);
-  const resolvedGlobalSourceDir = path.resolve(sourceDir);
-  if (!isPathContained(resolvedGlobalSourceDir, resolvedRepoRoot)) {
+  const globalSourceDirContainment = checkContained(sourceDir, resolvedRepoRoot);
+  if (!globalSourceDirContainment.lexicallyContained) {
     throw new ConfigError(
       `Config validation failed:\n  sourceDir escapes the repository: "${config.sourceDir}"`
     );
   }
-  if (
-    existsSync(resolvedGlobalSourceDir) &&
-    !isPathContained(realpathSync(resolvedGlobalSourceDir), realpathSync(resolvedRepoRoot))
-  ) {
+  if (!globalSourceDirContainment.symlinkContained) {
     throw new ConfigError(
       `Config validation failed:\n  sourceDir escapes the repository through a symlink: "${config.sourceDir}"`
     );
@@ -204,26 +201,24 @@ export function validateConfig(
   for (const target of config.targets) {
     if (target.kind !== "document") continue;
     for (const includeName of target.include) {
-      const resolvedBase = path.resolve(sourceDir);
       const agentPath = path.resolve(sourceDir, includeName);
+      const containment = checkContained(agentPath, sourceDir);
 
-      if (agentPath !== resolvedBase && !agentPath.startsWith(resolvedBase + path.sep)) {
+      if (!containment.lexicallyContained) {
         errors.push(
           `Include path escapes sourceDir (path traversal): "${includeName}"`
         );
         continue;
       }
 
-      if (!existsSync(agentPath)) {
+      if (!existsSync(containment.resolved)) {
         errors.push(
           `Include references non-existent directory: ${sourceDir}/${includeName}`
         );
         continue;
       }
 
-      const realSourceDir = realpathSync(resolvedBase);
-      const realAgentPath = realpathSync(agentPath);
-      if (!isPathContained(realAgentPath, realSourceDir)) {
+      if (!containment.symlinkContained) {
         errors.push(
           `Include path escapes sourceDir through a symlink: "${includeName}"`
         );
@@ -235,11 +230,10 @@ export function validateConfig(
   for (const target of config.targets) {
     if (target.kind !== "document") continue;
     for (const includeName of target.include) {
-      const resolvedBase = path.resolve(sourceDir);
       const agentPath = path.resolve(sourceDir, includeName);
 
       // Skip traversal paths (already caught in Rule 5)
-      if (agentPath !== resolvedBase && !agentPath.startsWith(resolvedBase + path.sep)) {
+      if (!isPathContained(agentPath, path.resolve(sourceDir))) {
         continue;
       }
 
@@ -264,35 +258,49 @@ export function validateConfig(
   // Additional validation for agent-definitions targets
   const agentErrors: string[] = [];
 
+  // Resolve and validate each agent-definitions target's sourceDir once, up
+  // front, so the per-agent Rule A/B checks below and the cross-target Rule C
+  // uniqueness pass don't each recompute the same resolve+realpath work.
+  const validatedTargets: Array<{
+    target: Extract<AgentQuiltConfig["targets"][number], { kind: "agent-definitions" }>;
+    targetSourceDir: string;
+    resolvedTargetSourceDir: string;
+  }> = [];
+
   for (const target of config.targets) {
     if (target.kind !== "agent-definitions") continue;
 
     // Use target-specific sourceDir if provided, otherwise use global sourceDir
     const targetSourceDir = target.sourceDir ? path.resolve(sourceDir, "..", target.sourceDir) : sourceDir;
+    const containment = checkContained(targetSourceDir, resolvedRepoRoot);
 
-    const resolvedRepoRoot = path.resolve(repoRoot);
-    const resolvedTargetSourceDir = path.resolve(targetSourceDir);
-    if (!isPathContained(resolvedTargetSourceDir, resolvedRepoRoot)) {
+    if (!containment.lexicallyContained) {
       agentErrors.push(
         `agent-definitions target: sourceDir escapes the repository: "${target.sourceDir}"`
       );
       continue;
     }
-    if (!existsSync(resolvedTargetSourceDir)) {
+    if (!existsSync(containment.resolved)) {
       agentErrors.push(
         `agent-definitions target: sourceDir does not exist: "${target.sourceDir ?? config.sourceDir}"`
       );
       continue;
     }
-    const realRepoRoot = realpathSync(resolvedRepoRoot);
-    const realTargetSourceDir = realpathSync(resolvedTargetSourceDir);
-    if (!isPathContained(realTargetSourceDir, realRepoRoot)) {
+    if (!containment.symlinkContained) {
       agentErrors.push(
         `agent-definitions target: sourceDir escapes the repository through a symlink: "${target.sourceDir}"`
       );
       continue;
     }
 
+    validatedTargets.push({
+      target,
+      targetSourceDir,
+      resolvedTargetSourceDir: containment.resolved,
+    });
+  }
+
+  for (const { target, targetSourceDir, resolvedTargetSourceDir } of validatedTargets) {
     const agentNames = target.agents === "*"
       ? discoverAgentDirsForValidation(targetSourceDir).map((d) => path.basename(d))
       : target.agents;
@@ -300,7 +308,8 @@ export function validateConfig(
     // Rule A: every agent resolves to dir with agent.yaml
     for (const agentName of agentNames) {
       const agentDir = path.resolve(targetSourceDir, agentName);
-      if (!isPathContained(agentDir, resolvedTargetSourceDir)) {
+      const agentContainment = checkContained(agentDir, resolvedTargetSourceDir);
+      if (!agentContainment.lexicallyContained) {
         agentErrors.push(
           `agent-definitions target: path traversal outside sourceDir is not allowed: "${agentName}"`
         );
@@ -313,9 +322,7 @@ export function validateConfig(
         );
         continue;
       }
-      const realSourceDir = realpathSync(resolvedTargetSourceDir);
-      const realAgentDir = realpathSync(agentDir);
-      if (!isPathContained(realAgentDir, realSourceDir)) {
+      if (!agentContainment.symlinkContained) {
         agentErrors.push(
           `agent-definitions target: symlink traversal outside sourceDir is not allowed: "${agentName}"`
         );
@@ -341,16 +348,7 @@ export function validateConfig(
   // name in the same source root listed twice is fine, but two different
   // source roots must not both claim a name.
   const agentNameRoots = new Map<string, string>();
-  for (const target of config.targets) {
-    if (target.kind !== "agent-definitions") continue;
-    const targetSourceDir = target.sourceDir ? path.resolve(sourceDir, "..", target.sourceDir) : sourceDir;
-    const resolvedRepoRoot = path.resolve(repoRoot);
-    const resolvedTargetSourceDir = path.resolve(targetSourceDir);
-    if (!isPathContained(resolvedTargetSourceDir, resolvedRepoRoot)) continue;
-    if (!existsSync(resolvedTargetSourceDir)) continue;
-    if (!isPathContained(realpathSync(resolvedTargetSourceDir), realpathSync(resolvedRepoRoot))) {
-      continue;
-    }
+  for (const { target, targetSourceDir } of validatedTargets) {
     const agentNames = target.agents === "*"
       ? discoverAgentDirsForValidation(targetSourceDir).map((d) => path.basename(d))
       : target.agents;

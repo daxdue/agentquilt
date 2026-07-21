@@ -8,7 +8,7 @@ import {
 } from "../schemas/agentDefinition.schema.js";
 import { ConfigError } from "./configLoader.js";
 import { byteCompare } from "./sortUtil.js";
-import { assertPathContained } from "./pathSecurity.js";
+import { assertPathContained, assertContainedIncludingSymlinks } from "./pathSecurity.js";
 
 export interface BodyFragment {
   id: string;       // repo-relative POSIX path
@@ -123,22 +123,13 @@ export function resolveAgents(
   const seenNames = new Set<string>();
 
   for (const agentName of agentNames) {
-    const resolvedSourceDir = path.resolve(sourceDir);
     const agentDir = path.resolve(sourceDir, agentName);
-    assertPathContained(
+    assertContainedIncludingSymlinks(
       agentDir,
-      resolvedSourceDir,
-      `Agent selector escapes source directory: "${agentName}"`
+      sourceDir,
+      `Agent selector escapes source directory: "${agentName}"`,
+      `Agent selector escapes source directory through a symlink: "${agentName}"`
     );
-    if (existsSync(agentDir)) {
-      const realSourceDir = realpathSync(resolvedSourceDir);
-      const realAgentDir = realpathSync(agentDir);
-      assertPathContained(
-        realAgentDir,
-        realSourceDir,
-        `Agent selector escapes source directory through a symlink: "${agentName}"`
-      );
-    }
     const record = loadAgentDir(agentDir, repoRoot);
 
     // Check for duplicate names

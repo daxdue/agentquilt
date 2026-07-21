@@ -2,6 +2,7 @@ import { readFileSync } from "fs";
 import { stringify as tomlStringify } from "smol-toml";
 import { normalize } from "../normalize.js";
 import { ConfigError } from "../configLoader.js";
+import { sortKeysDeep } from "../agentHasher.js";
 import { byteCompare } from "../sortUtil.js";
 import { registerAdapter, type Adapter, type AdapterOutput } from "./index.js";
 import type { CanonicalAgentRecord } from "../agentLoader.js";
@@ -23,21 +24,6 @@ function assembleBody(record: CanonicalAgentRecord): string {
   return record.bodyFragments
     .map((fragment) => normalize(readFileSync(fragment.filePath)))
     .join("\n");
-}
-
-function sortValue(value: unknown): unknown {
-  if (Array.isArray(value)) {
-    return value.map(sortValue);
-  }
-  if (value === null || typeof value !== "object" || value instanceof Date) {
-    return value;
-  }
-
-  const sorted = Object.create(null) as Record<string, unknown>;
-  for (const key of Object.keys(value).sort(byteCompare)) {
-    sorted[key] = sortValue((value as Record<string, unknown>)[key]);
-  }
-  return sorted;
 }
 
 function invalidField(
@@ -148,7 +134,7 @@ function skillsConfig(
     return normalized;
   });
 
-  return sortValue({ config }) as Record<string, unknown>;
+  return sortKeysDeep({ config }) as Record<string, unknown>;
 }
 
 function extensionFields(record: CanonicalAgentRecord): Record<string, unknown> {

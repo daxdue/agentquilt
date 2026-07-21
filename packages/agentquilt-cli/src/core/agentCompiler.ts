@@ -1,4 +1,3 @@
-import { realpathSync } from "fs";
 import path from "path";
 import { resolveAgents } from "./agentLoader.js";
 import { hashAgent, computeAgentVersion, type OutputEntry } from "./agentHasher.js";
@@ -9,7 +8,7 @@ import { AgentQuiltConfig } from "../schemas/config.schema.js";
 import type { AgentLockRecord, AgentOutputRecord } from "../schemas/lock.schema.js";
 import { fragmentHash } from "./normalize.js";
 import { byteCompare } from "./sortUtil.js";
-import { assertPathContained, portablePathKey } from "./pathSecurity.js";
+import { assertContainedIncludingSymlinks, PathClaimTracker } from "./pathSecurity.js";
 
 export type { AdapterOutput } from "./adapters/index.js";
 
@@ -40,7 +39,7 @@ export function mergeCompiledAgentTargets(
   >();
   const recordsByName = new Map<string, AgentLockRecord>();
   const outputsByName = new Map<string, AdapterOutput[]>();
-  const outputOwnerByPath = new Map<string, string>();
+  const outputClaims = new PathClaimTracker();
   const bodyHashByName = new Map<string, string>();
 
   for (const result of results) {
@@ -76,15 +75,13 @@ export function mergeCompiledAgentTargets(
       }
 
       for (const output of result.outputs.get(record.name) ?? []) {
-        const key = portablePathKey(output.path);
         const owner = `${record.name} (${output.path})`;
-        const previousOwner = outputOwnerByPath.get(key);
-        if (previousOwner !== undefined) {
-          throw new ConfigError(
+        outputClaims.claim(
+          output.path,
+          owner,
+          (previousOwner) =>
             `Adapter output path collision: ${previousOwner} and ${owner} resolve to the same portable path`
-          );
-        }
-        outputOwnerByPath.set(key, owner);
+        );
         const mergedOutputs = outputsByName.get(record.name) ?? [];
         mergedOutputs.push(output);
         outputsByName.set(record.name, mergedOutputs);
@@ -154,15 +151,10 @@ export async function compileAgentDefinitionsTarget(
   // Use target-specific sourceDir if provided, otherwise use global sourceDir
   const targetSourceDir = target.sourceDir ? path.resolve(sourceDir, "..", target.sourceDir) : sourceDir;
   const resolvedRepoRoot = path.resolve(repoRoot);
-  const resolvedTargetSourceDir = path.resolve(targetSourceDir);
-  assertPathContained(
-    resolvedTargetSourceDir,
+  assertContainedIncludingSymlinks(
+    targetSourceDir,
     resolvedRepoRoot,
-    `agent-definitions target sourceDir escapes the repository: "${target.sourceDir}"`
-  );
-  assertPathContained(
-    realpathSync(resolvedTargetSourceDir),
-    realpathSync(resolvedRepoRoot),
+    `agent-definitions target sourceDir escapes the repository: "${target.sourceDir}"`,
     `agent-definitions target sourceDir escapes the repository through a symlink: "${target.sourceDir}"`
   );
 
@@ -173,7 +165,7 @@ export async function compileAgentDefinitionsTarget(
   const agentLockRecords: AgentLockRecord[] = [];
   const allOutputs = new Map<string, AdapterOutput[]>();
   const allFragmentMap = new Map<string, { body: string; hash: string; bytes: number; tags: string[] }>();
-  const outputOwnerByPath = new Map<string, string>();
+  const outputClaims = new PathClaimTracker();
   const bodyHashByName = new Map<string, string>();
 
   for (const record of records) {
@@ -199,15 +191,18 @@ export async function compileAgentDefinitionsTarget(
       const resolvedModel = resolveModel(record.definition, platform, config);
       const adapterOutputs = adapter.outputsFor(record, resolvedModel, config);
       for (const out of adapterOutputs) {
-        const outputKey = portablePathKey(out.path);
-        const previousOwner = outputOwnerByPath.get(outputKey);
-        if (previousOwner !== undefined) {
+        if (out.kind !== undefined && out.kind !== "file") {
           throw new ConfigError(
-            `Adapter output path collision: ${previousOwner} and ` +
-              `${record.name}/${platform} both emit the portable path "${out.path}"`
+            `Adapter output "${out.path}" uses legacy unsupported kind "${out.kind}"`
           );
         }
-        outputOwnerByPath.set(outputKey, `${record.name}/${platform}`);
+        outputClaims.claim(
+          out.path,
+          `${record.name}/${platform}`,
+          (previousOwner) =>
+            `Adapter output path collision: ${previousOwner} and ` +
+            `${record.name}/${platform} both emit the portable path "${out.path}"`
+        );
 
         // Adapter outputs are already complete serialized files. Hash their
         // exact bytes rather than applying source-fragment normalization.

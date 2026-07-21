@@ -37,7 +37,7 @@ export function computeMetaHash(definition: Record<string, unknown>): string {
   return `sha256-${hash}`;
 }
 
-function sortKeysDeep(obj: unknown): unknown {
+export function sortKeysDeep(obj: unknown): unknown {
   // Recurse into arrays too, not just objects: an array of objects (e.g.
   // x-codex.skills.config) must have each element's keys canonicalized, or
   // two semantically identical manifests that only differ in per-element
@@ -45,7 +45,7 @@ function sortKeysDeep(obj: unknown): unknown {
   if (Array.isArray(obj)) {
     return obj.map(sortKeysDeep);
   }
-  if (typeof obj !== "object" || obj === null) {
+  if (typeof obj !== "object" || obj === null || obj instanceof Date) {
     return obj;
   }
   const sorted: Record<string, unknown> = {};

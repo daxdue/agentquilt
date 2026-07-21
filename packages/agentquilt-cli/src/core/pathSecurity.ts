@@ -25,9 +25,79 @@ export function assertPathContained(
   }
 }
 
+export interface ContainmentCheck {
+  /** The resolved (absolute) candidate path. */
+  resolved: string;
+  /** True if `resolved` is lexically inside root (no filesystem access). */
+  lexicallyContained: boolean;
+  /**
+   * True if `resolved` is still contained once symlinks are resolved, or if
+   * `resolved` doesn't exist yet (nothing to resolve). False only when
+   * `resolved` exists and its real path escapes root's real path through a
+   * symlink. Only meaningful when `lexicallyContained` is true.
+   */
+  symlinkContained: boolean;
+}
+
+/**
+ * Resolve `candidate` against `root` and check containment both lexically
+ * (string comparison) and, if `candidate` exists, through symlinks
+ * (`realpathSync` on both sides). Callers that need to throw immediately
+ * should use `assertContainedIncludingSymlinks`; callers that accumulate
+ * multiple validation errors before reporting (e.g. `validateConfig`) should
+ * inspect the returned flags directly.
+ */
+export function checkContained(candidate: string, root: string): ContainmentCheck {
+  const resolved = path.resolve(candidate);
+  const resolvedRoot = path.resolve(root);
+  const lexicallyContained = isPathContained(resolved, resolvedRoot);
+  const symlinkContained =
+    !lexicallyContained || !existsSync(resolved)
+      ? lexicallyContained
+      : isPathContained(realpathSync(resolved), realpathSync(resolvedRoot));
+  return { resolved, lexicallyContained, symlinkContained };
+}
+
+/**
+ * Throwing wrapper over `checkContained` for callers that want a single
+ * resolve-and-verify call rather than inspecting the result themselves.
+ * Returns the resolved candidate path on success.
+ */
+export function assertContainedIncludingSymlinks(
+  candidate: string,
+  root: string,
+  lexicalMessage: string,
+  symlinkMessage: string
+): string {
+  const check = checkContained(candidate, root);
+  if (!check.lexicallyContained) throw new ConfigError(lexicalMessage);
+  if (!check.symlinkContained) throw new ConfigError(symlinkMessage);
+  return check.resolved;
+}
+
 export interface OutputPathClaim {
   path: string;
   owner: string;
+}
+
+/**
+ * Tracks which owner has claimed each portable output path, throwing on a
+ * second claim. Compile-time (per-target and cross-target merge) and the
+ * final output-inventory gate each need their own tracker instance — they
+ * differ in scope (what's been compiled so far) — but share this claim/throw
+ * logic so a future change to collision semantics only has one place to land.
+ */
+export class PathClaimTracker {
+  private readonly ownersByKey = new Map<string, string>();
+
+  claim(claimPath: string, owner: string, describeCollision: (previousOwner: string) => string): void {
+    const key = portablePathKey(claimPath);
+    const previousOwner = this.ownersByKey.get(key);
+    if (previousOwner !== undefined) {
+      throw new ConfigError(describeCollision(previousOwner));
+    }
+    this.ownersByKey.set(key, owner);
+  }
 }
 
 export function portablePathKey(value: string): string {
@@ -85,7 +155,7 @@ export function validateOutputPaths(
 ): Map<string, string> {
   const resolvedRoot = path.resolve(repoRoot);
   const realRoot = realpathSync(resolvedRoot);
-  const ownersByKey = new Map<string, string>();
+  const claimTracker = new PathClaimTracker();
   const resolvedByPath = new Map<string, string>();
 
   for (const claim of claims) {
@@ -118,14 +188,12 @@ export function validateOutputPaths(
     // other generated outputs, and not-yet-created external files.
     rejectSymlinkComponents(resolvedRoot, resolved, claim.path);
 
-    const key = portablePathKey(claim.path);
-    const previousOwner = ownersByKey.get(key);
-    if (previousOwner !== undefined) {
-      throw new ConfigError(
+    claimTracker.claim(
+      claim.path,
+      claim.owner,
+      (previousOwner) =>
         `Generated output path collision: ${previousOwner} and ${claim.owner} both claim "${claim.path}"`
-      );
-    }
-    ownersByKey.set(key, claim.owner);
+    );
 
     const realExisting = realpathSync(nearestExistingPath(resolved));
     assertPathContained(

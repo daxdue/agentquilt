@@ -24,6 +24,18 @@ interface BuildOptions {
 }
 
 /**
+ * Returns the on-disk content if the file exists and differs from what a
+ * fresh build would write, or null if there's nothing to protect (file
+ * doesn't exist yet, or disk already matches). Shared by isTampered and
+ * adapterBlockReason, which each layer their own decision logic on top.
+ */
+function diskContentIfDiffers(outputPath: string, freshContent: string): string | null {
+  if (!existsSync(outputPath)) return null;
+  const diskContent = readFileSync(outputPath, "utf8");
+  return diskContent === freshContent ? null : diskContent;
+}
+
+/**
  * A generated file was found on disk with content that doesn't match what a
  * fresh build would produce, AND its recorded source version in the previous
  * lock is unchanged from the version we'd compute now. That combination is
@@ -37,11 +49,9 @@ function isTampered(
   oldVersion: string | undefined,
   newVersion: string
 ): boolean {
-  if (!existsSync(outputPath)) return false;
   if (oldVersion === undefined) return false; // never built before — nothing to protect
   if (oldVersion !== newVersion) return false; // legitimate source change — self-heal
-  const diskContent = readFileSync(outputPath, "utf8");
-  return diskContent !== freshContent;
+  return diskContentIfDiffers(outputPath, freshContent) !== null;
 }
 
 type AdapterBlockReason = "first-claim" | "tampered" | null;
@@ -53,9 +63,7 @@ function adapterBlockReason(
   oldHash: string | undefined,
   legacySourceUnchanged: boolean
 ): AdapterBlockReason {
-  if (!existsSync(outputPath)) return null;
-  const diskContent = readFileSync(outputPath, "utf8");
-  if (diskContent === freshContent) return null;
+  if (diskContentIfDiffers(outputPath, freshContent) === null) return null;
   if (oldHash === undefined) return "first-claim";
   const legacyHash = fragmentHash(normalize(Buffer.from(freshContent, "utf8")));
   return oldHash === freshHash || (legacySourceUnchanged && oldHash === legacyHash)
@@ -117,7 +125,7 @@ export async function executeBuild(options: BuildOptions): Promise<BuildResult> 
   let config: AgentQuiltConfig;
   let configPath: string;
   let result: Awaited<ReturnType<typeof compile>>;
-  const agentResults: Awaited<ReturnType<typeof compileAgentDefinitionsTarget>>[] = [];
+  let agentResults: Awaited<ReturnType<typeof compileAgentDefinitionsTarget>>[] = [];
 
   try {
     configPath = options.config || findConfigFile(cwd);
@@ -129,10 +137,11 @@ export async function executeBuild(options: BuildOptions): Promise<BuildResult> 
     result = await compile(config, sourceDir);
 
     spinner.update("Compiling agents…");
-    for (const target of config.targets) {
-      if (target.kind !== "agent-definitions") continue;
-      agentResults.push(await compileAgentDefinitionsTarget(target, config, sourceDir, cwd));
-    }
+    agentResults = await Promise.all(
+      config.targets
+        .filter((target) => target.kind === "agent-definitions")
+        .map((target) => compileAgentDefinitionsTarget(target, config, sourceDir, cwd))
+    );
     const merged = mergeCompiledAgentTargets(agentResults);
     agentResults.splice(0, agentResults.length, merged);
     const lockOutput = ["agentquilt", "lock"].join(".");
@@ -385,7 +394,7 @@ async function watchAction(options: BuildOptions): Promise<void> {
       if (!options.quiet) {
         console.log(dim(`  watching for changes… (ctrl-c to stop)`));
       }
-      return 0;
+      return result.blocked.length > 0 ? 1 : 0;
     } catch (err) {
       const exitCode = reportError(err);
       if (!options.quiet) {

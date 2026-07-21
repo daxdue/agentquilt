@@ -50,7 +50,7 @@ async function checkAction(options: CheckOptions): Promise<void> {
     const allFragmentMap = new Map<string, any>();
     let agentRecords: any[] = [];
     const agentOutputs: AdapterOutput[] = [];
-    const agentResults: CompiledAgentTarget[] = [];
+    let agentResults: CompiledAgentTarget[] = [];
 
     try {
       // Find and load config
@@ -68,12 +68,11 @@ async function checkAction(options: CheckOptions): Promise<void> {
       }
 
       // Compile agent-definitions targets
-      for (const target of config.targets) {
-        if (target.kind !== "agent-definitions") continue;
-
-        const agentResult = await compileAgentDefinitionsTarget(target, config, sourceDir, cwd);
-        agentResults.push(agentResult);
-      }
+      agentResults = await Promise.all(
+        config.targets
+          .filter((target) => target.kind === "agent-definitions")
+          .map((target) => compileAgentDefinitionsTarget(target, config, sourceDir, cwd))
+      );
       const merged = mergeCompiledAgentTargets(agentResults);
       agentRecords = merged.agentRecords;
       for (const outputs of merged.outputs.values()) {
