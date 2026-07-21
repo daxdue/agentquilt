@@ -11,6 +11,7 @@ import { registerAgentsCommand } from "./commands/agents/index.js";
 import { registerSkillsCommand } from "./commands/skills/index.js";
 import "./core/adapters/claude.js";
 import "./core/adapters/agentskills.js";
+import "./core/adapters/codex.js";
 
 // Read from package.json at runtime rather than hardcoding, so --version
 // can't drift from the published package version the way it silently did

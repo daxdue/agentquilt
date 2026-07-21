@@ -10,7 +10,7 @@ AgentQuilt must produce platform-specific output files from a common agent manif
 
 - **Claude Code**: frontmatter Markdown at `.claude/agents/<name>.md`
 - **AgentSkills.io**: frontmatter Markdown at `.agents/skills/<name>/SKILL.md`
-- **Codex** (planned): TOML at `.codex/agents/<name>.toml` with managed-region injection in `.codex/config.toml`
+- **Codex**: standalone TOML at `.codex/agents/<name>.toml`; the managed-region proposal was superseded by [ADR-0015](ADR-0015-codex-provider-adapter.md)
 - **Cursor**, **Copilot**, etc. (future)
 
 A design decision is required for how the compiler knows about platforms and how new platforms are added.
@@ -37,9 +37,9 @@ interface PlatformAdapter {
 - `adapters/claude.ts` — Claude Code (`claude`)
 - `adapters/agentskills.ts` — AgentSkills.io (`agentskills`)
 
-### Planned adapters
+### Additional adapters
 
-- `adapters/codex.ts` — Codex [DEFERRED] (v1.1 §6.2–6.3)
+- `adapters/codex.ts` — Codex (implemented; see [ADR-0015](ADR-0015-codex-provider-adapter.md))
 
 ## Rationale
 

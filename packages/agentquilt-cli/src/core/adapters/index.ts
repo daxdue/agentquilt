@@ -3,9 +3,9 @@ import type { ResolvedModel } from "../modelResolver.js";
 import type { AgentQuiltConfig } from "../../schemas/config.schema.js";
 
 export interface AdapterOutput {
-  path: string;              // repo-relative path for the output file
-  content: string;           // full file content
-  kind?: "file" | "region";  // default "file"; "region" for managed-region injection
+  path: string;     // repo-relative path for the output file
+  content: string;  // full file content
+  kind?: "file";     // default "file"; the only kind any adapter emits (ADR-0015 rejected managed-region injection)
 }
 
 export interface Adapter {

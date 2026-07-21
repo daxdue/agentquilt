@@ -1,7 +1,9 @@
-import { readdirSync, existsSync, readFileSync } from "fs";
+import { readdirSync, existsSync, readFileSync, realpathSync } from "fs";
 import path from "path";
 import { parse as parseYaml } from "yaml";
 import type { AgentQuiltConfig } from "../schemas/config.schema.js";
+import { byteCompare } from "./sortUtil.js";
+import { assertPathContained } from "./pathSecurity.js";
 
 export interface DiscoveredFragment {
   id: string;              // POSIX path: agents/_shared/010-tone.md
@@ -68,7 +70,7 @@ function sortFragmentsBytelex(frags: DiscoveredFragment[]): DiscoveredFragment[]
   return [...frags].sort((a, b) => {
     // Both have prefix: sort by filename
     if (a.hasPrefix && b.hasPrefix) {
-      return Buffer.from(a.fileName).compare(Buffer.from(b.fileName));
+      return byteCompare(a.fileName, b.fileName);
     }
 
     // a has prefix, b doesn't: a comes first
@@ -82,7 +84,7 @@ function sortFragmentsBytelex(frags: DiscoveredFragment[]): DiscoveredFragment[]
     }
 
     // Both unprefixed: sort lexicographically by filename
-    return Buffer.from(a.fileName).compare(Buffer.from(b.fileName));
+    return byteCompare(a.fileName, b.fileName);
   });
 }
 
@@ -96,6 +98,7 @@ export function scanFragments(
 ): DiscoveredFragment[] {
   const allFragments: DiscoveredFragment[] = [];
   const seenIds = new Set<string>();
+  const realSourceDir = realpathSync(sourceDir);
 
   // Scan each include in order (only for document targets)
   for (const includeName of new Set(
@@ -110,6 +113,12 @@ export function scanFragments(
       console.warn(`Warning: agent directory not found: ${agentPath}`);
       continue;
     }
+    const realAgentPath = realpathSync(agentPath);
+    assertPathContained(
+      realAgentPath,
+      realSourceDir,
+      `Document include escapes sourceDir through a symlink: "${includeName}"`
+    );
 
     // List all .md files
     let mdFiles: string[] = [];
@@ -133,11 +142,16 @@ export function scanFragments(
     }
 
     // Sort by byte-lex within this include
-    mdFiles.sort((a, b) => Buffer.from(a).compare(Buffer.from(b)));
+    mdFiles.sort(byteCompare);
 
     // Process each file
     for (const fileName of mdFiles) {
       const filePath = path.join(agentPath, fileName);
+      assertPathContained(
+        realpathSync(filePath),
+        realAgentPath,
+        `Document fragment escapes its include directory through a symlink: ${filePath}`
+      );
       const id = path.relative(sourceDir, filePath).replace(/\\/g, "/");
 
       // Warn on unprefixed files

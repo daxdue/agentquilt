@@ -5,12 +5,17 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   website:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
       - name: Install dependencies (workspace root)
@@ -21,12 +26,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
       - name: Install dependencies
-        working-directory: packages/agentquilt-cli
         run: npm ci
       - name: Format check
         working-directory: packages/agentquilt-cli
@@ -52,17 +58,39 @@ jobs:
         run: node packages/agentquilt-cli/dist/index.js check
       - name: Pipeline agent drift check
         run: node scripts/check-pipeline-agent-drift.mjs
-        continue-on-error: true
       - name: Package validation
-        working-directory: packages/agentquilt-cli
-        run: npm pack --dry-run
+        run: npm run package:check
       - name: Dependency audit
         working-directory: packages/agentquilt-cli
         run: npm audit --audit-level=high
         continue-on-error: true
+  node18:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "18"
+      - name: Install dependencies (workspace root)
+        run: npm ci
+      - name: Build CLI on minimum supported Node
+        run: npm run build
+      - name: Run tests on minimum supported Node
+        run: npm test
+
+  review-reminder:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    needs: [website, test, node18]
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
       - name: Post review reminder
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
         with:
           script: |
             github.rest.issues.createComment({
@@ -74,14 +102,14 @@ jobs:
               Deterministic checks (see step results above for pass/fail):
               - Website build (packages/website, Astro): required
               - Format check: informational only, not yet blocking (no repository-wide formatting pass has been run; see .docs/agentic-sdlc/github-ci-integration.md D8/section 5.1)
-              - Lint: informational only, not yet blocking (no ESLint configuration exists in this repository yet; see the same note)
+              - Lint: informational only while repository-wide lint debt remains tracked
               - TypeScript typecheck: required
               - Unit / integration / golden-fixture tests: required
-              - Coverage: produced, not threshold-enforced
+              - Coverage: required; thresholds enforced at 75% lines / 65% branches
               - Build: required
               - AgentQuilt drift check: required
-              - Pipeline agent drift check (Claude Code vs Codex roster parity): informational only, not yet blocking (new check, promotable once proven stable)
-              - Package validation (npm pack --dry-run): required
+              - Pipeline agent drift check (Claude Code vs Codex roster parity): required
+              - Package validation (Codex adapter and runtime dependencies): required
               - Dependency audit (npm audit, high severity): informational only, not blocking
 
               For detailed review, invoke Claude Code or Codex manually per

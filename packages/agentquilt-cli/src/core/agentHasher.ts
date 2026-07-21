@@ -2,9 +2,12 @@ import { createHash } from "crypto";
 import { readFileSync } from "fs";
 import { normalize, fragmentHash, targetVersion, type FragmentRef } from "./normalize.js";
 import { CanonicalAgentRecord, BodyFragment } from "./agentLoader.js";
+import { byteCompare } from "./sortUtil.js";
 
 export interface OutputEntry {
   platform: string;
+  path: string;
+  kind: "file";
   adapterVersion: string;
   outputHash: string;
 }
@@ -34,17 +37,20 @@ export function computeMetaHash(definition: Record<string, unknown>): string {
   return `sha256-${hash}`;
 }
 
-function sortKeysDeep(obj: Record<string, unknown>): Record<string, unknown> {
-  if (typeof obj !== "object" || obj === null || Array.isArray(obj)) {
-    return obj as Record<string, unknown>;
+export function sortKeysDeep(obj: unknown): unknown {
+  // Recurse into arrays too, not just objects: an array of objects (e.g.
+  // x-codex.skills.config) must have each element's keys canonicalized, or
+  // two semantically identical manifests that only differ in per-element
+  // key order would hash differently and falsely bump the agent version.
+  if (Array.isArray(obj)) {
+    return obj.map(sortKeysDeep);
+  }
+  if (typeof obj !== "object" || obj === null || obj instanceof Date) {
+    return obj;
   }
   const sorted: Record<string, unknown> = {};
-  for (const key of Object.keys(obj).sort((a, b) => Buffer.from(a).compare(Buffer.from(b)))) {
-    const val = obj[key];
-    sorted[key] =
-      typeof val === "object" && val !== null && !Array.isArray(val)
-        ? sortKeysDeep(val as Record<string, unknown>)
-        : val;
+  for (const key of Object.keys(obj).sort(byteCompare)) {
+    sorted[key] = sortKeysDeep((obj as Record<string, unknown>)[key]);
   }
   return sorted;
 }
@@ -56,11 +62,21 @@ export function computeAgentVersion(
   outputEntries: OutputEntry[] = []
 ): string {
   // Phase 3: Extended version with ADAPTER_VERSION + outputHashes
-  const sorted = [...outputEntries].sort((a, b) =>
-    Buffer.from(a.platform).compare(Buffer.from(b.platform))
-  );
+  const sorted = [...outputEntries].sort((a, b) => {
+    for (const [left, right] of [
+      [a.platform, b.platform],
+      [a.path, b.path],
+      [a.kind, b.kind],
+      [a.adapterVersion, b.adapterVersion],
+      [a.outputHash, b.outputHash],
+    ]) {
+      const order = byteCompare(left, right);
+      if (order !== 0) return order;
+    }
+    return 0;
+  });
   const outputLines = sorted
-    .map((e) => `${e.platform}:${e.adapterVersion}:${e.outputHash}`)
+    .map((e) => `${e.platform}:${e.path}:${e.kind}:${e.adapterVersion}:${e.outputHash}`)
     .join("\n");
   const input = `1\nagent\n${name}\n${bodyHash}\n${metaHash}\n${outputLines}\n`;
   const hash = createHash("sha256").update(input, "utf8").digest("hex");

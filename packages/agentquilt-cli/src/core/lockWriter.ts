@@ -1,6 +1,7 @@
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import type { CompiledTarget } from "./compiler.js";
-import type { AgentQuiltLock } from "../schemas/lock.schema.js";
+import { AgentQuiltLockSchema, type AgentQuiltLock } from "../schemas/lock.schema.js";
+import { byteCompare } from "./sortUtil.js";
 
 /**
  * Difference report for drift detection.
@@ -41,7 +42,7 @@ export function createLock(
       bytes: metadata.bytes,
       tags: metadata.tags,
     }))
-    .sort((a, b) => Buffer.from(a.id).compare(Buffer.from(b.id)));
+    .sort((a, b) => byteCompare(a.id, b.id));
 
   // Build targets array, sorted by output
   const targets = compiledTargets
@@ -51,12 +52,10 @@ export function createLock(
       fragments: target.fragmentIds, // preserve resolution order
       version: target.version,
     }))
-    .sort((a, b) => Buffer.from(a.output).compare(Buffer.from(b.output)));
+    .sort((a, b) => byteCompare(a.output, b.output));
 
   // Sort agents by name
-  const agents = [...agentRecords].sort((a, b) =>
-    Buffer.from(a.name).compare(Buffer.from(b.name))
-  );
+  const agents = [...agentRecords].sort((a, b) => byteCompare(a.name, b.name));
 
   return {
     lockfileVersion: 1,
@@ -171,5 +170,5 @@ export function readLock(lockPath: string): AgentQuiltLock | null {
     return null;
   }
   const content = readFileSync(lockPath, "utf8");
-  return JSON.parse(content);
+  return AgentQuiltLockSchema.parse(JSON.parse(content));
 }

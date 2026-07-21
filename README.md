@@ -14,7 +14,7 @@ AgentQuilt introduces a structured source model:
 Agent = Manifest + Instruction Blocks + Generated Prompt
 ```
 
-Developers edit small, ordered instruction blocks (fragments). AgentQuilt validates them and compiles them deterministically into platform-specific artifacts — the same sources can produce Claude Code agents, AgentSkills skills, Cursor rules, Copilot instructions, and more. Generated files are never hand-edited; a lock file records every fragment hash so CI can detect drift.
+Developers edit small, ordered instruction blocks (fragments). AgentQuilt validates them and compiles them deterministically into platform-specific artifacts — the same sources can produce Claude Code agents, Codex custom agents, AgentSkills skills, Cursor rules, Copilot instructions, and more. Generated files are never hand-edited; a lock file records every fragment hash so CI can detect drift.
 
 ## Supported Platforms
 
@@ -22,6 +22,7 @@ Developers edit small, ordered instruction blocks (fragments). AgentQuilt valida
 |---|---|---|
 | `claude` | adapter | `.claude/agents/<name>.md` (one file per agent) |
 | `agentskills` | adapter | `.agents/skills/<name>/SKILL.md` (one skill per agent) |
+| `codex` | adapter | `.codex/agents/<name>.toml` (one file per agent) |
 | `cursor` | preset | `.cursor/rules/<agent>.mdc` (combined) |
 | `copilot` | preset | `.github/copilot-instructions.md` (combined) |
 | `gemini` | preset | `GEMINI.md` (combined) |
@@ -52,9 +53,14 @@ npm run build
 ```bash
 # 1. Scaffold a project (in your repo root)
 agentquilt init --platform claude
+# Or emit standalone Codex custom-agent files
+agentquilt init --platform codex
 ```
 
 This creates `.agentquilt/config.yaml`, the `.agentquilt/agents/` source tree (plus `.agentquilt/skills/` when the `agentskills` platform is selected), and a `.gitattributes`. If you already have agents in `.claude/agents/` or skills in `.agents/skills/`, `init` adopts them as sources automatically. It refuses to overwrite an existing config unless you pass `--force`, and never overwrites an existing `.gitattributes`.
+
+Adoption is limited to the platforms selected for that init run; bare `init`
+selects Claude, while skills require `--platform agentskills`.
 
 ```bash
 # 2. Add an agent
@@ -71,12 +77,16 @@ This scaffolds `.agentquilt/agents/reviewer/` with a manifest and a first instru
 
 Edit `010-role.md`, and add more blocks as separate files — `020-style.md`, `030-testing.md`, … Blocks compile in filename order; use gaps of 10 so you can insert later without renumbering. Fragments in `.agentquilt/agents/_shared/` can be included across agents.
 
+Codex targets inherit the model selected by Codex unless a model tier or override is configured. Existing Codex TOML files are not reverse-adopted; the first build preserves a differing file until `--force` explicitly lets AgentQuilt claim that output path.
+
 Skills work the same way from their own source root: `agentquilt skills add <name>` scaffolds `.agentquilt/skills/<name>/` with a manifest and a `010-instructions.md`, compiled to `.agents/skills/<name>/SKILL.md` by an `agentskills` target.
 
 ```bash
 # 3. Compile
 agentquilt build
 ```
+
+For a `codex` target, build writes standalone files under `.codex/agents/`; it never edits `.codex/config.toml`.
 
 This writes the platform outputs (e.g. `.claude/agents/reviewer.md`) and `agentquilt.lock`. Commit sources and generated outputs together.
 
@@ -87,7 +97,7 @@ agentquilt check
 
 `check` exits non-zero if any generated output or the lock is stale relative to the sources — so a PR that edits a generated file by hand, or edits sources without rebuilding, fails the gate.
 
-**Exit codes:** `0` success · `1` drift detected (`check`) · `2` config or validation error · `3` I/O error.
+**Exit codes:** `0` success · `1` drift detected by `check` or an output blocked by `build` ownership/tamper protection · `2` config or validation error · `3` I/O error.
 
 ## Commands
 
@@ -107,13 +117,11 @@ agentquilt skills list                          # List skills and their descript
 repo/
 ├── .agentquilt/               # All AgentQuilt sources live here
 │   ├── config.yaml            # Project config (targets, model tiers, sourceDir)
-│   ├── agents/                # Source agent definitions
-│   │   ├── _shared/           # Shared fragments (included across agents)
-│   │   └── <agent-id>/
-│   │       ├── agent.yaml     # Agent manifest
-│   │       └── NNN-block.md   # Instruction blocks (ordered by prefix)
-│   ├── skills/                # Source skill definitions (same manifest + block format)
-│   └── meta-agents/           # AgentQuilt's own meta-agents (framework development)
+│   └── agents/                # Flat source tree for project and lifecycle agents
+│       ├── project/           # Fragments for the repository development guide
+│       └── <development-agent>/
+│           ├── agent.yaml     # Agent manifest
+│           └── NNN-block.md   # Instruction blocks (ordered by prefix)
 ├── .claude/agents/            # Compiled Claude Code agent outputs (generated)
 ├── AGENTS.md                  # Compiled document target (generated)
 ├── agentquilt.lock            # Fragment hashes and target versions (generated)
@@ -132,9 +140,9 @@ still honored as a fallback.
 
 ## Project Status
 
-**v0.1.0** — the core author → build → check workflow: deterministic compiler, Zod-validated schemas, Claude and AgentSkills adapters, platform presets, lock file, and drift checking.
+**Current development line** — the core author → build → check workflow: deterministic compiler, Zod-validated schemas, Claude, Codex, and AgentSkills adapters, platform presets, lock file, and drift checking.
 
-Planned next (see [Roadmap](.docs/roadmap.md)): eval-based regression testing, lint rules and semantic diff, `build --watch`, additional platform adapters.
+Planned next (see [Roadmap](.docs/roadmap.md)): eval-based regression testing, lint rules and semantic diff, and additional platform adapters.
 
 ## Goals
 
@@ -158,6 +166,7 @@ Planned next (see [Roadmap](.docs/roadmap.md)): eval-based regression testing, l
 - [Architecture Overview](.docs/architecture/overview.md)
 - [v1 Specification](.docs/agentquilt-v1-spec.md)
 - [v1.1 Addendum](.docs/agentquilt-v1.1-addendum.md)
+- [ADR-0015: Codex Provider Adapter](.docs/architecture/adr/ADR-0015-codex-provider-adapter.md)
 - [Glossary](.docs/glossary.md)
 - [Roadmap](.docs/roadmap.md)
 - [Contributing](CONTRIBUTING.md)

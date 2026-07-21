@@ -7,7 +7,14 @@ import os from "os";
 import "../src/core/adapters/claude";
 import "../src/core/adapters/agentskills";
 
-import { compileAgentDefinitionsTarget } from "../src/core/agentCompiler";
+import {
+  compileAgentDefinitionsTarget,
+  mergeCompiledAgentTargets,
+  type CompiledAgentTarget,
+} from "../src/core/agentCompiler";
+import { registerAdapter, type Adapter } from "../src/core/adapters";
+import { fragmentHash } from "../src/core/normalize";
+import { computeAgentVersion, type OutputEntry } from "../src/core/agentHasher";
 import type { AgentDefinitionsTarget } from "../src/core/agentCompiler";
 import type { AgentQuiltConfig } from "../src/schemas/config.schema";
 
@@ -237,5 +244,136 @@ describe("compileAgentDefinitionsTarget", () => {
       expect(meta.hash).toMatch(/^sha256-/);
       expect(meta.bytes).toBeGreaterThan(0);
     }
+  });
+
+  it("preserves exact adapter bytes, hashes them unchanged, and sorts paths", async () => {
+    const rawContent = "raw output with two trailing newlines\n\n";
+    const rawAdapter: Adapter = {
+      id: "raw-exact-test",
+      ADAPTER_VERSION: "1",
+      outputsFor: () => [
+        { path: "z-output.txt", content: "z\n" },
+        { path: "a-output.txt", content: rawContent },
+      ],
+    };
+    registerAdapter(rawAdapter);
+    scaffoldAgent(tmpDir, "raw-agent", {
+      yaml: 'description: "Raw agent"\nmodel: inherit\n',
+    });
+
+    const result = await compileAgentDefinitionsTarget(
+      makeTarget(["raw-agent"], ["raw-exact-test"]),
+      makeConfig(),
+      tmpDir,
+      tmpDir
+    );
+
+    const adapterOutputs = result.outputs.get("raw-agent")!;
+    expect(adapterOutputs.map((output) => output.path)).toEqual([
+      "a-output.txt",
+      "z-output.txt",
+    ]);
+    expect(adapterOutputs[0].content).toBe(rawContent);
+    expect(result.agentRecords[0].outputs.map((output) => output.path)).toEqual([
+      "a-output.txt",
+      "z-output.txt",
+    ]);
+    expect(result.agentRecords[0].outputs[0].hash).toBe(fragmentHash(rawContent));
+  });
+
+  it("rejects two adapters that emit the same output path for one agent", async () => {
+    for (const id of ["collision-a-test", "collision-b-test"]) {
+      registerAdapter({
+        id,
+        ADAPTER_VERSION: "1",
+        outputsFor: () => [{ path: "same-output.txt", content: `${id}\n` }],
+      });
+    }
+    scaffoldAgent(tmpDir, "collision-agent", {
+      yaml: 'description: "Collision agent"\nmodel: inherit\n',
+    });
+
+    await expect(
+      compileAgentDefinitionsTarget(
+        makeTarget(["collision-agent"], ["collision-a-test", "collision-b-test"]),
+        makeConfig(),
+        tmpDir,
+        tmpDir
+      )
+    ).rejects.toThrow("output path collision");
+  });
+
+  it("rejects portable case-equivalent paths across compiled agents", () => {
+    const makeResult = (name: string, outputPath: string): CompiledAgentTarget => ({
+      agentRecords: [
+        {
+          name,
+          dir: `agents/${name}`,
+          bodyFragments: [],
+          metaHash: "meta",
+          version: "version",
+          outputs: [],
+        },
+      ],
+      outputs: new Map([[name, [{ path: outputPath, content: "content", kind: "file" }]]]),
+      fragmentMap: new Map(),
+      bodyHashByName: new Map([[name, "body-hash"]]),
+    });
+
+    expect(() =>
+      mergeCompiledAgentTargets([
+        makeResult("upper", "provider/Foo.toml"),
+        makeResult("lower", "provider/foo.toml"),
+      ])
+    ).toThrow("same portable path");
+  });
+
+  it("merges duplicate canonical agents across targets into one lock identity", () => {
+    const result: CompiledAgentTarget = {
+      agentRecords: [
+        {
+          name: "duplicate",
+          dir: "agents/duplicate",
+          bodyFragments: [],
+          metaHash: "meta",
+          version: "version",
+          outputs: [],
+        },
+      ],
+      outputs: new Map([["duplicate", []]]),
+      fragmentMap: new Map(),
+      bodyHashByName: new Map([["duplicate", "body-hash"]]),
+    };
+
+    const merged = mergeCompiledAgentTargets([result, result]);
+    expect(merged.agentRecords).toHaveLength(1);
+    expect(merged.agentRecords[0].name).toBe("duplicate");
+  });
+
+  it("binds agent versions to sorted output paths rather than adapter order", () => {
+    const a: OutputEntry = {
+      platform: "test",
+      path: "a.txt",
+      kind: "file",
+      adapterVersion: "1",
+      outputHash: "hash-a",
+    };
+    const z: OutputEntry = {
+      platform: "test",
+      path: "z.txt",
+      kind: "file",
+      adapterVersion: "1",
+      outputHash: "hash-z",
+    };
+
+    const forward = computeAgentVersion("agent", "body", "meta", [a, z]);
+    const reversed = computeAgentVersion("agent", "body", "meta", [z, a]);
+    const swappedBytes = computeAgentVersion("agent", "body", "meta", [
+      { ...a, outputHash: z.outputHash },
+      { ...z, outputHash: a.outputHash },
+    ]);
+
+    expect(reversed).toBe(forward);
+    expect(swappedBytes).not.toBe(forward);
   });
 });

@@ -25,6 +25,6 @@ agentquilt skills list                   # List all skills and their description
 
 **Exit codes:**
 - 0: success
-- 1: drift detected (check failed)
+- 1: drift detected by check, or build output blocked by ownership/tamper protection
 - 2: config or validation error
 - 3: I/O error

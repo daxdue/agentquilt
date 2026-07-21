@@ -19,6 +19,8 @@ export type TargetLock = z.infer<typeof TargetLockSchema>;
 export const AgentOutputRecordSchema = z.object({
   platform: z.string(),
   path: z.string(),
+  // "region" is accepted for backward-compatible lock reads only. Current
+  // adapters emit standalone files exclusively.
   kind: z.enum(["file", "region"]).default("file"),
   hash: z.string(),
 });

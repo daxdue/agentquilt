@@ -59,6 +59,57 @@ describe("agentquilt init", () => {
     expect(configContent).toContain("claude");
   });
 
+  it("--platform codex creates a Codex target and generated-file rule", () => {
+    initProject(tmpDir, ["codex"]);
+
+    const configContent = readFileSync(
+      path.join(tmpDir, ".agentquilt", "config.yaml"),
+      "utf8"
+    );
+    const attributes = readFileSync(path.join(tmpDir, ".gitattributes"), "utf8");
+    expect(configContent).toContain("platforms: [codex]");
+    expect(attributes).toContain(".codex/agents/**");
+    expect(mockExit).toHaveBeenCalledWith(0);
+  });
+
+  it("deduplicates repeated platform values while preserving order", () => {
+    initProject(tmpDir, ["codex", "claude", "codex", "claude"]);
+
+    const configContent = readFileSync(
+      path.join(tmpDir, ".agentquilt", "config.yaml"),
+      "utf8"
+    );
+    expect(configContent).toContain("platforms: [codex, claude]");
+    expect(configContent.match(/codex/g)?.length).toBe(1);
+    expect(mockExit).toHaveBeenCalledWith(0);
+  });
+
+  it("does not change non-Codex gitattributes with a Codex-only rule", () => {
+    initProject(tmpDir, ["claude"]);
+
+    const attributes = readFileSync(path.join(tmpDir, ".gitattributes"), "utf8");
+    expect(attributes).not.toContain(".codex/agents/**");
+    expect(attributes).toBe(
+      [
+        "# normalize line endings everywhere — primary CRLF defense in the working tree",
+        "* text=auto eol=lf",
+        ".agentquilt/**/*.md text eol=lf",
+        "",
+        '# mark generated outputs (collapses diffs, signals "do not edit")',
+        "AGENTS" + ".md            linguist-generated=true",
+        "CLAUDE" + ".md            linguist-generated=true",
+        "GEMINI.md            linguist-generated=true",
+        ".cursor/rules/**     linguist-generated=true",
+        ".github/copilot-instructions.md linguist-generated=true",
+        ".agents/skills/**    linguist-generated=true",
+        "",
+        "# lock: structured to rarely conflict; union as a free win where honored",
+        "agentquilt" + ".lock      linguist-generated=true merge=union",
+        "",
+      ].join("\n")
+    );
+  });
+
   it("exits with code 2 when given an invalid platform", () => {
     initProject(tmpDir, ["not-a-platform"]);
 
@@ -90,6 +141,18 @@ describe("generateConfig", () => {
     const config = generateConfig(["claude"]);
     expect(config).toContain("kind: agent-definitions");
     expect(config).toContain("claude");
+  });
+
+  it("includes Codex in an agent-definitions target without model identifiers", () => {
+    const config = generateConfig(["codex"]);
+    expect(config).toContain("platforms: [codex]");
+    expect(config).toContain("# defaultModelTier: balanced");
+    expect(config).not.toMatch(/^\s+codex:/m);
+  });
+
+  it("combines Claude and Codex in the same agent target", () => {
+    const config = generateConfig(["claude", "codex"]);
+    expect(config).toContain("platforms: [claude, codex]");
   });
 
   it("generates a dedicated skills target when agentskills selected", () => {

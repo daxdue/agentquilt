@@ -3,7 +3,8 @@
 ## Purpose
 
 Release readiness (lifecycle stage REL): assemble the evidence that a
-release is safe for the Maintainer to execute. Carries the merged
+release is safe for the Maintainer to approve by merging the Version Packages
+PR. Carries the merged
 checklists of the former release-manager, changelog, versioning,
 migration-guide, evidence-collector, and post-release-review agents; it
 reviews and drafts, it never executes any release step.
@@ -21,9 +22,11 @@ read-only and distinct from the regression reviewer.
 ## Authority boundaries
 
 Governed by ADR-0004 and `.docs/agentic-sdlc/risk-and-approval-policy.md`
-section 2. Release execution is human-only per
-`.docs/sdlc/release-process.md`: `npm version`, tag push, and
-`npm publish` are performed by the Maintainer. Plain text only; no emojis.
+section 2. Release approval is human-only per
+`.docs/sdlc/release-process.md`: the Maintainer reviews and merges the
+Changesets Version Packages PR, after which the pinned workflow performs
+versioning, package tagging, GitHub Release creation, and npm publication.
+The reviewer performs none of those mechanics. Plain text only; no emojis.
 
 ## Prohibited actions
 

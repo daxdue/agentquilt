@@ -4,7 +4,8 @@
 - Zod schema definitions for config, lock, and agent definitions
 - Core compiler: fragment scanning, normalization, hashing, deterministic output
 - Agent compiler: metadata hashing, adapter system, per-platform serialization
-- Claude and AgentSkills adapters (v1.1 addendum)
+- Claude, Codex, and AgentSkills adapters (v1.1 addendum; Codex architecture updated by ADR-0015)
+- Codex emits standalone `.codex/agents/<name>.toml` files and never edits `.codex/config.toml`
 - Lock writer and drift checker
 - CLI: init, build (with --watch), check, agents add, agents list
 
@@ -24,6 +25,5 @@
 - Lint rules, semantic diff, additional enforcement
 - Eval runner, regression testing
 - Release packaging, migration tools
-- Codex adapter — `.codex/agents/<name>.toml` + managed-region injection in `.codex/config.toml` (v1.1 §6.2–6.3)
 
 See [PROJECT_PLAN.md](.planning/PROJECT_PLAN.md) for historical context and full roadmap.

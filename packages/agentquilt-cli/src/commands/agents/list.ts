@@ -31,7 +31,7 @@ function listAgentsAction(options: ListAgentsOptions): void {
     const config = loadConfig(configPath);
     const sourceDir = path.join(cwd, config.sourceDir);
 
-    validateConfig(config, sourceDir);
+    validateConfig(config, sourceDir, cwd);
 
     // Discover all agents
     const agentDirs = discoverAgentDirs(sourceDir);

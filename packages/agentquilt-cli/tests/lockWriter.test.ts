@@ -4,6 +4,7 @@ import path from "path";
 import os from "os";
 import { createLock, writeLock, readLock, diffLock } from "../src/core/lockWriter";
 import type { AgentQuiltLock } from "../src/schemas/lock.schema";
+import { AgentOutputRecordSchema } from "../src/schemas/lock.schema";
 
 let tmpDir: string;
 
@@ -75,6 +76,55 @@ describe("createLock", () => {
 });
 
 describe("writeLock / readLock", () => {
+  it("accepts legacy region output records for upgrade compatibility", () => {
+    expect(
+      AgentOutputRecordSchema.parse({
+        platform: "codex",
+        path: ".codex/config.toml",
+        kind: "region",
+        hash: "sha256-legacy",
+      }).kind
+    ).toBe("region");
+  });
+
+  it("applies persisted-schema defaults when reading a legacy lock", () => {
+    const lockPath = path.join(tmpDir, "agentquilt" + ".lock");
+    writeFileSync(
+      lockPath,
+      JSON.stringify({
+        lockfileVersion: 1,
+        formatVersion: "1",
+        fragments: [],
+        targets: [],
+      }),
+      "utf8"
+    );
+
+    expect(readLock(lockPath)?.agents).toEqual([]);
+  });
+
+  it("reads legacy region records through the production lock schema", () => {
+    const lockPath = path.join(tmpDir, "agentquilt" + ".lock");
+    const legacy = makeLock({
+      agents: [{
+        name: "helper",
+        dir: ".agentquilt/agents/helper",
+        bodyFragments: [],
+        metaHash: "sha256-meta",
+        version: "sha256-version",
+        outputs: [{
+          platform: "codex",
+          path: ".codex/config.toml",
+          kind: "region",
+          hash: "sha256-legacy",
+        }],
+      }],
+    });
+    writeFileSync(lockPath, JSON.stringify(legacy), "utf8");
+
+    expect(readLock(lockPath)?.agents[0].outputs[0].kind).toBe("region");
+  });
+
   it("round-trips a lock through disk", () => {
     const lock = makeLock({
       fragments: [{ id: "a/010.md", hash: "sha256-abc", bytes: 4, tags: ["role"] }],

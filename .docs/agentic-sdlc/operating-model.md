@@ -258,7 +258,9 @@ state this precisely and are not restated in full here:
   approves a plan, approves a PR, merges, tags, pushes, publishes, or
   overrides CI; no agent performs a destructive operation without prior
   recorded human approval; release creation and publication are
-  Maintainer-only; generated files are never hand-edited by an agent.
+  Maintainer-only as an approval decision, with mechanics executed by the
+  pinned release workflow after the Version Packages PR merge; generated
+  files are never hand-edited by an agent.
 - **Section 3's approval-gate trigger table**: high-risk architecture
   change, public interface change, new dependency, persisted-format
   change, generated-output semantics change, destructive operation, and

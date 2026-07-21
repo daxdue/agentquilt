@@ -1,8 +1,14 @@
-import { readFileSync, existsSync, readdirSync } from "fs";
+import { readFileSync, existsSync, readdirSync, realpathSync } from "fs";
 import path from "path";
 import { parse as parseYaml } from "yaml";
-import { AgentDefinitionSchema, type AgentDefinition } from "../schemas/agentDefinition.schema.js";
+import {
+  AgentDefinitionSchema,
+  AgentNameSchema,
+  type AgentDefinition,
+} from "../schemas/agentDefinition.schema.js";
 import { ConfigError } from "./configLoader.js";
+import { byteCompare } from "./sortUtil.js";
+import { assertPathContained, assertContainedIncludingSymlinks } from "./pathSecurity.js";
 
 export interface BodyFragment {
   id: string;       // repo-relative POSIX path
@@ -17,12 +23,30 @@ export interface CanonicalAgentRecord {
   bodyFragments: BodyFragment[];
 }
 
+function assertFileContained(filePath: string, realAgentDir: string): void {
+  let realFilePath: string;
+  try {
+    realFilePath = realpathSync(filePath);
+  } catch (error) {
+    throw new ConfigError(
+      `Unable to resolve agent file ${filePath}: ${error instanceof Error ? error.message : String(error)}`
+    );
+  }
+  assertPathContained(
+    realFilePath,
+    realAgentDir,
+    `Agent file escapes its directory through a symlink: ${filePath}`
+  );
+}
+
 export function loadAgentDir(agentDirPath: string, repoRoot: string): CanonicalAgentRecord {
   const manifestPath = path.join(agentDirPath, "agent.yaml");
 
   if (!existsSync(manifestPath)) {
     throw new ConfigError(`Agent directory missing agent.yaml: ${manifestPath}`);
   }
+  const realAgentDir = realpathSync(agentDirPath);
+  assertFileContained(manifestPath, realAgentDir);
 
   // Read and parse agent.yaml
   const raw = readFileSync(manifestPath, "utf8");
@@ -38,16 +62,24 @@ export function loadAgentDir(agentDirPath: string, repoRoot: string): CanonicalA
 
   // Resolve name
   const dirBasename = path.basename(agentDirPath);
-  const name = definition.name ?? dirBasename;
+  const inferredName = definition.name ?? dirBasename;
+  const parsedName = AgentNameSchema.safeParse(inferredName);
+  if (!parsedName.success) {
+    throw new ConfigError(
+      `Invalid agent name "${inferredName}": ${parsedName.error.issues.map((issue) => issue.message).join("; ")}`
+    );
+  }
+  const name = parsedName.data;
 
   // Discover body fragments (.md files, byte-lex sorted, excluding agent.yaml)
   const bodyFragments: BodyFragment[] = [];
   const mdFiles = readdirSync(agentDirPath)
     .filter((f) => f.endsWith(".md"))
-    .sort((a, b) => Buffer.from(a).compare(Buffer.from(b)));
+    .sort(byteCompare);
 
   for (const fileName of mdFiles) {
     const filePath = path.join(agentDirPath, fileName);
+    assertFileContained(filePath, realAgentDir);
     const id = path.relative(repoRoot, filePath).replace(/\\/g, "/");
 
     // Warn on unprefixed files
@@ -73,7 +105,7 @@ export function discoverAgentDirs(sourceDir: string): string[] {
     .filter((e) => e.isDirectory())
     .filter((e) => existsSync(path.join(sourceDir, e.name, "agent.yaml")))
     .map((e) => e.name)
-    .sort((a, b) => Buffer.from(a).compare(Buffer.from(b)));
+    .sort(byteCompare);
 
   return entries.map((name) => path.join(sourceDir, name));
 }
@@ -91,7 +123,13 @@ export function resolveAgents(
   const seenNames = new Set<string>();
 
   for (const agentName of agentNames) {
-    const agentDir = path.join(sourceDir, agentName);
+    const agentDir = path.resolve(sourceDir, agentName);
+    assertContainedIncludingSymlinks(
+      agentDir,
+      sourceDir,
+      `Agent selector escapes source directory: "${agentName}"`,
+      `Agent selector escapes source directory through a symlink: "${agentName}"`
+    );
     const record = loadAgentDir(agentDir, repoRoot);
 
     // Check for duplicate names
@@ -104,7 +142,7 @@ export function resolveAgents(
   }
 
   // Sort by name (byte order)
-  records.sort((a, b) => Buffer.from(a.name).compare(Buffer.from(b.name)));
+  records.sort((a, b) => byteCompare(a.name, b.name));
 
   return records;
 }

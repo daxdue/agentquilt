@@ -286,4 +286,70 @@ x-claude:
     expect(content).toContain('tools: WebFetch, WebSearch');
     expect(content).not.toContain("tools: Read, Grep, Glob");
   });
+
+  it.each(["name", "description", "model", "effort"])(
+    "scenario 8: rejects reserved x-claude key %s",
+    (key) => {
+      const agentDir = setupAgentFixture(
+        `test-scenario-8-${key}`,
+        `description: "Reserved key agent"
+model: balanced
+permissions: read-only
+x-claude:
+  ${key}: forbidden
+`,
+        {
+          "010-role.md": "I should not compile.\n",
+        }
+      );
+
+      const adapter = getAdapter("claude");
+      expect(adapter).toBeDefined();
+      if (!adapter) return;
+
+      const record = loadAgentDir(agentDir, tempDir);
+      const config = createMinimalConfig({
+        balanced: { claude: "claude-sonnet-4-6" },
+      });
+      const resolvedModel = resolveModel(record.definition, "claude", config);
+
+      expect(() => adapter.outputsFor(record, resolvedModel, config)).toThrow(
+        `x-claude key "${key}" collides`
+      );
+    }
+  );
+
+  it("scenario 9: x-claude tools/permissionMode overrides remain allowed alongside a reserved-key rejection elsewhere", () => {
+    // tools and permissionMode are the sanctioned override channel and must
+    // never be treated as reserved, even though other canonical fields are.
+    const agentDir = setupAgentFixture(
+      "test-scenario-9",
+      `description: "Override channel agent"
+model: balanced
+permissions: full
+x-claude:
+  tools: "WebFetch"
+  permissionMode: plan
+`,
+      {
+        "010-role.md": "I use custom tools and mode.\n",
+      }
+    );
+
+    const adapter = getAdapter("claude");
+    expect(adapter).toBeDefined();
+    if (!adapter) return;
+
+    const record = loadAgentDir(agentDir, tempDir);
+    const config = createMinimalConfig({
+      balanced: { claude: "claude-sonnet-4-6" },
+    });
+    const resolvedModel = resolveModel(record.definition, "claude", config);
+
+    const outputs = adapter.outputsFor(record, resolvedModel, config);
+    const content = outputs[0].content;
+
+    expect(content).toContain("tools: WebFetch");
+    expect(content).toContain("permissionMode: plan");
+  });
 });

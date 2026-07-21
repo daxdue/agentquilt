@@ -32,13 +32,16 @@ release-readiness summary.
 | ------- | ----- | ------- |
 | `npm install` | repo root | Install workspace dependencies |
 | `npm run build` | repo root | `tsc` build of the CLI workspace |
+| `npm run website:build` | repo root | Production build of the Astro website workspace |
 | `npm test` | repo root | Full test suite (`vitest run`) |
 | `npm run coverage` | `packages/agentquilt-cli` | Coverage with enforced thresholds: 75% lines / 65% branches (per `policies/gates/pr-quality-gate.yaml`) |
 | `npx tsc --project tsconfig.test.json` | `packages/agentquilt-cli` | Typecheck including tests |
 | `npx agentquilt build` | repo root | Regenerate all targets + lock (CI equivalent: `node packages/agentquilt-cli/dist/index.js build`) |
 | `npx agentquilt check` | repo root | Drift gate; exit 0 clean, 1 drift, 2 config/validation error, 3 I/O (CI invokes `node packages/agentquilt-cli/dist/index.js check`) |
-| `npm run lint` | `packages/agentquilt-cli` | ESLint. Note: not currently a CI step (audit gap, Phase 7); optional evidence until then |
-| `npm version <type>` / `npm publish` | release only, human only | See [release-process.md](../sdlc/release-process.md) |
+| `node scripts/check-pipeline-agent-drift.mjs` | repo root | Provider-native development-agent roster parity gate |
+| `npm run package:check` | repo root | Validate npm package contents, including the Codex adapter and reviewed TOML dependency |
+| `npm run lint` | `packages/agentquilt-cli` | ESLint; currently informational rather than blocking in CI |
+| `npm run version-packages` / `npm run release` | release workflow only | Mechanical Changesets commands after Maintainer approval; agents never invoke them |
 
 Focused test runs may narrow scope with standard vitest file/name filters of
 `npm test`; the evidence records the exact invocation used.
@@ -49,7 +52,7 @@ Focused test runs may narrow scope with standard vitest file/name filters of
 | ----- | ---- | ----------------- |
 | Focused verification | per bounded task (VER) | The tests named in the task, plus `npx agentquilt check` whenever the task touched fragments, manifests, config, or generated files |
 | Completion checks (small profile) | before PR | `npm run build`, `npm test`, `npx agentquilt check` (CI adds typecheck and coverage) |
-| Full validation (standard, high-risk) | before PR (VAL) | `npm run build`; `npx tsc --project tsconfig.test.json`; `npm test`; `npm run coverage` (thresholds met); `npx agentquilt check`; plus `git status` cleanliness |
+| Full validation (standard, high-risk) | before PR (VAL) | `npm run build`; `npm run website:build`; `npx tsc --project tsconfig.test.json`; `npm test`; `npm run coverage` (thresholds met); `npx agentquilt check`; `node scripts/check-pipeline-agent-drift.mjs`; `npm run package:check`; plus `git status` cleanliness |
 | Full evidence package (high-risk) | before PR/merge | Full validation, plus compatibility verification evidence for each flagged trigger (e.g. before/after CLI output, schema round-trip, fixture diffs each explained) |
 
 ## 5. Artifact format: Validation Evidence

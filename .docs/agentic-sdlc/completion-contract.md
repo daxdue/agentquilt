@@ -124,7 +124,10 @@ evidence-backed instead of asserted.
 | Typecheck | npx tsc --project tsconfig.test.json | exit 0 |
 | Coverage | npm run coverage | <x>% lines / <y>% branches (>= 75/65) |
 | Build | npm run build | exit 0 |
+| Website build | npm run website:build | exit 0 |
 | Drift | npx agentquilt check | exit 0 |
+| Pipeline roster drift | node scripts/check-pipeline-agent-drift.mjs | exit 0 |
+| Package contents | npm run package:check | exit 0 |
 
 ### Release artifacts
 
@@ -147,8 +150,9 @@ with evidence>
 
 READY | NOT READY — <blocking items>
 
-Remaining human steps (never performed by an agent): npm version, tag push,
-npm publish per release-process.md.
+Remaining human step (never performed by an agent): review and merge the
+Changesets Version Packages PR when ready. The release workflow performs
+versioning, tagging, and publication mechanically after that approval.
 ```
 
 ## 5. Entry and exit criteria
