@@ -79,13 +79,12 @@ A failure in any of these blocks both the version PR and the publish step.
 
 ## One-time setup (Maintainer only, outside this repo)
 
-- Create an npm automation token and add it as the `NPM_TOKEN` secret
-  under GitHub repo Settings -> Secrets and variables -> Actions. This is
-  required for the publish step and cannot be done by an agent or
-  workflow.
-- npm's newer Trusted Publishing (OIDC) flow removes the need for a
-  stored token entirely — worth adopting once this token-based flow is
-  proven, configured from the package's settings page on npmjs.com.
+- Publishing authenticates via npm's Trusted Publishing (OIDC) flow, not
+  a stored token. Configure it from the `agentquilt` package's settings
+  page on npmjs.com, naming this repo, the `release.yml` workflow, and
+  the `release` job as the trusted source. This is required for the
+  publish step and cannot be done by an agent or workflow. No `NPM_TOKEN`
+  secret is used or required.
 
 ---
 

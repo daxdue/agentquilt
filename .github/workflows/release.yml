@@ -121,6 +121,11 @@ jobs:
       - name: Install dependencies (workspace root)
         run: npm ci
 
+      # npm's OIDC Trusted Publishing flow (below) requires npm >= 11.5.1;
+      # Node 20's bundled npm predates that.
+      - name: Upgrade npm for OIDC trusted publishing
+        run: npm install -g npm@latest
+
       # Two possible outcomes, decided entirely by repo state -- not by
       # this workflow:
       #   1. Changesets are pending on main -> opens/updates the
@@ -129,7 +134,11 @@ jobs:
       #      merge that PR.
       #   2. No changesets pending (i.e. this push *is* that PR having
       #      just been merged) -> runs `npm run release`, which publishes
-      #      to npm and pushes the resulting git tag.
+      #      to npm and pushes the resulting git tag. Authentication is via
+      #      npm Trusted Publishing (OIDC, `id-token: write` above) -- no
+      #      stored npm token. Do not reintroduce an NPM_TOKEN env var here:
+      #      a static token, even an unrelated/stale one, takes precedence
+      #      over OIDC and would silently defeat trusted publishing.
       - name: Create release PR or publish
         id: changesets
         uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1
@@ -138,12 +147,10 @@ jobs:
           publish: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 # One-time setup this workflow depends on, outside this repo (a human,
 # Maintainer-only action -- cannot be automated by a workflow or agent):
-#   - Add an npm automation token as the `NPM_TOKEN` secret under
-#     GitHub repo Settings -> Secrets and variables -> Actions.
-#     (npm's newer Trusted Publishing / OIDC flow removes the need for a
-#     stored token at all, configured from the package's settings page on
-#     npmjs.com -- a good next step once this token-based flow is proven.)
+#   - Configure npm Trusted Publishing for the `agentquilt` package from
+#     its settings page on npmjs.com, naming this repo, the `release.yml`
+#     workflow, and the `release` job as the trusted source. No NPM_TOKEN
+#     secret is used or required.
