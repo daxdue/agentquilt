@@ -46,6 +46,10 @@ jobs:
         working-directory: packages/agentquilt-cli
         run: npx tsc --project tsconfig.test.json
 
+      - name: Build CLI
+        working-directory: packages/agentquilt-cli
+        run: npm run build
+
       - name: Run all tests
         working-directory: packages/agentquilt-cli
         run: npm test -- --run
@@ -53,10 +57,6 @@ jobs:
       - name: Check coverage
         working-directory: packages/agentquilt-cli
         run: npm run coverage
-
-      - name: Build CLI
-        working-directory: packages/agentquilt-cli
-        run: npm run build
 
       - name: Build website
         run: npm run website:build
