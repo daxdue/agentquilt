@@ -122,9 +122,11 @@ jobs:
         run: npm ci
 
       # npm's OIDC Trusted Publishing flow (below) requires npm >= 11.5.1;
-      # Node 20's bundled npm predates that.
+      # Node 20's bundled npm (10.x) predates that. Pin to the npm 11 line,
+      # not `latest`: npm 12 requires Node >=22 and would fail to install
+      # (EBADENGINE) on this job's Node 20 runtime.
       - name: Upgrade npm for OIDC trusted publishing
-        run: npm install -g npm@latest
+        run: npm install -g npm@11
 
       # Two possible outcomes, decided entirely by repo state -- not by
       # this workflow:
