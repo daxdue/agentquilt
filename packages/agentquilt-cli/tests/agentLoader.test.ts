@@ -90,6 +90,18 @@ describe("agentLoader", () => {
     expect(records[0].name).toBe("alpha");
   });
 
+  it("rejects an invalid directory basename when name is omitted", () => {
+    const sourceDir = path.join(tempDir, "invalid-name-agents");
+    const agentDir = path.join(sourceDir, "invalid name");
+    mkdirSync(agentDir, { recursive: true });
+    writeFileSync(path.join(agentDir, "agent.yaml"), 'description: "Invalid"\n');
+    writeFileSync(path.join(agentDir, "010-role.md"), "Role.\n");
+
+    expect(() => resolveAgents("*", sourceDir, tempDir)).toThrow(
+      "Invalid agent name"
+    );
+  });
+
   it("should resolve agents with explicit list", () => {
     const sourceDir = path.join(tempDir, "explicit-agents");
     mkdirSync(sourceDir, { recursive: true });

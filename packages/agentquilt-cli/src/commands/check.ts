@@ -3,9 +3,15 @@ import { readFileSync, existsSync } from "fs";
 import path from "path";
 import { findConfigFile, loadConfig, validateConfig, ConfigError } from "../core/configLoader.js";
 import { compile } from "../core/compiler.js";
-import { compileAgentDefinitionsTarget, type AdapterOutput } from "../core/agentCompiler.js";
+import {
+  compileAgentDefinitionsTarget,
+  mergeCompiledAgentTargets,
+  type AdapterOutput,
+  type CompiledAgentTarget,
+} from "../core/agentCompiler.js";
 import { createLock, readLock, diffLock } from "../core/lockWriter.js";
 import { cyan, dim, green, sym, formatDuration, createSpinner } from "../ui/terminal.js";
+import { validateOutputPaths, type OutputPathClaim } from "../core/pathSecurity.js";
 
 interface CheckOptions {
   config?: string;
@@ -44,6 +50,7 @@ async function checkAction(options: CheckOptions): Promise<void> {
     const allFragmentMap = new Map<string, any>();
     let agentRecords: any[] = [];
     const agentOutputs: AdapterOutput[] = [];
+    const agentResults: CompiledAgentTarget[] = [];
 
     try {
       // Find and load config
@@ -52,7 +59,7 @@ async function checkAction(options: CheckOptions): Promise<void> {
       const sourceDir = path.join(cwd, config.sourceDir);
 
       // Validate config
-      validateConfig(config, sourceDir);
+      validateConfig(config, sourceDir, cwd);
 
       // Compile document targets (in-memory)
       result = await compile(config, sourceDir);
@@ -65,17 +72,29 @@ async function checkAction(options: CheckOptions): Promise<void> {
         if (target.kind !== "agent-definitions") continue;
 
         const agentResult = await compileAgentDefinitionsTarget(target, config, sourceDir, cwd);
-        agentRecords.push(...agentResult.agentRecords);
-
-        for (const outputs of agentResult.outputs.values()) {
-          agentOutputs.push(...outputs);
-        }
-
-        // Merge fragment maps
-        for (const [id, meta] of agentResult.fragmentMap) {
-          allFragmentMap.set(id, meta);
-        }
+        agentResults.push(agentResult);
       }
+      const merged = mergeCompiledAgentTargets(agentResults);
+      agentRecords = merged.agentRecords;
+      for (const outputs of merged.outputs.values()) {
+        agentOutputs.push(...outputs);
+      }
+      for (const [id, meta] of merged.fragmentMap) {
+        allFragmentMap.set(id, meta);
+      }
+      const lockOutput = ["agentquilt", "lock"].join(".");
+      const claims: OutputPathClaim[] = [
+        ...result.targets.map((target) => ({
+          path: target.output,
+          owner: `document target ${target.output}`,
+        })),
+        ...agentOutputs.map((output) => ({
+          path: output.path,
+          owner: `adapter output ${output.path}`,
+        })),
+        { path: lockOutput, owner: "AgentQuilt lock" },
+      ];
+      validateOutputPaths(cwd, claims);
     } finally {
       spinner.stop();
     }
@@ -86,7 +105,7 @@ async function checkAction(options: CheckOptions): Promise<void> {
 
     // Check each compiled target against disk
     for (const target of result.targets) {
-      const outputPath = path.join(cwd, target.output);
+      const outputPath = path.resolve(cwd, target.output);
 
       if (!existsSync(outputPath)) {
         if (!options.quiet) {
@@ -117,13 +136,12 @@ async function checkAction(options: CheckOptions): Promise<void> {
     }
 
     // Check agent-definitions outputs against disk. Build writes each adapter
-    // output verbatim to path.join(cwd, output.path), so compare the same way.
+    // output verbatim to path.join(cwd, output.path), so compare the same
+    // way. Every adapter output is a standalone file (ADR-0015 rejected
+    // managed-region injection into shared, user-owned config files), so no
+    // output kind is ever skipped here.
     for (const output of agentOutputs) {
-      // Managed regions live inside user-owned files and cannot be compared
-      // whole-file; no adapter emits them yet (Codex deferred).
-      if (output.kind === "region") continue;
-
-      const outputPath = path.join(cwd, output.path);
+      const outputPath = path.resolve(cwd, output.path);
 
       if (!existsSync(outputPath)) {
         if (!options.quiet) {

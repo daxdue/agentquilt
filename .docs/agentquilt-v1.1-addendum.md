@@ -1,8 +1,14 @@
 # AgentQuilt — v1.1 Addendum: Platform-Agnostic Agent Definitions
 
-**Status:** Ready to build · **Extends:** v1 Specification · **Config schema version:** 1 (unchanged)
+**Status:** Implemented · **Extends:** v1 Specification · **Config schema version:** 1 (unchanged)
 
-This addendum adds a second kind of compile target: **agent definitions**. Where v1 compiles fragments into a prose *document* (`AGENTS.md`, `CLAUDE.md`), v1.1 compiles a neutral agent definition into the **per-platform files each LLM provider expects** — `.claude/agents/<name>.md` for Claude Code, `.codex/agents/<name>.toml` + a registration stanza in `.codex/config.toml` for Codex, and so on via pluggable adapters.
+> **Codex update:** [ADR-0015](architecture/adr/ADR-0015-codex-provider-adapter.md)
+> supersedes this addendum's Codex managed-region design. The implemented
+> contract emits one standalone `.codex/agents/<name>.toml` file per agent and
+> never edits `.codex/config.toml`. Codex examples below that show registration
+> stanzas are retained as historical design context only.
+
+This addendum adds a second kind of compile target: **agent definitions**. Where v1 compiles fragments into prose documents, v1.1 compiles a neutral agent definition into each provider file: Claude Markdown, standalone Codex custom-agent TOML, and future formats through registered adapters.
 
 Nothing in v1 changes. Document targets, normalization, fragment hashing, the lock, the CI drift check, and recovery all apply unchanged — because "canonical record → adapter → output file" is the same kind of pure, hashable function as "fragments → document." This addendum only adds new inputs (an `agent.yaml` sidecar), new outputs (adapter files), and the resolution rules between them.
 
@@ -18,14 +24,14 @@ The author writes one **canonical agent record** (the IR). At compile time, one 
 agents/reviewer/                      canonical record           adapters → outputs
 ├── agent.yaml      ─┐                ┌─────────────┐            ┌─ claude → .claude/agents/reviewer.md
 ├── 010-role.md      ├─ compose ──▶   │ name, desc, │ ──fan-out─▶├─ codex  → .codex/agents/reviewer.toml
-├── 020-criteria.md  │                │ model, body │            │          + [agents.reviewer] stanza
+├── 020-criteria.md  │                │ model, body │            │
 └── 030-output.md   ─┘                │ permissions │            └─ (future adapters: API-ready)
                                       └─────────────┘
 ```
 
 ### 1.1 Agents and subagents are one record type **[LOCKED]**
 
-In both Claude Code and Codex a "subagent" is just another agent definition that happens to have its own model — there is no separate artifact and no parent→child link the platforms require (Claude auto-discovers agents from the directory; Codex registers them in `config.toml`). AgentQuilt therefore has **one** agent record type. Model selection is per-record. A primary agent does not declare its subagents; they are simply other agent directories. This keeps the model uniform and avoids inventing linkage the platforms don't use.
+In both Claude Code and Codex a "subagent" is just another agent definition that happens to have its own model — there is no separate artifact and no parent→child link the platforms require. AgentQuilt therefore has **one** agent record type. Model selection is per-record. A primary agent does not declare its subagents; they are simply other agent directories. This keeps the model uniform and avoids inventing linkage the platforms don't use.
 
 ### 1.2 Document vs. agent-definition sources are distinct **[v1.1 CHOICE]**
 
@@ -72,28 +78,32 @@ model: balanced
 # coarse, neutral capability level
 permissions: read-only        # read-only | workspace | full   (default: read-only)
 
-# platform-specific passthrough — emitted verbatim by that adapter only
+# platform-specific extensions — validated and serialized by that adapter
 x-claude:
   color: blue
   tools: [Read, Grep, Glob]   # overrides the permissions→tools default
 x-codex:
   nickname_candidates: [Athena, Ada]
+  skills:
+    config:
+      - path: .agents/skills/review
+        enabled: true
 ```
 
 ### 3.1 Canonical fields **[LOCKED set, values extensible]**
 
 | field | required | meaning | maps to |
 |---|---|---|---|
-| `description` | yes | routing hint the platform uses to decide delegation | Claude `description`, Codex `[agents.*].description` |
+| `description` | yes | routing hint the platform uses to decide delegation | Claude `description`, Codex `description` |
 | `name` | no (default = dir name) | stable identity | Claude `name`, Codex `name` |
 | `model` | no (default = project `defaultModelTier`) | model intent as a **tier**, not a name | resolved per §4 |
 | `permissions` | no (default `read-only`) | coarse capability | mapped per §5 |
 | body (fragments) | yes | the system prompt | Claude markdown body, Codex `developer_instructions` |
-| `x-<platform>` | no | one-sided fields with no neutral equivalent | passed through to that adapter only |
+| `x-<platform>` | no | one-sided fields with no neutral equivalent | validated and serialized by that adapter |
 
 ### 3.2 Core + extension design (why not pure lowest-common-denominator)
 
-Forcing every provider's fields into one shared shape would either strip all power (intersection) or fake cross-platform meaning (union). Instead: a **canonical core** that genuinely maps everywhere, plus **`x-<platform>` extension blocks** (the OpenAPI-extension / ESLint-overrides pattern) for fields that exist on only one side. An `x-` block is emitted verbatim by its named adapter and ignored by all others. This is the only way to be agnostic in the core without lying about fidelity at the edges.
+Forcing every provider's fields into one shared shape would either strip all power (intersection) or fake cross-platform meaning (union). Instead: a **canonical core** that genuinely maps everywhere, plus **`x-<platform>` extension blocks** (the OpenAPI-extension / ESLint-overrides pattern) for fields that exist on only one side. The neutral schema accepts extension blocks, and each adapter owns their provider-specific validation and serialization. Codex deliberately allowlists only `nickname_candidates` and `skills`: nickname candidates must be a non-empty unique string array, and `skills.config` must be an array of objects with a required nonblank `path` and optional boolean `enabled`. Executable, malformed, or unknown extensions are rejected. Other adapters ignore the block. This keeps the core agnostic without promising unsafe or unsupported fidelity at the edges.
 
 ---
 
@@ -124,6 +134,12 @@ modelTiers:
 
 A brand-new platform works the moment its adapter ships, with **zero edits to any agent** — authors only ever wrote tiers.
 
+When `agentquilt init --platform claude,codex` adopts an existing Claude agent,
+a recognized Claude alias (`sonnet`, `opus`, or `haiku`) is preserved as an
+exact `model.overrides.claude` value. Codex receives no model override and
+inherits its runtime model, avoiding a tier that has only a Claude mapping.
+Claude-only adoption retains the alias-to-tier behavior.
+
 ---
 
 ## 5. Permissions and reasoning mapping **[v1.1 CHOICE]**
@@ -136,15 +152,18 @@ A brand-new platform works the moment its adapter ships, with **zero edits to an
 | `workspace` | omit `tools` (inherit full set); `permissionMode` default | `sandbox_mode = "workspace-write"` |
 | `full` | `tools` inherit; `permissionMode: acceptEdits` | `sandbox_mode = "danger-full-access"` |
 
-`x-claude.tools` (or `x-claude.permissionMode`) overrides the Claude row entirely; `x-codex.sandbox_mode` overrides the Codex row. Default is **`read-only`** (least privilege; matches the "keep tool access tight" guidance — authors opt up to write access deliberately).
+`x-claude.tools` (or `x-claude.permissionMode`) overrides the Claude row entirely. Codex canonical fields, including `sandbox_mode`, cannot be overridden through `x-codex`; the adapter currently allowlists only `nickname_candidates` and `skills`. Default is **`read-only`** (least privilege; authors opt up to write access deliberately).
 
 ### 5.2 Reasoning
 
 | neutral `reasoning` | Claude | Codex |
 |---|---|---|
-| `low` / `medium` / `high` | `effort` field (best-effort; omitted if unsupported by the installed Claude version) | `model_reasoning_effort` |
+| `low` / `medium` / `high` | `effort` field | `model_reasoning_effort` |
 
-> **Known uncertainty:** Codex's `model_reasoning_effort` is well-documented; Claude's per-file `effort` frontmatter is listed among agent fields but less firmly documented than `model`/`tools`. The Claude adapter emits `effort` when `reasoning` is set and treats a rejection as non-fatal (omit + warn). Verify against the installed Claude Code version during the build.
+> **Known uncertainty:** Codex's `model_reasoning_effort` is well-documented;
+> Claude's per-file `effort` frontmatter is less firmly documented than
+> `model`/`tools`. The Claude adapter emits `effort` whenever `reasoning` is
+> configured; it does not perform runtime provider-version detection.
 
 ---
 
@@ -152,12 +171,13 @@ A brand-new platform works the moment its adapter ships, with **zero edits to an
 
 Each adapter is `(canonicalRecord, resolvedModel, config) → files`. Each carries its own **`ADAPTER_VERSION`** constant, so changing one adapter busts only its outputs (not document outputs, not the other adapter's).
 
-### 6.1 Claude adapter **[v1.1 CHOICE]**
+### 6.1 Claude adapter **[IMPLEMENTED; source is authoritative for exact bytes]**
+
+The example below records the original serialization proposal. Current output is defined by `claude.ts` and begins with YAML frontmatter; no generated HTML banner is prepended.
 
 Output: `.claude/agents/<name>.md` (Markdown + YAML frontmatter; body is the system prompt verbatim).
 
 ```markdown
-<!-- agentquilt: generated file — do not edit. version=sha256-… regenerate: agentquilt build -->
 ---
 name: reviewer
 description: Reviews a diff for correctness, security, and missing tests. Use after code changes, before opening a PR.
@@ -173,17 +193,16 @@ Report findings by severity: Critical, Warning, Suggestion. Be specific with fil
 ```
 
 - `model` omitted entirely when tier resolves to `inherit`.
-- `tools` from §5 unless `x-claude.tools` overrides; remaining `x-claude.*` keys pass through into frontmatter verbatim.
-- The HTML-comment header sits **above** the frontmatter so it doesn't break YAML parsing; it self-identifies the file as generated.
+- `tools` from §5 unless `x-claude.tools` overrides; remaining `x-claude.*` keys pass through into frontmatter verbatim, except canonical field names (`name`, `description`, `model`, `effort`), which are rejected rather than silently overwriting the canonical value.
+- No HTML-comment banner precedes the frontmatter; provenance and exact output
+  hashes live in the lock.
 
-### 6.2 Codex adapter **[v1.1 CHOICE]**
+### 6.2 Codex adapter **[IMPLEMENTED; ADR-0015 is authoritative]**
 
-Two outputs per agent:
-
-**(a)** `.codex/agents/<name>.toml`
+One output per agent: `.codex/agents/<name>.toml`.
 
 ```toml
-# agentquilt: generated file — do not edit. version=sha256-… regenerate: agentquilt build
+# agentquilt: generated file - do not edit; regenerate: agentquilt build
 name = "reviewer"
 description = "Reviews a diff for correctness, security, and missing tests. Use after code changes, before opening a PR."
 model = "gpt-5-codex"
@@ -200,11 +219,14 @@ Report findings by severity: Critical, Warning, Suggestion. Be specific with fil
 
 - `model` / `model_reasoning_effort` lines omitted when not set / `inherit`.
 - `developer_instructions` is the composed body as a TOML multi-line string (escape `"""` if it ever appears in a body).
-- `x-codex.*` keys pass through verbatim.
+- `description` and `developer_instructions` must each be nonblank after trimming; invalid agents fail before output is written.
+- `x-codex.nickname_candidates` must be a non-empty array of unique strings containing only ASCII letters, digits, spaces, hyphens, and underscores. Values are trimmed before serialization.
+- `x-codex.skills` must contain a `config` array. Each entry requires a nonblank string `path`, may include boolean `enabled`, and may not include unknown keys; an empty array is accepted.
+- Canonical fields, executable fields such as `mcp_servers`, malformed extension values, and unknown keys are rejected instead of passed through.
+- Adapter version 2 binds this validation and serialization contract into deterministic agent and lock versions.
+- No registration stanza is emitted; `.codex/config.toml` remains user-owned (§6.3).
 
-**(b)** A registration stanza injected into `.codex/config.toml` (§6.3).
-
-### 6.3 Codex `config.toml` managed-region injection **[v1.1 CHOICE — the fragile part]**
+### 6.3 Codex `config.toml` managed-region injection **[SUPERSEDED by ADR-0015]**
 
 Codex requires each agent to be registered with an `[agents.<name>]` stanza in the otherwise hand-maintained, shared `.codex/config.toml`. AgentQuilt owns **one bounded region** of that file and never touches anything outside it:
 
@@ -287,9 +309,11 @@ metadata:
 
 ---
 
-### 6.4 Adapter API and forward-compatibility **[v1.1 CHOICE]**
+### 6.4 Adapter API and forward-compatibility **[IMPLEMENTED]**
 
-Adapters implement a small interface (`id`, `version`, `outputsFor(record, resolvedModel, config) → File[]`, optional `injectionsFor(...) → Region[]`). v1.1+ ships **Claude, Codex, and AgentSkills** concretely; the API is open so a new platform is added without touching core. Honest limit: an unknown future platform is unsupported until its adapter exists — there is no magic. Two mitigations, both **[DEFERRED]**: (a) a community/plugin adapter path; (b) an optional **neutral fallback emission** — a plain-prose description of each agent appended to a document target — so AGENTS.md-only tools get *something* for free.
+The current interface is `id`, `ADAPTER_VERSION`, and `outputsFor(record, resolvedModel, config)`. The `injectionsFor` proposal in the historical paragraph below was not implemented.
+
+Adapters implement `id`, `ADAPTER_VERSION`, and `outputsFor(record, resolvedModel, config)`. v1.1+ ships **Claude, Codex, and AgentSkills** concretely; a future platform remains unsupported until an adapter is registered.
 
 ---
 
@@ -313,12 +337,11 @@ targets:
   - kind: agent-definitions           # new
     agents: [reviewer, planner]       # explicit list, or "*" for every agent dir
     platforms: [claude, codex]        # which adapters to run
-    # outputPaths:                    # optional per-platform path override
-    #   claude: .claude/agents
-    #   codex:  .codex/agents
 ```
 
 Validation additions (fail build, exit 2): every name in `agents` resolves to a directory containing `agent.yaml`; every name in `platforms` is a known adapter; every referenced tier has a mapping for every requested platform; no two agents resolve to the same `name`.
+
+`outputPaths` is reserved but not implemented; current adapters own their fixed output locations.
 
 ---
 
@@ -328,7 +351,7 @@ Output-based, so it is robust to model-table and adapter changes (the recompiled
 
 - **bodyHash** = Merkle root over the agent's body fragments' `(id:hash)` lines (as a v1 document body, minus header).
 - **metaHash** = `sha256` of the **canonicalized** `agent.yaml` (parse → sort keys → stable JSON → hash), so reformatting or key reordering does not bump the version.
-- **outputHash[p]** = `sha256` of each adapter's normalized emitted file(s) for platform `p`, including any injected region.
+- **outputHash[p]** = `sha256` of each adapter's exact emitted bytes for platform `p`.
 - **agentVersion** = `sha256(` `FORMAT_VERSION` + adapter versions + `name` + `bodyHash` + `metaHash` + sorted `p:outputHash[p]` `)`. Bumps on body, metadata, resolved-model, or adapter change — i.e. whenever real output would change.
 - **target version** (agent-definitions) = `sha256` over sorted member `agentVersion`s.
 
@@ -345,15 +368,14 @@ Lock additions (`agentquilt.lock`), sorted, one self-contained record per agent:
       "version": "sha256-…",
       "outputs": [
         { "platform": "claude", "path": ".claude/agents/reviewer.md", "hash": "sha256-…" },
-        { "platform": "codex",  "path": ".codex/agents/reviewer.toml", "hash": "sha256-…" },
-        { "platform": "codex",  "path": ".codex/config.toml", "kind": "region", "hash": "sha256-…" }
+        { "platform": "codex",  "path": ".codex/agents/reviewer.toml", "hash": "sha256-…" }
       ]
     }
   ]
 }
 ```
 
-`agents` sorted by `name`; each agent's `outputs` sorted by `(platform, path)`. The Codex region is recorded as an output of `kind: "region"` so drift covers it.
+`agents` are sorted by `name`; each agent's outputs are sorted deterministically and hash the exact emitted bytes.
 
 ---
 
@@ -361,31 +383,34 @@ Lock additions (`agentquilt.lock`), sorted, one self-contained record per agent:
 
 | command | behavior |
 |---|---|
-| `agentquilt add agent <name>` | scaffold `agents/<name>/agent.yaml` + a starter `010-role.md`. |
+| `agentquilt agents add <name>` | scaffold `agents/<name>/agent.yaml` + a starter `010-role.md`. |
 | `agentquilt agents list` | print each agent and its **resolved** model per platform (catches tier-mapping gaps before CI). |
-| `build` / `build --watch` / `check` | now also process `agent-definitions` targets and the Codex region; semantics and exit codes unchanged from v1. |
+| `build` / `build --watch` / `check` | now also process `agent-definitions` targets and provider files; semantics and exit codes unchanged from v1. |
 
 `.gitattributes` additions:
 
 ```gitattributes
 .claude/agents/**   linguist-generated=true
 .codex/agents/**    linguist-generated=true
-# NOTE: do NOT mark .codex/config.toml generated — only a region is managed; the rest is the user's.
+# `.codex/config.toml` remains entirely user-owned.
 ```
 
 ---
 
 ## 10. Risks and open questions (v1.1-specific)
 
-- **`config.toml` injection is the sharp edge.** Owning a region inside a shared, hand-edited file is inherently more failure-prone than writing a whole file (Claude's model). Mitigation: strict sentinel matching, region-only drift check, deterministic regeneration, and the focused test matrix in §6.3.
+- **The earlier `config.toml` injection proposal was rejected.** ADR-0015 limits ownership to standalone files under `.codex/agents/` and leaves shared Codex configuration untouched.
 - **These formats are young and moving.** Research found the official docs internally inconsistent (Codex conflates agents vs. skills; Claude's documented frontmatter differs from what `/agents` generates). Adapters are **living code** with ongoing maintenance cost — weigh that against the "set and forget" promise. Pin each adapter's assumptions behind its `ADAPTER_VERSION`.
-- **Forward-compatibility has a hard floor.** Agnosticism is real for the *core*; a novel future format needs a new adapter. The neutral-fallback emission (§6.4) softens but does not remove this.
-- **Permissions coarseness.** Three levels won't satisfy every power user; the `x-<platform>` escape hatch is the pressure-release valve, at the cost of some per-platform divergence in those agents.
-- **Claude `effort` field support** is unverified per-version (§5.2); the adapter degrades gracefully but confirm against the target Claude Code version.
+- **Forward-compatibility has a hard floor.** Agnosticism is real for the
+  *core*; a novel future format needs a new adapter. No neutral fallback is
+  currently implemented.
+- **Permissions coarseness.** Three levels will not satisfy every power user. Provider extensions remain adapter-validated; Codex intentionally does not allow extensions to override canonical permissions or introduce executable process configuration.
+- **Claude `effort` field support** is unverified per-version (§5.2); confirm
+  compatibility against the target Claude Code version when using reasoning.
 
 ---
 
-## Appendix — end-to-end agent example
+## Appendix — end-to-end agent example **[HISTORICAL where superseded by ADR-0015]**
 
 `agents/reviewer/agent.yaml`
 ```yaml
@@ -416,4 +441,4 @@ targets:
     platforms: [claude, codex]
 ```
 
-`agentquilt build` produces: `.claude/agents/reviewer.md` (frontmatter `model: sonnet`, `tools: Read, Grep, Glob`, `color: blue`), `.codex/agents/reviewer.toml` (`model = "gpt-5-codex"`, `sandbox_mode = "read-only"`), and a `[agents.reviewer]` stanza inside the managed region of `.codex/config.toml` — all recorded in `agentquilt.lock` and verified by `agentquilt check`.
+`agentquilt build` produces standalone Claude and Codex agent files, records their exact hashes in the generated lock, and verifies them with `agentquilt check`; shared Codex configuration remains untouched.

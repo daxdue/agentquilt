@@ -27,7 +27,11 @@ plans to flag these triggers.
    without a prior recorded human approval of the specific operation.
 3. Release creation and publication (`npm version`, tag push, `npm publish`)
    are performed by the Maintainer only, per
-   [release-process.md](../sdlc/release-process.md).
+   [release-process.md](../sdlc/release-process.md). In the automated release
+   contract, "performed by the Maintainer" means the Maintainer makes the
+   release decision by merging the Version Packages PR; the pinned workflow
+   performs the mechanical version, package-tag, GitHub Release, and registry
+   publication steps. No agent performs them.
 4. Generated files are never hand-edited; a hand-edit is not approvable — it
    is redone via the canonical source and `npx agentquilt build`.
 

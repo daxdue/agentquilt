@@ -38,6 +38,53 @@ describe("agentHasher", () => {
     expect(hash1).not.toBe(hash2);
   });
 
+  it("should compute the same meta hash regardless of key order inside array-of-object values", () => {
+    // Regression test: x-codex.skills.config is an array of {path, enabled}
+    // objects. Two manifests that only differ in the key order within one
+    // array element are semantically identical and must hash identically —
+    // otherwise a purely cosmetic reformat falsely bumps the agent version.
+    const def1 = {
+      description: "Test",
+      "x-codex": {
+        skills: {
+          config: [
+            { enabled: true, path: "/skills/foo" },
+            { path: "/skills/bar" },
+          ],
+        },
+      },
+    };
+    const def2 = {
+      description: "Test",
+      "x-codex": {
+        skills: {
+          config: [
+            { path: "/skills/foo", enabled: true },
+            { path: "/skills/bar" },
+          ],
+        },
+      },
+    };
+
+    const hash1 = computeMetaHash(def1 as any);
+    const hash2 = computeMetaHash(def2 as any);
+
+    expect(hash1).toBe(hash2);
+  });
+
+  it("still distinguishes definitions that differ in array element order or content", () => {
+    const def1 = {
+      description: "Test",
+      "x-codex": { skills: { config: [{ path: "/skills/foo" }, { path: "/skills/bar" }] } },
+    };
+    const def2 = {
+      description: "Test",
+      "x-codex": { skills: { config: [{ path: "/skills/bar" }, { path: "/skills/foo" }] } },
+    };
+
+    expect(computeMetaHash(def1 as any)).not.toBe(computeMetaHash(def2 as any));
+  });
+
   it("should hash agent with body fragments", () => {
     const agentDir = path.join(tempDir, "hash-test-agent");
     mkdirSync(agentDir, { recursive: true });

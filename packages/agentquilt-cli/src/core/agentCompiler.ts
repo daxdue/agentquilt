@@ -1,22 +1,26 @@
+import { realpathSync } from "fs";
 import path from "path";
 import { resolveAgents } from "./agentLoader.js";
 import { hashAgent, computeAgentVersion, type OutputEntry } from "./agentHasher.js";
 import { resolveModel } from "./modelResolver.js";
-import { getAdapter } from "./adapters/index.js";
+import { getAdapter, type AdapterOutput } from "./adapters/index.js";
+import { ConfigError } from "./configLoader.js";
 import { AgentQuiltConfig } from "../schemas/config.schema.js";
 import type { AgentLockRecord, AgentOutputRecord } from "../schemas/lock.schema.js";
-import { normalize, fragmentHash } from "./normalize.js";
+import { fragmentHash } from "./normalize.js";
+import { byteCompare } from "./sortUtil.js";
+import { assertPathContained, portablePathKey } from "./pathSecurity.js";
 
-export interface AdapterOutput {
-  path: string;
-  content: string;
-  kind?: "file" | "region";
-}
+export type { AdapterOutput } from "./adapters/index.js";
 
 export interface CompiledAgentTarget {
   agentRecords: AgentLockRecord[];
   outputs: Map<string, AdapterOutput[]>;
   fragmentMap: Map<string, { body: string; hash: string; bytes: number; tags: string[] }>;
+  /** Agent name -> bodyHash, computed once per agent by hashAgent() so
+   * mergeCompiledAgentTargets doesn't need to rebuild and re-hash the same
+   * fragment refs when combining results from multiple targets. */
+  bodyHashByName: Map<string, string>;
 }
 
 export interface AgentDefinitionsTarget {
@@ -27,6 +31,120 @@ export interface AgentDefinitionsTarget {
   outputPaths?: Record<string, string>;
 }
 
+export function mergeCompiledAgentTargets(
+  results: CompiledAgentTarget[]
+): CompiledAgentTarget {
+  const mergedFragmentMap = new Map<
+    string,
+    { body: string; hash: string; bytes: number; tags: string[] }
+  >();
+  const recordsByName = new Map<string, AgentLockRecord>();
+  const outputsByName = new Map<string, AdapterOutput[]>();
+  const outputOwnerByPath = new Map<string, string>();
+  const bodyHashByName = new Map<string, string>();
+
+  for (const result of results) {
+    for (const [id, metadata] of result.fragmentMap) {
+      const previous = mergedFragmentMap.get(id);
+      if (previous !== undefined && previous.hash !== metadata.hash) {
+        throw new ConfigError(`Fragment "${id}" resolves to conflicting content across targets`);
+      }
+      mergedFragmentMap.set(id, metadata);
+    }
+
+    for (const [name, bodyHash] of result.bodyHashByName) {
+      // Every target contributing a record with this name is guaranteed
+      // (by the incompatible-definitions check below) to have identical
+      // bodyFragments, so all contributed bodyHash values are identical too
+      // — first-wins is safe here, no need to compare or recompute.
+      if (!bodyHashByName.has(name)) {
+        bodyHashByName.set(name, bodyHash);
+      }
+    }
+
+    for (const record of result.agentRecords) {
+      const previousRecord = recordsByName.get(record.name);
+      if (
+        previousRecord !== undefined &&
+        (previousRecord.dir !== record.dir ||
+          previousRecord.metaHash !== record.metaHash ||
+          JSON.stringify(previousRecord.bodyFragments) !== JSON.stringify(record.bodyFragments))
+      ) {
+        throw new ConfigError(
+          `Agent "${record.name}" resolves to incompatible canonical definitions across targets`
+        );
+      }
+
+      for (const output of result.outputs.get(record.name) ?? []) {
+        const key = portablePathKey(output.path);
+        const owner = `${record.name} (${output.path})`;
+        const previousOwner = outputOwnerByPath.get(key);
+        if (previousOwner !== undefined) {
+          throw new ConfigError(
+            `Adapter output path collision: ${previousOwner} and ${owner} resolve to the same portable path`
+          );
+        }
+        outputOwnerByPath.set(key, owner);
+        const mergedOutputs = outputsByName.get(record.name) ?? [];
+        mergedOutputs.push(output);
+        outputsByName.set(record.name, mergedOutputs);
+      }
+
+      if (previousRecord === undefined) {
+        recordsByName.set(record.name, { ...record, outputs: [...record.outputs] });
+      } else {
+        previousRecord.outputs.push(...record.outputs);
+      }
+    }
+  }
+
+  const agentRecords = [...recordsByName.values()];
+  for (const record of agentRecords) {
+    record.outputs.sort((a, b) => {
+      const platformOrder = byteCompare(a.platform, b.platform);
+      return platformOrder !== 0 ? platformOrder : byteCompare(a.path, b.path);
+    });
+    outputsByName.get(record.name)?.sort((a, b) => byteCompare(a.path, b.path));
+
+    const bodyHash = bodyHashByName.get(record.name);
+    if (bodyHash === undefined) {
+      throw new ConfigError(`Missing body hash for agent "${record.name}"`);
+    }
+    const outputEntries: OutputEntry[] = record.outputs.map((output) => {
+      if (output.kind !== "file") {
+        throw new ConfigError(
+          `Adapter output "${output.path}" uses legacy unsupported kind "${output.kind}"`
+        );
+      }
+      const adapter = getAdapter(output.platform);
+      if (adapter === undefined) {
+        throw new ConfigError(`Unknown adapter "${output.platform}" while merging outputs`);
+      }
+      return {
+        platform: output.platform,
+        path: output.path,
+        kind: output.kind,
+        adapterVersion: adapter.ADAPTER_VERSION,
+        outputHash: output.hash,
+      };
+    });
+    record.version = computeAgentVersion(
+      record.name,
+      bodyHash,
+      record.metaHash,
+      outputEntries
+    );
+  }
+  agentRecords.sort((a, b) => byteCompare(a.name, b.name));
+
+  return {
+    agentRecords,
+    outputs: outputsByName,
+    fragmentMap: mergedFragmentMap,
+    bodyHashByName,
+  };
+}
+
 export async function compileAgentDefinitionsTarget(
   target: AgentDefinitionsTarget,
   config: AgentQuiltConfig,
@@ -35,6 +153,18 @@ export async function compileAgentDefinitionsTarget(
 ): Promise<CompiledAgentTarget> {
   // Use target-specific sourceDir if provided, otherwise use global sourceDir
   const targetSourceDir = target.sourceDir ? path.resolve(sourceDir, "..", target.sourceDir) : sourceDir;
+  const resolvedRepoRoot = path.resolve(repoRoot);
+  const resolvedTargetSourceDir = path.resolve(targetSourceDir);
+  assertPathContained(
+    resolvedTargetSourceDir,
+    resolvedRepoRoot,
+    `agent-definitions target sourceDir escapes the repository: "${target.sourceDir}"`
+  );
+  assertPathContained(
+    realpathSync(resolvedTargetSourceDir),
+    realpathSync(resolvedRepoRoot),
+    `agent-definitions target sourceDir escapes the repository through a symlink: "${target.sourceDir}"`
+  );
 
   // Resolve agent list
   const records = resolveAgents(target.agents, targetSourceDir, repoRoot);
@@ -43,9 +173,12 @@ export async function compileAgentDefinitionsTarget(
   const agentLockRecords: AgentLockRecord[] = [];
   const allOutputs = new Map<string, AdapterOutput[]>();
   const allFragmentMap = new Map<string, { body: string; hash: string; bytes: number; tags: string[] }>();
+  const outputOwnerByPath = new Map<string, string>();
+  const bodyHashByName = new Map<string, string>();
 
   for (const record of records) {
     const { bodyHash, metaHash, fragmentMap } = hashAgent(record);
+    bodyHashByName.set(record.name, bodyHash);
 
     // Merge fragment map
     for (const [id, meta] of fragmentMap) {
@@ -66,8 +199,19 @@ export async function compileAgentDefinitionsTarget(
       const resolvedModel = resolveModel(record.definition, platform, config);
       const adapterOutputs = adapter.outputsFor(record, resolvedModel, config);
       for (const out of adapterOutputs) {
-        // Hash the output content
-        const outHash = fragmentHash(normalize(Buffer.from(out.content, "utf8")));
+        const outputKey = portablePathKey(out.path);
+        const previousOwner = outputOwnerByPath.get(outputKey);
+        if (previousOwner !== undefined) {
+          throw new ConfigError(
+            `Adapter output path collision: ${previousOwner} and ` +
+              `${record.name}/${platform} both emit the portable path "${out.path}"`
+          );
+        }
+        outputOwnerByPath.set(outputKey, `${record.name}/${platform}`);
+
+        // Adapter outputs are already complete serialized files. Hash their
+        // exact bytes rather than applying source-fragment normalization.
+        const outHash = fragmentHash(out.content);
         adapterOutputsByPlatform.push({ ...out, content: out.content, platform }); // Store platform for later
         outputs.push({
           platform,
@@ -77,6 +221,8 @@ export async function compileAgentDefinitionsTarget(
         });
         outputEntries.push({
           platform,
+          path: out.path,
+          kind: out.kind ?? "file",
           adapterVersion: adapter.ADAPTER_VERSION,
           outputHash: outHash,
         });
@@ -86,17 +232,16 @@ export async function compileAgentDefinitionsTarget(
     // Finalize agent version with output entries
     const finalVersion = computeAgentVersion(record.name, bodyHash, metaHash, outputEntries);
 
-    // Prepend HTML comment header to adapter outputs — except outputs that
-    // begin with YAML frontmatter (.claude/agents/*.md, SKILL.md): platform
-    // parsers require the frontmatter delimiter at byte 0, and their bodies
-    // are loaded into model context, so a banner would both break parsing and
-    // pollute the prompt. Provenance for those lives in agentquilt.lock.
-    for (const out of adapterOutputsByPlatform) {
-      if (!out.content.startsWith("---\n")) {
-        const header = `<!-- agentquilt: generated file — do not edit. version=${finalVersion} · regenerate: agentquilt build -->\n`;
-        out.content = `${header}${out.content}`;
-      }
-    }
+    // Adapters own their complete output bytes. Hashing, writing, and drift
+    // checking must all observe exactly the same content.
+    outputs.sort((a, b) => {
+      const platformOrder = byteCompare(a.platform, b.platform);
+      return platformOrder !== 0 ? platformOrder : byteCompare(a.path, b.path);
+    });
+    adapterOutputsByPlatform.sort((a, b) => {
+      const platformOrder = byteCompare(a.platform, b.platform);
+      return platformOrder !== 0 ? platformOrder : byteCompare(a.path, b.path);
+    });
 
     // Store adapter outputs in allOutputs map for later retrieval
     if (adapterOutputsByPlatform.length > 0) {
@@ -117,5 +262,6 @@ export async function compileAgentDefinitionsTarget(
     agentRecords: agentLockRecords,
     outputs: allOutputs,
     fragmentMap: allFragmentMap,
+    bodyHashByName,
   };
 }

@@ -13,12 +13,15 @@ name: release
 #
 # Everything downstream of those two human decisions -- running the full
 # gate suite, bumping package.json, writing the changelog, publishing to
-# npm with provenance, tagging, and creating the GitHub Release -- is
-# mechanical and safe to automate.
+# npm with provenance, and creating the package tag and GitHub Release --
+# is mechanical and safe to automate.
 
 on:
   push:
     branches: [main]
+
+permissions:
+  contents: read
 
 concurrency:
   group: release-${{ github.ref }}
@@ -28,16 +31,20 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
 
       - name: Install dependencies
-        working-directory: packages/agentquilt-cli
         run: npm ci
+
+      - name: Typecheck CLI and tests
+        working-directory: packages/agentquilt-cli
+        run: npx tsc --project tsconfig.test.json
 
       - name: Run all tests
         working-directory: packages/agentquilt-cli
@@ -51,16 +58,17 @@ jobs:
         working-directory: packages/agentquilt-cli
         run: npm run build
 
+      - name: Build website
+        run: npm run website:build
+
       - name: Drift check
         run: node packages/agentquilt-cli/dist/index.js check
 
       - name: Pipeline agent drift check
         run: node scripts/check-pipeline-agent-drift.mjs
-        continue-on-error: true
 
       - name: Package validation
-        working-directory: packages/agentquilt-cli
-        run: npm pack --dry-run
+        run: npm run package:check
 
       - name: Verify risk register
         working-directory: packages/agentquilt-cli
@@ -77,18 +85,35 @@ jobs:
             console.log('OK: no open high/critical risks in policies/risks/risk-register.yaml');
           "
 
+  node18:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "18"
+      - name: Install dependencies (workspace root)
+        run: npm ci
+      - name: Build CLI on minimum supported Node
+        run: npm run build
+      - name: Run tests on minimum supported Node
+        run: npm test
+
   release:
-    needs: checks
+    needs: [checks, node18]
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
       id-token: write # required for npm provenance
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
@@ -107,40 +132,13 @@ jobs:
       #      to npm and pushes the resulting git tag.
       - name: Create release PR or publish
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1
         with:
           version: npm run version-packages
           publish: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Create GitHub Release
-        if: steps.changesets.outputs.published == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          for pkg in $(echo '${{ steps.changesets.outputs.publishedPackages }}' | node -e "
-            const data = JSON.parse(require('fs').readFileSync(0, 'utf8'));
-            data.forEach(p => console.log(p.name + '@' + p.version));
-          "); do
-            name="${pkg%@*}"
-            version="${pkg##*@}"
-            tag="v${version}"
-            body=$(node -e "
-              const fs = require('fs');
-              const changelog = fs.readFileSync('packages/agentquilt-cli/CHANGELOG.md', 'utf8');
-              const marker = '## ${version}';
-              const start = changelog.indexOf(marker);
-              if (start === -1) { console.log('See CHANGELOG.md.'); process.exit(0); }
-              const rest = changelog.slice(start + marker.length);
-              const next = rest.search(/\n## /);
-              console.log(rest.slice(0, next === -1 ? undefined : next).trim());
-            ")
-            gh release create "$tag" \
-              --title "$name $version" \
-              --notes "$body"
-          done
 
 # One-time setup this workflow depends on, outside this repo (a human,
 # Maintainer-only action -- cannot be automated by a workflow or agent):

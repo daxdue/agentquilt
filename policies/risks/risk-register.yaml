@@ -42,18 +42,19 @@ risks:
     discovered: "2026-06-23 (SDLC/STLC review)"
     mitigatedDate: "2026-06-30"
     owner: "@cli-maintainers"
-    mitigation: "Added path traversal check in validateConfig() Rule 5 (configLoader.ts): each include is resolved with path.resolve(sourceDir, includeName) and asserted to start with path.resolve(sourceDir). Traversal paths push a ConfigError entry. Covered by tests/security.test.ts (8 cases)."
+    mitigation: "The global sourceDir is bounded lexically and physically to the repository before scanning. Document outputs are resolved absolutely and rejected inside any canonical source root. Includes are checked lexically and by realpath, and fragmentScanner realpath-checks every Markdown file against its include directory before reading. Covered by adversarial config, scanner, and end-to-end tests."
     aiAssistance: "security-agent flags any PR touching configLoader.ts or fragmentScanner.ts; generates adversarial test inputs"
 
   - id: RISK-005
     type: process
     description: "No npm publish workflow — releases are currently manual (npm publish run by human from CI)"
     level: medium
-    status: open
+    status: mitigated
     discovered: "2026-06-23 (SDLC/STLC review)"
+    mitigatedDate: "2026-07-21"
     owner: "@maintainers"
-    mitigation: "Create release.yml GitHub workflow that publishes on git tag. Week 4 scope."
-    aiAssistance: "release-agent reminds of this risk during release-gate check"
+    mitigation: "Added .github/workflows/release.yml using Changesets. A human-authored changeset records release intent; the workflow opens or updates a Version Packages PR, and publication occurs only after a maintainer merges that PR. Deterministic release checks run before the changesets action. See ADR-0013."
+    aiAssistance: "release-agent verifies the workflow and changeset evidence during release-gate review"
 
   - id: RISK-006
     type: test
@@ -81,20 +82,22 @@ risks:
     type: security
     description: "agent-definitions target.sourceDir in config.yaml not validated for traversal — a config with sourceDir: ../../../etc directs the loader outside the project"
     level: medium
-    status: open
+    status: mitigated
     discovered: "2026-07-05 (pre-v0.1.0 security-review agent)"
+    mitigatedDate: "2026-07-21"
     owner: "@cli-maintainers"
-    mitigation: "Extend validateConfig() to bounds-check per-target sourceDir against the project root, mirroring the RISK-004 include check. Post-v0.1.0 patch scope: config.yaml is author-controlled, so exploitation requires a malicious config passing PR review."
+    mitigation: "validateConfig() directly bounds-checks each agent-definitions target.sourceDir against the repository root using lexical and realpath containment, then checks explicit agent selectors against that source root. agentCompiler.ts repeats source-root containment at compile time, while agentLoader.ts covers wildcard discovery and individual manifest/fragment symlinks. See ADR-0016 and tests/security.test.ts."
     aiAssistance: "security-agent flags PRs adding sourceDir values containing '..'"
 
   - id: RISK-009
     type: security
     description: "agentquilt agents add <name> accepts raw CLI argument as path component (low: requires direct CLI control); dead src/integration/claude-agent.ts ships in dist with unresolvable @anthropic-ai/sdk import"
     level: low
-    status: open
+    status: mitigated
     discovered: "2026-07-05 (pre-v0.1.0 security-review agent)"
+    mitigatedDate: "2026-07-21"
     owner: "@cli-maintainers"
-    mitigation: "Reject path separators and '..' in agents add name argument (exit 2); either drop integration/ from the published dist or move the SDK dependency when Phase 3.4 auto-invocation is revisited. Post-v0.1.0 patch scope."
+    mitigation: "agents add rejects names that resolve outside the configured agent source directory with exit 2. The retracted provider-invocation integration and @anthropic-ai/sdk dependency are absent from source, the workspace lock, and the package dry-run contents; provider support is compile-only per ADR-0012."
     aiAssistance: "security-agent re-checks on next release-gate run"
 
   - id: RISK-010
@@ -106,6 +109,28 @@ risks:
     owner: "@cli-maintainers"
     mitigation: "Post-v0.1.0: build refuses to overwrite an existing document-target output that lacks the '<!-- agentquilt: generated file' header unless --force (mirrors init's config-clobber guard); optionally add an adoption flow that snapshots the existing content into a fragment first. Related: init-written .gitattributes marks AGENTS.md/CLAUDE.md/GEMINI.md linguist-generated even when they are hand-authored and unmanaged."
     aiAssistance: "security-agent and code-review agent flag PRs adding document targets whose output path already exists in the repo"
+
+  - id: RISK-011
+    type: security
+    description: "A generated output path can follow an existing file or parent-directory symlink and write outside the repository"
+    level: high
+    status: mitigated
+    discovered: "2026-07-21 (Codex release-readiness investigation)"
+    mitigatedDate: "2026-07-21"
+    owner: "@cli-maintainers"
+    mitigation: "build and check validate every document, adapter, and lock output before I/O. Every existing path component is lstat-checked and symlinks are rejected, including dangling and in-repository aliases; existing paths and nearest parents are also realpath-checked. --force cannot bypass the check. Covered by pathSecurity and end-to-end tests. See ADR-0017."
+    aiAssistance: "security-agent reviews changes to output validation and filesystem write paths"
+
+  - id: RISK-012
+    type: implementation
+    description: "Document targets and provider adapters can claim the same output path, causing order-dependent overwrite and lock drift"
+    level: medium
+    status: mitigated
+    discovered: "2026-07-21 (Codex release-readiness investigation)"
+    mitigatedDate: "2026-07-21"
+    owner: "@cli-maintainers"
+    mitigation: "build and check construct one output inventory across document targets, adapter outputs, and the lock path. Portable path keys reject exact, case-only, slash, or Unicode-normalization collisions before any output is changed. Covered by pathSecurity and end-to-end tests. See ADR-0017."
+    aiAssistance: "architecture-reviewer and deterministic-build specialist inspect new output producers for inventory participation"
 
 mitigationProcess: |
   ## AI-Assisted Risk Management

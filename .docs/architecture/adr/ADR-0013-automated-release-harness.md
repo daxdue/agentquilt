@@ -58,20 +58,22 @@ practice for packages published from CI.
 ### Release workflow: human-gated, mechanically automated
 
 `.github/workflows/release.yml` is rewritten to trigger on every push to
-`main` (instead of manual `workflow_dispatch`), with two jobs:
+`main` (instead of manual `workflow_dispatch`), with three jobs:
 
 1. `checks` — the same deterministic gate suite the old workflow ran by
    hand (tests, coverage, build, drift check, pipeline agent drift check,
    package validation, risk-register check). Must pass before anything
    else runs.
-2. `release` — runs `changesets/action@v1`. If changesets are pending on
+2. `node18` — builds and tests on the minimum supported Node version and is
+   a direct dependency of publication.
+3. `release` — runs a commit-SHA-pinned Changesets action. If changesets are pending on
    `main`, it opens or updates a bot-owned "Version Packages" PR (bumps
    `package.json`, writes the `CHANGELOG.md` section) and stops — nothing
    publishes. If no changesets are pending (the push *is* that PR having
    just been merged), it runs `npm run release` (`changeset publish`),
-   which publishes to npm with provenance and pushes the `vX.Y.Z` tag. A
-   final step creates a GitHub Release from the published changelog
-   section.
+   which publishes to npm with provenance. Changesets creates the single
+   `agentquilt@X.Y.Z` package tag and corresponding GitHub Release; the
+   workflow does not create a second custom release identity.
 
 This preserves ADR-0004's human-approval requirement at both decision
 points:

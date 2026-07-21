@@ -501,15 +501,18 @@ so every agent is self-contained):
 - Tools / permission scope: `permissions: read-only` (`Read, Grep, Glob`).
   It consumes validation evidence rather than re-running checks; this keeps
   it strictly read-only and distinguishable from the regression reviewer.
-- Prohibited actions: publishing, tagging, pushing, or bumping versions
-  (human-only per [release-process.md](../sdlc/release-process.md)); editing
+- Prohibited actions: publishing, tagging, pushing, or bumping versions;
+  the Maintainer approves release by merging the Version Packages PR and the
+  pinned workflow performs those mechanics per
+  [release-process.md](../sdlc/release-process.md); editing
   the CHANGELOG or register (proposed text goes in the summary as
   suggestions).
 - Expected output format:
   [Release-Readiness Summary](completion-contract.md#4-artifact-format-release-readiness-summary).
 - Completion criteria: summary complete with evidence for every checklist
   item; blocking items named explicitly.
-- Handoff destination: the Maintainer, who executes the release steps.
+- Handoff destination: the Maintainer, who decides whether to merge the
+  Version Packages PR and then verifies the automated release result.
 - May edit files: no. Read-only: yes.
 
 ### 6.9 security-review (specialist)

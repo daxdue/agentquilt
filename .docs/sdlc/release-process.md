@@ -2,7 +2,9 @@
 
 ## Overview
 
-Releases follow the milestone roadmap defined in [roadmap.md](../roadmap.md). The release unit is a semver version tag (`v0.x.0`). npm publish is the primary distribution channel.
+Releases follow the milestone roadmap defined in [roadmap.md](../roadmap.md).
+The release unit is the Changesets package tag (`agentquilt@X.Y.Z`). npm
+publish is the primary distribution channel.
 
 Versioning, changelog generation, and publishing are automated via
 [Changesets](https://github.com/changesets/changesets) and the
@@ -57,17 +59,19 @@ release.
 
 This is the "when" — a human decides to release by merging that PR. Once
 merged, the next run of `release.yml` finds no pending changesets (they
-were already consumed) and instead runs the publish path: builds the CLI,
-runs `changeset publish` (which runs `npm publish` with npm provenance for
-each changed package), pushes the resulting `vX.Y.Z` git tag, and creates
-a GitHub Release with the changelog section as its body.
+were already consumed) and instead runs the publish path: builds the CLI
+and runs `changeset publish`, which publishes with npm provenance, creates
+and pushes the resulting `agentquilt@X.Y.Z` package tag, and lets the
+pinned Changesets action create the corresponding GitHub Release. There is
+no second custom tag or release step.
 
 ### 4. Everything else in the gate suite still runs first
 
 Before either the version-PR or the publish path executes, `release.yml`
 runs the same deterministic checks that have always gated a release: full
 test suite, coverage, CLI build, `agentquilt check` drift check, pipeline
-agent drift check, `npm pack --dry-run` package validation, and the
+agent drift check, asserted package-content validation, the Node 18
+compatibility job, and the
 open-high/critical-risk check against `policies/risks/risk-register.yaml`.
 A failure in any of these blocks both the version PR and the publish step.
 

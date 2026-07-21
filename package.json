@@ -25,6 +25,7 @@
     "website:dev": "npm run dev -w packages/website",
     "website:build": "npm run build -w packages/website",
     "check:pipeline-agents": "node scripts/check-pipeline-agent-drift.mjs",
+    "package:check": "node scripts/check-package-contents.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "npm run build -w packages/agentquilt-cli && changeset publish"

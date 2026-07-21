@@ -48,6 +48,7 @@ blocking items.
 
 ## Handoff
 
-To the Maintainer, who decides and executes the release steps per
-`.docs/sdlc/release-process.md`. Post-release verification also remains
-with the Maintainer (G7, outside the day-to-day loop).
+To the Maintainer, who decides whether to merge the Changesets Version
+Packages PR per `.docs/sdlc/release-process.md`. The pinned workflow executes
+the mechanical release steps after that approval. Post-release verification
+remains with the Maintainer (G7, outside the day-to-day loop).

@@ -3,9 +3,10 @@ import { join, basename, extname, resolve, sep } from "path";
 import { parse as parseYaml } from "yaml";
 import type { Command } from "commander";
 import { ConfigError } from "../core/configLoader.js";
+import { byteCompare } from "../core/sortUtil.js";
 import { bold, cyan, dim, green, sym } from "../ui/terminal.js";
 
-const ADAPTER_PLATFORMS = ["claude", "agentskills"];
+const ADAPTER_PLATFORMS = ["claude", "codex", "agentskills"];
 const PRESET_PLATFORMS = ["cursor", "copilot", "gemini"];
 const ALL_PLATFORMS = [...ADAPTER_PLATFORMS, ...PRESET_PLATFORMS];
 
@@ -15,6 +16,10 @@ const PLATFORM_DESCRIPTIONS: Record<string, { type: string; output: string }> = 
   cursor: { type: "preset", output: ".cursor/rules/<agent>.mdc (combined)" },
   copilot: { type: "preset", output: ".github/copilot-instructions.md (combined)" },
   gemini: { type: "preset", output: "GEMINI.md (combined)" },
+};
+PLATFORM_DESCRIPTIONS.codex = {
+  type: "adapter",
+  output: ".codex/agents/<name>.toml (per agent)",
 };
 
 export function registerInitCommand(program: Command): void {
@@ -46,6 +51,8 @@ export function initProject(dir: string, platforms: string[], force = false): vo
   try {
     console.log(`${bold("Initializing AgentQuilt project")}\n`);
 
+    platforms = [...new Set(platforms)];
+
     // Validate platforms
     const invalidPlatforms = platforms.filter((p) => !ALL_PLATFORMS.includes(p));
     if (invalidPlatforms.length > 0) {
@@ -76,6 +83,12 @@ export function initProject(dir: string, platforms: string[], force = false): vo
       mkdirSync(skillsDir, { recursive: true });
     }
 
+    if (platforms.includes("codex") && existsSync(join(dir, ".codex", "agents"))) {
+      console.warn(
+        `  ${sym.warn} existing Codex agents are not adopted; build preserves differing files until --force explicitly claims them`
+      );
+    }
+
     // Scan for existing agents/skills and adopt them into the source directories
     // (before config generation, so preset targets can include them)
     const adopted = adoptExistingAgents(dir, platforms, agentsDir, skillsDir);
@@ -94,6 +107,9 @@ export function initProject(dir: string, platforms: string[], force = false): vo
     // Create .gitattributes (spec §7.1) — never overwrite an existing one,
     // even with --force: it usually carries non-AgentQuilt rules
     const gitattributesPath = join(dir, ".gitattributes");
+    const codexGeneratedRule = platforms.includes("codex")
+      ? ".codex/agents/**     linguist-generated=true\n"
+      : "";
     const gitattributesContent = `# normalize line endings everywhere — primary CRLF defense in the working tree
 * text=auto eol=lf
 .agentquilt/**/*.md text eol=lf
@@ -105,7 +121,7 @@ GEMINI.md            linguist-generated=true
 .cursor/rules/**     linguist-generated=true
 .github/copilot-instructions.md linguist-generated=true
 .agents/skills/**    linguist-generated=true
-
+${codexGeneratedRule}
 # lock: structured to rarely conflict; union as a free win where honored
 agentquilt.lock      linguist-generated=true merge=union
 `;
@@ -289,7 +305,9 @@ export function adoptExistingAgents(
     if (!existsSync(scanDir)) continue;
 
     if (platform === "claude") {
-      adopted.agents.push(...adoptClaudeAgents(scanDir, agentsDir));
+      adopted.agents.push(
+        ...adoptClaudeAgents(scanDir, agentsDir, platforms.includes("codex"))
+      );
     } else if (platform === "agentskills") {
       adopted.skills.push(...adoptAgentSkillsSkills(scanDir, skillsDir));
     }
@@ -298,11 +316,15 @@ export function adoptExistingAgents(
   return adopted;
 }
 
-function adoptClaudeAgents(scanDir: string, agentsDir: string): string[] {
+function adoptClaudeAgents(
+  scanDir: string,
+  agentsDir: string,
+  useClaudeModelOverride: boolean
+): string[] {
   const adopted: string[] = [];
   const entries = readdirSync(scanDir, { withFileTypes: true })
     .filter((e) => e.isFile() && extname(e.name) === ".md")
-    .sort((a, b) => Buffer.from(a.name).compare(Buffer.from(b.name)));
+    .sort((a, b) => byteCompare(a.name, b.name));
 
   for (const entry of entries) {
     const filePath = join(scanDir, entry.name);
@@ -322,10 +344,13 @@ function adoptClaudeAgents(scanDir: string, agentsDir: string): string[] {
       : `Adopted from .claude/agents/${entry.name}`;
 
     const modelTier = reverseMapModel(fm["model"]);
+    const claudeModelOverride = useClaudeModelOverride && modelTier !== undefined
+      ? (fm["model"] as string)
+      : undefined;
     const permissions = reverseMapPermissions(fm["tools"], fm["permissionMode"]);
 
     mkdirSync(agentDir, { recursive: true });
-    writeAgentYaml(agentDir, description, modelTier, permissions);
+    writeAgentYaml(agentDir, description, modelTier, permissions, claudeModelOverride);
     writeRoleBlock(agentDir, body);
 
     console.log(`  ${sym.ok} adopted ${name} ${dim(`from .claude/agents/${entry.name}`)}`);
@@ -339,7 +364,7 @@ function adoptAgentSkillsSkills(scanDir: string, skillsDir: string): string[] {
   const adopted: string[] = [];
   const skillDirs = readdirSync(scanDir, { withFileTypes: true })
     .filter((e) => e.isDirectory())
-    .sort((a, b) => Buffer.from(a.name).compare(Buffer.from(b.name)));
+    .sort((a, b) => byteCompare(a.name, b.name));
 
   for (const skillDir of skillDirs) {
     const skillFile = join(scanDir, skillDir.name, "SKILL.md");
@@ -374,10 +399,13 @@ function writeAgentYaml(
   agentDir: string,
   description: string,
   modelTier: string | undefined,
-  permissions: string
+  permissions: string,
+  claudeModelOverride?: string
 ): void {
   let yaml = `description: ${JSON.stringify(description)}\n`;
-  if (modelTier !== undefined) {
+  if (claudeModelOverride !== undefined) {
+    yaml += `model:\n  overrides:\n    claude: ${JSON.stringify(claudeModelOverride)}\n`;
+  } else if (modelTier !== undefined) {
     yaml += `model: ${modelTier}\n`;
   }
   yaml += `permissions: ${permissions}\n`;

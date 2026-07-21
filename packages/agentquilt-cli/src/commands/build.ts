@@ -3,11 +3,17 @@ import { mkdirSync, writeFileSync, existsSync, readFileSync } from "fs";
 import path from "path";
 import { findConfigFile, loadConfig, validateConfig, ConfigError } from "../core/configLoader.js";
 import { compile } from "../core/compiler.js";
-import { compileAgentDefinitionsTarget } from "../core/agentCompiler.js";
+import {
+  compileAgentDefinitionsTarget,
+  mergeCompiledAgentTargets,
+} from "../core/agentCompiler.js";
 import { createLock, writeLock, readLock } from "../core/lockWriter.js";
 import { watchTree, watchFile, WatchHandle } from "../core/watcher.js";
 import type { AgentQuiltConfig } from "../schemas/config.schema.js";
 import { bold, cyan, dim, red, sym, formatDuration, createSpinner } from "../ui/terminal.js";
+import { fragmentHash, normalize } from "../core/normalize.js";
+import type { AgentLockRecord } from "../schemas/lock.schema.js";
+import { validateOutputPaths, type OutputPathClaim } from "../core/pathSecurity.js";
 
 interface BuildOptions {
   config?: string;
@@ -36,6 +42,39 @@ function isTampered(
   if (oldVersion !== newVersion) return false; // legitimate source change — self-heal
   const diskContent = readFileSync(outputPath, "utf8");
   return diskContent !== freshContent;
+}
+
+type AdapterBlockReason = "first-claim" | "tampered" | null;
+
+function adapterBlockReason(
+  outputPath: string,
+  freshContent: string,
+  freshHash: string,
+  oldHash: string | undefined,
+  legacySourceUnchanged: boolean
+): AdapterBlockReason {
+  if (!existsSync(outputPath)) return null;
+  const diskContent = readFileSync(outputPath, "utf8");
+  if (diskContent === freshContent) return null;
+  if (oldHash === undefined) return "first-claim";
+  const legacyHash = fragmentHash(normalize(Buffer.from(freshContent, "utf8")));
+  return oldHash === freshHash || (legacySourceUnchanged && oldHash === legacyHash)
+    ? "tampered"
+    : null;
+}
+
+function hasUnchangedCanonicalSource(
+  oldAgent: AgentLockRecord | undefined,
+  newAgent: AgentLockRecord,
+  oldFragmentHashById: Map<string, string>,
+  newFragmentHashById: Map<string, string>
+): boolean {
+  return oldAgent !== undefined &&
+    oldAgent.metaHash === newAgent.metaHash &&
+    JSON.stringify(oldAgent.bodyFragments) === JSON.stringify(newAgent.bodyFragments) &&
+    newAgent.bodyFragments.every(
+      (id) => oldFragmentHashById.get(id) === newFragmentHashById.get(id)
+    );
 }
 
 const WATCH_DEBOUNCE_MS = 150;
@@ -84,7 +123,7 @@ export async function executeBuild(options: BuildOptions): Promise<BuildResult> 
     configPath = options.config || findConfigFile(cwd);
     config = loadConfig(configPath);
     const sourceDir = path.join(cwd, config.sourceDir);
-    validateConfig(config, sourceDir);
+    validateConfig(config, sourceDir, cwd);
 
     spinner.update("Compiling fragments…");
     result = await compile(config, sourceDir);
@@ -94,6 +133,23 @@ export async function executeBuild(options: BuildOptions): Promise<BuildResult> 
       if (target.kind !== "agent-definitions") continue;
       agentResults.push(await compileAgentDefinitionsTarget(target, config, sourceDir, cwd));
     }
+    const merged = mergeCompiledAgentTargets(agentResults);
+    agentResults.splice(0, agentResults.length, merged);
+    const lockOutput = ["agentquilt", "lock"].join(".");
+    const claims: OutputPathClaim[] = [
+      ...result.targets.map((target) => ({
+        path: target.output,
+        owner: `document target ${target.output}`,
+      })),
+      ...[...merged.outputs.entries()].flatMap(([agentName, outputs]) =>
+        outputs.map((output) => ({
+          path: output.path,
+          owner: `agent ${agentName}`,
+        }))
+      ),
+      { path: lockOutput, owner: "AgentQuilt lock" },
+    ];
+    validateOutputPaths(cwd, claims);
   } finally {
     spinner.stop();
   }
@@ -104,27 +160,102 @@ export async function executeBuild(options: BuildOptions): Promise<BuildResult> 
   // on disk no longer matches what that version compiles to).
   const oldLock = options.force ? null : readLock(path.join(cwd, "agentquilt.lock"));
   const oldTargetVersionByOutput = new Map((oldLock?.targets ?? []).map((t) => [t.output, t.version]));
-  const oldAgentVersionByName = new Map((oldLock?.agents ?? []).map((a) => [a.name, a.version]));
+  const oldAgentHashByOutput = new Map<string, string>();
+  const oldAgentByName = new Map((oldLock?.agents ?? []).map((agent) => [agent.name, agent]));
+  const oldFragmentHashById = new Map(
+    (oldLock?.fragments ?? []).map((fragment) => [fragment.id, fragment.hash])
+  );
+  for (const agent of oldLock?.agents ?? []) {
+    for (const output of agent.outputs) {
+      oldAgentHashByOutput.set(output.path, output.hash);
+    }
+  }
 
   const blocked: string[] = [];
 
+  let agentRecords: any[] = [];
+  const allFragmentMap = new Map(result.fragmentMap);
+  for (const agentResult of agentResults) {
+    agentRecords.push(...agentResult.agentRecords);
+    for (const [id, meta] of agentResult.fragmentMap) {
+      allFragmentMap.set(id, meta);
+    }
+  }
+
+  // Preflight every output before writing anything, so a refused claim or
+  // tamper finding leaves the existing output set and lock mutually intact.
+  if (!options.force) {
+    for (const target of result.targets) {
+      const outputPath = path.resolve(cwd, target.output);
+      if (
+        isTampered(
+          outputPath,
+          target.content,
+          oldTargetVersionByOutput.get(target.output),
+          target.version
+        )
+      ) {
+        blocked.push(target.output);
+        if (!options.quiet) {
+          console.error(
+            `${sym.fail} ${bold(target.output)}: hand-edited outside of build since the last build - refusing to overwrite`
+          );
+        }
+      }
+    }
+
+    for (const agentResult of agentResults) {
+      for (const record of agentResult.agentRecords) {
+        const freshHashByPath = new Map(
+          record.outputs.map((output) => [output.path, output.hash])
+        );
+        const legacySourceUnchanged = hasUnchangedCanonicalSource(
+          oldAgentByName.get(record.name),
+          record,
+          oldFragmentHashById,
+          new Map(
+            record.bodyFragments.map((id) => [id, allFragmentMap.get(id)?.hash ?? ""])
+          )
+        );
+        for (const output of agentResult.outputs.get(record.name) ?? []) {
+          const reason = adapterBlockReason(
+            path.resolve(cwd, output.path),
+            output.content,
+            freshHashByPath.get(output.path)!,
+            oldAgentHashByOutput.get(output.path),
+            legacySourceUnchanged
+          );
+          if (reason === null) continue;
+          blocked.push(output.path);
+          if (!options.quiet) {
+            if (reason === "first-claim") {
+              console.error(
+                `${sym.fail} ${output.path}: existing user-owned file is not yet claimed - refusing to overwrite`
+              );
+              console.error(
+                dim(`  Rerun with ${cyan("--force")} only if AgentQuilt should own this path.`)
+              );
+            } else {
+              console.error(
+                `${sym.fail} ${output.path}: hand-edited outside of build since the last build - refusing to overwrite`
+              );
+            }
+          }
+        }
+      }
+    }
+  }
+
+  if (blocked.length > 0) {
+    if (!options.quiet) {
+      console.error(`${sym.fail} ${red(`${blocked.length} generated file(s) blocked`)}`);
+    }
+    return { config, configPath, writtenPaths, blocked };
+  }
+
   // Phase 2: write outputs and report.
   for (const target of result.targets) {
-    const outputPath = path.join(cwd, target.output);
-
-    if (
-      !options.force &&
-      isTampered(outputPath, target.content, oldTargetVersionByOutput.get(target.output), target.version)
-    ) {
-      blocked.push(target.output);
-      if (!options.quiet) {
-        console.error(
-          `${sym.fail} ${bold(target.output)}: hand-edited outside of build since the last build — refusing to overwrite`
-        );
-        console.error(dim(`  Revert the manual edit, or rerun with ${cyan("--force")} to discard it.`));
-      }
-      continue;
-    }
+    const outputPath = path.resolve(cwd, target.output);
 
     mkdirSync(path.dirname(outputPath), { recursive: true });
     writeFileSync(outputPath, target.content, "utf8");
@@ -142,35 +273,13 @@ export async function executeBuild(options: BuildOptions): Promise<BuildResult> 
     }
   }
 
-  let agentRecords: any[] = [];
-  const allFragmentMap = new Map(result.fragmentMap);
-
   for (const agentResult of agentResults) {
-    agentRecords.push(...agentResult.agentRecords);
-
-    // Merge fragment maps
-    for (const [id, meta] of agentResult.fragmentMap) {
-      allFragmentMap.set(id, meta);
-    }
-
     // Write adapter outputs
     for (const record of agentResult.agentRecords) {
       const outputs = agentResult.outputs.get(record.name) ?? [];
-      const oldAgentVersion = oldAgentVersionByName.get(record.name);
 
       for (const output of outputs) {
-        const outputPath = path.join(cwd, output.path);
-
-        if (!options.force && isTampered(outputPath, output.content, oldAgentVersion, record.version)) {
-          blocked.push(output.path);
-          if (!options.quiet) {
-            console.error(
-              `${sym.fail} ${output.path}: hand-edited outside of build since the last build — refusing to overwrite`
-            );
-            console.error(dim(`  Revert the manual edit, or rerun with ${cyan("--force")} to discard it.`));
-          }
-          continue;
-        }
+        const outputPath = path.resolve(cwd, output.path);
 
         mkdirSync(path.dirname(outputPath), { recursive: true });
         writeFileSync(outputPath, output.content, "utf8");
@@ -180,12 +289,6 @@ export async function executeBuild(options: BuildOptions): Promise<BuildResult> 
         }
       }
     }
-  }
-
-  if (blocked.length > 0 && !options.quiet) {
-    console.error(
-      `${sym.fail} ${red(`${blocked.length} generated file(s) blocked`)} — rerun with ${cyan("--force")} to discard the manual edits.`
-    );
   }
 
   // Create and write lock (with agents)
@@ -274,7 +377,7 @@ async function watchAction(options: BuildOptions): Promise<void> {
   }
 
   let writtenPaths = new Set<string>();
-  const runBuild = async (): Promise<void> => {
+  const runBuild = async (): Promise<number> => {
     try {
       const result = await executeBuild(options);
       config = result.config;
@@ -282,15 +385,22 @@ async function watchAction(options: BuildOptions): Promise<void> {
       if (!options.quiet) {
         console.log(dim(`  watching for changes… (ctrl-c to stop)`));
       }
+      return 0;
     } catch (err) {
-      reportError(err);
+      const exitCode = reportError(err);
       if (!options.quiet) {
         console.log(dim(`  watching for changes… (ctrl-c to stop)`));
       }
+      return exitCode;
     }
   };
 
-  await runBuild();
+  // Never install watchers from a config that failed the initial build and
+  // validation pass; otherwise an escaped sourceDir could still be watched.
+  const initialExitCode = await runBuild();
+  if (initialExitCode !== 0) {
+    process.exit(initialExitCode);
+  }
 
   let timer: NodeJS.Timeout | undefined;
   let building = false;

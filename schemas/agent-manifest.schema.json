@@ -2,17 +2,18 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://agentquilt.dev/schemas/agent-manifest.json",
   "title": "Agent Manifest (agent.yaml)",
-  "description": "Schema for agent.yaml: the canonical agent definition metadata. Used for agent-definition targets in agentquilt.config.yaml.",
+  "description": "Schema for agent.yaml: the canonical agent definition metadata. Used for agent-definition targets in agentquilt.config.yaml. Provider adapters may enforce additional output-specific constraints without changing this neutral schema.",
   "type": "object",
   "required": ["description"],
   "properties": {
     "description": {
       "type": "string",
       "minLength": 1,
-      "description": "Human-readable purpose of this agent. Required."
+      "description": "Human-readable purpose of this agent. Required by the neutral schema; provider adapters may impose stricter requirements. The Codex adapter rejects descriptions that are blank after trimming."
     },
     "name": {
       "type": "string",
+      "pattern": "^[A-Za-z0-9](?!.*\\.\\.)[A-Za-z0-9._-]*$",
       "description": "Optional agent name. Defaults to the agent directory name if not provided."
     },
     "model": {
@@ -53,7 +54,7 @@
     }
   },
   "additionalProperties": {
-    "description": "Platform-specific extension blocks (e.g., x-claude, x-codex) are accepted and passed through verbatim to adapters. Keys must start with 'x-' to indicate extensions."
+    "description": "Platform-specific extension blocks are accepted by the neutral schema and validated by their adapters. The Codex adapter requires nonblank description and developer instructions. It accepts x-codex.nickname_candidates only as a non-empty unique array of trimmed strings containing ASCII letters, digits, spaces, hyphens, and underscores. It accepts x-codex.skills only as an object with a required config array whose entries require a nonblank string path and permit an optional boolean enabled. Canonical fields, mcp_servers, malformed values, and unknown keys are rejected by that adapter."
   },
   "examples": [
     {

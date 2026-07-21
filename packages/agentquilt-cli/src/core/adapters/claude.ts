@@ -1,6 +1,7 @@
 import { readFileSync } from "fs";
 import { stringify as yamlStringify } from "yaml";
 import { normalize } from "../normalize.js";
+import { ConfigError } from "../configLoader.js";
 import { registerAdapter, type Adapter, type AdapterOutput } from "./index.js";
 import type { CanonicalAgentRecord } from "../agentLoader.js";
 import type { ResolvedModel } from "../modelResolver.js";
@@ -8,6 +9,12 @@ import type { ResolvedModel } from "../modelResolver.js";
 // v2: body is emitted verbatim per v1.1 §5 — no content transformation of
 // user fragments (previously headers were stripped and lines flattened)
 const ADAPTER_VERSION = "2";
+
+// Canonical fields buildFrontmatter sets unconditionally, with no override
+// mechanism. "tools" and "permissionMode" are deliberately NOT reserved —
+// x-claude.tools / x-claude.permissionMode are the sanctioned override
+// channel (v1.1 addendum §5.1).
+const CLAUDE_RESERVED_EXTENSION_KEYS = new Set(["name", "description", "model", "effort"]);
 
 function assembleBody(record: CanonicalAgentRecord): string {
   const bodies = record.bodyFragments.map((f) => normalize(readFileSync(f.filePath)));
@@ -64,11 +71,17 @@ function buildFrontmatter(
     fm["effort"] = resolvedModel.reasoning;
   }
 
-  // remaining x-claude keys (not tools, not permissionMode)
+  // remaining x-claude keys (not tools, not permissionMode) pass through
+  // verbatim, except canonical field names, which are rejected rather than
+  // silently overwriting the value already set above.
   for (const [k, v] of Object.entries(xc)) {
-    if (k !== "tools" && k !== "permissionMode") {
-      fm[k] = v;
+    if (k === "tools" || k === "permissionMode") continue;
+    if (CLAUDE_RESERVED_EXTENSION_KEYS.has(k)) {
+      throw new ConfigError(
+        `Agent "${record.name}" x-claude key "${k}" collides with a canonical Claude field`
+      );
     }
+    fm[k] = v;
   }
 
   return yamlStringify(fm); // ends with \n
@@ -81,9 +94,8 @@ export const CLAUDE_ADAPTER: Adapter = {
     const path = `.claude/agents/${record.name}.md`;
     const frontmatter = buildFrontmatter(record, resolvedModel);
     const body = assembleBody(record);
-    // agentVersion is not available here; it's finalized in agentCompiler.
-    // The HTML comment version will be filled by agentCompiler using the final version.
-    // For now the adapter returns raw content and agentCompiler wraps it.
+    // The adapter owns the exact output bytes. Provenance and version metadata
+    // live in the lock so YAML frontmatter remains at byte zero.
     const content = `---\n${frontmatter}---\n\n${body}`;
     return [{ path, content, kind: "file" }];
   },

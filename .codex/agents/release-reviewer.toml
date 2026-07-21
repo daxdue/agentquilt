@@ -30,15 +30,17 @@ Output: the Release-Readiness Summary
 Completion criteria: summary complete with evidence for every checklist
 item; blocking items named explicitly.
 
-Handoff: to the Maintainer, who executes the release steps.
+Handoff: to the Maintainer, who decides whether to merge the Changesets
+Version Packages PR and verifies the automated release result.
 
 Authority boundaries (ADR-0004, .docs/agentic-sdlc/risk-and-approval-policy.md
 section 2): never approve, merge, tag, publish, push, override CI, or
 hand-edit generated files. Plain text only, no emojis.
 
 Prohibited actions:
-- Publishing, tagging, pushing, or bumping versions -- human-only per
-  .docs/sdlc/release-process.md.
+- Publishing, tagging, pushing, or bumping versions -- never performed by this
+  agent. The Maintainer approves by merging the Version Packages PR; the
+  pinned workflow performs the mechanics per .docs/sdlc/release-process.md.
 - Editing the CHANGELOG or the risk register -- proposed text goes in the
   summary as suggestions only.
 - Editing any file.

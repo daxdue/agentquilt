@@ -244,6 +244,39 @@ describe("adoptExistingAgents", () => {
     expect(yaml).toContain("permissions: full");
   });
 
+  it.each(["sonnet", "opus", "haiku"])(
+    "preserves recognized Claude model %s as a provider override during mixed adoption",
+    (model) => {
+      writeClaudeAgent(
+        `mixed-${model}`,
+        `---\nname: mixed-${model}\ndescription: Mixed ${model}\nmodel: ${model}\n---\n\nBody.\n`
+      );
+      const dir = initAgentsDir();
+      adoptExistingAgents(tmpDir, ["claude", "codex"], dir, skillsDir());
+
+      const yaml = readFileSync(join(dir, `mixed-${model}`, "agent.yaml"), "utf8");
+      expect(yaml).toContain(
+        `model:\n  overrides:\n    claude: ${JSON.stringify(model)}\n`
+      );
+      expect(yaml).not.toMatch(/^model: (balanced|frontier|fast)$/m);
+    }
+  );
+
+  it.each([
+    { label: "absent", modelLine: "" },
+    { label: "unrecognized", modelLine: "model: claude-custom\n" },
+  ])("omits an $label model during mixed adoption", ({ label, modelLine }) => {
+    writeClaudeAgent(
+      `mixed-${label}`,
+      `---\nname: mixed-${label}\ndescription: Mixed ${label}\n${modelLine}---\n\nBody.\n`
+    );
+    const dir = initAgentsDir();
+    adoptExistingAgents(tmpDir, ["claude", "codex"], dir, skillsDir());
+
+    const yaml = readFileSync(join(dir, `mixed-${label}`, "agent.yaml"), "utf8");
+    expect(yaml).not.toContain("model:");
+  });
+
   it("skips agent whose source dir already exists (idempotent)", () => {
     writeClaudeAgent(
       "existing",
@@ -319,6 +352,23 @@ describe("adoptExistingAgents", () => {
       agents: [],
       skills: [],
     });
+  });
+
+  it("does not reverse-adopt existing Codex agent files", () => {
+    const existingDir = join(tmpDir, ".codex", "agents");
+    mkdirSync(existingDir, { recursive: true });
+    writeFileSync(
+      join(existingDir, "existing.toml"),
+      'name = "existing"\ndescription = "Existing"\ndeveloper_instructions = "Keep me"\n',
+      "utf8"
+    );
+    const dir = initAgentsDir();
+
+    expect(adoptExistingAgents(tmpDir, ["codex"], dir, skillsDir())).toEqual({
+      agents: [],
+      skills: [],
+    });
+    expect(existsSync(join(dir, "existing"))).toBe(false);
   });
 
   it("rejects a claude agent whose frontmatter name escapes agentsDir", () => {
@@ -500,7 +550,7 @@ describe("initProject integration", () => {
     expect(runInit(tmpDir, ["claude"])).toBe(0);
     expect(readFileSync(join(tmpDir, ".gitattributes"), "utf8")).toBe(existing);
 
-    expect(runInit(tmpDir, ["claude"], true)).toBe(0);
+    expect(runInit(tmpDir, ["codex"], true)).toBe(0);
     expect(readFileSync(join(tmpDir, ".gitattributes"), "utf8")).toBe(existing);
   });
 });

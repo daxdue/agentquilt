@@ -152,8 +152,11 @@ check.
   (including agent-definitions outputs), golden tests, package validation,
   secret scanning, dependency checks. Provider-run evaluations (Phase 8) are
   manual and never a required CI gate.
-- **Release** remains human-executed (`npm version`, tag push, `npm publish`)
-  with the release reviewer producing the readiness evidence beforehand.
+- **Release** remains human-approved: the Maintainer decides when to merge the
+  Changesets Version Packages PR, while the pinned workflow performs version,
+  package-tag, GitHub Release, and npm publication mechanics. The release
+  reviewer produces readiness evidence beforehand and never executes a
+  release step.
 
 ## 8. What is explicitly out of scope, forever (for this pipeline)
 

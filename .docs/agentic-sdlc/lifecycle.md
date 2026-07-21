@@ -208,7 +208,8 @@ The primary role names come from the
 - Inputs: CHANGELOG, version, risk register, validation evidence.
 - Outputs: Release-Readiness Summary
   ([format](completion-contract.md#4-artifact-format-release-readiness-summary)).
-- Exit: Maintainer executes the release steps per
+- Exit: Maintainer approves release by merging the Version Packages PR; the
+  pinned workflow executes the mechanics per
   [release-process.md](../sdlc/release-process.md).
 
 ## 4. Workflow profiles
