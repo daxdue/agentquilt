@@ -19,7 +19,6 @@ The implemented command set is:
 | `agentquilt init` | Scaffold a new project |
 | `agentquilt agents add <name>` | Scaffold a new agent directory |
 | `agentquilt agents list` | List all agents and resolved models |
-| `agentquilt agents check-models` | Advisory: warn if a committed model id looks stale against a platform's local CLI cache (see ADR-0018; never gates build/check) |
 
 Commands not yet implemented (Week 2+):
 

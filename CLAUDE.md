@@ -1,4 +1,4 @@
-<!-- agentquilt: generated file — do not edit. version=sha256-8841281ba1fccc50ee7b09dce249bee4595066e250b4c367d49d5514ebff062f · source: .agentquilt/agents/ · regenerate: agentquilt build -->
+<!-- agentquilt: generated file — do not edit. version=sha256-7dcaf4cd9532c4985b570a37eb59bef56b703c10dbfa80f1f1318c05d451fd4b · source: .agentquilt/agents/ · regenerate: agentquilt build -->
 
 # AgentQuilt Development Guide
 
@@ -171,7 +171,6 @@ agentquilt build --watch                 # Rebuild automatically when fragments 
 agentquilt check                         # CI gate: detect drift between source and disk
 agentquilt agents add <name>             # Scaffold a new agent directory with agent.yaml
 agentquilt agents list                   # List all agents and resolved models per platform
-agentquilt agents check-models           # Advisory: warn if a committed model id looks stale (never gates build/check)
 agentquilt skills add <name>             # Scaffold a new skill directory under .agentquilt/skills/
 agentquilt skills list                   # List all skills and their descriptions
 ```
