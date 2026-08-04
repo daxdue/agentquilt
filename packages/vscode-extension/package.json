@@ -3,8 +3,13 @@
   "displayName": "AgentQuilt",
   "description": "Visualize AgentQuilt fragment compilation: agents, fragments, compiled output, and drift state.",
   "version": "0.0.1",
-  "private": true,
   "publisher": "daxdue",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daxdue/agentquilt.git",
+    "directory": "packages/vscode-extension"
+  },
   "icon": "media/icon.png",
   "engines": {
     "vscode": "^1.90.0",
