@@ -73,6 +73,11 @@
           "type": "string",
           "default": "agentquilt",
           "description": "Command used to invoke the AgentQuilt CLI (e.g. 'agentquilt' or 'npx agentquilt')."
+        },
+        "agentquilt.autoRebuildOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically run `agentquilt build` when a source fragment or agent manifest under .agentquilt/ changes."
         }
       }
     }

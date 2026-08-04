@@ -5,9 +5,14 @@ import { DriftStatusBar } from "./driftStatusBar";
 import { AgentQuiltWatcher } from "./watcher";
 import { PreviewPanel } from "./PreviewPanel";
 import { registerCommands } from "./commands";
+import { AutoRebuilder } from "./autoRebuild";
 
 function getCliCommand(): string {
   return vscode.workspace.getConfiguration("agentquilt").get<string>("cliCommand", "agentquilt");
+}
+
+function getAutoRebuildEnabled(): boolean {
+  return vscode.workspace.getConfiguration("agentquilt").get<boolean>("autoRebuildOnSave", true);
 }
 
 export function activate(context: vscode.ExtensionContext): void {
@@ -23,6 +28,8 @@ export function activate(context: vscode.ExtensionContext): void {
 
   const statusBar = new DriftStatusBar(workspaceRoot, getCliCommand);
 
+  const autoRebuilder = new AutoRebuilder(workspaceRoot, getCliCommand, getAutoRebuildEnabled);
+
   const watcher = new AgentQuiltWatcher(workspaceFolder);
   watcher.onDidChange((event) => {
     if (event.kind === "source" || event.kind === "lock") {
@@ -37,6 +44,9 @@ export function activate(context: vscode.ExtensionContext): void {
     if (event.kind === "output") {
       PreviewPanel.refreshIfOpen(path.join(workspaceRoot, event.uri));
     }
+    if (event.kind === "source") {
+      autoRebuilder.scheduleRebuild();
+    }
     statusBar.scheduleCheck();
   });
   // Seed output watchers from whatever the tree already knows (e.g. from a
@@ -49,7 +59,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
   void statusBar.checkNow();
 
-  context.subscriptions.push(treeView, statusBar, watcher);
+  context.subscriptions.push(treeView, statusBar, watcher, autoRebuilder);
 }
 
 export function deactivate(): void {
