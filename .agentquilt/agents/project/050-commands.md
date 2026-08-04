@@ -19,6 +19,7 @@ agentquilt build --watch                 # Rebuild automatically when fragments 
 agentquilt check                         # CI gate: detect drift between source and disk
 agentquilt agents add <name>             # Scaffold a new agent directory with agent.yaml
 agentquilt agents list                   # List all agents and resolved models per platform
+agentquilt agents check-models           # Advisory: warn if a committed model id looks stale (never gates build/check)
 agentquilt skills add <name>             # Scaffold a new skill directory under .agentquilt/skills/
 agentquilt skills list                   # List all skills and their descriptions
 ```
