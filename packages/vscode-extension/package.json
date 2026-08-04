@@ -1,0 +1,99 @@
+{
+  "name": "agentquilt-vscode",
+  "displayName": "AgentQuilt",
+  "description": "Visualize AgentQuilt fragment compilation: agents, fragments, compiled output, and drift state.",
+  "version": "0.0.1",
+  "private": true,
+  "publisher": "agentquilt-dev",
+  "engines": {
+    "vscode": "^1.90.0",
+    "node": ">=18"
+  },
+  "categories": ["Visualization", "Other"],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "agentquilt",
+          "title": "AgentQuilt",
+          "icon": "media/agentquilt-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "agentquilt": [
+        {
+          "id": "agentquiltAgents",
+          "name": "Agents & Fragments"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "agentquilt.build",
+        "title": "AgentQuilt: Build",
+        "icon": "$(play)"
+      },
+      {
+        "command": "agentquilt.check",
+        "title": "AgentQuilt: Check",
+        "icon": "$(search)"
+      },
+      {
+        "command": "agentquilt.showPreview",
+        "title": "AgentQuilt: Show Compiled Output"
+      },
+      {
+        "command": "agentquilt.refreshTree",
+        "title": "AgentQuilt: Refresh Agent Tree",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "agentquilt.enableProvider",
+        "title": "AgentQuilt: Enable Provider...",
+        "icon": "$(add)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        { "command": "agentquilt.refreshTree", "when": "view == agentquiltAgents", "group": "navigation" },
+        { "command": "agentquilt.build", "when": "view == agentquiltAgents", "group": "navigation" },
+        { "command": "agentquilt.enableProvider", "when": "view == agentquiltAgents", "group": "navigation" }
+      ],
+      "view/item/context": [
+        { "command": "agentquilt.showPreview", "when": "view == agentquiltAgents && viewItem == agent", "group": "inline" }
+      ]
+    },
+    "configuration": {
+      "title": "AgentQuilt",
+      "properties": {
+        "agentquilt.cliCommand": {
+          "type": "string",
+          "default": "agentquilt",
+          "description": "Command used to invoke the AgentQuilt CLI (e.g. 'agentquilt' or 'npx agentquilt')."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "node ./esbuild.js",
+    "watch": "node ./esbuild.js --watch",
+    "typecheck": "tsc --noEmit",
+    "package": "vsce package --no-dependencies",
+    "vscode:prepublish": "npm run compile"
+  },
+  "dependencies": {
+    "marked": "^18.0.7",
+    "smol-toml": "1.7.0",
+    "yaml": "^2.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^2.29.0",
+    "esbuild": "^0.21.0",
+    "typescript": "^5.3.3"
+  }
+}
