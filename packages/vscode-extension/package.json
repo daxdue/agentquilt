@@ -4,7 +4,7 @@
   "description": "Visualize AgentQuilt fragment compilation: agents, fragments, compiled output, and drift state.",
   "version": "0.0.1",
   "private": true,
-  "publisher": "agentquilt-dev",
+  "publisher": "daxdue",
   "engines": {
     "vscode": "^1.90.0",
     "node": ">=18"
