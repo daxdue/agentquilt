@@ -7,6 +7,7 @@ import { program } from "commander";
 import { registerInitCommand } from "./commands/init.js";
 import { registerBuildCommand } from "./commands/build.js";
 import { registerCheckCommand } from "./commands/check.js";
+import { registerLintCommand } from "./commands/lint.js";
 import { registerAgentsCommand } from "./commands/agents/index.js";
 import { registerSkillsCommand } from "./commands/skills/index.js";
 import "./core/adapters/claude.js";
@@ -31,6 +32,7 @@ program
 registerInitCommand(program);
 registerBuildCommand(program);
 registerCheckCommand(program);
+registerLintCommand(program);
 registerAgentsCommand(program);
 registerSkillsCommand(program);
 

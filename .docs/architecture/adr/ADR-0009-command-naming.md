@@ -16,6 +16,7 @@ The implemented command set is:
 |---|---|
 | `agentquilt build` | Compile all targets, write outputs and lock |
 | `agentquilt check` | CI gate: detect drift between source and disk |
+| `agentquilt lint` | Validate agent manifests and fragments: schema, ordering-prefix collisions, front-matter |
 | `agentquilt init` | Scaffold a new project |
 | `agentquilt agents add <name>` | Scaffold a new agent directory |
 | `agentquilt agents list` | List all agents and resolved models |
@@ -24,7 +25,6 @@ Commands not yet implemented (Week 2+):
 
 | Command | Purpose |
 |---|---|
-| `agentquilt lint` | Validate fragment semantics (Week 2) |
 | `agentquilt diff` | Show semantic diff between versions (Week 3) |
 | `agentquilt eval` | Run eval test suite (Week 3) |
 

@@ -485,8 +485,8 @@
     },
     {
       "id": "project/050-commands.md",
-      "hash": "sha256-ea3e920d69235744bad8a6519aa3af2eaa85be6b232603ff020db43fef9b30d3",
-      "bytes": 1160,
+      "hash": "sha256-72a0f0e1d6af8f08b4de583864b28aff13f8e6635f088ec593c8a54a6c65bb2a",
+      "bytes": 1324,
       "tags": []
     },
     {
@@ -536,7 +536,7 @@
         "project/090-implementation-notes.md",
         "project/100-package-and-links.md"
       ],
-      "version": "sha256-7dcaf4cd9532c4985b570a37eb59bef56b703c10dbfa80f1f1318c05d451fd4b"
+      "version": "sha256-1bbc66a87f0356c14d07706c2446cc65bda17dc472c7ba1bb96fa2f80ddc963d"
     },
     {
       "output": "CLAUDE.md",
@@ -553,7 +553,7 @@
         "project/090-implementation-notes.md",
         "project/100-package-and-links.md"
       ],
-      "version": "sha256-7dcaf4cd9532c4985b570a37eb59bef56b703c10dbfa80f1f1318c05d451fd4b"
+      "version": "sha256-1bbc66a87f0356c14d07706c2446cc65bda17dc472c7ba1bb96fa2f80ddc963d"
     }
   ]
 }
