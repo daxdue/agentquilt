@@ -8,6 +8,7 @@ packages/**/node_modules/
 # Build output
 packages/**/dist/
 *.tsbuildinfo
+*.vsix
 
 # Test coverage
 packages/**/coverage/

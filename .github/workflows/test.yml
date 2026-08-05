@@ -2,8 +2,12 @@ name: agentquilt-test
 
 on:
   pull_request:
+    paths-ignore:
+      - "packages/vscode-extension/**"
   push:
     branches: [main]
+    paths-ignore:
+      - "packages/vscode-extension/**"
 
 permissions:
   contents: read

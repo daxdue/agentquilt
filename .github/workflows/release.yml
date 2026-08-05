@@ -19,6 +19,8 @@ name: release
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "packages/vscode-extension/**"
 
 permissions:
   contents: read

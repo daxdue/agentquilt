@@ -1,0 +1,78 @@
+name: vscode-extension
+
+# Isolated CI for packages/vscode-extension: path-scoped so it never runs
+# (and, symmetrically, test.yml/release.yml are path-scoped to never run)
+# for changes confined to this package. Publishing is gated on an explicit
+# version bump in package.json rather than every push to main - CI only
+# checks whether a human already decided to release (by bumping the
+# version), it never decides that itself. See scripts/check-vscode-version-changed.mjs.
+
+on:
+  pull_request:
+    paths:
+      - "packages/vscode-extension/**"
+  push:
+    branches: [main]
+    paths:
+      - "packages/vscode-extension/**"
+
+concurrency:
+  group: vscode-extension-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "20"
+      - name: Install dependencies (workspace root)
+        run: npm ci
+      - name: Typecheck
+        run: npm run vscode:typecheck
+      - name: Compile
+        run: npm run vscode:compile
+      - name: Package (.vsix)
+        run: npm run vscode:package
+
+  publish:
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 2 # need HEAD^ to detect a version bump
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "20"
+      - name: Install dependencies (workspace root)
+        run: npm ci
+      - name: Check for a version bump
+        id: version_check
+        run: node scripts/check-vscode-version-changed.mjs
+      - name: Publish to VS Code Marketplace
+        if: steps.version_check.outputs.changed == 'true'
+        working-directory: packages/vscode-extension
+        run: npx vsce publish --no-dependencies --pat "$VSCE_PAT"
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+# One-time setup this workflow depends on, outside this repo (a human,
+# Maintainer-only action -- cannot be automated by a workflow or agent):
+#   - Add a VSCE_PAT repository secret (Settings > Secrets and variables >
+#     Actions) containing an Azure DevOps Personal Access Token scoped to
+#     Marketplace: Manage, for the "daxdue" publisher.
+#   - Publishing a new version: bump packages/vscode-extension/package.json's
+#     "version" field as part of the merged PR. Merging without a version
+#     bump runs validate only; nothing is published.
