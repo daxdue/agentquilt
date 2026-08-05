@@ -34,6 +34,16 @@ The [`agentquilt` CLI](https://www.npmjs.com/package/agentquilt) must be install
 | `AgentQuilt: Refresh Agent Tree` | Re-scan the source tree. |
 | `AgentQuilt: Enable Provider...` | Add a platform to an `agent-definitions` target and rebuild. |
 
+## For maintainers: packaging and publishing
+
+This extension is built with `esbuild` (`bundle: true`, only `vscode` marked external — see `esbuild.js`), so `dist/extension.js` already contains everything it needs at runtime; nothing under `node_modules` needs to ship separately.
+
+**Always pass `--no-dependencies`** when running `vsce package` or `vsce publish` directly (`npm run vscode:package` already does this correctly — prefer that script). In this npm workspace, `vsce`'s dependency-bundling pass (the default when `--no-dependencies` is omitted) follows the workspace's `node_modules` symlinks and sweeps in sibling packages and unrelated repo content, which fails outright (`ERROR invalid relative path: extension/../../...`) rather than producing a bloated-but-working `.vsix`. This isn't a workaround for a one-off bug — it's the correct flag for any `esbuild`-bundled extension, and it's required here specifically because of the workspace layout:
+
+```bash
+npx vsce publish --no-dependencies
+```
+
 ## License
 
 MIT

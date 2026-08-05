@@ -95,16 +95,14 @@
     "package": "vsce package --no-dependencies",
     "vscode:prepublish": "npm run compile"
   },
-  "dependencies": {
-    "marked": "^18.0.7",
-    "smol-toml": "1.7.0",
-    "yaml": "^2.4.1"
-  },
   "devDependencies": {
     "@types/node": "^20.10.6",
     "@types/vscode": "^1.90.0",
     "@vscode/vsce": "^2.29.0",
     "esbuild": "^0.21.0",
-    "typescript": "^5.3.3"
+    "marked": "^18.0.7",
+    "smol-toml": "1.7.0",
+    "typescript": "^5.3.3",
+    "yaml": "^2.4.1"
   }
 }
